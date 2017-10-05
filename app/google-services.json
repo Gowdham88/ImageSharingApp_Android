@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "597233205650",
+    "firebase_url": "https://numnu-server-dev.firebaseio.com",
+    "project_id": "numnu-server-dev",
+    "storage_bucket": "numnu-server-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597233205650:android:b5bfdc25119c9412",
+        "android_client_info": {
+          "package_name": "com.numnu.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597233205650-jvrj4r5sdorfdlmd0fk62300fdbi4oi3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBteVbGLxcqAghTke20JPuh92Kq459eMIc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
