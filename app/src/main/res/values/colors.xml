@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="pink">#FF2F55</color>
+    <color name="onboardButton">#f13a30</color>
+    <color name="facebookButton">#3b5998</color>
     <color name="blue">#392fff</color>
 </resources>

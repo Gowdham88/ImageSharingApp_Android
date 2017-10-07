@@ -12,4 +12,25 @@
     <item name="android:textColor">@android:color/white</item>
 </style>
 
+    <style name="cancel_button">
+        <item name="android:background">@drawable/cancel_background</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="facebook_login_button">
+        <item name="android:background">@drawable/fb_login_button_background</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="onboard_button">
+        <item name="android:background">@color/onboardButton</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="android:textColorPrimary">@color/w</item>-->
+        <item name="android:background">@drawable/fb_login_button_background</item>
+    </style>
+
 </resources>

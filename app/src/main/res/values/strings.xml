@@ -8,4 +8,7 @@
     <string name="numnu_logo">Numnu logo</string>
     <string name="by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"><![CDATA[By signing up you agree to our Terms of service & Privacy Policy]]></string>
     <string name="loading">Loading..</string>
+    <string name="yum_let_me_in">Yum! Let me in!</string>
+    <string name="facebook_app_id"></string>
+    <string name="enabling_notifications"><![CDATA[Enabling Notifications & Location services would optimize the user experience]]></string>
 </resources>

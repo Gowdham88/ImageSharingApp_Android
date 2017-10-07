@@ -1,4 +1,4 @@
-package com.numnu.android;
+package com.numnu.android.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,13 +20,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.numnu.android.R;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG ="SignUpActivity";
     TextView textView;
     EditText mEmailField, mPasswordField;
-    public ProgressDialog mProgressDialog;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -80,6 +82,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Intent mainIntent = new Intent(SignupActivity.this,OnboardingActivity.class);
+                            SignupActivity.this.startActivity(mainIntent);
+                            SignupActivity.this.finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -95,40 +100,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         // [END create_user_with_email]
     }
 
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
 
-        showProgressDialog();
-
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(SignupActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(SignupActivity.this, "Auth Failed!", Toast.LENGTH_SHORT).show();
-                        }
-                        hideProgressDialog();
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END sign_in_with_email]
-    }
 
     private void signOut() {
         mAuth.signOut();
@@ -177,7 +149,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password) || password.length()<8) {
             mPasswordField.setError("Required.");
             valid = false;
         } else {
@@ -205,19 +177,18 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();
+        RelativeLayout layout = new RelativeLayout(this);
+        ProgressBar progressBar = new ProgressBar(SignupActivity.this,null,android.R.attr.progressBarStyleLarge);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar,params);
+        setContentView(layout);
     }
 
     public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+        setContentView(R.layout.activity_login);
     }
 
     @Override

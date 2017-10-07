@@ -1,6 +1,5 @@
-package com.numnu.android;
+package com.numnu.android.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
@@ -10,6 +9,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +19,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.numnu.android.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG ="LoginActivity";
     TextView textView;
     EditText mEmailField, mPasswordField;
-    public ProgressDialog mProgressDialog;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -80,6 +81,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Intent mainIntent = new Intent(LoginActivity.this,OnboardingActivity.class);
+                            LoginActivity.this.startActivity(mainIntent);
+                            LoginActivity.this.finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -111,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password) || password.length()<8) {
             mPasswordField.setError("Required.");
             valid = false;
         } else {
@@ -137,19 +141,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();
+        RelativeLayout layout = new RelativeLayout(this);
+        ProgressBar progressBar = new ProgressBar(LoginActivity.this,null,android.R.attr.progressBarStyleLarge);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout.addView(progressBar,params);
+        setContentView(layout);
     }
 
     public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+        setContentView(R.layout.activity_login);
     }
 
     @Override
