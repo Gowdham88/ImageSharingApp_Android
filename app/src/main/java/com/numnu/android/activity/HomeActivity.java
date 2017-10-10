@@ -1,17 +1,25 @@
 package com.numnu.android.activity;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.NotificationFragment;
 import com.numnu.android.fragments.ProfileFragment;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class HomeActivity extends MyActivity {
 
@@ -53,5 +61,20 @@ public class HomeActivity extends MyActivity {
 
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.numnu.android",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
     }
 }

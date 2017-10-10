@@ -1,9 +1,8 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.home;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpAdapter;
-import com.numnu.android.adapter.NotificationsAdapter;
 
 import java.util.ArrayList;
 
@@ -19,14 +17,14 @@ import java.util.ArrayList;
  * Created by thulir on 9/10/17.
  */
 
-public class NotificationFragment extends Fragment {
+public class EventsFragment extends Fragment {
 
-    private RecyclerView notificationRecyclerView;
-    private Context context;
+    private RecyclerView current_up_recyclerview;
     private ArrayList<String> stringlist;
+    Context context;
 
-    public static NotificationFragment newInstance() {
-        NotificationFragment fragment = new NotificationFragment();
+    public static EventsFragment newInstance() {
+        EventsFragment fragment = new EventsFragment();
         return fragment;
     }
 
@@ -38,13 +36,12 @@ public class NotificationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View  view= inflater.inflate(R.layout.fragment_notification, container, false);
 
-        notificationRecyclerView = view.findViewById(R.id.notification_recycler_view);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
-        notificationRecyclerView.setLayoutManager(layoutManager);
+        View view = inflater.inflate(R.layout.fragment_events, container, false);
+        current_up_recyclerview = view.findViewById(R.id.current_up_recyclerview);
 
         setupRecyclerView();
+
         return view;
     }
 
@@ -58,10 +55,10 @@ public class NotificationFragment extends Fragment {
         stringlist = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            stringlist.add("Notification " + i);
+            stringlist.add("Item " + i);
 
-            NotificationsAdapter currentUpAdapter = new NotificationsAdapter(context, stringlist);
-            notificationRecyclerView.setAdapter(currentUpAdapter);
+            CurrentUpAdapter currentUpAdapter = new CurrentUpAdapter(getActivity(), stringlist);
+            current_up_recyclerview.setAdapter(currentUpAdapter);
         }
 
     }

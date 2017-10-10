@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.home.EventsFragment;
+import com.numnu.android.fragments.home.MenuItemsFragment;
+import com.numnu.android.fragments.home.PostsFragment;
+import com.numnu.android.fragments.home.UsersFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +56,10 @@ public class HomeFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new NotificationFragment(), "Posts");
-        adapter.addFragment(new NotificationFragment(), "Users");
-        adapter.addFragment(new ProfileFragment(), "Menu Items");
-        adapter.addFragment(new ProfileFragment(), "Events");
+        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(new UsersFragment(), "Users");
+        adapter.addFragment(new MenuItemsFragment(), "Menu Items");
+        adapter.addFragment(new EventsFragment(), "Events");
         viewPager.setAdapter(adapter);
     }
 
