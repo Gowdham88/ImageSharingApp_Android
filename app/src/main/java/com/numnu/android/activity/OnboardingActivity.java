@@ -1,5 +1,6 @@
 package com.numnu.android.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,7 +15,10 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 
-public class OnboardingActivity extends AppCompatActivity {
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class OnboardingActivity extends MyActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,12 @@ public class OnboardingActivity extends AppCompatActivity {
 
         LayoutInflater factory = LayoutInflater.from(this);
         final View deleteDialogView = factory.inflate(R.layout.custom_alert, null);
-        AlertDialog.Builder alertDialog=new AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialog=new AlertDialog.Builder(this);
         alertDialog.setView(deleteDialogView);
         Button ok=deleteDialogView.findViewById(R.id.ok_button);
         Button cancel=deleteDialogView.findViewById(R.id.cancel_button);
+
+        final AlertDialog alertDialog1=alertDialog.create();
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,9 +54,9 @@ public class OnboardingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(OnboardingActivity.this, "cancel clicked", Toast.LENGTH_SHORT).show();
+                alertDialog1.dismiss();
             }
         });
-        AlertDialog alertDialog1=alertDialog.create();
         alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog1.show();
     }

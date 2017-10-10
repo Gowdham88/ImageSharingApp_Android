@@ -1,6 +1,7 @@
 package com.numnu.android.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
@@ -22,7 +23,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class SignupActivity extends MyActivity implements View.OnClickListener {
 
     private static final String TAG ="SignUpActivity";
     TextView textView;
@@ -172,23 +175,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 //        } else if (i == R.id.verify_email_button) {
 //            sendEmailVerification();
 //        }
-    }
-
-
-
-    public void showProgressDialog() {
-        RelativeLayout layout = new RelativeLayout(this);
-        ProgressBar progressBar = new ProgressBar(SignupActivity.this,null,android.R.attr.progressBarStyleLarge);
-        progressBar.setIndeterminate(true);
-        progressBar.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        layout.addView(progressBar,params);
-        setContentView(layout);
-    }
-
-    public void hideProgressDialog() {
-        setContentView(R.layout.activity_login);
     }
 
     @Override

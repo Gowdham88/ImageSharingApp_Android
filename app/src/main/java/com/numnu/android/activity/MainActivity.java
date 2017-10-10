@@ -1,6 +1,7 @@
 package com.numnu.android.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,12 +38,15 @@ import com.numnu.android.R;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class MainActivity extends MyActivity {
     private static final String TAG ="MainActivity" ;
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
     private CallbackManager mCallbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,20 +167,6 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(mainIntent);
     }
 
-    public void showProgressDialog() {
-        RelativeLayout layout = new RelativeLayout(this);
-        ProgressBar progressBar = new ProgressBar(MainActivity.this,null,android.R.attr.progressBarStyleLarge);
-        progressBar.setIndeterminate(true);
-        progressBar.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        layout.addView(progressBar,params);
-        setContentView(layout);
-    }
-
-    public void hideProgressDialog() {
-        setContentView(R.layout.activity_login);
-    }
 }
 
 
