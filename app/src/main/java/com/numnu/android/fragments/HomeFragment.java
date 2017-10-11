@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.home.EventsFragment;
@@ -51,6 +52,9 @@ public class HomeFragment extends Fragment {
 
         tabLayout =  view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Explore");
         return view;
     }
 

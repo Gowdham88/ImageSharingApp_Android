@@ -16,12 +16,12 @@ import java.util.ArrayList;
  * Created by thulir on 10/10/17.
  */
 
-public class CurrentUpAdapter extends RecyclerView.Adapter<CurrentUpAdapter.ViewHolder> {
+public class PastEventsAdapter extends RecyclerView.Adapter<PastEventsAdapter.ViewHolder> {
 
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
 
-    public CurrentUpAdapter(Context context, ArrayList<String> stringArrayList) {
+    public PastEventsAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
         this.stringArrayList=stringArrayList;
     }
@@ -29,7 +29,7 @@ public class CurrentUpAdapter extends RecyclerView.Adapter<CurrentUpAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.current_event_item, parent, false);
+                .inflate(R.layout.past_event_item, parent, false);
 
         //view.setOnClickListener(MainActivity.myOnClickListener);
 

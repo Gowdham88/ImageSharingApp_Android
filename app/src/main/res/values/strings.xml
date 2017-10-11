@@ -16,4 +16,6 @@
     <string name="notifications">notifications</string>
     <string name="profile">profile</string>
     <string name="current_upcoming_events"><![CDATA[Current & Upcoming Events]]></string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="past_events">Past events</string>
 </resources>

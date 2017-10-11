@@ -3,14 +3,15 @@ package com.numnu.android.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.CurrentUpAdapter;
 import com.numnu.android.adapter.NotificationsAdapter;
 
 import java.util.ArrayList;
@@ -43,6 +44,11 @@ public class NotificationFragment extends Fragment {
         notificationRecyclerView = view.findViewById(R.id.notification_recycler_view);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
         notificationRecyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(notificationRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
+        notificationRecyclerView.addItemDecoration(dividerItemDecoration);
+
+        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Notifications");
 
         setupRecyclerView();
         return view;

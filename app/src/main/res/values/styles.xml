@@ -7,10 +7,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-<style name="login_button">
-   <item name="android:background">@drawable/button_background_login</item>
-    <item name="android:textColor">@android:color/white</item>
-</style>
+
+    <style name="login_button">
+        <item name="android:background">@drawable/button_background_login</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 
     <style name="cancel_button">
         <item name="android:background">@drawable/cancel_background</item>
@@ -32,5 +33,9 @@
         <!--<item name="android:textColorPrimary">@color/w</item>-->
         <item name="android:background">@drawable/fb_login_button_background</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.CurrentUpAdapter;
+import com.numnu.android.adapter.CurrentUpEventsAdapter;
+import com.numnu.android.adapter.PastEventsAdapter;
 
 import java.util.ArrayList;
 
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 
 public class EventsFragment extends Fragment {
 
-    private RecyclerView current_up_recyclerview;
-    private ArrayList<String> stringlist;
+    private RecyclerView currentEventsList, pastEventsList;
+    private ArrayList<String> stringlist,stringlist1;
     Context context;
 
     public static EventsFragment newInstance() {
@@ -38,7 +39,8 @@ public class EventsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_events, container, false);
-        current_up_recyclerview = view.findViewById(R.id.current_up_recyclerview);
+        currentEventsList = view.findViewById(R.id.current_up_recyclerview);
+        pastEventsList = view.findViewById(R.id.past_recyclerview);
 
         setupRecyclerView();
 
@@ -53,13 +55,21 @@ public class EventsFragment extends Fragment {
 
     private void setupRecyclerView() {
         stringlist = new ArrayList<>();
+        stringlist1 = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
             stringlist.add("Item " + i);
-
-            CurrentUpAdapter currentUpAdapter = new CurrentUpAdapter(getActivity(), stringlist);
-            current_up_recyclerview.setAdapter(currentUpAdapter);
         }
+            CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(getActivity(), stringlist);
+            currentEventsList.setAdapter(currentUpAdapter);
+
+
+        for (int i = 1; i <= 10; i++) {
+            stringlist1.add(" Past Event  " + i);
+        }
+            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(getActivity(), stringlist1);
+            pastEventsList.setAdapter(pastEventsAdapter);
+
 
     }
 }
