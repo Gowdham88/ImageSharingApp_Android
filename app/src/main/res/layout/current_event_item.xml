@@ -18,6 +18,6 @@
         android:layout_below="@id/current_event_image"
         android:layout_centerHorizontal="true"
         android:text="Posts"
-        android:textSize="30sp"/>
+        android:textSize="18sp"/>
 
 </RelativeLayout>
