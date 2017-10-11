@@ -11,4 +11,9 @@
     <string name="yum_let_me_in">Yum! Let me in!</string>
     <string name="facebook_app_id"></string>
     <string name="enabling_notifications"><![CDATA[Enabling Notifications & Location services would optimize the user experience]]></string>
+    <string name="onboard_text">Discover delicious food and drink at events and festivals near you</string>
+    <string name="home">home</string>
+    <string name="notifications">notifications</string>
+    <string name="profile">profile</string>
+    <string name="current_upcoming_events"><![CDATA[Current & Upcoming Events]]></string>
 </resources>

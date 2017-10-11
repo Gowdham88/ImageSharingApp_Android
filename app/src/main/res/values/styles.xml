@@ -14,7 +14,7 @@
 
     <style name="cancel_button">
         <item name="android:background">@drawable/cancel_background</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/onboardButton</item>
     </style>
 
     <style name="facebook_login_button">

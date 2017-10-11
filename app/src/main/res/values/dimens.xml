@@ -2,4 +2,6 @@
 <resources>
     <dimen name="login_app_text_size">30sp</dimen>
     <dimen name="login_inner_app_text_size">25sp</dimen>
+    <dimen name="button_text_size">18sp</dimen>
+    <dimen name="onboard_text_size">24sp</dimen>
 </resources>

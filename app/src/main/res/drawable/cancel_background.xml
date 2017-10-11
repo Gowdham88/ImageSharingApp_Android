@@ -4,7 +4,7 @@
         android:right="7dp" android:bottom="7dp" />
     <corners android:radius="20dp" />
     <stroke
-        android:color="@color/pink"
-        android:width="2dp"/>
+        android:color="@color/onboardButton"
+        android:width="1dp"/>
     <solid android:color="@android:color/white"/>
 </shape>
