@@ -1,18 +1,13 @@
 package com.numnu.android.activity;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +17,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignupActivity extends MyActivity implements View.OnClickListener {
 
@@ -186,5 +179,6 @@ public class SignupActivity extends MyActivity implements View.OnClickListener {
     public void signIn(View view) {
         Intent mainIntent = new Intent(this,LoginActivity.class);
         this.startActivity(mainIntent);
+        this.finish();
     }
 }

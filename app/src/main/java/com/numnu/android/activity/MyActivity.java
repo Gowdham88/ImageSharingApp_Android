@@ -1,6 +1,9 @@
 package com.numnu.android.activity;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -29,6 +32,7 @@ public class MyActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         layout.addView(progressBar,params);
+        layout.getRootView().setBackgroundResource(R.color.transparent);
         setContentView(layout);
     }
 

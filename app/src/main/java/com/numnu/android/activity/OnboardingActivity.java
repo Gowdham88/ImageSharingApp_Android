@@ -24,13 +24,11 @@ public class OnboardingActivity extends MyActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
-        showAlert();
+
     }
 
     public void gotoHome(View view) {
-        Intent mainIntent = new Intent(OnboardingActivity.this,HomeActivity.class);
-        OnboardingActivity.this.startActivity(mainIntent);
-        OnboardingActivity.this.finish();
+        showAlert();
     }
 
     public void showAlert(){
@@ -46,18 +44,23 @@ public class OnboardingActivity extends MyActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(OnboardingActivity.this, "Ok clicked", Toast.LENGTH_SHORT).show();
+                Intent mainIntent = new Intent(OnboardingActivity.this,HomeActivity.class);
+                OnboardingActivity.this.startActivity(mainIntent);
+                OnboardingActivity.this.finish();
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(OnboardingActivity.this, "cancel clicked", Toast.LENGTH_SHORT).show();
                 alertDialog1.dismiss();
             }
         });
-        alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        try {
+            alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         alertDialog1.show();
     }
 }

@@ -1,17 +1,13 @@
 package com.numnu.android.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +17,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends MyActivity implements View.OnClickListener {
     private static final String TAG ="LoginActivity";
@@ -118,7 +112,7 @@ public class LoginActivity extends MyActivity implements View.OnClickListener {
         }
 
         String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password) || password.length()<8) {
+        if (TextUtils.isEmpty(password) || password.length()<4) {
             mPasswordField.setError("Required.");
             valid = false;
         } else {

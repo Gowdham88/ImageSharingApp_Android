@@ -18,5 +18,9 @@
         android:layout_centerHorizontal="true"
         android:text="Menu items"
         android:textSize="30sp"/>
+    <android.support.v7.widget.SearchView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:queryHint="test"/>
 
 </RelativeLayout>

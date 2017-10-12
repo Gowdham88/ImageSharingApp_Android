@@ -18,5 +18,13 @@
         android:layout_centerHorizontal="true"
         android:text="Profile"
         android:textSize="30sp"/>
+    <SearchView
+        style="@style/MySearchViewStyle"
+        android:id="@+id/search_food"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:iconifiedByDefault="false"
+        android:clickable="true"
+        android:queryHint="Search Food..." />
 
 </RelativeLayout>
