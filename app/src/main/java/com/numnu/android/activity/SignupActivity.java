@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 
-public class SignupActivity extends MyActivity implements View.OnClickListener {
+public class SignupActivity extends MyActivity  {
 
     private static final String TAG ="SignUpActivity";
     TextView textView;
@@ -43,7 +43,12 @@ public class SignupActivity extends MyActivity implements View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-        findViewById(R.id.button_signup).setOnClickListener(this);
+        findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            }
+        });
     }
 
     public void forgetPassword(View view) {
@@ -145,7 +150,7 @@ public class SignupActivity extends MyActivity implements View.OnClickListener {
         }
 
         String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password) || password.length()<8) {
+        if (TextUtils.isEmpty(password)) {
             mPasswordField.setError("Required.");
             valid = false;
         } else {
@@ -157,18 +162,6 @@ public class SignupActivity extends MyActivity implements View.OnClickListener {
 
 
 
-    @Override
-    public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.button_signup) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        }
-//        } else if (i == R.id.button_login) {
-//            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-//        } else if (i == R.id.verify_email_button) {
-//            sendEmailVerification();
-//        }
-    }
 
     @Override
     public void onStop() {

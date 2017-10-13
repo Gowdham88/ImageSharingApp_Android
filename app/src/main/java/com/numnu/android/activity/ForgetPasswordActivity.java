@@ -41,6 +41,8 @@ public class ForgetPasswordActivity extends MyActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Log.d(TAG, "Email sent.");
+                                    }else {
+                                        Toast.makeText(ForgetPasswordActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

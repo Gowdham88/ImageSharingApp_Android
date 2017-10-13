@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,13 +19,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 
-public class LoginActivity extends MyActivity implements View.OnClickListener {
+public class LoginActivity extends MyActivity  {
     private static final String TAG ="LoginActivity";
     TextView textView;
     EditText mEmailField, mPasswordField;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
+    private Button login;
     // [END declare_auth]
 
     @Override
@@ -32,18 +34,27 @@ public class LoginActivity extends MyActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        textView=findViewById(R.id.textView3);
-        mEmailField =findViewById(R.id.et_email);
-        mPasswordField =findViewById(R.id.et_password);
+        textView = findViewById(R.id.textView3);
+        mEmailField = findViewById(R.id.et_email);
+        mPasswordField = findViewById(R.id.et_password);
 
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
-        
-        findViewById(R.id.button_login).setOnClickListener(this);
+
+        login = findViewById(R.id.button_login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            }
+        });
+
+
     }
+
 
     public void forgetPassword(View view) {
         Intent mainIntent = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
@@ -124,22 +135,19 @@ public class LoginActivity extends MyActivity implements View.OnClickListener {
 
 
 
-    @Override
-    public void onClick(View v) {
-        int i = v.getId();
-      if (i == R.id.button_login) {
-            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        }
-//        else if (i == R.id.verify_email_button) {
-//            sendEmailVerification();
-//        }
-    }
 
 
     @Override
     public void onStop() {
         super.onStop();
         hideProgressDialog();
+    }
+
+    public void signUp(View view) {
+
+        Intent mainIntent = new Intent(this,SignupActivity.class);
+        this.startActivity(mainIntent);
+        this.finish();
     }
 }
 

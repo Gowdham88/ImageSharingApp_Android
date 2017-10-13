@@ -33,6 +33,9 @@ public class OnboardingActivity extends MyActivity {
 
     public void showAlert(){
 
+        findViewById(R.id.textView_info).setVisibility(View.GONE);
+        findViewById(R.id.button_letme).setVisibility(View.GONE);
+
         LayoutInflater factory = LayoutInflater.from(this);
         final View deleteDialogView = factory.inflate(R.layout.custom_alert, null);
         final AlertDialog.Builder alertDialog=new AlertDialog.Builder(this);
@@ -53,14 +56,20 @@ public class OnboardingActivity extends MyActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                findViewById(R.id.textView_info).setVisibility(View.VISIBLE);
+                findViewById(R.id.button_letme).setVisibility(View.VISIBLE);
                 alertDialog1.dismiss();
             }
         });
+
+        alertDialog1.setCanceledOnTouchOutside(false);
         try {
             alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (Exception e) {
             e.printStackTrace();
         }
         alertDialog1.show();
+        alertDialog1.getWindow().setLayout(800, 800);
     }
 }

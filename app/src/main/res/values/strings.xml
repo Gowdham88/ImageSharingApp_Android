@@ -23,4 +23,21 @@
     <string name="email_address">Email Address</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="signup_with_email">Signup with email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forgot_password_label">Forgot Password</string>
+    <string name="don_t_have_an_account_yet">Don\'t have an account yet?</string>
+    <string name="ignore">Ignore</string>
+    <string name="ok">Ok</string>
+    <string name="share_the_app">Share the app</string>
+    <string name="rate_the_app">Rate the app</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="events">Events</string>
+    <string name="business">Business</string>
+    <string name="items">Items</string>
+    <string name="posts">Posts</string>
+    <string name="users">Users</string>
+    <string name="share_using">Share Using</string>
 </resources>

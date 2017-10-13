@@ -2,13 +2,14 @@
 <resources>
     <color name="colorPrimary">#f13a30</color>
     <color name="colorPrimaryDark">#b71c1c</color>
-    <color name="colorAccent">#f13a30</color>
-    <color name="pink">#FF2F55</color>
+    <color name="colorAccent">#69a3e6</color>
     <color name="onboardButton">#f13a30</color>
     <color name="facebookButton">#3b5998</color>
     <color name="blue">#69a3e6</color>
     <color name="tab_text_color">#8f8d8d</color>
+    <color name="light_grey">#bdbdbd</color>
     <color name="black">#000000</color>
     <color name="toolbar_background_color">#ffffff</color>
     <color name="transparent">#00ffffff</color>
+    <color name="primary_text_material_light">#757575</color>
 </resources>

@@ -1,8 +1,10 @@
 package com.numnu.android.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,19 +26,52 @@ public class MyActivity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+//    public void showProgressDialog() {
+//        RelativeLayout layout = new RelativeLayout(this);
+//        ProgressBar progressBar = new ProgressBar(MyActivity.this,null,android.R.attr.progressBarStyleLarge);
+//        progressBar.setIndeterminate(true);
+//        progressBar.setVisibility(View.VISIBLE);
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
+//        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+//        layout.addView(progressBar,params);
+//        layout.getRootView().setBackgroundResource(R.color.transparent);
+//        setContentView(layout);
+//    }
+//
+//    public void hideProgressDialog() {
+//        setContentView(R.layout.activity_login);
+//    }
+    public ProgressDialog mProgressDialog;
+
     public void showProgressDialog() {
-        RelativeLayout layout = new RelativeLayout(this);
-        ProgressBar progressBar = new ProgressBar(MyActivity.this,null,android.R.attr.progressBarStyleLarge);
-        progressBar.setIndeterminate(true);
-        progressBar.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        layout.addView(progressBar,params);
-        layout.getRootView().setBackgroundResource(R.color.transparent);
-        setContentView(layout);
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
     }
 
     public void hideProgressDialog() {
-        setContentView(R.layout.activity_login);
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
+
+    private void showSnackBar(String message){
+        Snackbar.make(this.findViewById(android.R.id.content),
+                message,
+                Snackbar.LENGTH_LONG)
+                .setActionTextColor(Color.RED)
+                .show();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideProgressDialog();
+    }
+
+
 }
