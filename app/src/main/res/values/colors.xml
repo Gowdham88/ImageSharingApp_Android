@@ -12,4 +12,5 @@
     <color name="toolbar_background_color">#ffffff</color>
     <color name="transparent">#00ffffff</color>
     <color name="primary_text_material_light">#757575</color>
+    <color name="color_search_icon_background">#c9342b</color>
 </resources>

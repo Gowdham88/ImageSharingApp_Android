@@ -1,10 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     tools:context="com.numnu.android.activity.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -12,127 +11,94 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-        <include layout="@layout/toolbar"/>
+
+        <include layout="@layout/toolbar" />
     </android.support.design.widget.AppBarLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"
-            />
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
+            android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_image"
             android:layout_centerHorizontal="true"
-            android:text="User Name"
             android:layout_gravity="center_horizontal"
-            android:textSize="20sp"/>
+            android:text="User Name"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/imageView_profile_edit"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_above="@+id/textView16"
+            android:layout_alignEnd="@+id/profile_image"
+            android:layout_alignRight="@+id/profile_image"
+            app:srcCompat="@drawable/edit_profile" />
     </RelativeLayout>
-    
-    <TextView
-        android:id="@+id/text_share_app"
-        android:text="@string/share_the_app"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:layout_marginTop="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/text_rate_app"
-        android:text="@string/rate_the_app"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/text_terms"
-        android:text="@string/terms_of_service"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/text_privacy"
-        android:text="@string/privacy_policy"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:text="@string/bookmarks"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/text_events"
-        android:text="@string/events"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/text_rate_business"
-        android:text="@string/business"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/text_items"
-        android:text="@string/items"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/text_posts"
-        android:text="@string/posts"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/text_users"
-        android:text="@string/users"
-        android:gravity="center_vertical"
-        android:padding="@dimen/settings_padding"
-        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 
+    <LinearLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_name_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_padding"
+            android:gravity="center_vertical"
+            android:padding="@dimen/settings_padding"
+            android:text="@string/name" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/text_emaill_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/settings_padding"
+            android:text="@string/email_address" />
+
+        <EditText
+            android:id="@+id/et_email_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+        <Button
+            android:id="@+id/button_save"
+            android:text="@string/save"
+            style="@style/login_button"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/button_cancel"
+            android:text="@string/cancel"
+            style="@style/clear_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

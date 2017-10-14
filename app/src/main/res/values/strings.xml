@@ -40,4 +40,9 @@
     <string name="posts">Posts</string>
     <string name="users">Users</string>
     <string name="share_using">Share Using</string>
+    <string name="share_content">Find Delicious Food around you.Get Numnu App. Click to Download https://play.google.com/store/apps/details?id=</string>
+    <string name="name">Name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>
