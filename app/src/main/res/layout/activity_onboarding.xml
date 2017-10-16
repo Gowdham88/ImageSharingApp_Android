@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/yum_let_me_in"
-        android:onClick="gotoHome"
+        android:onClick="showAlert"
         android:textAllCaps="false"
         android:textSize="@dimen/button_text_size"
         fontPath="fonts/Proxima-Nova-Bold.otf"

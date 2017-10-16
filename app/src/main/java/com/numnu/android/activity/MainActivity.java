@@ -50,7 +50,7 @@ public class MainActivity extends MyActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        FacebookSdk.sdkInitialize(getApplicationContext());
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         TextView textView=findViewById(R.id.textView3);
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);

@@ -36,6 +36,7 @@
             android:text="@string/ignore"
             android:id="@+id/cancel_button"
             style="@style/cancel_button"
+            android:visibility="gone"
             android:layout_weight="1"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"

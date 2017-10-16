@@ -60,14 +60,14 @@ public class EventsFragment extends Fragment {
         for (int i = 1; i <= 10; i++) {
             stringlist.add("Item " + i);
         }
-            CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(getActivity(), stringlist);
+            CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context, stringlist);
             currentEventsList.setAdapter(currentUpAdapter);
 
 
         for (int i = 1; i <= 10; i++) {
             stringlist1.add(" Past Event  " + i);
         }
-            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(getActivity(), stringlist1);
+            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
             pastEventsList.setAdapter(pastEventsAdapter);
 
 

@@ -1,6 +1,10 @@
 package com.numnu.android.adapter;
 
+import android.app.Activity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.EventDetailFragment;
 
 import java.util.ArrayList;
 
@@ -41,6 +46,14 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.textViewName.setText(stringArrayList.get(position));
+        holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.commit();
+            }
+        });
     }
 
     @Override
