@@ -90,6 +90,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <EditText
+        style="@style/MyEditTextStyle"
         android:id="@+id/et_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
