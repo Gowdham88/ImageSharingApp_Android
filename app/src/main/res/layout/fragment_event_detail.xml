@@ -38,6 +38,8 @@
                     android:src="@mipmap/ic_launcher" />
 
                 <TextView
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:id="@+id/event_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -46,6 +48,8 @@
                     android:textSize="16sp" />
 
                 <LinearLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:id="@+id/chips_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,6 +71,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:id="@+id/date_time_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,6 +80,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txt_event_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -83,6 +90,7 @@
                         android:text="August 9 - August 14" />
 
                     <TextView
+                        android:id="@+id/txt_event_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/event_name"
@@ -94,6 +102,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:id="@+id/location_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,6 +111,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txt_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_city"
@@ -109,6 +120,7 @@
                         android:text="Montreal" />
 
                     <TextView
+                        android:id="@+id/txt_view_event_map"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/event_name"
@@ -119,6 +131,8 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:id="@+id/weblinks_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,18 +140,21 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/txt_weblink_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:text="Weblink 1" />
 
                     <TextView
+                        android:id="@+id/txt_weblink_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:text="Weblink 2" />
 
                     <TextView
+                        android:id="@+id/txt_weblink_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
@@ -145,6 +162,8 @@
                 </LinearLayout>
 
                 <TextView
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:id="@+id/event_description_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,6 +172,8 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
