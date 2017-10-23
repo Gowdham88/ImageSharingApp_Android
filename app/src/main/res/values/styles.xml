@@ -6,9 +6,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+        <item name="android:textColorPrimary">@color/primary_text_material_light</item>
+        <item name="editTextStyle">@style/MyEditTextStyle</item>
+        <item name="colorControlActivated">@color/blue</item>
+
     </style>
 
     <style name="login_button">
+        <item name="android:textAllCaps">false</item>
         <item name="android:background">@drawable/button_background_login</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
@@ -16,16 +22,19 @@
     <style name="cancel_button">
         <item name="android:background">@drawable/cancel_background</item>
         <item name="android:textColor">@color/onboardButton</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="facebook_login_button">
         <item name="android:background">@drawable/fb_login_button_background</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="onboard_button">
         <item name="android:background">@color/onboardButton</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -37,5 +46,31 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Background for the search query section (e.g. EditText) -->
+        <item name="queryBackground">@drawable/search_view</item>
+        <!-- Close button icon -->
+        <item name="closeIcon">@android:drawable/ic_menu_close_clear_cancel</item>
+        <!-- Search button icon -->
+        <item name="searchIcon">@drawable/ic_search_location</item>
+    </style>
+
+    <style name="login_heading_style">
+        <item name="android:textSize">@dimen/login_inner_app_text_size</item>
+        <item name="fontPath">fonts/Proxima-Nova-Bold.otf</item>
+    </style>
+
+    <style name="clear_button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="MyEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 
 </resources>

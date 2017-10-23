@@ -4,10 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
     tools:context="com.numnu.android.activity.LoginActivity"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
@@ -23,7 +19,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:id="@+id/textView"
@@ -32,12 +29,13 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
-        android:text="SignUp With Email"
-        android:textSize="@dimen/login_inner_app_text_size"
+        android:text="@string/signup_with_email"
+        style="@style/login_heading_style"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.528"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
@@ -46,18 +44,19 @@
         style="@style/login_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Sign Up"
+        android:layout_marginLeft="@dimen/signup_margin"
+        android:layout_marginRight="@dimen/signup_margin"
+        android:text="@string/sign_up"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/signup_margin"
+        android:layout_marginEnd="@dimen/signup_margin"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
+        app:layout_constraintTop_toBottomOf="@+id/et_password_layout"
+        app:layout_constraintVertical_bias="0.284" />
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -65,12 +64,13 @@
         android:text="@string/already_have_an_account"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@+id/button_signup"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.376" />
 
     <TextView
         android:id="@+id/textView3"
@@ -80,8 +80,8 @@
         android:textColor="@color/blue"
         android:onClick="signIn"
         android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/textView2"
         android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <EditText
@@ -90,45 +90,66 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="@dimen/signup_margin"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="@dimen/signup_margin"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/signup_margin"
+        android:layout_marginEnd="@dimen/signup_margin"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/et_password_layout"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:passwordToggleEnabled="true"
+        android:layout_marginLeft="@dimen/signup_margin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="@dimen/signup_margin"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/signup_margin"
+        android:layout_marginEnd="@dimen/signup_margin"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintHorizontal_bias="0.0">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_password"
+            android:paddingTop="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+    </android.support.design.widget.TextInputLayout>
+
     <EditText
-        android:id="@+id/et_password"
+        android:visibility="gone"
+        android:id="@+id/et_password_layout1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="Name"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="@dimen/signup_margin"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="@dimen/signup_margin"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/signup_margin"
+        android:layout_marginEnd="@dimen/signup_margin"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/txt_forget_pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forget Password?"
+        android:text="@string/forgot_password"
+        android:visibility="gone"
         android:onClick="forgetPassword"
-        app:layout_constraintRight_toRightOf="@+id/et_password"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
+        app:layout_constraintRight_toRightOf="@+id/et_password_layout"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_layout" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email Address"
+        android:text="@string/email_address"
         app:layout_constraintLeft_toLeftOf="@+id/et_email"
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -137,37 +158,34 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
-        app:layout_constraintLeft_toLeftOf="@+id/et_password"
+        android:text="@string/password"
+        app:layout_constraintLeft_toLeftOf="@+id/et_password_layout"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/et_email" />
     <View
         android:id="@+id/view_divider"
-        android:layout_width="344dp"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
+        android:background="@color/light_grey"
         android:layout_marginBottom="9dp"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintHorizontal_bias="1.0" />
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="@dimen/privacy_policy_bottom_spacing"
+        android:layout_marginLeft="@dimen/signup_margin"
+        android:layout_marginRight="@dimen/signup_margin"
         android:text="@string/by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center_horizontal"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginStart="@dimen/signup_margin"
+        android:layout_marginEnd="@dimen/signup_margin" />
 
 </android.support.constraint.ConstraintLayout>

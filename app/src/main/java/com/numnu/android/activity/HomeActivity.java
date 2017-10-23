@@ -3,7 +3,6 @@ package com.numnu.android.activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,7 +15,7 @@ import android.view.MenuItem;
 import com.numnu.android.R;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.NotificationFragment;
-import com.numnu.android.fragments.ProfileFragment;
+import com.numnu.android.fragments.SettingsFragment;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -44,7 +43,7 @@ public class HomeActivity extends MyActivity {
                                 selectedFragment = NotificationFragment.newInstance();
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = ProfileFragment.newInstance();
+                                selectedFragment = SettingsFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

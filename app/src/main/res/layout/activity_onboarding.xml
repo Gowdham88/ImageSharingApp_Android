@@ -8,12 +8,12 @@
     tools:context="com.numnu.android.activity.OnboardingActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_letme"
         style="@style/onboard_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/yum_let_me_in"
-        android:onClick="gotoHome"
+        android:onClick="showAlert"
         android:textAllCaps="false"
         android:textSize="@dimen/button_text_size"
         fontPath="fonts/Proxima-Nova-Bold.otf"
@@ -24,7 +24,7 @@
         tools:ignore="MissingPrefix" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textView_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -35,7 +35,7 @@
         android:textSize="@dimen/onboard_text_size"
         android:textColor="@android:color/white"
         android:text="@string/onboard_text"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/button_letme"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="MissingPrefix" />

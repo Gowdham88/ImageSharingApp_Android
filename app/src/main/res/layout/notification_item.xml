@@ -1,18 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/notification_item_margin"
     tools:context="com.numnu.android.activity.HomeActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/notification_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@mipmap/ic_launcher"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
+        />
 
 
     <TextView
@@ -25,7 +24,33 @@
         android:layout_alignBaseline="@+id/notification_image"
         android:layout_toRightOf="@+id/notification_image"
         android:layout_toEndOf="@+id/notification_image"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp" />
+        android:layout_marginStart="26dp"
+        app:layout_constraintLeft_toRightOf="@+id/notification_image"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/imageView8"
+        android:layout_marginRight="8dp"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintTop_toTopOf="@+id/notification_image"
+        android:layout_marginTop="16dp" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_chevron_right_black_24dp"
+        tools:layout_editor_absoluteY="18dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2hrs"
+        android:layout_marginTop="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/text_notification"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/text_notification" />
+
+
+</android.support.constraint.ConstraintLayout>
