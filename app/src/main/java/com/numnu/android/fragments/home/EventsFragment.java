@@ -3,14 +3,17 @@ package com.numnu.android.fragments.home;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PastEventsAdapter;
+import com.numnu.android.fragments.ProfileFragment;
 
 import java.util.ArrayList;
 
@@ -42,6 +45,28 @@ public class EventsFragment extends Fragment {
         currentEventsList = view.findViewById(R.id.current_up_recyclerview);
         pastEventsList = view.findViewById(R.id.past_recyclerview);
 
+        ImageView viewCurrentEventsList = view.findViewById(R.id.view_current_event_list);
+
+        ImageView viewPastEventsList = view.findViewById(R.id.view_past_event_list);
+
+        viewCurrentEventsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, CurrentEventsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        viewPastEventsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, PastEventsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
         setupRecyclerView();
 
         return view;
@@ -65,12 +90,14 @@ public class EventsFragment extends Fragment {
 
 
         for (int i = 1; i <= 10; i++) {
-            stringlist1.add(" Past Event  " + i);
+            stringlist1.add("Event " + i);
         }
             PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
             pastEventsList.setAdapter(pastEventsAdapter);
 
 
     }
+
+
 }
 

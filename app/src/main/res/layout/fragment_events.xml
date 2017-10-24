@@ -10,17 +10,18 @@
         android:id="@+id/current_events_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:text="@string/current_upcoming_events"
         android:textSize="18sp" />
 
     <ImageView
+        android:id="@+id/view_current_event_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="20dp"
-        android:src="@drawable/ic_arrow_forward_black_24dp" />
+        android:layout_margin="10dp"
+        app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/current_up_recyclerview"
@@ -39,9 +40,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/current_up_recyclerview"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/past_events"
         android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/view_past_event_list"
+        android:layout_below="@+id/current_up_recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/past_recyclerview"
@@ -50,7 +63,7 @@
         android:layout_below="@+id/past_events_text"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:reverseLayout="false">
 

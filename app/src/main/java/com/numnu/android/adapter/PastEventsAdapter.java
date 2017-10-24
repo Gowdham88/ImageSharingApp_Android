@@ -29,7 +29,7 @@ public class PastEventsAdapter extends RecyclerView.Adapter<PastEventsAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.past_event_item, parent, false);
+                .inflate(R.layout.current_event_item, parent, false);
 
         //view.setOnClickListener(MainActivity.myOnClickListener);
 

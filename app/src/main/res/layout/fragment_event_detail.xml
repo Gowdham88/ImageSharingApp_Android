@@ -84,21 +84,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_calendar"
+                        android:drawableLeft="@android:drawable/ic_menu_my_calendar"
                         android:drawablePadding="4dp"
-                        android:padding="4dp"
-                        android:text="August 9 - August 14" />
+                        android:padding="2dp"
+                        android:gravity="center"
+                        android:text="August 9 - 07.00 am" />
 
+                    <TextView
+                        android:id="@+id/txt_event_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="to" />
                     <TextView
                         android:id="@+id/txt_event_time"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_below="@+id/event_name"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_time"
                         android:drawablePadding="4dp"
-                        android:padding="4dp"
-                        android:text="07.00 am - 11.00pm" />
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="August 14 - 11.00pm" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -127,7 +135,8 @@
                         android:drawableLeft="@drawable/ic_maplocation"
                         android:drawablePadding="4dp"
                         android:padding="4dp"
-                        android:text="View Event Map" />
+                        android:textColor="@color/black"
+                        android:text="Event Map" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -164,20 +173,10 @@
                 <TextView
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/event_description_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/weblinks_layout"
-                    android:text="Description for event"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/event_description_label"
+                    android:layout_below="@+id/weblinks_layout"
                     android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
 
             </RelativeLayout>
