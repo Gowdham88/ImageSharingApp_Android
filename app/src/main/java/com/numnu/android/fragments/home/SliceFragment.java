@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,9 @@ import com.numnu.android.R;
 
 public class SliceFragment extends Fragment {
 
+    private BottomSheetBehavior mBottomSheetBehavior1;
     Context context;
+
     public static SliceFragment newInstance() {
         SliceFragment fragment = new SliceFragment();
         return fragment;
@@ -33,6 +37,8 @@ public class SliceFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Nullable
@@ -43,6 +49,25 @@ public class SliceFragment extends Fragment {
 
         TextView textView = view.findViewById(R.id.liked_counts);
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+//        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+//        View bottomSheetView = inflater.inflate(R.layout.fragment_slice,null);
+//        bottomSheetDialog.setContentView(bottomSheetView);
+//
+//
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(mBottomSheetBehavior1.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+//                    mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
+////                    mButton1.setText(R.string.collapse_button1);
+//                }
+//                else {
+//                    mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
+////                    mButton1.setText(R.string.button1);
+//                }
+//            }
+//        });
         return view;
     }
 }
