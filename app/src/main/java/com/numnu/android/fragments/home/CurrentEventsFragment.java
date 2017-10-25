@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
@@ -41,6 +42,9 @@ public class CurrentEventsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_current_events_list, container, false);
         currentEventsList = view.findViewById(R.id.current_up_recyclerview);
 
+        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.current_upcoming);
+
         setupRecyclerView();
 
         return view;
@@ -59,8 +63,14 @@ public class CurrentEventsFragment extends Fragment {
         for (int i = 1; i <= 10; i++) {
             stringlist.add("Item " + i);
         }
-            CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context, stringlist);
-            currentEventsList.setAdapter(currentUpAdapter);
+
+        currentEventsList.setHasFixedSize(true);
+        currentEventsList.setItemViewCacheSize(20);
+        currentEventsList.setDrawingCacheEnabled(true);
+        currentEventsList.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+        CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context, stringlist);
+        currentEventsList.setAdapter(currentUpAdapter);
 
 
     }

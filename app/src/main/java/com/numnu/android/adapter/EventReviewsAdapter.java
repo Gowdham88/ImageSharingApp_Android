@@ -54,9 +54,9 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.text_notification);
+            this.textViewName =  itemView.findViewById(R.id.text_event_name);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
-            this.imageViewIcon = itemView.findViewById(R.id.notification_image);
+            this.imageViewIcon = itemView.findViewById(R.id.review_image);
         }
     }
 }

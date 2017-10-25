@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
@@ -41,6 +42,8 @@ public class PastEventsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_past_events_list, container, false);
         pastEventsList = view.findViewById(R.id.past_recyclerview);
 
+        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.past_events_title);
         setupRecyclerView();
 
         return view;

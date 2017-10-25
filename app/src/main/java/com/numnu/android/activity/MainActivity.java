@@ -160,6 +160,7 @@ public class MainActivity extends MyActivity {
         Intent mainIntent = new Intent(MainActivity.this,SignupActivity.class);
         MainActivity.this.startActivity(mainIntent);
 
+
     }
 
     public void signIn(View view) {

@@ -25,6 +25,7 @@ import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
 import com.numnu.android.fragments.EventDetail.EventReviewsFragment;
+import com.numnu.android.utils.ExpandableTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,10 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     SearchView searchViewFood,searchViewLocation;
     private Context context;
     TextView weblink1,weblink2,weblink3;
-    private TextView viewEventMap,eventDescription,eventName,city,eventDate,eventTime;
+    private TextView viewEventMap,eventName,city,eventDate,eventTime;
     private ImageView eventImageView;
+    private ExpandableTextView eventDescription;
+
 
     public static EventDetailFragment newInstance() {
         return new EventDetailFragment();
@@ -75,12 +78,18 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
 
-
-
-
-
         eventImageView = view.findViewById(R.id.current_event_image);
 
+        eventDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(eventDescription.isExpanded()){
+                    eventDescription.truncateText();
+                }else {
+                    eventDescription.expandText();
+                }
+            }
+        });
 
 //        Picasso.with(activity).load(url).transform(new RoundedCornersTransform(this)).into(eventImageView)
 

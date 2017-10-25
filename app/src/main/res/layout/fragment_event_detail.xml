@@ -34,8 +34,9 @@
                     android:layout_below="@+id/toolbar"
                     android:id="@+id/current_event_image"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:scaleType="centerCrop"
+                    android:layout_height="150dp"
+                    android:src="@drawable/food_for_lunch_mom" />
 
                 <TextView
                     android:layout_marginLeft="16dp"
@@ -47,13 +48,18 @@
                     android:text="Food and Rum Festival"
                     android:textSize="16sp" />
 
+                <HorizontalScrollView
+                    android:id="@+id/chips_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/event_name">
+
+
                 <LinearLayout
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/chips_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/event_name"
                     android:orientation="horizontal">
 
                     <TextView
@@ -65,10 +71,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/event_name"
                         android:padding="4dp"
                         android:text="Rum" />
+
                 </LinearLayout>
+
+                </HorizontalScrollView>
 
                 <LinearLayout
                     android:layout_marginLeft="16dp"
@@ -84,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableLeft="@android:drawable/ic_menu_my_calendar"
+                        android:drawableLeft="@drawable/ic_time"
                         android:drawablePadding="4dp"
                         android:padding="2dp"
                         android:gravity="center"
@@ -170,7 +178,7 @@
                         android:text="Weblink 3" />
                 </LinearLayout>
 
-                <TextView
+                <com.numnu.android.utils.ExpandableTextView
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:id="@+id/event_description"

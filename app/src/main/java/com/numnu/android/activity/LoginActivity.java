@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
+import com.numnu.android.utils.PreferencesHelper;
 
 public class LoginActivity extends MyActivity  {
     private static final String TAG ="LoginActivity";
@@ -89,7 +90,9 @@ public class LoginActivity extends MyActivity  {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
                             Intent mainIntent = new Intent(LoginActivity.this,OnboardingActivity.class);
+                            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             LoginActivity.this.startActivity(mainIntent);
                             LoginActivity.this.finish();
                         } else {

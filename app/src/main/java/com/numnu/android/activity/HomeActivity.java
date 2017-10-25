@@ -1,5 +1,6 @@
 package com.numnu.android.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -16,6 +17,7 @@ import com.numnu.android.R;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.NotificationFragment;
 import com.numnu.android.fragments.SettingsFragment;
+import com.numnu.android.utils.PreferencesHelper;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
