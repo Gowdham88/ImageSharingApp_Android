@@ -1,18 +1,23 @@
 package com.numnu.android.fragments.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.activity.CompleteSignupActivity;
+import com.numnu.android.activity.LoginActivity;
 
 /**
  * Created by Thulirsoft on 20/10/2017.
@@ -39,6 +44,7 @@ public class SliceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
+
     }
 
     @Nullable
@@ -47,27 +53,48 @@ public class SliceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_slice, container, false);
 
+//        TextView toolbarTitle=view.findViewById(R.id.slice_toolbar);
+//        toolbarTitle.setText("Slice");
+
+
         TextView textView = view.findViewById(R.id.liked_counts);
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
-//        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
-//        View bottomSheetView = inflater.inflate(R.layout.fragment_slice,null);
-//        bottomSheetDialog.setContentView(bottomSheetView);
-//
-//
-//        textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(mBottomSheetBehavior1.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-//                    mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_EXPANDED);
-////                    mButton1.setText(R.string.collapse_button1);
-//                }
-//                else {
-//                    mBottomSheetBehavior1.setState(BottomSheetBehavior.STATE_COLLAPSED);
-////                    mButton1.setText(R.string.button1);
-//                }
-//            }
-//        });
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        ImageView imageView = (ImageView)view.findViewById(R.id.slice_toolbar_icon);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.show();
+            }
+        });
+
+
+        TextView share = bottomSheetView.findViewById(R.id.share_title);
+        TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
+                sendIntent.setType("text/plain");
+                context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), CompleteSignupActivity.class));
+                bottomSheetDialog.dismiss();
+            }
+        });
         return view;
     }
 }

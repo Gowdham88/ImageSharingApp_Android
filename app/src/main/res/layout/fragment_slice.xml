@@ -6,8 +6,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/slice_toolbar"
+            android:background="@color/toolbar_background_color"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_scrollFlags="scroll|enterAlways"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/slice_profile_image"
+                    android:layout_toLeftOf="@+id/slice_toolbar_profile_name"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/dup_vegrecipe"
+                    android:layout_marginRight="10dp"
+                    />
+                <TextView
+                    android:id="@+id/slice_toolbar_profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Marc Chiriqui"
+                    style="@style/BoldTextStyle"
+                    android:layout_centerInParent="true"
+                    />
+            <ImageView
+                android:id="@+id/slice_toolbar_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_eventdots"
+                />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:padding="15dp"
     android:background="@color/toolbar_background_color">
 
     <TextView
@@ -15,11 +72,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/title"
         android:text="It was a Great night !! Amazing food very long one Header ..."
-        android:textSize="15sp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp"
-        android:textStyle="bold"
+        style="@style/BoldTextStyle"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -28,8 +81,7 @@
         android:layout_below="@+id/title"
         android:layout_alignParentRight="true"
         android:text="2hrs"
-        android:paddingRight="20dp"
-        android:textSize="18sp"
+        android:textSize="16sp"
         />
 
     <ImageView
@@ -37,18 +89,21 @@
         android:layout_below="@+id/time"
         android:layout_height="250dp"
         android:src="@drawable/dup_vegrecipe"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
         android:id="@+id/content_image"
+        android:background="@drawable/image_corner_radius"
         />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/content_image"
+            android:id="@+id/post_interests_layout">
     <ImageView
-        android:layout_width="50dp"
+        android:layout_width="35dp"
         android:layout_height="30dp"
         android:id="@+id/heart_icon"
         android:src="@drawable/ic_heart"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_below="@id/content_image"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         />
     <TextView
         android:layout_width="40dp"
@@ -58,13 +113,11 @@
         android:text="15"
         android:textSize="15sp"
         android:gravity="center_vertical"
-        android:layout_below="@id/content_image"
         />
     <ImageView
-        android:layout_width="40dp"
+        android:layout_width="35dp"
         android:layout_height="30dp"
         android:layout_toRightOf="@id/heart_count"
-        android:layout_below="@id/content_image"
         android:src="@drawable/ic_chat_bubble_outline"
         android:id="@+id/comment"
         />
@@ -77,76 +130,69 @@
         android:textSize="15sp"
         android:gravity="center_vertical"
         android:backgroundTint="@color/toolbar_background_color"
-        android:layout_below="@id/content_image"
         />
     <ImageView
-        android:layout_width="50dp"
+        android:layout_width="35dp"
         android:layout_height="30dp"
         android:id="@+id/inlove_icon"
         android:src="@drawable/ic_in_love"
-        android:layout_below="@+id/content_image"
         android:layout_toLeftOf="@+id/event_dots"
         android:layout_toStartOf="@+id/event_dots" />
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:paddingRight="20dp"
-        android:layout_below="@id/content_image"
         android:src="@drawable/ic_eventdots"
         android:id="@+id/event_dots"
         />
+        </RelativeLayout>
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:id="@+id/cottage_house_icon"
-        android:layout_below="@id/heart_icon"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/ic_chat_bubble_outline"
+        android:layout_below="@+id/post_interests_layout"
+        android:src="@drawable/ic_calendar"
         android:layout_marginTop="10dp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_toRightOf="@id/cottage_house_icon"
-        android:layout_below="@id/heart_count"
+        android:layout_below="@+id/post_interests_layout"
         android:text="Cottage House"
-        android:paddingLeft="8dp"
         android:textSize="15sp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         android:id="@+id/cottage_house_txt"
         />
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:id="@+id/barbq_icon"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
         android:layout_below="@id/cottage_house_txt"
-        android:src="@drawable/ic_chat_bubble_outline"
+        android:src="@drawable/ic_calendar"
         />
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_below="@id/cottage_house_txt"
         android:layout_toRightOf="@id/barbq_icon"
-        android:paddingLeft="8dp"
         android:gravity="center_vertical"
         android:textSize="15sp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="Barbeque side platter"
         android:id="@+id/textView17" />
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:id="@+id/barbados_icon"
         android:layout_below="@id/barbq_icon"
         android:src="@drawable/ic_calendar"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
 
         />
@@ -158,10 +204,10 @@
         android:layout_toRightOf="@id/barbados_icon"
         android:layout_below="@id/barbq_icon"
         android:gravity="center_vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:paddingLeft="8dp"
-        android:textSize="15sp"
-        android:textStyle="bold"
+        style="@style/BoldTextStyle"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -169,7 +215,6 @@
         android:id="@+id/liked_users"
         android:layout_below="@id/barbados_icon"
         android:textStyle="bold"
-        android:paddingLeft="20dp"
         android:textColor="#72A9E9"
         android:layout_marginTop="10dp"
         android:text="Jesica Matthew, Sandy Butcher"
@@ -188,61 +233,5 @@
         />
 
 </RelativeLayout>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="wrap_content"
-        android:id="@+id/bottom_sheet1"
-        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-        android:background="#FAFAFA"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:id="@+id/dialog_image"
-            android:src="@drawable/messenger_button_send_round_shadow"
-            android:tint="#727272"
-            android:background="#FAFAFA"
-            android:layout_above="@+id/bookmark_text"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-        <TextView
-            android:id="@+id/dialog_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Share"
-            android:textColor="#727272"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/bookmark_icon"
-            android:layout_toEndOf="@+id/bookmark_icon" />
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="25dp"
-            android:id="@+id/bookmark_icon"
-            android:src="@drawable/messenger_button_send_round_shadow"
-            android:background="#FAFAFA"
-            android:layout_alignTop="@+id/bookmark_text"
-            android:layout_alignLeft="@+id/dialog_image"
-            android:layout_alignStart="@+id/dialog_image" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bookmark_text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Bookmark"
-            android:textColor="#727272"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_below="@+id/dialog_title"
-            android:layout_alignLeft="@+id/dialog_title"
-            android:layout_alignStart="@+id/dialog_title"
-            android:layout_marginTop="22dp" />
-    </RelativeLayout>
-
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>
