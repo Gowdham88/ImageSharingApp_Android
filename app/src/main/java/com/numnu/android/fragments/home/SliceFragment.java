@@ -14,10 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.CompleteSignupActivity;
 import com.numnu.android.activity.LoginActivity;
+import com.numnu.android.activity.MainActivity;
+import com.numnu.android.utils.PreferencesHelper;
 
 /**
  * Created by Thulirsoft on 20/10/2017.
@@ -53,10 +56,6 @@ public class SliceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_slice, container, false);
 
-//        TextView toolbarTitle=view.findViewById(R.id.slice_toolbar);
-//        toolbarTitle.setText("Slice");
-
-
         TextView textView = view.findViewById(R.id.liked_counts);
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
@@ -91,8 +90,13 @@ public class SliceFragment extends Fragment {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), CompleteSignupActivity.class));
-                bottomSheetDialog.dismiss();
+               String loginStatus =  PreferencesHelper.getPreference(getActivity(),PreferencesHelper.PREFERENCE_IS_SIGNED_IN);
+                if (loginStatus.equals("")||loginStatus.equals("no")) {
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    bottomSheetDialog.dismiss();
+                }else if (loginStatus.equals("yes")){
+                    Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;

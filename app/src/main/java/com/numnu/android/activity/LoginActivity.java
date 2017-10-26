@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
+import com.numnu.android.utils.PreferencesHelper;
 
 public class LoginActivity extends MyActivity  {
     private static final String TAG ="LoginActivity";
@@ -49,6 +50,7 @@ public class LoginActivity extends MyActivity  {
             @Override
             public void onClick(View view) {
                 signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+
             }
         });
 
@@ -72,7 +74,7 @@ public class LoginActivity extends MyActivity  {
     // [END on_start_check_user]
 
 
-    private void signIn(String email, String password) {
+    private void signIn(final String email, String password) {
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
@@ -92,6 +94,8 @@ public class LoginActivity extends MyActivity  {
                             Intent mainIntent = new Intent(LoginActivity.this,OnboardingActivity.class);
                             LoginActivity.this.startActivity(mainIntent);
                             LoginActivity.this.finish();
+                            PreferencesHelper.setPreference(LoginActivity.this,PreferencesHelper.PREFERENCE_IS_SIGNED_IN,"yes");
+                            PreferencesHelper.setPreference(LoginActivity.this,PreferencesHelper.PREFERENCE_EMAIL,email);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());

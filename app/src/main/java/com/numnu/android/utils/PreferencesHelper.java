@@ -12,7 +12,7 @@ public class PreferencesHelper {
 
     // region Constants
     private static final String USER_PREFERENCES = "userPreferences";
-    public static final String PREFERENCE_USER_NAME = USER_PREFERENCES + ".name";
+    public static final String PREFERENCE_USER_NAME = USER_PREFERENCES + ".user_name";
     public static final String PREFERENCE_EMAIL = USER_PREFERENCES + ".email";
     public static final String PREFERENCE_ID = USER_PREFERENCES + ".id";
     public static final String PREFERENCE_PROFILE_PIC = ".profilePic";
@@ -25,6 +25,12 @@ public class PreferencesHelper {
     public static final String PREFERENCE_COLLECTED_AMOUNT ="collected_amount";
     public static final String PREFERENCE_COLLECTION_DATE ="collected_date";
     public static final String PREFERENCE_LAST_BILL_NO ="last_bill_no";
+    public static final String PREFERENCE_IS_SIGNED_IN ="is_signed_in";
+    public static final String PREFERENCE_NAME ="name";
+    public static final String PREFERENCE_CITY ="city";
+    public static final String PREFERENCE_DOB ="dob";
+    public static final String PREFERENCE_GENDER ="gender";
+
 
 
     // endregion

@@ -34,7 +34,7 @@
             android:layout_below="@+id/profile_image"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:text="User Name"
+            android:text="@string/user_name"
             android:textSize="20sp" />
 
         <ImageView

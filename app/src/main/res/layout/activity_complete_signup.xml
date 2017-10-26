@@ -37,7 +37,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -50,7 +50,7 @@
             android:text="@string/user_name" />
 
         <EditText
-            android:id="@+id/et_user_name"
+            android:id="@+id/et_signup_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -64,7 +64,7 @@
             android:text="@string/name" />
 
         <EditText
-            android:id="@+id/et_name"
+            android:id="@+id/et_signup_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -78,7 +78,7 @@
             android:text="@string/city" />
 
         <EditText
-            android:id="@+id/et_city"
+            android:id="@+id/et_signup_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              />
@@ -90,12 +90,37 @@
             android:gravity="center_vertical"
             android:padding="@dimen/settings_padding"
             android:text="@string/gender" />
+        <RadioGroup
 
-        <EditText
-            android:id="@+id/et_gender"
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/male_radio"
+                android:text="Male"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:textColor="@color/primary_text_material_light"
+                />
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/female_radio"
+                android:layout_weight="1"
+                android:text="Female"
+                android:textSize="16sp"
+                android:textColor="@color/primary_text_material_light"
+                />
+        </RadioGroup>
+
+        <!--<EditText-->
+            <!--android:id="@+id/et_signup_gender"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="text" />-->
         <TextView
             android:id="@+id/text_dob"
             android:layout_width="match_parent"
@@ -105,7 +130,7 @@
             android:text="Date of Birth" />
 
         <EditText
-            android:id="@+id/et_dob"
+            android:id="@+id/et_signup_dob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date" />
@@ -118,12 +143,12 @@
             android:text="@string/foodpreferences" />
 
         <EditText
-            android:id="@+id/et_food_preferences"
+            android:id="@+id/et_signup_food_preferences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              />
         <Button
-            android:id="@+id/button_save"
+            android:id="@+id/button_complete_signup"
             android:text="@string/complete_sign_up"
             style="@style/login_button"
             android:layout_marginTop="20dp"
