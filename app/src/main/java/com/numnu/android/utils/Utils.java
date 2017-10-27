@@ -8,12 +8,15 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
+import android.text.Spannable;
+import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -78,6 +81,13 @@ public class Utils {
         float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return dp;
     }
+
+	public static void setTextColors(TextView view, String fulltext, String subtext, int color) {
+		view.setText(fulltext, TextView.BufferType.SPANNABLE);
+		Spannable str = (Spannable) view.getText();
+		int i = fulltext.indexOf(subtext);
+		str.setSpan(new ForegroundColorSpan(color), i, i + subtext.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+	}
 
 
 }

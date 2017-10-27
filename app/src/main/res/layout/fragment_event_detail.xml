@@ -6,6 +6,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        android:focusableInTouchMode="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -13,6 +14,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             app:title="Numnu1"
+            android:focusableInTouchMode="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
@@ -26,10 +28,42 @@
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7">
 
-                <include
-                    layout="@layout/toolbar"
+                <android.support.v7.widget.Toolbar
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/toolbar"
-                    app:layout_collapseMode="parallax"/>
+                    app:layout_collapseMode="parallax"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/toolbar_background_color"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:contentInsetStart="0dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/toolbar_title"
+                            android:text="@string/app_name"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/toolbar_text_size"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:id="@+id/toolbar_image"
+                            app:srcCompat="@drawable/event_dots"
+                            android:layout_marginRight="@dimen/event_details_margin"
+                            android:layout_marginEnd="@dimen/event_details_margin"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="@dimen/toolbar_icon_width"
+                            android:layout_height="@dimen/toolbar_icon_height" />
+                    </RelativeLayout>
+
+                </android.support.v7.widget.Toolbar>
+
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_view"
                     android:layout_marginLeft="@dimen/event_details_margin"
