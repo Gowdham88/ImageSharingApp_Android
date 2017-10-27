@@ -11,6 +11,7 @@ import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.numnu.android.Manifest;
 import com.numnu.android.R;
+import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.text.SimpleDateFormat;
@@ -97,11 +99,14 @@ public class CompleteSignupActivity extends AppCompatActivity {
                 String dob = mDob.getText().toString();
                 String foodPreferences = mFoodPreferences.getText().toString();
 
-                if (!(userName.isEmpty()&&name.isEmpty()&&city.isEmpty()&&dob.isEmpty()&&foodPreferences.isEmpty()))
+                if ((userName.isEmpty()&&name.isEmpty()&&city.isEmpty()&&dob.isEmpty()&&foodPreferences.isEmpty()))
                 {
-                    startActivity(new Intent(CompleteSignupActivity.this,HomeActivity.class));
+                    Intent intent = new Intent(CompleteSignupActivity.this,HomeActivity.class);
+                    intent.putExtra("completesignup","showprofilefragment");
+                    startActivity(intent);
+
                     CompleteSignupActivity.this.finish();
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_IS_SIGNED_IN,"yes");
+                    PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_LOGGED_IN,true);
                     PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_NAME,name);
                     PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_USER_NAME,userName);
                     PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_CITY,city);

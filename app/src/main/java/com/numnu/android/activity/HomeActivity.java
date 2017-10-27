@@ -12,10 +12,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.NotificationFragment;
+import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -60,6 +62,13 @@ public class HomeActivity extends MyActivity {
         transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         transaction.commit();
 
+        String bundle = getIntent().getStringExtra("completesignup");
+        if (bundle.equals("showprofilefragment")){
+            FragmentTransaction intentTransaction = getSupportFragmentManager().beginTransaction();
+            intentTransaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+            intentTransaction.commit();
+
+        }else
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
         // Add code to print out the key hash

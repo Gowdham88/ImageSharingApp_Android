@@ -47,8 +47,8 @@
                     />
             <ImageView
                 android:id="@+id/slice_toolbar_icon"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_alignParentRight="true"
@@ -79,7 +79,7 @@
             android:layout_height="35dp"
             android:id="@+id/slice_profile_image"
             android:layout_alignParentTop="true"
-            android:src="@drawable/dup_vegrecipe"
+            android:src="@drawable/dup_men_image"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
@@ -92,7 +92,8 @@
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/slice_profile_image"
             android:text="Marc Chiriqui,"
-            style="@style/BoldTextStyle"
+            fontPath="fonts/Proxima-Nova-Bold.otf"
+            tools:ignore="MissingPrefix"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -101,7 +102,8 @@
             android:text="Ottawa"
             android:gravity="center"
             android:layout_marginLeft="3dp"
-            style="@style/BoldTextStyle"
+            fontPath="fonts/Proxima-Nova-Bold.otf"
+            tools:ignore="MissingPrefix"
             />
 
         <TextView
@@ -112,7 +114,8 @@
             android:layout_alignParentEnd="true"
             android:text="2hrs"
             android:gravity="center"
-            style="@style/BoldTextStyle"
+            fontPath="fonts/Proxima-Nova-Bold.otf"
+            tools:ignore="MissingPrefix"
             />
     <TextView
         android:layout_width="wrap_content"
@@ -120,7 +123,8 @@
         android:id="@+id/title"
         android:layout_below="@id/slice_profile_image"
         android:text="It was a Great night !! Amazing food very long one Header ..."
-        style="@style/BoldTextStyle"
+        fontPath="fonts/Proxima-Nova-Bold.otf"
+        tools:ignore="MissingPrefix"
         />
 
     <android.support.v7.widget.CardView
@@ -256,11 +260,11 @@
         android:layout_below="@+id/tag_entity_layout"
         android:src="@drawable/ic_calendar"
         android:layout_marginTop="10dp"
-
+        android:layout_marginLeft="6dp"
         />
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:id="@+id/barbados_txt"
         android:text="Barbados food and rum festival"
         android:layout_toRightOf="@id/barbados_icon"

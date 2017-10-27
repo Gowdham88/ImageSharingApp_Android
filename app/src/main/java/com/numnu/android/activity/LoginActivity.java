@@ -96,7 +96,6 @@ public class LoginActivity extends MyActivity  {
                             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             LoginActivity.this.startActivity(mainIntent);
                             LoginActivity.this.finish();
-                            PreferencesHelper.setPreference(LoginActivity.this,PreferencesHelper.PREFERENCE_IS_SIGNED_IN,"yes");
                             PreferencesHelper.setPreference(LoginActivity.this,PreferencesHelper.PREFERENCE_EMAIL,email);
                         } else {
                             // If sign in fails, display a message to the user.

@@ -25,7 +25,6 @@ public class PreferencesHelper {
     public static final String PREFERENCE_COLLECTED_AMOUNT ="collected_amount";
     public static final String PREFERENCE_COLLECTION_DATE ="collected_date";
     public static final String PREFERENCE_LAST_BILL_NO ="last_bill_no";
-    public static final String PREFERENCE_IS_SIGNED_IN ="is_signed_in";
     public static final String PREFERENCE_NAME ="name";
     public static final String PREFERENCE_CITY ="city";
     public static final String PREFERENCE_DOB ="dob";

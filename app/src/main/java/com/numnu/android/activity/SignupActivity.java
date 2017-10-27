@@ -87,7 +87,7 @@ public class SignupActivity extends MyActivity  {
                             Intent mainIntent = new Intent(SignupActivity.this,CompleteSignupActivity.class);
                             SignupActivity.this.startActivity(mainIntent);
                             SignupActivity.this.finish();
-                            PreferencesHelper.setPreference(SignupActivity.this,PreferencesHelper.PREFERENCE_IS_SIGNED_IN,"yes");
+                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
                             PreferencesHelper.setPreference(SignupActivity.this,PreferencesHelper.PREFERENCE_EMAIL,email);
                         } else {
                             // If sign in fails, display a message to the user.

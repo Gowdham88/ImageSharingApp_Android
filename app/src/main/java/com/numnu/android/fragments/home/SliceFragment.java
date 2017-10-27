@@ -31,7 +31,6 @@ import com.numnu.android.utils.PreferencesHelper;
 
 public class SliceFragment extends Fragment {
 
-    private BottomSheetBehavior mBottomSheetBehavior1;
     Context context;
 
     public static SliceFragment newInstance() {
@@ -107,12 +106,13 @@ public class SliceFragment extends Fragment {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               String loginStatus =  PreferencesHelper.getPreference(getActivity(),PreferencesHelper.PREFERENCE_IS_SIGNED_IN);
-                if (loginStatus.equals("")||loginStatus.equals("no")) {
-                    startActivity(new Intent(getActivity(), MainActivity.class));
-                    bottomSheetDialog.dismiss();
-                }else if (loginStatus.equals("yes")){
+               Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
+                if (loginStatus) {
                     Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    bottomSheetDialog.dismiss();
+                }else if (!loginStatus){
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+
                 }
             }
         });
