@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.numnu.android.R;
 import com.numnu.android.activity.CompleteSignupActivity;
 import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.fragments.ProfileFragment;
+import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 /**
@@ -56,6 +59,9 @@ public class SliceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_slice, container, false);
 
+        TextView toolbarTitle=view.findViewById(R.id.slice_title);
+        toolbarTitle.setText("POST");
+
         TextView textView = view.findViewById(R.id.liked_counts);
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
@@ -63,8 +69,19 @@ public class SliceFragment extends Fragment {
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
 
-        ImageView imageView = (ImageView)view.findViewById(R.id.slice_toolbar_icon);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        ImageView toolbarIcon = (ImageView)view.findViewById(R.id.slice_toolbar_icon);
+        ImageView moreIcon = (ImageView)view.findViewById(R.id.event_dots);
+
+        toolbarIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
+                transaction.commit();
+            }
+        });
+
+        moreIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.show();
