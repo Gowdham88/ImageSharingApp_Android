@@ -30,26 +30,47 @@
                     layout="@layout/toolbar"
                     android:id="@+id/toolbar"
                     app:layout_collapseMode="parallax"/>
-                <ImageView
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginRight="@dimen/event_details_margin"
                     android:layout_below="@+id/toolbar"
-                    android:id="@+id/current_event_image"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_height="150dp"
+                    app:cardCornerRadius="@dimen/image_card_corner_radius"
+                    android:elevation="10dp">
+                    <ImageView
+                        android:id="@+id/current_event_image"
+                        android:layout_width="match_parent"
+                        android:scaleType="centerCrop"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/food_for_lunch_mom" />
+                </android.support.v7.widget.CardView>
+
 
                 <TextView
+                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginRight="@dimen/event_details_margin"
                     android:id="@+id/event_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/current_event_image"
+                    android:layout_below="@+id/card_view"
+                    android:layout_marginTop="4dp"
                     android:text="Food and Rum Festival"
                     android:textSize="16sp" />
 
-                <LinearLayout
+                <HorizontalScrollView
                     android:id="@+id/chips_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/event_name">
+
+
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginRight="@dimen/event_details_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/event_name"
                     android:orientation="horizontal">
 
                     <TextView
@@ -61,12 +82,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/event_name"
                         android:padding="4dp"
                         android:text="Rum" />
+
                 </LinearLayout>
 
+                </HorizontalScrollView>
+
                 <LinearLayout
+                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginRight="@dimen/event_details_margin"
                     android:id="@+id/date_time_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,26 +99,38 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txt_event_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_calendar"
-                        android:drawablePadding="4dp"
-                        android:padding="4dp"
-                        android:text="August 9 - August 14" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/event_name"
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/ic_time"
                         android:drawablePadding="4dp"
-                        android:padding="4dp"
-                        android:text="07.00 am - 11.00pm" />
+                        android:padding="2dp"
+                        android:gravity="center"
+                        android:text="August 9 - 07.00 am" />
+
+                    <TextView
+                        android:id="@+id/txt_event_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="to" />
+                    <TextView
+                        android:id="@+id/txt_event_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/event_name"
+                        android:layout_weight="1"
+                        android:drawablePadding="4dp"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="August 14 - 11.00pm" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginRight="@dimen/event_details_margin"
                     android:id="@+id/location_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,6 +138,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txt_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_city"
@@ -109,16 +147,20 @@
                         android:text="Montreal" />
 
                     <TextView
+                        android:id="@+id/txt_view_event_map"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/event_name"
                         android:drawableLeft="@drawable/ic_maplocation"
                         android:drawablePadding="4dp"
                         android:padding="4dp"
-                        android:text="View Event Map" />
+                        android:textColor="@color/black"
+                        android:text="Event Map" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginRight="@dimen/event_details_margin"
                     android:id="@+id/weblinks_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -126,37 +168,34 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/txt_weblink_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:text="Weblink 1" />
 
                     <TextView
+                        android:id="@+id/txt_weblink_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:text="Weblink 2" />
 
                     <TextView
+                        android:id="@+id/txt_weblink_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:text="Weblink 3" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/event_description_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/weblinks_layout"
-                    android:text="Description for event"
-                    android:textSize="16sp" />
-
-                <TextView
+                <com.numnu.android.utils.ExpandableTextView
+                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginRight="@dimen/event_details_margin"
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/event_description_label"
+                    android:layout_below="@+id/weblinks_layout"
                     android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
 
             </RelativeLayout>

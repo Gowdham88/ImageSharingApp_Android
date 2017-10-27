@@ -3,16 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/notification_item_margin"
+    android:layout_margin="@dimen/event_details_margin"
     tools:context="com.numnu.android.activity.HomeActivity">
 
-    <ImageView
-        android:id="@+id/notification_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@mipmap/ic_launcher"
-        />
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="@dimen/image_card_corner_radius"
+        android:elevation="10dp">
 
+        <ImageView
+            android:id="@+id/notification_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            />
+        </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/text_notification"
@@ -21,16 +29,16 @@
         android:text="Notification"
         android:layout_centerVertical="true"
         android:textSize="20sp"
-        android:layout_alignBaseline="@+id/notification_image"
-        android:layout_toRightOf="@+id/notification_image"
-        android:layout_toEndOf="@+id/notification_image"
+        android:layout_alignBaseline="@+id/card_view"
+        android:layout_toRightOf="@+id/card_view"
+        android:layout_toEndOf="@+id/card_view"
         android:layout_marginStart="26dp"
-        app:layout_constraintLeft_toRightOf="@+id/notification_image"
+        app:layout_constraintLeft_toRightOf="@+id/card_view"
         android:layout_marginLeft="8dp"
         app:layout_constraintRight_toLeftOf="@+id/imageView8"
         android:layout_marginRight="8dp"
         app:layout_constraintHorizontal_bias="0.293"
-        app:layout_constraintTop_toTopOf="@+id/notification_image"
+        app:layout_constraintTop_toTopOf="@+id/card_view"
         android:layout_marginTop="16dp" />
 
 

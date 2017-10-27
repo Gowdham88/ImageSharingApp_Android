@@ -1,9 +1,7 @@
 package com.numnu.android.adapter;
 
-import android.app.Activity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetailFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -23,8 +22,8 @@ import java.util.ArrayList;
 
 public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEventsAdapter.ViewHolder> {
 
-    Context context;
-    ArrayList<String> stringArrayList = new ArrayList<>();
+    private Context context;
+    private ArrayList<String> stringArrayList = new ArrayList<>();
 
     public CurrentUpEventsAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
@@ -38,8 +37,7 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
 
         //view.setOnClickListener(MainActivity.myOnClickListener);
 
-        ViewHolder myViewHolder = new ViewHolder(view);
-        return myViewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -51,9 +49,13 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
+
+        Picasso.with(context).load("null")
+                .placeholder(R.drawable.food_715539_1920)
+                .into(holder.imageViewIcon);
     }
 
     @Override
@@ -61,11 +63,11 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
         return stringArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
         private TextView textViewName;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             this.textViewName =  itemView.findViewById(R.id.text_event);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);

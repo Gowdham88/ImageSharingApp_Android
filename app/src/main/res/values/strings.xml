@@ -55,4 +55,7 @@
     <string name="city">City</string>
     <string name="gender">Gender</string>
     <string name="foodpreferences">Food Preferences</string>
+    <string name="current_upcoming">Current and upcoming events</string>
+    <string name="past_events_title">Past events</string>
+
 </resources>

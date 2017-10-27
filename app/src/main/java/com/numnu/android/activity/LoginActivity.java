@@ -91,7 +91,9 @@ public class LoginActivity extends MyActivity  {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
                             Intent mainIntent = new Intent(LoginActivity.this,OnboardingActivity.class);
+                            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             LoginActivity.this.startActivity(mainIntent);
                             LoginActivity.this.finish();
                             PreferencesHelper.setPreference(LoginActivity.this,PreferencesHelper.PREFERENCE_IS_SIGNED_IN,"yes");

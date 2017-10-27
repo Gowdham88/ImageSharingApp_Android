@@ -10,4 +10,6 @@
     <dimen name="signup_margin">32dp</dimen>
     <dimen name="privacy_policy_bottom_spacing">6dp</dimen>
     <dimen name="settings_padding">8dp</dimen>
+    <dimen name="event_details_margin">8dp</dimen>
+    <dimen name="image_card_corner_radius">8dp</dimen>
 </resources>

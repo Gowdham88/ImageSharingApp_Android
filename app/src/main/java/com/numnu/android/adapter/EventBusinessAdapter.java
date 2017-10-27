@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,6 +42,10 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.textViewName.setText(stringArrayList.get(position));
+
+        Picasso.with(context).load("null")
+                .placeholder(R.drawable.food_2616456_1920)
+                .into(holder.imageViewIcon);
     }
 
     @Override

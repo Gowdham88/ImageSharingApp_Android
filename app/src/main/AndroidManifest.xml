@@ -22,7 +22,7 @@
             tools:replace="android:value" />
 
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
@@ -44,7 +44,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.HomeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:padding="16dp"
@@ -17,33 +19,16 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="wrap_content" />
-    <LinearLayout
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
         <Button
             android:text="@string/ok"
             android:id="@+id/ok_button"
             style="@style/login_button"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:text="@string/ignore"
-            android:id="@+id/cancel_button"
-            style="@style/cancel_button"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            fontPath="fonts/Proxima-Nova-Bold.otf"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingPrefix" />
 
 </LinearLayout>

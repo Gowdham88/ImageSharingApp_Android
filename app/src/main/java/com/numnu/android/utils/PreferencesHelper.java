@@ -30,6 +30,7 @@ public class PreferencesHelper {
     public static final String PREFERENCE_CITY ="city";
     public static final String PREFERENCE_DOB ="dob";
     public static final String PREFERENCE_GENDER ="gender";
+    public static final String PREFERENCE_LOGGED_IN ="logged in";
 
 
 
@@ -71,7 +72,7 @@ public class PreferencesHelper {
 
     public static boolean getPreferenceBoolean(Context context, String name) {
         SharedPreferences preferences = getSharedPreferences(context);
-        return preferences.getBoolean(name, true);
+        return preferences.getBoolean(name, false);
     }
 
     public static void setPreferenceInt(Context context, String preference_name, int details) {

@@ -96,7 +96,6 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setView(deleteDialogView);
         Button ok = deleteDialogView.findViewById(R.id.ok_button);
-        Button cancel = deleteDialogView.findViewById(R.id.cancel_button);
 
         final AlertDialog alertDialog1 = alertDialog.create();
         ok.setOnClickListener(new View.OnClickListener() {
@@ -121,15 +120,6 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
             }
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                findViewById(R.id.textView_info).setVisibility(View.VISIBLE);
-                findViewById(R.id.button_letme).setVisibility(View.VISIBLE);
-                alertDialog1.dismiss();
-            }
-        });
 
         alertDialog1.setCanceledOnTouchOutside(false);
         try {
@@ -138,6 +128,6 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
             e.printStackTrace();
         }
         alertDialog1.show();
-        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(300,this),(int)Utils.convertDpToPixel(300,this));
+        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(280,this),(int)Utils.convertDpToPixel(280,this));
     }
 }
