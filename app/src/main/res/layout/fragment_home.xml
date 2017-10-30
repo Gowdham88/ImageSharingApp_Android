@@ -70,12 +70,12 @@
 
         <ImageView
             android:id="@+id/view_current_event_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/toolbar_icon_width"
+            android:layout_height="@dimen/toolbar_icon_width"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
+            app:srcCompat="@drawable/ic_arrow" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/current_up_recyclerview"
@@ -110,12 +110,12 @@
 
         <ImageView
             android:id="@+id/view_past_event_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/toolbar_icon_width"
+            android:layout_height="@dimen/toolbar_icon_width"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
+            app:srcCompat="@drawable/ic_arrow" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/past_recyclerview"

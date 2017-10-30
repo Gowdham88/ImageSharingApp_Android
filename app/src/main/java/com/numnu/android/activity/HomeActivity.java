@@ -39,7 +39,7 @@ public class HomeActivity extends MyActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_item1:
-                                selectedFragment = HomeSearchFragment.newInstance();
+                                selectedFragment = HomeFragment.newInstance();
                                 break;
                             case R.id.action_item2:
                                 selectedFragment = NotificationFragment.newInstance();
@@ -50,7 +50,7 @@ public class HomeActivity extends MyActivity {
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
+                        transaction.addToBackStack(null).commit();
                         return true;
                     }
                 });

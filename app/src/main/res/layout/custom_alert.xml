@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:padding="16dp"
@@ -24,11 +22,11 @@
             android:text="@string/ok"
             android:id="@+id/ok_button"
             style="@style/login_button"
-            fontPath="fonts/Proxima-Nova-Bold.otf"
             android:layout_gravity="center_horizontal"
-            android:layout_width="130dp"
+            android:layout_width="120dp"
+            android:textSize="@dimen/button_text_size"
             android:layout_marginTop="16dp"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingPrefix" />
+            android:layout_height="40dp"
+            />
 
 </LinearLayout>

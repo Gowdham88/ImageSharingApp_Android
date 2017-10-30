@@ -54,7 +54,7 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
         });
 
         Picasso.with(context).load("null")
-                .placeholder(R.drawable.food_715539_1920)
+                .placeholder(R.drawable.food_1631727_1920)
                 .into(holder.imageViewIcon);
     }
 

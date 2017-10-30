@@ -98,23 +98,18 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         searchViewLocation = view.findViewById(R.id.search_location);
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-//
-//
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.event);
         ImageView toolbarImage = view.findViewById(R.id.toolbar_image);
+        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+
+        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         toolbarImage.setOnClickListener(new View.OnClickListener() {
             @Override
