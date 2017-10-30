@@ -29,7 +29,7 @@ public class HomeActivity extends MyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        final BottomNavigationView bottomNavigationView = (BottomNavigationView)
+        final BottomNavigationView bottomNavigationView =
                 findViewById(R.id.navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
