@@ -12,4 +12,7 @@
     <dimen name="settings_padding">8dp</dimen>
     <dimen name="event_details_margin">8dp</dimen>
     <dimen name="image_card_corner_radius">8dp</dimen>
+    <dimen name="home_recycler_view_margin_top">10dp</dimen>
+    <dimen name="toolbar_icon_width">24dp</dimen>
+    <dimen name="toolbar_icon_height">24dp</dimen>
 </resources>

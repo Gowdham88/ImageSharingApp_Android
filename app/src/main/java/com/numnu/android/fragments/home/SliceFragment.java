@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.CompleteSignupActivity;
+import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.utils.PreferencesHelper;
@@ -68,8 +70,18 @@ public class SliceFragment extends Fragment {
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
 
-        ImageView toolbarIcon = (ImageView)view.findViewById(R.id.slice_toolbar_icon);
-        ImageView moreIcon = (ImageView)view.findViewById(R.id.event_dots);
+        ImageView toolbarIcon = view.findViewById(R.id.slice_toolbar_icon);
+        ImageView moreIcon = view.findViewById(R.id.event_dots);
+        ImageView toolbarBackIcon = view.findViewById(R.id.back_button);
+
+        toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, PostsFragment.newInstance());
+                transaction.commit();
+            }
+        });
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override

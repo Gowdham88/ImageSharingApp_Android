@@ -1,0 +1,55 @@
+ <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/toolbar"/>
+
+            <SearchView
+                style="@style/MySearchViewStyle"
+                android:id="@+id/search_food"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:padding="4dp"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@drawable/search_background"
+                android:searchIcon="@drawable/ic_search_with_background"
+                android:clickable="true"
+                android:queryHint="Search food..."
+                tools:targetApi="lollipop" />
+            <SearchView
+                android:id="@+id/search_location"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:padding="4dp"
+                android:searchIcon="@drawable/ic_location_with_background"
+                android:queryBackground="@drawable/search_background"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search by location..."
+                tools:targetApi="lollipop" />
+
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                app:tabTextColor="@color/tab_text_color"
+                app:tabSelectedTextColor="@color/black"
+                app:tabMode="scrollable"
+                app:tabGravity="fill"/>
+        </android.support.design.widget.AppBarLayout>
+
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+    </android.support.design.widget.CoordinatorLayout>

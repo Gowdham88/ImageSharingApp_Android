@@ -1,5 +1,6 @@
 package com.numnu.android.activity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -21,16 +22,21 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.ex.chips.BaseRecipientAdapter;
+import com.android.ex.chips.RecipientEditTextView;
+import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 import com.numnu.android.Manifest;
 import com.numnu.android.R;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -42,7 +48,8 @@ public class CompleteSignupActivity extends AppCompatActivity {
     Button mCompleteSignUp;
     RadioGroup mRadioGroup;
     RadioButton mRadioMale,mRadioFemale;
-    private DatePickerDialog datePickerDialog;
+    private String mGenderValue = "";
+    private DatePickerDialog.OnDateSetListener datePickerDialog;
     private SimpleDateFormat dateFormat;
 
     @Override
@@ -67,23 +74,43 @@ public class CompleteSignupActivity extends AppCompatActivity {
 
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
+
+        final RecipientEditTextView recipientEditTextView = findViewById(R.id.et_signup_food_preferences);
+        recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        BaseRecipientAdapter recipientAdapter = new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE,context);
+        recipientAdapter.setShowMobileOnly(false);
+        recipientEditTextView.setAdapter(recipientAdapter);
+
+
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
-        mDob.setOnClickListener(new View.OnClickListener() {
 
-            @TargetApi(Build.VERSION_CODES.N)
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+            if (checkedId == R.id.male_radio) {
+                mGenderValue = "Male";
+
+            } else  if (checkedId == R.id.female_radio) {
+                mGenderValue = "Female";
+            }
+        }
+        });
+
+        mDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Calendar newCalendar = Calendar.getInstance();
-                datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog pickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         Calendar newDate = Calendar.getInstance();
-                        newDate.set(i,i1,i2);
+                        newDate.set(i, i1, i2);
                         mDob.setText(dateFormat.format(newDate.getTime()));
                     }
-                },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+                },newCalendar.get(Calendar.YEAR),newCalendar.get(Calendar.MONTH),newCalendar.get(Calendar.DAY_OF_MONTH));
+                pickerDialog.show();
             }
         });
 
@@ -92,11 +119,11 @@ public class CompleteSignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String userName = mUserName.getText().toString();
-                String name = mName.getText().toString();
-                String city = mCity.getText().toString();
-//                String gender = mGender.getText().toString();
-                String dob = mDob.getText().toString();
+                String userName = mUserName.getText().toString().trim();
+                String name = mName.getText().toString().trim();
+                String city = mCity.getText().toString().trim();
+                String gender = mGenderValue.trim();
+                String dob = mDob.getText().toString().trim();
                 String foodPreferences = mFoodPreferences.getText().toString();
 
                 if ((userName.isEmpty()&&name.isEmpty()&&city.isEmpty()&&dob.isEmpty()&&foodPreferences.isEmpty()))
@@ -105,12 +132,18 @@ public class CompleteSignupActivity extends AppCompatActivity {
                     intent.putExtra("completesignup","showprofilefragment");
                     startActivity(intent);
 
+                    DrawableRecipientChip[] chips = recipientEditTextView.getSortedRecipients();
+
                     CompleteSignupActivity.this.finish();
                     PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_LOGGED_IN,true);
                     PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_NAME,name);
                     PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_USER_NAME,userName);
                     PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_CITY,city);
-//                    PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_GENDER,gender);
+                    PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_DOB,dob);
+                    if (!(gender.equals(""))){
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_GENDER,gender);
+                    }
+
                     PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_DOB,dob);
                 }
 

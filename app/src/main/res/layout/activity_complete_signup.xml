@@ -142,7 +142,7 @@
             android:padding="@dimen/settings_padding"
             android:text="@string/foodpreferences" />
 
-        <EditText
+        <com.android.ex.chips.RecipientEditTextView
             android:id="@+id/et_signup_food_preferences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
