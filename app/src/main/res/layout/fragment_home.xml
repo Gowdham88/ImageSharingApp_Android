@@ -77,6 +77,7 @@
             android:layout_margin="10dp"
             app:srcCompat="@drawable/ic_arrow" />
 
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/current_up_recyclerview"
             android:layout_width="match_parent"
@@ -116,6 +117,7 @@
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
             app:srcCompat="@drawable/ic_arrow" />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/past_recyclerview"

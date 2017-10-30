@@ -50,6 +50,7 @@ public class LoginActivity extends MyActivity  {
             @Override
             public void onClick(View view) {
                 signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+
             }
         });
 
@@ -73,7 +74,7 @@ public class LoginActivity extends MyActivity  {
     // [END on_start_check_user]
 
 
-    private void signIn(String email, String password) {
+    private void signIn(final String email, String password) {
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
@@ -95,6 +96,7 @@ public class LoginActivity extends MyActivity  {
                             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             LoginActivity.this.startActivity(mainIntent);
                             LoginActivity.this.finish();
+                            PreferencesHelper.setPreference(LoginActivity.this,PreferencesHelper.PREFERENCE_EMAIL,email);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());

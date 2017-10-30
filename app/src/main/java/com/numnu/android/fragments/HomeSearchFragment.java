@@ -53,6 +53,7 @@ public class HomeSearchFragment extends Fragment {
 
         searchViewFood=view.findViewById(R.id.search_food);
         searchViewLocation=view.findViewById(R.id.search_location);
+
         setupSearchListener();
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);

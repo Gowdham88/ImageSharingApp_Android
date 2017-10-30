@@ -17,6 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
+import com.numnu.android.utils.PreferencesHelper;
 
 public class SignupActivity extends MyActivity  {
 
@@ -66,7 +67,7 @@ public class SignupActivity extends MyActivity  {
     }
     // [END on_start_check_user]
 
-    private void createAccount(String email, String password) {
+    private void createAccount(final String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
@@ -83,9 +84,11 @@ public class SignupActivity extends MyActivity  {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent mainIntent = new Intent(SignupActivity.this,OnboardingActivity.class);
+                            Intent mainIntent = new Intent(SignupActivity.this,CompleteSignupActivity.class);
                             SignupActivity.this.startActivity(mainIntent);
                             SignupActivity.this.finish();
+                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                            PreferencesHelper.setPreference(SignupActivity.this,PreferencesHelper.PREFERENCE_EMAIL,email);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());

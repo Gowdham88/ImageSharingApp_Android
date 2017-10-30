@@ -41,10 +41,12 @@ dependencies {
     compile 'pub.devrel:easypermissions:1.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.klinkerapps:android-chips:1.2.0@aar'
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:customtabs:26.1.0'
 }
+
 
 
 

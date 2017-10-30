@@ -11,11 +11,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.HomeSearchFragment;
 import com.numnu.android.fragments.NotificationFragment;
+import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.fragments.home.EventsFragment;
 
@@ -39,7 +41,7 @@ public class HomeActivity extends MyActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_item1:
-                                selectedFragment = HomeFragment.newInstance();
+                                selectedFragment = HomeSearchFragment.newInstance();
                                 break;
                             case R.id.action_item2:
                                 selectedFragment = NotificationFragment.newInstance();
@@ -55,10 +57,19 @@ public class HomeActivity extends MyActivity {
                     }
                 });
 
-        //Manually displaying the first fragment - one time only
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
-        transaction.commit();
+        String bundle = getIntent().getStringExtra("completesignup");
+
+        if (bundle == null){
+            //Manually displaying the first fragment - one time only
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
+            transaction.commit();
+        }
+        else if (bundle.equals("showprofilefragment")){
+            FragmentTransaction intentTransaction = getSupportFragmentManager().beginTransaction();
+            intentTransaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+            intentTransaction.commit();
+        }
 
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);

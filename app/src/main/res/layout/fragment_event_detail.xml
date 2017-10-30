@@ -6,6 +6,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        android:focusableInTouchMode="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -13,6 +14,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             app:title="Numnu1"
+            android:focusableInTouchMode="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
@@ -40,6 +42,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
                         <ImageView
                             android:id="@+id/toolbar_back"
                             app:srcCompat="@drawable/back_arrow"
