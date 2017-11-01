@@ -77,6 +77,7 @@
         android:paddingStart="80dp"
         android:paddingRight="80dp"
         android:paddingEnd="80dp"
+        android:paddingBottom="10dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -113,18 +114,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="62dp" />
 
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/light_grey"
+        android:layout_marginBottom="9dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline"
-        app:layout_constraintGuide_begin="20dp"
-        android:orientation="horizontal" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline2"
-        app:layout_constraintGuide_begin="20dp"
-        android:orientation="horizontal" />
+        android:layout_marginBottom="@dimen/privacy_policy_bottom_spacing"
+        android:layout_marginLeft="@dimen/signup_margin"
+        android:layout_marginRight="@dimen/signup_margin"
+        android:text="@string/by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/signup_margin"
+        android:layout_marginEnd="@dimen/signup_margin"
+        app:layout_constraintHorizontal_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

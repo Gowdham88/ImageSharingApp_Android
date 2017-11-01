@@ -163,6 +163,7 @@
         android:id="@+id/view_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
+        android:visibility="invisible"
         android:background="@color/light_grey"
         android:layout_marginBottom="9dp"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
@@ -172,6 +173,7 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="0dp"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/privacy_policy_bottom_spacing"
         android:layout_marginLeft="@dimen/signup_margin"

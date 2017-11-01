@@ -99,19 +99,6 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
-
-
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.event);
         ImageView toolbarImage = view.findViewById(R.id.toolbar_image);
@@ -192,10 +179,10 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventMenuItemsFragment(), "Menu Items");
-        adapter.addFragment(new EventReviewsFragment(), "Reviews");
+        adapter.addFragment(new EventMenuItemsFragment(), "Items");
+        adapter.addFragment(new EventReviewsFragment(), "Posts");
         viewPager.setAdapter(adapter);
     }
 

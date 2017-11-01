@@ -46,7 +46,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         Utils.setTextColors(holder.textViewName,"Jack Dorsey commented on your review","Jack Dorsey", ContextCompat.getColor(context,R.color.blue));
 //        holder.textViewName.setText(stringArrayList.get(position));
         Picasso.with(context).load("null")
-                .placeholder(R.drawable.food_715539_1920)
+                .placeholder(R.drawable.dup_men_image)
                 .into(holder.imageViewIcon);
     }
 

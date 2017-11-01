@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.home.EventsFragment;
 import com.numnu.android.fragments.home.MenuItemsFragment;
 import com.numnu.android.fragments.home.PostsFragment;
@@ -31,6 +32,8 @@ public class HomeSearchFragment extends Fragment {
 
     SearchView searchViewFood,searchViewLocation;
     private Context context;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     public static HomeSearchFragment newInstance() {
         return new HomeSearchFragment();
@@ -48,18 +51,17 @@ public class HomeSearchFragment extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_home_search, container, false);
 
-        ViewPager viewPager = view.findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
+        viewPager = view.findViewById(R.id.viewpager);
         searchViewFood=view.findViewById(R.id.search_food);
         searchViewLocation=view.findViewById(R.id.search_location);
-
-        setupSearchListener();
-        TabLayout tabLayout = view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout = view.findViewById(R.id.tabs);
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(getString(R.string.app_name));
+
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+        setupSearchListener();
         return view;
     }
 
@@ -92,11 +94,13 @@ public class HomeSearchFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
-        adapter.addFragment(new MenuItemsFragment(), "Menu Items");
+        adapter.addFragment(new MenuItemsFragment(), "Items");
         adapter.addFragment(new EventsFragment(), "Events");
+        adapter.addFragment(new EventBusinessFragment(), "Businesses");
+        adapter.addFragment(new EventBusinessFragment(), "Lists");
         viewPager.setAdapter(adapter);
     }
 
