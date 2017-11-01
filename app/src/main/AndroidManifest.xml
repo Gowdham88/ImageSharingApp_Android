@@ -22,7 +22,7 @@
             tools:replace="android:value" />
 
         <activity
-            android:name=".activity.BusinessDetailActivity"
+            android:name=".activity.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -67,9 +67,12 @@
             android:name=".activity.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <!-- <activity android:name=".activity.BusinessDetailActivity"></activity> -->
-        <activity android:name=".fragments.BusinessDetailacivity.Menuitems" />
-        <activity android:name=".fragments.BusinessDetailacivity.Post"></activity>
+
+        <activity android:name=".activity.BusinessDetailActivity"
+             android:configChanges="orientation"
+             android:screenOrientation="portrait"/>
+        <!--<activity android:name=".fragments.BusinessDetailacivity.Menuitems" />-->
+        <!--<activity android:name=".fragments.BusinessDetailacivity.Post"></activity>-->
     </application>
 
 </manifest>

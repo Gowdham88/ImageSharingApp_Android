@@ -13,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -52,6 +53,10 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private TextView viewEventMap, eventName, city, eventDate, eventTime;
     private ImageView eventImageView;
     private ExpandableTextView eventDescription;
+    ViewPagerAdapter adapter;
+    TabLayout tabLayout;
+    ImageView BackImageView;
+    ViewPager viewPager;
 
 
     public static EventDetailFragment newInstance() {
@@ -68,10 +73,13 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_events_details_scr, container, false);
 
-        ViewPager viewPager = view.findViewById(R.id.event_viewpager);
+        viewPager = view.findViewById(R.id.event_details_viewpager);
+        tabLayout = view.findViewById(R.id.event_details_tabs);
         setupViewPager(viewPager);
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
         weblink1 = view.findViewById(R.id.txt_weblink_1);
         weblink2 = view.findViewById(R.id.txt_weblink_2);
@@ -96,22 +104,28 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         searchViewFood = view.findViewById(R.id.search_food);
         searchViewLocation = view.findViewById(R.id.search_location);
-        TabLayout tabLayout = view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-//
-//
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//        tabLayout.setupWithViewPager(viewPager);
+
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().onBackPressed();
+//            }
+//        });
+
+        BackImageView=(ImageView) view.findViewById(R.id.toolbarback_image);
+        BackImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 getActivity().onBackPressed();
             }
         });
-
-
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.event);
         ImageView toolbarImage = view.findViewById(R.id.toolbar_image);
@@ -184,7 +198,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
         adapter.addFragment(new EventMenuItemsFragment(), "Menu Items");
         adapter.addFragment(new EventReviewsFragment(), "Reviews");
@@ -225,7 +239,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
+    private class ViewPagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 

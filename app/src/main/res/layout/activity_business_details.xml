@@ -44,6 +44,13 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/toolbar__back_image"
+                            app:srcCompat="@drawable/back_icon"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="@dimen/toolbar_back_icon_width"
+                            android:layout_height="@dimen/toolbar_back_icon_height" />
                         <TextView
                             android:id="@+id/toolbar_title"
                             android:text="Business"
@@ -66,32 +73,16 @@
 
                 </android.support.v7.widget.Toolbar>
 
-                <!--<android.support.v7.widget.CardView-->
-                    <!--android:id="@+id/card_view1"-->
-                    <!--android:layout_marginLeft="@dimen/event_details_margin"-->
-                    <!--android:layout_marginRight="@dimen/event_details_margin"-->
-                    <!--android:layout_below="@+id/toolbar"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="110dp"-->
-                    <!--app:cardCornerRadius="@dimen/image_card_corner_radius"-->
-                    <!--android:elevation="10dp">-->
-                    <!--<ImageView-->
-                        <!--android:id="@+id/current_event_image"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:scaleType="centerCrop"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:src="@drawable/food_for_lunch_mom" />-->
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
                         android:orientation="horizontal">
 
                             <ImageView
                                 android:id="@+id/business_detail_image"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:layout_marginLeft="10dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/biryaniimg"
                                 />
@@ -147,7 +138,7 @@
                 <!--</android.support.v7.widget.CardView>-->
 
                 <com.numnu.android.utils.ExpandableTextView
-                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginLeft="13dp"
                     android:layout_marginRight="@dimen/event_details_margin"
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
@@ -170,14 +161,14 @@
                         android:textSize="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_marginLeft="13dp"/>
 
                     <ImageView
-                        android:layout_width="65dp"
-                        android:layout_height="45dp"
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:src="@mipmap/forwardicon"
-                        android:layout_marginLeft="110dp"/>
+                        android:src="@drawable/forwardarrow"
+                        android:layout_marginLeft="140dp"/>
                 </LinearLayout>
 
 
@@ -185,19 +176,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layout_marginLeft="5dp"
                     android:orientation="horizontal">
 
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"/>
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="8dp"
+                        android:src="@drawable/ic_calendar"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Event name which can be very very long"
                         android:textSize="15dp"
-                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
                         android:layout_marginLeft="5dp"/>
                 </LinearLayout>
             </LinearLayout>

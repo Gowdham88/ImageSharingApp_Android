@@ -31,7 +31,9 @@ public class HomeSearchFragment extends Fragment {
 
     SearchView searchViewFood,searchViewLocation;
     private Context context;
-
+    ViewPager viewPager;
+    ViewPagerAdapter adapter;
+    TabLayout HometabLayout;
     public static HomeSearchFragment newInstance() {
         return new HomeSearchFragment();
     }
@@ -48,14 +50,19 @@ public class HomeSearchFragment extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_home_search, container, false);
 
-        ViewPager viewPager = view.findViewById(R.id.viewpager);
+        viewPager= view.findViewById(R.id.home_viewpager);
+        HometabLayout= view.findViewById(R.id.home_tabs);
         setupViewPager(viewPager);
+        viewPager.setAdapter(adapter);
+        HometabLayout.setupWithViewPager(viewPager);
+//        viewPager.setOffscreenPageLimit(7);
+
+
 
         searchViewFood=view.findViewById(R.id.search_food);
         searchViewLocation=view.findViewById(R.id.search_location);
         setupSearchListener();
-        TabLayout tabLayout = view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(getString(R.string.app_name));
@@ -91,7 +98,7 @@ public class HomeSearchFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
         adapter.addFragment(new MenuItemsFragment(), "Menu Items");

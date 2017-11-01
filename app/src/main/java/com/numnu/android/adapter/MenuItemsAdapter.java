@@ -10,35 +10,25 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 
+
 /**
- * Created by lenovo on 10/31/2017.
+ * Created by lenovo on 10/5/2017.
  */
 
-public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.ViewHolder> {
+public class Menuitemsadapter extends RecyclerView.Adapter<Menuitemsadapter.ViewHolder> {
 
     String[] arr = {"Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani"};
     int[] image = {R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg,
             R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg,
             R.drawable.biryaniimg, R.drawable.biryaniimg};
     Context context;
+    LayoutInflater layout;
 
-    public MenuItemsAdapter(Context context) {
+    public Menuitemsadapter(Context context) {
         this.context = context;
+        layout = LayoutInflater.from(context);
 
     }
-    @Override
-    public MenuItemsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menuitems_content, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(MenuItemsAdapter.ViewHolder holder, int position) {
-            holder.BusinessImage.setImageResource(image[position]);
-            holder.BusinessTitle.setText(arr[position]);
-    }
-
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView BusinessTitle,CategoryTitle1,CategoryTitle2;
@@ -54,8 +44,26 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
         }
     }
 
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewtype) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menuitems_content, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder Holder, final int position) {
+
+        Holder.BusinessImage.setImageResource(image[position]);
+        Holder.BusinessTitle.setText(arr[position]);
+
+//
+
+    }
+
     @Override
     public int getItemCount() {
-        return 0;
+        return arr.length;
     }
 }
+
