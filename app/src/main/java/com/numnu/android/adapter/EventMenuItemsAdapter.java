@@ -40,7 +40,7 @@ public class EventMenuItemsAdapter extends RecyclerView.Adapter<EventMenuItemsAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.textViewName.setText(stringArrayList.get(position));
+//        holder.textViewName.setText(stringArrayList.get(position));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class EventMenuItemsAdapter extends RecyclerView.Adapter<EventMenuItemsAd
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.text_notification);
+            this.textViewName =  itemView.findViewById(R.id.business_name);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.notification_image);
         }
