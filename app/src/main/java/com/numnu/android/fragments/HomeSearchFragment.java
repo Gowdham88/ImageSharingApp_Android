@@ -10,14 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
+import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
 import com.numnu.android.fragments.home.EventsFragment;
-import com.numnu.android.fragments.home.MenuItemsFragment;
 import com.numnu.android.fragments.home.PostsFragment;
 import com.numnu.android.fragments.home.UsersFragment;
 
@@ -30,7 +29,7 @@ import java.util.List;
 
 public class HomeSearchFragment extends Fragment {
 
-    SearchView searchViewFood,searchViewLocation;
+    EditText searchViewFood,searchViewLocation;
     private Context context;
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -52,8 +51,8 @@ public class HomeSearchFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_home_search, container, false);
 
         viewPager = view.findViewById(R.id.viewpager);
-        searchViewFood=view.findViewById(R.id.search_food);
-        searchViewLocation=view.findViewById(R.id.search_location);
+        searchViewFood=view.findViewById(R.id.et_search_food);
+        searchViewLocation=view.findViewById(R.id.et_search_location);
         tabLayout = view.findViewById(R.id.tabs);
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
@@ -67,37 +66,14 @@ public class HomeSearchFragment extends Fragment {
 
     private void setupSearchListener() {
         
-        searchViewFood.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(context, "Food name:"+query, Toast.LENGTH_SHORT).show();
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        searchViewLocation.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(context, "Location name:"+query, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
-        adapter.addFragment(new MenuItemsFragment(), "Items");
+        adapter.addFragment(new EventMenuItemsFragment(), "Items");
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
         adapter.addFragment(new EventBusinessFragment(), "Lists");

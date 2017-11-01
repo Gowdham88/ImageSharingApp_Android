@@ -20,6 +20,7 @@ import com.numnu.android.fragments.NotificationFragment;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.fragments.home.EventsFragment;
+import com.numnu.android.utils.Utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -60,7 +61,7 @@ public class HomeActivity extends MyActivity {
 
         //Manually displaying the first fragment - one time only
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, HomeSearchFragment.newInstance());
+        transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         transaction.commit();
 
         String bundle = getIntent().getStringExtra("completesignup");

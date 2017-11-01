@@ -94,8 +94,6 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         setupWebLinks();
 
-        searchViewFood = view.findViewById(R.id.search_food);
-        searchViewLocation = view.findViewById(R.id.search_location);
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 

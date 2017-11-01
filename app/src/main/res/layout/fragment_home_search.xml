@@ -10,29 +10,83 @@
 
             <include layout="@layout/toolbar"/>
 
-            <SearchView
-                style="@style/MySearchViewStyle"
-                android:id="@+id/search_food"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:padding="4dp"
-                android:iconifiedByDefault="false"
-                android:queryBackground="@drawable/search_background"
-                android:searchIcon="@drawable/ic_search_with_background"
-                android:clickable="true"
-                android:queryHint="Search food..."
-                tools:targetApi="lollipop" />
-            <SearchView
-                android:id="@+id/search_location"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:padding="4dp"
-                android:searchIcon="@drawable/ic_location_with_background"
-                android:queryBackground="@drawable/search_background"
-                android:iconifiedByDefault="false"
-                android:queryHint="Search by location..."
-                tools:targetApi="lollipop" />
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:id="@+id/search_food_layout"
+                android:background="@color/onboardButton">
 
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/search_image_corner_radius"
+                    android:padding="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_search"
+                    android:id="@+id/search_icon"
+                    />
+
+                <EditText
+                    android:id="@+id/et_search_food"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_toRightOf="@+id/search_icon"
+                    android:background="@drawable/edittext_corner_radius"
+                    android:hint="Search"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableRight="@drawable/ic_close"
+                    android:drawableEnd="@drawable/ic_close"
+                    android:paddingRight="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_centerVertical="true"
+                    android:inputType="text"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:id="@+id/search_location_layout"
+                android:background="@color/onboardButton">
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/search_image_corner_radius"
+                    android:padding="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_search_location"
+                    android:id="@+id/location_icon"
+                    />
+
+                <EditText
+                    android:id="@+id/et_search_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_toRightOf="@+id/location_icon"
+                    android:background="@drawable/edittext_corner_radius"
+                    android:hint="Location"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:drawableRight="@drawable/ic_close"
+                    android:drawableEnd="@drawable/ic_close"
+                    android:paddingRight="8dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_centerVertical="true"
+                    android:inputType="text"
+                    />
+            </RelativeLayout>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"

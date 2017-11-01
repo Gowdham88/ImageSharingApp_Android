@@ -28,10 +28,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/card_view"
         android:layout_centerHorizontal="true"
-        android:text="Posts"
+        android:text="Event Name"
         android:layout_marginTop="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:textSize="18sp"/>
-
 
 
 </RelativeLayout>
