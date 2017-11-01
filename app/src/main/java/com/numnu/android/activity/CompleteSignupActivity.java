@@ -126,13 +126,14 @@ public class CompleteSignupActivity extends AppCompatActivity {
                 String dob = mDob.getText().toString().trim();
                 String foodPreferences = mFoodPreferences.getText().toString();
 
-                if ((userName.isEmpty()&&name.isEmpty()&&city.isEmpty()&&dob.isEmpty()&&foodPreferences.isEmpty()))
+                DrawableRecipientChip[] chips = recipientEditTextView.getSortedRecipients();
+                if (!(userName.equals("")&&name.equals("")&&city.equals("")&&dob.equals("")&&foodPreferences.equals("")))
                 {
                     Intent intent = new Intent(CompleteSignupActivity.this,HomeActivity.class);
                     intent.putExtra("completesignup","showprofilefragment");
                     startActivity(intent);
 
-                    DrawableRecipientChip[] chips = recipientEditTextView.getSortedRecipients();
+
 
                     CompleteSignupActivity.this.finish();
                     PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_LOGGED_IN,true);

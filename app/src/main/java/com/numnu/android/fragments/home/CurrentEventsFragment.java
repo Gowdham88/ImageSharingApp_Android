@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.adapter.CurrentEventsAdapter;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PastEventsAdapter;
 
@@ -69,8 +70,8 @@ public class CurrentEventsFragment extends Fragment {
         currentEventsList.setDrawingCacheEnabled(true);
         currentEventsList.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-        CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context, stringlist);
-        currentEventsList.setAdapter(currentUpAdapter);
+        CurrentEventsAdapter currentEventsAdapter = new CurrentEventsAdapter(context, stringlist);
+        currentEventsList.setAdapter(currentEventsAdapter);
 
 
     }

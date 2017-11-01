@@ -59,17 +59,15 @@ public class HomeActivity extends MyActivity {
 
         String bundle = getIntent().getStringExtra("completesignup");
 
-        if (bundle == null){
+        if (bundle != null){
             //Manually displaying the first fragment - one time only
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
             transaction.commit();
         }
-        else if (bundle.equals("showprofilefragment")){
-            FragmentTransaction intentTransaction = getSupportFragmentManager().beginTransaction();
-            intentTransaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
-            intentTransaction.commit();
-        }
+        FragmentTransaction intentTransaction = getSupportFragmentManager().beginTransaction();
+        intentTransaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+        intentTransaction.commit();
 
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
