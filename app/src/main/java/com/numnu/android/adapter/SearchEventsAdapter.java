@@ -33,7 +33,7 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.current_event_item, parent, false);
+                .inflate(R.layout.search_event_item, parent, false);
 
         //view.setOnClickListener(MainActivity.myOnClickListener);
 

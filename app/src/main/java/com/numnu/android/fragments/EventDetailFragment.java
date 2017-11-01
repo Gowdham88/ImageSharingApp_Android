@@ -172,7 +172,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         weblink3.setTextColor(ContextCompat.getColor(context, R.color.blue));
 
 
-        viewEventMap.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+//        viewEventMap.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
 
