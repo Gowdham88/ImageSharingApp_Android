@@ -118,6 +118,7 @@
                 android:background="@android:color/white"
                 app:tabTextColor="@color/tab_text_color"
                 app:tabSelectedTextColor="@color/black"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                 app:tabMode="scrollable"
                 app:tabGravity="fill"/>
         </android.support.design.widget.AppBarLayout>

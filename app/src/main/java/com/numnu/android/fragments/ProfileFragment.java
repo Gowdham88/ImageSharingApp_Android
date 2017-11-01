@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -55,6 +56,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 editProfile();
+            }
+        });
+
+        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+
+        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
             }
         });
 

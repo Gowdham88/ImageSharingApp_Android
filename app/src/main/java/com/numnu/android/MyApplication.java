@@ -13,7 +13,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/ProximaNova-Regular.otf")
+                .setDefaultFontPath("fonts/avenir.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

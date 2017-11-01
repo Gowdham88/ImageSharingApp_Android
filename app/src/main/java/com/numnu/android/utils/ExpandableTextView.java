@@ -15,8 +15,8 @@ import android.support.v7.widget.AppCompatTextView;
 
 public class ExpandableTextView extends AppCompatTextView {
 
-    private final String readMoreText = "...more";
-    private final String readLessText = "...less";
+    private final String readMoreText = " ...more";
+    private final String readLessText = " ...less";
     private final int readMoreColor = Color.parseColor("#69a3e6");
     private Boolean isExpanded = false;
 

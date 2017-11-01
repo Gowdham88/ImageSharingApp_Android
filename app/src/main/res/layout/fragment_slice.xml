@@ -144,7 +144,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/dup_vegrecipe"
+        android:src="@drawable/food_for_lunch_mom"
         android:id="@+id/content_image"
         android:background="@drawable/image_corner_radius"
         android:scaleType="centerCrop" />

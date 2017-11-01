@@ -31,7 +31,7 @@ public class HomeActivity extends MyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        final BottomNavigationView bottomNavigationView =
+        final BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener
@@ -41,7 +41,7 @@ public class HomeActivity extends MyActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_item1:
-                                selectedFragment = HomeSearchFragment.newInstance();
+                                selectedFragment = HomeFragment.newInstance();
                                 break;
                             case R.id.action_item2:
                                 selectedFragment = NotificationFragment.newInstance();
@@ -52,22 +52,25 @@ public class HomeActivity extends MyActivity {
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
+                        transaction.addToBackStack(null).commit();
                         return true;
                     }
                 });
 
-        String bundle = getIntent().getStringExtra("completesignup");
 
-        if (bundle != null){
-            //Manually displaying the first fragment - one time only
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
-            transaction.commit();
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, HomeSearchFragment.newInstance());
+        transaction.commit();
+
+        String bundle = getIntent().getStringExtra("completesignup");
+        if(bundle!=null) {
+            if (bundle.equals("showprofilefragment")) {
+                FragmentTransaction intentTransaction = getSupportFragmentManager().beginTransaction();
+                intentTransaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                intentTransaction.commit();
+            }
         }
-        FragmentTransaction intentTransaction = getSupportFragmentManager().beginTransaction();
-        intentTransaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
-        intentTransaction.commit();
 
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);

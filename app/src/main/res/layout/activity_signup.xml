@@ -165,6 +165,7 @@
     <View
         android:id="@+id/view_divider"
         android:layout_width="0dp"
+        android:visibility="invisible"
         android:layout_height="1dp"
         android:background="@color/light_grey"
         android:layout_marginBottom="9dp"
@@ -180,6 +181,7 @@
         android:layout_marginBottom="@dimen/privacy_policy_bottom_spacing"
         android:layout_marginLeft="@dimen/signup_margin"
         android:layout_marginRight="@dimen/signup_margin"
+        android:visibility="invisible"
         android:text="@string/by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

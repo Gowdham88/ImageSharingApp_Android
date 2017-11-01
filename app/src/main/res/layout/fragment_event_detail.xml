@@ -42,6 +42,17 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/toolbar_back"
+                            app:srcCompat="@drawable/back_arrow"
+                            android:layout_marginLeft="@dimen/event_details_margin"
+                            android:layout_marginStart="@dimen/event_details_margin"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_width="@dimen/toolbar_icon_width"
+                            android:layout_height="@dimen/toolbar_icon_height" />
                         <TextView
                             android:id="@+id/toolbar_title"
                             android:text="@string/app_name"
@@ -86,12 +97,15 @@
                     android:layout_marginLeft="@dimen/event_details_margin"
                     android:layout_marginRight="@dimen/event_details_margin"
                     android:id="@+id/event_name"
+                    fontPath="fonts/Avenir-Roman.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/card_view"
                     android:layout_marginTop="4dp"
                     android:text="Food and Rum Festival"
-                    android:textSize="16sp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="MissingPrefix" />
 
                 <HorizontalScrollView
                     android:id="@+id/chips_layout"
@@ -103,17 +117,22 @@
                 <LinearLayout
                     android:layout_marginLeft="@dimen/event_details_margin"
                     android:layout_marginRight="@dimen/event_details_margin"
+                    android:layout_marginTop="@dimen/event_details_margin"
+                    android:layout_marginBottom="@dimen/event_details_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:background="@drawable/tag_background"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
                         android:text="food" />
 
                     <TextView
+                        android:layout_marginLeft="4dp"
+                        android:background="@drawable/tag_background"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="4dp"
@@ -188,8 +207,10 @@
                         android:drawableLeft="@drawable/ic_maplocation"
                         android:drawablePadding="4dp"
                         android:padding="4dp"
+                        fontPath="fonts/Avenir-Roman.ttf"
                         android:textColor="@color/black"
-                        android:text="Event Map" />
+                        android:text="View Event Map"
+                        tools:ignore="MissingPrefix" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -226,6 +247,7 @@
                 <com.numnu.android.utils.ExpandableTextView
                     android:layout_marginLeft="@dimen/event_details_margin"
                     android:layout_marginRight="@dimen/event_details_margin"
+                    android:layout_marginTop="16dp"
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -241,6 +263,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabGravity="fill"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/black"

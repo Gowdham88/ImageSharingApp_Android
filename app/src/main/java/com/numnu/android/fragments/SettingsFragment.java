@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -92,6 +95,15 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
+        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+
+        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
             return view;
 
     }
@@ -99,15 +111,27 @@ public class SettingsFragment extends Fragment {
     private void editProfile() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
-        transaction.commit();
+        transaction.addToBackStack(null).commit();
     }
 
     private void showPrivacyPolicy() {
 
+        String url = "https://www.youtube.com/";
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        // set toolbar color
+        builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(context, Uri.parse(url));
     }
 
     private void showTerms() {
 
+        String url = "https://www.youtube.com/";
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        // set toolbar color
+        builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(context, Uri.parse(url));
     }
 
     private void rateApp() {
