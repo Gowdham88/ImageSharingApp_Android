@@ -22,6 +22,7 @@ import com.numnu.android.activity.CompleteSignupActivity;
 import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.activity.SignupActivity;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
@@ -123,7 +124,9 @@ public class SliceFragment extends Fragment {
                     Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
                     bottomSheetDialog.dismiss();
                 }else if (!loginStatus){
-                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    Intent intent = new Intent(getActivity(),SignupActivity.class);
+                    intent.putExtra("BookmarkIntent","completeSignup");
+                    startActivity(intent);
 
                 }
             }

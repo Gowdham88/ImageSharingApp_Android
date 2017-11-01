@@ -59,7 +59,7 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.text_notification);
+            this.textViewName =  itemView.findViewById(R.id.business_name);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.notification_image);
         }
