@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
+import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.activity.MainActivity;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -48,7 +49,10 @@ public class SettingsFragment extends Fragment {
         if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
         {
             getActivity().finish();
-            startActivity(new Intent(getActivity(),MainActivity.class));
+            Intent intent = new Intent(getActivity(),LoginActivity.class);
+            intent.putExtra("ProfileIntent","profile");
+            startActivity(intent);
+
         }
 
             View view = inflater.inflate(R.layout.fragment_settings, container, false);

@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
+import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.activity.MainActivity;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
@@ -137,7 +138,9 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     public void onClick(View view) {
                         Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
                         if (!loginStatus) {
-                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            intent.putExtra("EventBookmarkIntent","eventbookmark");
+                            startActivity(intent);
                             bottomSheetDialog.dismiss();
                         }else if (loginStatus){
                             Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
