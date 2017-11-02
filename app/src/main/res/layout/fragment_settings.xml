@@ -184,6 +184,17 @@
                 android:text="@string/users"
                 android:focusable="true" />
 
+            <TextView
+                android:id="@+id/text_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                android:clickable="true"
+                android:gravity="center_vertical|center"
+                android:padding="@dimen/settings_padding"
+                android:text="Logout"
+                android:focusable="true" />
+
 
         </LinearLayout>
 

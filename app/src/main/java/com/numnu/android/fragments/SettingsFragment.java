@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.INotificationSideChannel;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,11 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
+import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.activity.MainActivity;
 import com.numnu.android.utils.PreferencesHelper;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by thulir on 9/10/17.
@@ -95,6 +99,13 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
+            view.findViewById(R.id.text_logout).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    logout();
+                }
+            });
+
         ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +117,13 @@ public class SettingsFragment extends Fragment {
 
             return view;
 
+    }
+
+    private void logout() {
+
+        PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,false);
+        Intent intent = new Intent(context, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void editProfile() {

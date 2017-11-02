@@ -57,5 +57,7 @@
     <string name="foodpreferences">Food Preferences</string>
     <string name="current_upcoming">Current and upcoming events</string>
     <string name="past_events_title">Past events</string>
+    <string name="item">Item</string>
+    <string name="location">Location</string>
 
 </resources>

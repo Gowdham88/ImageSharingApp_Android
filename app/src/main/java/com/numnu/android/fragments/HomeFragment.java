@@ -110,11 +110,6 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Utils.hideKeyboard(getActivity());
-    }
 
     @Override
     public void onAttach(Context context) {

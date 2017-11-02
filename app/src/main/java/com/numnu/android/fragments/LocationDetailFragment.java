@@ -2,28 +2,19 @@ package com.numnu.android.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.MainActivity;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
@@ -48,7 +38,7 @@ import java.util.List;
  * Created by thulir on 9/10/17.
  */
 
-public class EventDetailFragment extends Fragment implements View.OnClickListener {
+public class LocationDetailFragment extends Fragment implements View.OnClickListener {
 
     SearchView searchViewFood, searchViewLocation;
     private Context context;
@@ -58,8 +48,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private ExpandableTextView eventDescription;
 
 
-    public static EventDetailFragment newInstance() {
-        return new EventDetailFragment();
+    public static LocationDetailFragment newInstance() {
+        return new LocationDetailFragment();
     }
 
     @Override
@@ -72,7 +62,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_location_detail, container, false);
 
         ViewPager viewPager = view.findViewById(R.id.event_viewpager);
         setupViewPager(viewPager);
@@ -102,9 +92,9 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         tabLayout.setupWithViewPager(viewPager);
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(R.string.event);
+        toolbarTitle.setText(R.string.location);
         TextView toolbarTitle1 = view.findViewById(R.id.toolbar_title1);
-        toolbarTitle1.setText(R.string.event);
+        toolbarTitle1.setText(R.string.location);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
         ImageView collapsedtoolbarIcon = view.findViewById(R.id.toolbar_image1);
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
@@ -112,6 +102,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         toolbarBackIcon.setOnClickListener(this);
         collapsedtoolbarBackIcon.setOnClickListener(this);
+
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,9 +205,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventMenuItemsFragment(), "Items");
         adapter.addFragment(new EventReviewsFragment(), "Posts");
+        adapter.addFragment(new EventMenuItemsFragment(), "Items");
         viewPager.setAdapter(adapter);
     }
 
