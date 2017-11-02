@@ -36,7 +36,7 @@
         android:layout_below="@id/tx_date_view"
         android:layout_centerHorizontal="true"
         android:text="Event Name"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:textSize="18sp"/>
@@ -48,6 +48,7 @@
         android:layout_toRightOf="@id/card_view"
         android:layout_toEndOf="@id/card_view"
         android:text="Category1,"
+        android:layout_marginTop="4dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"/>
     <TextView
@@ -58,6 +59,7 @@
         android:layout_toRightOf="@id/category1"
         android:layout_toEndOf="@id/category1"
         android:text="Category2"
+        android:layout_marginTop="4dp"
         android:layout_marginLeft="2dp"
         android:layout_marginStart="2dp"/>
     <TextView
@@ -68,6 +70,7 @@
         android:layout_toRightOf="@id/card_view"
         android:layout_toEndOf="@id/card_view"
         android:text="November 1,"
+        android:layout_marginTop="4dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"/>
     <TextView
@@ -78,6 +81,7 @@
         android:layout_toRightOf="@id/event_date"
         android:layout_toEndOf="@id/event_date"
         android:text="Montreal"
+        android:layout_marginTop="4dp"
         android:layout_marginLeft="2dp"
         android:layout_marginStart="2dp"/>
 </RelativeLayout>

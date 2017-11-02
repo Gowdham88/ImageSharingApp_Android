@@ -1,140 +1,208 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.numnu.android.activity.HomeActivity">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar"/>
+        <include layout="@layout/toolbar" />
 
-        <SearchView
-            style="@style/MySearchViewStyle"
-            android:id="@+id/search_food"
+        <RelativeLayout
+            android:id="@+id/search_food_layout"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:padding="4dp"
-            android:iconifiedByDefault="false"
-            android:queryBackground="@drawable/search_background"
-            android:searchIcon="@drawable/ic_search_with_background"
-            android:clickable="true"
-            android:queryHint="Search food..."
-            tools:targetApi="lollipop" />
-        <SearchView
-            android:id="@+id/search_location"
+            android:background="@color/onboardButton"
+            android:gravity="center"
+            android:paddingLeft="20dp">
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/search_image_corner_radius"
+                android:padding="8dp"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/et_search_food"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/search_icon"
+                android:background="@drawable/edittext_corner_radius"
+                android:drawableEnd="@drawable/ic_close"
+                android:drawableRight="@drawable/ic_close"
+                android:hint="Search"
+                android:inputType="text"
+                android:paddingRight="8dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/search_location_layout"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:padding="4dp"
-            android:searchIcon="@drawable/ic_location_with_background"
-            android:queryBackground="@drawable/search_background"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search by location..."
-            tools:targetApi="lollipop" />
+            android:background="@color/onboardButton"
+            android:gravity="center"
+            android:paddingLeft="20dp">
+
+            <ImageView
+                android:id="@+id/location_icon"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/search_image_corner_radius"
+                android:padding="8dp"
+                android:src="@drawable/ic_search_location" />
+
+            <EditText
+                android:id="@+id/et_search_location"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/location_icon"
+                android:background="@drawable/edittext_corner_radius"
+                android:drawableEnd="@drawable/ic_close"
+                android:drawableRight="@drawable/ic_close"
+                android:hint="Location"
+                android:inputType="text"
+                android:paddingRight="8dp" />
+        </RelativeLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            app:tabTextColor="@color/tab_text_color"
-            app:tabSelectedTextColor="@color/black"
+            android:visibility="gone"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabGravity="fill"
             app:tabMode="scrollable"
-            app:tabGravity="fill"/>
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="@color/tab_text_color" />
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/events_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="2">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout
-        android:gravity="center_vertical"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/current_events_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textColor="@android:color/darker_gray"
-            android:text="@string/current_upcoming_events"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/view_current_event_list"
-            android:layout_width="@dimen/toolbar_icon_width"
-            android:layout_height="@dimen/toolbar_icon_width"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/ic_arrow" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/current_up_recyclerview"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/current_events_text"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            app:reverseLayout="false">
-        </android.support.v7.widget.RecyclerView>
-        </RelativeLayout>
-
-    <RelativeLayout
-        android:gravity="center_vertical"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/past_events_text"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/past_events"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18sp" />
+            android:orientation="vertical"
+            android:weightSum="2">
 
-        <ImageView
-            android:id="@+id/view_past_event_list"
-            android:layout_width="@dimen/toolbar_icon_width"
-            android:layout_height="@dimen/toolbar_icon_width"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/ic_arrow" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/current_events_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/current_upcoming_events"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/view_current_event_list"
+                    android:layout_width="@dimen/toolbar_icon_width"
+                    android:layout_height="@dimen/toolbar_icon_width"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/ic_arrow" />
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/past_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/past_events_text"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            app:reverseLayout="false">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/current_up_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/current_events_text"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:reverseLayout="false"/>
+            </RelativeLayout>
 
-        </android.support.v7.widget.RecyclerView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/past_events_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/past_events"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/view_past_event_list"
+                    android:layout_width="@dimen/toolbar_icon_width"
+                    android:layout_height="@dimen/toolbar_icon_width"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/ic_arrow" />
 
-</LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/past_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/past_events_text"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:reverseLayout="false">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>

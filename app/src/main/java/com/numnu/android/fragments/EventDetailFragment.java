@@ -94,8 +94,6 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         setupWebLinks();
 
-        searchViewFood = view.findViewById(R.id.search_food);
-        searchViewLocation = view.findViewById(R.id.search_location);
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -174,7 +172,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         weblink3.setTextColor(ContextCompat.getColor(context, R.color.blue));
 
 
-        viewEventMap.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+//        viewEventMap.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
 
