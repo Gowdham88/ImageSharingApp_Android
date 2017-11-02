@@ -52,7 +52,10 @@ public class SettingsFragment extends Fragment {
         if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
         {
             getActivity().finish();
-            startActivity(new Intent(getActivity(),MainActivity.class));
+            Intent intent = new Intent(getActivity(),LoginActivity.class);
+            intent.putExtra("ProfileIntent","profile");
+            startActivity(intent);
+
         }
 
             View view = inflater.inflate(R.layout.fragment_settings, container, false);

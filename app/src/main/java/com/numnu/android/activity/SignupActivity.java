@@ -104,8 +104,6 @@ public class SignupActivity extends MyActivity  {
         // [END create_user_with_email]
     }
 
-
-
     private void signOut() {
         mAuth.signOut();
     }
