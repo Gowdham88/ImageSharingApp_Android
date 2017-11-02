@@ -29,7 +29,7 @@ public class LoginActivity extends MyActivity  {
     private FirebaseAuth mAuth;
     private Button login;
     // [END declare_auth]
-
+    String mBookmarkIntent,mProfileIntent,mReceivedIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,12 @@ public class LoginActivity extends MyActivity  {
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+
+        mBookmarkIntent = getIntent().getStringExtra("BookmarkIntent");
+        mProfileIntent = getIntent().getStringExtra("ProfileIntent");
+        if (mProfileIntent!=null){
+            Toast.makeText(this, "0", Toast.LENGTH_SHORT).show();
+        }
 
         login = findViewById(R.id.button_login);
         login.setOnClickListener(new View.OnClickListener() {

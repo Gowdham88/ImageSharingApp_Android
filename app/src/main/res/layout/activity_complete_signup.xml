@@ -142,16 +142,18 @@
             android:padding="@dimen/settings_padding"
             android:text="@string/foodpreferences" />
 
-        <com.android.ex.chips.RecipientEditTextView
+        <com.robertlevonyan.views.chip.Chip
             android:id="@+id/et_signup_food_preferences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:mcv_closable="true"
+            app:mcv_chipText="Burger"
              />
         <Button
             android:id="@+id/button_complete_signup"
             android:text="@string/complete_sign_up"
             style="@style/login_button"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 </LinearLayout>

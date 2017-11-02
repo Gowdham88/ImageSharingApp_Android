@@ -45,6 +45,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:customtabs:26.1.0'
+    compile 'com.robertlevonyan.view:MaterialChipView:1.1.2'
+
 }
 
 

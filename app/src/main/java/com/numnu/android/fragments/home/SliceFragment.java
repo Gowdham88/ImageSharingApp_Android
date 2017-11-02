@@ -124,7 +124,7 @@ public class SliceFragment extends Fragment {
                     Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
                     bottomSheetDialog.dismiss();
                 }else if (!loginStatus){
-                    Intent intent = new Intent(getActivity(),SignupActivity.class);
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
                     intent.putExtra("BookmarkIntent","completeSignup");
                     startActivity(intent);
 
