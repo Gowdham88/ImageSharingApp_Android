@@ -44,7 +44,7 @@ dependencies {
     compile 'com.klinkerapps:android-chips:1.2.0@aar'
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:customtabs:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.0.0'
 }
 
 

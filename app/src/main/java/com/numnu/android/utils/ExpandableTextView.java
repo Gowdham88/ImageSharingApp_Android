@@ -20,7 +20,7 @@ public class ExpandableTextView extends AppCompatTextView {
     private final int readMoreColor = Color.parseColor("#69a3e6");
     private Boolean isExpanded = false;
 
-    private int _maxLines = 2;
+    private int _maxLines = 4;
     private CharSequence originalText;
 
     public ExpandableTextView(Context context) {

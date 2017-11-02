@@ -124,18 +124,18 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:background="@drawable/tag_background"
+                        style="@style/TagStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="4dp"
                         android:text="food" />
 
                     <TextView
+                        style="@style/TagStyle"
                         android:layout_marginLeft="4dp"
+                        android:layout_marginStart="4dp"
                         android:background="@drawable/tag_background"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="4dp"
                         android:text="Rum" />
 
                 </LinearLayout>
@@ -264,8 +264,8 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabGravity="fill"
-            app:tabMode="scrollable"
+            app:tabGravity="center"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@color/black"
             app:tabTextColor="@color/tab_text_color" />
     </android.support.design.widget.AppBarLayout>
