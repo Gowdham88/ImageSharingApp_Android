@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
+import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
 import com.numnu.android.fragments.SettingsFragment;
+import com.numnu.android.fragments.home.EventsFragment;
 import com.numnu.android.fragments.home.SliceFragment;
 
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -57,7 +60,33 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        holder.cottageHouseText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventBusinessFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        holder.barbequeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventMenuItemsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.eventName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
             }
         });
     }
@@ -70,7 +99,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
         private  ImageView profileImage;
-        private TextView textViewName;
+        private TextView eventName;
+        private TextView cottageHouseText;
+        private TextView barbequeText;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -78,6 +109,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.content_image);
             this.profileImage = itemView.findViewById(R.id.slice_profile_image);
+            this.cottageHouseText = itemView.findViewById(R.id.cottage_house_txt);
+            this.barbequeText = itemView.findViewById(R.id.barbq_txt);
+            this.eventName = itemView.findViewById(R.id.barbados_txt);
         }
     }
 }

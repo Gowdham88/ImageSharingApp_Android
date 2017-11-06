@@ -63,7 +63,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_item_detail, container, false);
+        final View view = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
         ViewPager viewPager = view.findViewById(R.id.event_viewpager);
         setupViewPager(viewPager);
@@ -126,13 +126,16 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
                  case "EXPANDED":
                      toolbar1.setVisibility(View.GONE);
+                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                      break;
 
                  case "IDLE":
                      toolbar1.setVisibility(View.GONE);
+                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                      break;
                  case "COLLAPSED":
                      toolbar1.setVisibility(View.VISIBLE);
+                     view.findViewById(R.id.tabs).setVisibility(View.GONE);
                      break;
              }
 
@@ -206,7 +209,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new PostsFragment(), "Posts");
-        adapter.addFragment(new EventMenuItemsFragment(), "Locations");
+        adapter.addFragment(new LocationItemsFragment(), "Locations");
         adapter.addFragment(new EventReviewsFragment(), "Events");
         viewPager.setAdapter(adapter);
     }

@@ -305,6 +305,7 @@
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabGravity="center"
             app:tabMode="fixed"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:tabSelectedTextColor="@color/black"
             app:tabTextColor="@color/tab_text_color" />
     </android.support.design.widget.AppBarLayout>
