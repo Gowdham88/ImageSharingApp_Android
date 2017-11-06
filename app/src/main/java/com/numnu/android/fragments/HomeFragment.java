@@ -143,7 +143,7 @@ public class HomeFragment extends Fragment {
         adapter.addFragment(new UsersFragment(), "Users");
         adapter.addFragment(new EventMenuItemsFragment(), "Items");
         adapter.addFragment(new EventsFragment(), "Events");
-        adapter.addFragment(new EventBusinessFragment(), "Businesses");
+        adapter.addFragment(new UserPostsFragment(), "Businesses");
         adapter.addFragment(new EventBusinessFragment(), "Lists");
         viewPager.setAdapter(adapter);
     }

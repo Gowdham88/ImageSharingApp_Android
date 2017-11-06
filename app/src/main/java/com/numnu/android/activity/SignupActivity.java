@@ -28,7 +28,7 @@ public class SignupActivity extends MyActivity  {
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
-
+    String mBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +43,20 @@ public class SignupActivity extends MyActivity  {
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+
+        mBookmarkIntent = getIntent().getStringExtra("BookmarkIntent");
+        mProfileIntent = getIntent().getStringExtra("ProfileIntent");
+        mEventBookmarkIntent = getIntent().getStringExtra("EventBookmarkIntent");
+
+        if (mProfileIntent!=null){
+            mReceivedIntent = mProfileIntent;
+        }else if (mBookmarkIntent!=null){
+            mReceivedIntent = mBookmarkIntent;
+        }else if (mEventBookmarkIntent!=null){
+            mReceivedIntent = mEventBookmarkIntent;
+        }else {
+            mReceivedIntent = null;
+        }
 
         findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,11 +98,44 @@ public class SignupActivity extends MyActivity  {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent mainIntent = new Intent(SignupActivity.this,CompleteSignupActivity.class);
-                            SignupActivity.this.startActivity(mainIntent);
-                            SignupActivity.this.finish();
-                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                            PreferencesHelper.setPreference(SignupActivity.this,PreferencesHelper.PREFERENCE_EMAIL,email);
+
+                            String bookmarkBundle = "bookmark";
+                            String profileBundle = "profile";
+                            String eventBookmarkBundle = "eventbookmark";
+
+                            if (mReceivedIntent == null){
+                                Intent mainIntent = new Intent(SignupActivity.this, CompleteSignupActivity.class);
+                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                SignupActivity.this.startActivity(mainIntent);
+                                SignupActivity.this.finish();
+                                PreferencesHelper.setPreference(SignupActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
+                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                            }else if (mReceivedIntent.equals(bookmarkBundle)){
+                                Intent mainIntent = new Intent(SignupActivity.this, CompleteSignupActivity.class);
+                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                mainIntent.putExtra("BookmarkIntent",bookmarkBundle);
+                                SignupActivity.this.startActivity(mainIntent);
+                                SignupActivity.this.finish();
+                                PreferencesHelper.setPreference(SignupActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
+                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                            }else if (mReceivedIntent.equals(profileBundle)){
+                                Intent mainIntent = new Intent(SignupActivity.this, CompleteSignupActivity.class);
+                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                mainIntent.putExtra("ProfileIntent",profileBundle);
+                                SignupActivity.this.startActivity(mainIntent);
+                                SignupActivity.this.finish();
+                                PreferencesHelper.setPreference(SignupActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
+                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                            }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
+                                Intent mainIntent = new Intent(SignupActivity.this, CompleteSignupActivity.class);
+                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                mainIntent.putExtra("EventBookmarkIntent", eventBookmarkBundle);
+                                SignupActivity.this.startActivity(mainIntent);
+                                SignupActivity.this.finish();
+                                PreferencesHelper.setPreference(SignupActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
+                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -171,8 +218,33 @@ public class SignupActivity extends MyActivity  {
     }
 
     public void signIn(View view) {
-        Intent mainIntent = new Intent(this,LoginActivity.class);
-        this.startActivity(mainIntent);
-        this.finish();
+        String bookmarkBundle = "bookmark";
+        String profileBundle = "profile";
+        String eventBookmarkBundle = "eventbookmark";
+        if (mReceivedIntent == null){
+            Intent mainIntent = new Intent(SignupActivity.this,LoginActivity.class);
+            this.startActivity(mainIntent);
+            this.finish();
+        }
+        else if(mReceivedIntent.equals(bookmarkBundle)) {
+            Intent mainIntent = new Intent(SignupActivity.this, LoginActivity.class);
+//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            mainIntent.putExtra("BookmarkIntent",bookmarkBundle);
+            SignupActivity.this.startActivity(mainIntent);
+            SignupActivity.this.finish();
+
+        }else if (mReceivedIntent.equals(profileBundle)){
+            Intent mainIntent = new Intent(SignupActivity.this, LoginActivity.class);
+//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            mainIntent.putExtra("ProfileIntent",bookmarkBundle);
+            SignupActivity.this.startActivity(mainIntent);
+            SignupActivity.this.finish();
+        }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+            Intent mainIntent = new Intent(SignupActivity.this, LoginActivity.class);
+//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            mainIntent.putExtra("EventBookmarkIntent",bookmarkBundle);
+            SignupActivity.this.startActivity(mainIntent);
+            SignupActivity.this.finish();
+        }
     }
 }

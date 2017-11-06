@@ -86,9 +86,7 @@ public class SliceFragment extends Fragment {
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, PostsFragment.newInstance());
-                transaction.commit();
+                getActivity().onBackPressed();
             }
         });
 
@@ -97,7 +95,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -113,7 +111,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -122,7 +120,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -131,7 +129,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, EventBusinessFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -140,7 +138,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, EventMenuItemsFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
 

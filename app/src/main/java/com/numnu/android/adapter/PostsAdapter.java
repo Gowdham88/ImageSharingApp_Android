@@ -48,7 +48,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -57,7 +57,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
     }
