@@ -8,14 +8,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.BusinessDetailacivity.Menuitems;
 import com.numnu.android.fragments.BusinessDetailacivity.Post;
+import com.numnu.android.utils.ExpandableTextView;
 
 public class BusinessDetailActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ExpandableTextView eventDescription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +26,7 @@ public class BusinessDetailActivity extends AppCompatActivity implements TabLayo
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        setupExpandableText();
         //Initializing the tablayout
         tabLayout = (TabLayout) findViewById(R.id.business_tabs);
 
@@ -44,6 +47,19 @@ public class BusinessDetailActivity extends AppCompatActivity implements TabLayo
 
         //Adding onTabSelectedListener to swipe views
         tabLayout.setOnTabSelectedListener(this);
+    }
+
+    private void setupExpandableText() {
+        eventDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (eventDescription.isExpanded()) {
+                    eventDescription.truncateText();
+                } else {
+                    eventDescription.expandText();
+                }
+            }
+        });
     }
 
     @Override
