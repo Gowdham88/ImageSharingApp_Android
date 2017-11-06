@@ -38,6 +38,41 @@
         app:layout_constraintHorizontal_bias="0.528"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
+    <Button
+        android:id="@+id/sinup_btn_facebook"
+        style="@style/facebook_login_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/facebook_sign_up"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/fb_logo__blue_29"
+        android:drawableLeft="@drawable/fb_logo__blue_29"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="24dp"
+        android:paddingLeft="80dp"
+        android:paddingStart="80dp"
+        android:paddingRight="80dp"
+        android:paddingEnd="80dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView"/>
+
+
+    <TextView
+        android:id="@+id/signup_or_txt"
+        style="@style/login_heading_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="or"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sinup_btn_facebook" />
 
     <Button
         android:id="@+id/button_signup"
@@ -64,7 +99,7 @@
         android:text="@string/already_have_an_account"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="17dp"
         app:layout_constraintTop_toBottomOf="@+id/button_signup"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -151,10 +186,8 @@
         android:layout_height="wrap_content"
         android:text="@string/email_address"
         app:layout_constraintLeft_toLeftOf="@+id/et_email"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        fontPath="fonts/avenir_next.ttf"
-        tools:ignore="MissingPrefix"/>
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/signup_or_txt" />
 
     <TextView
         android:id="@+id/textView6"
@@ -163,9 +196,7 @@
         android:text="@string/password"
         app:layout_constraintLeft_toLeftOf="@+id/et_password_layout"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/et_email"
-        fontPath="fonts/avenir_next.ttf"
-        tools:ignore="MissingPrefix"/>
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
     <View
         android:id="@+id/view_divider"
         android:layout_width="0dp"
@@ -185,7 +216,7 @@
         android:layout_marginBottom="@dimen/privacy_policy_bottom_spacing"
         android:layout_marginLeft="@dimen/signup_margin"
         android:layout_marginRight="@dimen/signup_margin"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:text="@string/by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
