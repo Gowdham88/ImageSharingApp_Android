@@ -75,7 +75,7 @@ public class HomeActivity extends MyActivity {
                 transaction.addToBackStack(null).commit();
             } else if (profileBundle != null && profileBundle.equals("profile")){
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                    transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
                     transaction.addToBackStack(null).commit();
         }else if (eventBookmarkBundle != null && eventBookmarkBundle.equals("eventbookmark")) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

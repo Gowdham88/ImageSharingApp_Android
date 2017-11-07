@@ -7,7 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -61,12 +64,44 @@ public class HomeSearchFragment extends Fragment {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         setupSearchListener();
+
         return view;
     }
 
     private void setupSearchListener() {
-        
+//        searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+//        searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+//        searchViewFood.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
 
+//        searchViewFood.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+//                    if (searchViewFood.getCompoundDrawables()[2]!= null){
+//                        if (motionEvent.getX() >=(searchViewFood.getRight()-searchViewFood.getLeft() - searchViewFood.getCompoundDrawables()[2].getBounds().width())){
+//                            searchViewFood.setText("");
+//                        }
+//                    }
+//                }
+//
+//                return false;
+//            }
+//        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
