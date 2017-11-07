@@ -60,7 +60,8 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_facebook"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/btn_facebook"
@@ -112,7 +113,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="62dp" />
+        android:layout_marginBottom="62dp"
+        tools:ignore="OnClick" />
 
     <View
         android:id="@+id/view_divider"

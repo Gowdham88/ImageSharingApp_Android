@@ -73,7 +73,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
+        final View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
 
         ViewPager viewPager = view.findViewById(R.id.event_viewpager);
         setupViewPager(viewPager);
@@ -136,13 +136,16 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
                  case "EXPANDED":
                      toolbar1.setVisibility(View.GONE);
+                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                      break;
 
                  case "IDLE":
                      toolbar1.setVisibility(View.GONE);
+                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
                      break;
                  case "COLLAPSED":
                      toolbar1.setVisibility(View.VISIBLE);
+                     view.findViewById(R.id.tabs).setVisibility(View.GONE);
                      break;
              }
 
