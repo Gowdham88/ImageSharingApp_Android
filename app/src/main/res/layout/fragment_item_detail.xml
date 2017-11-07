@@ -110,7 +110,8 @@
                     android:id="@+id/chips_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/event_name">
+                    android:layout_below="@+id/event_name"
+                    android:scrollbars="none">
 
 
                     <LinearLayout
@@ -134,7 +135,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
                             android:layout_marginStart="4dp"
-                            android:background="@drawable/tag_background"
                             android:text="Rum" />
 
                     </LinearLayout>
@@ -152,7 +152,7 @@
                     android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
 
                 <include
-                    layout="@layout/event_business_item"
+                    layout="@layout/business_entity_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/event_description" />

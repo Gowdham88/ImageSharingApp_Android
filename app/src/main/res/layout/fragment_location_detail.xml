@@ -127,7 +127,7 @@
                 </LinearLayout>
 
                 <include
-                    layout="@layout/event_business_item"
+                    layout="@layout/business_entity_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/location_layout" />
