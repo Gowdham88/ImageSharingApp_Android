@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\dhivy\Desktop\Projech Numnu\Source\numnu_android_master\Numnu.iml" filepath="C:\Users\dhivy\Desktop\Projech Numnu\Source\numnu_android_master\Numnu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NumnuAndroid_sample.iml" filepath="$PROJECT_DIR$/NumnuAndroid_sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/numnu_android_master.iml" filepath="$PROJECT_DIR$/numnu_android_master.iml" />
     </modules>
   </component>
 </project>
