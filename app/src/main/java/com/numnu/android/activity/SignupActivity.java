@@ -56,7 +56,7 @@ public class SignupActivity extends MyActivity  {
         mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
-        Button loginButton = findViewById(R.id.login_btn_facebook);
+        Button loginButton = findViewById(R.id.signup_btn_facebook);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

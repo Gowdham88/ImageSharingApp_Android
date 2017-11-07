@@ -24,6 +24,8 @@ public class BusinessDetailActivity extends AppCompatActivity implements TabLayo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_details);
 
+        eventDescription = findViewById(R.id.event_description);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setupExpandableText();
