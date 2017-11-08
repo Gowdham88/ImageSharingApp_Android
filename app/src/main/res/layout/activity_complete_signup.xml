@@ -146,8 +146,7 @@
             android:id="@+id/et_signup_food_preferences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mcv_closable="true"
-            app:mcv_chipText="Burger"
+
              />
         <Button
             android:id="@+id/button_complete_signup"

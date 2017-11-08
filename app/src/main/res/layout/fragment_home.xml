@@ -40,14 +40,14 @@
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
+                android:gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/search_icon"
                 android:background="@drawable/edittext_corner_radius"
-                android:drawableEnd="@drawable/ic_close"
-                android:drawableRight="@drawable/ic_close"
                 android:hint="Search"
+                android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:paddingRight="8dp" />
         </RelativeLayout>
@@ -82,12 +82,12 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
                 android:layout_toRightOf="@+id/location_icon"
                 android:background="@drawable/edittext_corner_radius"
-                android:drawableEnd="@drawable/ic_close"
-                android:drawableRight="@drawable/ic_close"
                 android:hint="Location"
                 android:inputType="text"
+                android:imeOptions="actionSearch"
                 android:paddingRight="8dp" />
         </RelativeLayout>
 

@@ -36,8 +36,6 @@ import com.numnu.android.Manifest;
 import com.numnu.android.R;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.utils.PreferencesHelper;
-import com.robertlevonyan.views.chip.Chip;
-import com.robertlevonyan.views.chip.OnChipClickListener;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -79,8 +77,6 @@ public class CompleteSignupActivity extends AppCompatActivity {
 
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
-
-        Chip chip = findViewById(R.id.et_signup_food_preferences);
 
 //        final RecipientEditTextView recipientEditTextView = findViewById(R.id.et_signup_food_preferences);
 //        recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
