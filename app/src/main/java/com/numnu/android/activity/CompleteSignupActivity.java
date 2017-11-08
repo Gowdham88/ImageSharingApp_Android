@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -41,6 +42,8 @@ import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.utils.PreferencesHelper;
+import com.robertlevonyan.views.chip.Chip;
+import com.robertlevonyan.views.chip.OnChipClickListener;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -74,6 +77,9 @@ public class CompleteSignupActivity extends AppCompatActivity {
         adapter = new FoodAdapter(this,CompleteSignupActivity.this);
 //        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        ImageView toolbarBackIcon = findViewById(R.id.toolbar_back);
+        toolbarBackIcon.setVisibility(View.GONE);
+
         mUserName = findViewById(R.id.et_signup_user_name);
         mName = findViewById(R.id.et_signup_name);
         mCity = findViewById(R.id.et_signup_city);
@@ -82,7 +88,7 @@ public class CompleteSignupActivity extends AppCompatActivity {
         mRadioMale = findViewById(R.id.male_radio);
         mRadioFemale = findViewById(R.id.female_radio);
         mDob = findViewById(R.id.et_signup_dob);
-        mFoodPreferences = findViewById(R.id.et_signup_food_preferences);
+//        mFoodPreferences = findViewById(R.id.et_signup_food_preferences);
         mCompleteSignUp = findViewById(R.id.button_complete_signup);
         mFoodPreferences.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,11 +101,13 @@ public class CompleteSignupActivity extends AppCompatActivity {
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
 
-        final RecipientEditTextView recipientEditTextView = findViewById(R.id.et_signup_food_preferences);
-        recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        BaseRecipientAdapter recipientAdapter = new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE,context);
-        recipientAdapter.setShowMobileOnly(false);
-        recipientEditTextView.setAdapter(recipientAdapter);
+        Chip chip = findViewById(R.id.et_signup_food_preferences);
+
+//        final RecipientEditTextView recipientEditTextView = findViewById(R.id.et_signup_food_preferences);
+//        recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+//        BaseRecipientAdapter recipientAdapter = new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE,context);
+//        recipientAdapter.setShowMobileOnly(false);
+//        recipientEditTextView.setAdapter(recipientAdapter);
 
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
@@ -146,28 +154,28 @@ public class CompleteSignupActivity extends AppCompatActivity {
                 String dob = mDob.getText().toString().trim();
                 String foodPreferences = mFoodPreferences.getText().toString();
 
-                DrawableRecipientChip[] chips = recipientEditTextView.getSortedRecipients();
-                if (!(userName.equals("")&&name.equals("")&&city.equals("")&&dob.equals("")&&foodPreferences.equals("")))
-                {
-                    Intent intent = new Intent(CompleteSignupActivity.this,HomeActivity.class);
-                    intent.putExtra("completesignup","showprofilefragment");
-                    startActivity(intent);
 
-
-
-                    CompleteSignupActivity.this.finish();
-                    PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_NAME,name);
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_USER_NAME,userName);
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_CITY,city);
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_DOB,dob);
-                    if (!(gender.equals(""))){
-                        PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_GENDER,gender);
-                    }
-
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this,PreferencesHelper.PREFERENCE_DOB,dob);
+                if (userName.equals("")) {
+                    Toast.makeText(context, "UserName is mandatory", Toast.LENGTH_SHORT).show();
                 }
+//                 else if (!(userName.equals("") && name.equals("") && city.equals("") && dob.equals("") && foodPreferences.equals(""))) {
+                else {
+                        Intent intent = new Intent(CompleteSignupActivity.this, HomeActivity.class);
+                        intent.putExtra("completesignup", "showprofilefragment");
+                        startActivity(intent);
 
+                        CompleteSignupActivity.this.finish();
+                        PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_LOGGED_IN, true);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_NAME, name);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_USER_NAME, userName);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_CITY, city);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
+                        if (!(gender.equals(""))) {
+                            PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_GENDER, gender);
+                        }
+
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
+                    }
 
             }
         });

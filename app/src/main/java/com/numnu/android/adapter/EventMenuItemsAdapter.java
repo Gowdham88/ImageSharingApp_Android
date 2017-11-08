@@ -1,6 +1,8 @@
 package com.numnu.android.adapter;
 
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.ItemDetailFragment;
+import com.numnu.android.fragments.home.CurrentEventsFragment;
 
 import java.util.ArrayList;
 
@@ -40,7 +44,16 @@ public class EventMenuItemsAdapter extends RecyclerView.Adapter<EventMenuItemsAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-//        holder.textViewName.setText(stringArrayList.get(position));
+        holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
     }
 
     @Override

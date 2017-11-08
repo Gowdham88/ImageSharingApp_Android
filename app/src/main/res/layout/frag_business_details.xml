@@ -45,12 +45,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <ImageView
-                            android:id="@+id/toolbar__back_image"
-                            app:srcCompat="@drawable/back_icon"
+                            android:id="@+id/toolbar_back_image"
+                            app:srcCompat="@drawable/back_arrow"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
-                            android:layout_width="@dimen/toolbar_back_icon_width"
-                            android:layout_height="@dimen/toolbar_back_icon_height" />
+                            android:layout_width="@dimen/toolbar_icon_width"
+                            android:layout_height="@dimen/toolbar_icon_height" />
                         <TextView
                             android:id="@+id/toolbar_title"
                             android:text="Business"
@@ -109,7 +109,7 @@
                                 app:layout_constraintTop_toTopOf="@+id/card_view"
                                 />
                             <HorizontalScrollView
-                                android:id="@+id/chips_layout"
+                                android:id="@+id/business_chips_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/event_name">
@@ -153,7 +153,7 @@
                 <com.numnu.android.utils.ExpandableTextView
                     android:layout_marginLeft="13dp"
                     android:layout_marginRight="@dimen/event_details_margin"
-                    android:id="@+id/event_description"
+                    android:id="@+id/business_detail_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -205,12 +205,58 @@
                         android:textSize="15dp"
                         fontPath="fonts/Avenir-Roman.ttf"
                         android:gravity="center"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        tools:ignore="MissingPrefix" />
                 </LinearLayout>
             </LinearLayout>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
+        <android.support.v7.widget.Toolbar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/toolbar1"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background_color"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:contentInsetStart="0dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/toolbar_back1"
+                    app:srcCompat="@drawable/back_arrow"
+                    android:layout_marginLeft="@dimen/event_details_margin"
+                    android:layout_marginStart="@dimen/event_details_margin"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="@dimen/toolbar_icon_width"
+                    android:layout_height="@dimen/toolbar_icon_height" />
+                <TextView
+                    android:id="@+id/toolbar_title1"
+                    android:text="@string/businesses"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/toolbar_text_size"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/toolbar_image1"
+                    app:srcCompat="@drawable/event_dots"
+                    android:layout_marginRight="@dimen/event_details_margin"
+                    android:layout_marginEnd="@dimen/event_details_margin"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/toolbar_icon_width"
+                    android:layout_height="@dimen/toolbar_icon_height" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
         <android.support.design.widget.TabLayout
             android:id="@+id/business_tabs"
             android:layout_width="match_parent"

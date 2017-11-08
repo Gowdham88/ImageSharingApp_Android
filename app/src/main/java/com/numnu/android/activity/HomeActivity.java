@@ -14,12 +14,15 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.EventDetailFragment;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.HomeSearchFragment;
 import com.numnu.android.fragments.NotificationFragment;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
+import com.numnu.android.fragments.UserPostsFragment;
 import com.numnu.android.fragments.home.EventsFragment;
+import com.numnu.android.fragments.home.SliceFragment;
 import com.numnu.android.utils.Utils;
 
 import java.security.MessageDigest;
@@ -48,7 +51,7 @@ public class HomeActivity extends MyActivity {
                                 selectedFragment = NotificationFragment.newInstance();
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = SettingsFragment.newInstance();
+                                selectedFragment = UserPostsFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -58,21 +61,27 @@ public class HomeActivity extends MyActivity {
                     }
                 });
 
-
-        //Manually displaying the first fragment - one time only
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
-        transaction.commit();
-
-        String bundle = getIntent().getStringExtra("completesignup");
-        if(bundle!=null) {
-            if (bundle.equals("showprofilefragment")) {
-                FragmentTransaction intentTransaction = getSupportFragmentManager().beginTransaction();
-                intentTransaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
-                intentTransaction.commit();
-            }
+        String bookmarkBundle = getIntent().getStringExtra("BookmarkIntent");
+        String profileBundle = getIntent().getStringExtra("ProfileIntent");
+        String eventBookmarkBundle = getIntent().getStringExtra("EventBookmarkIntent");
+        if (bookmarkBundle==null && profileBundle == null && eventBookmarkBundle ==null) {
+            //Manually displaying the first fragment - one time only
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
+            transaction.addToBackStack(null).commit();
+        }else if (bookmarkBundle != null && bookmarkBundle.equals("bookmark")) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            } else if (profileBundle != null && profileBundle.equals("profile")){
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                    transaction.addToBackStack(null).commit();
+        }else if (eventBookmarkBundle != null && eventBookmarkBundle.equals("eventbookmark")) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+            transaction.addToBackStack(null).commit();
         }
-
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
         // Add code to print out the key hash

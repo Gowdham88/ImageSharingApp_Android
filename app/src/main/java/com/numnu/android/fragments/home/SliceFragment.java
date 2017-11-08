@@ -23,10 +23,14 @@ import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.activity.MainActivity;
 import com.numnu.android.activity.SignupActivity;
+import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
+import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.utils.PreferencesHelper;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by Thulirsoft on 20/10/2017.
@@ -74,13 +78,15 @@ public class SliceFragment extends Fragment {
         ImageView toolbarIcon = view.findViewById(R.id.slice_toolbar_icon);
         ImageView moreIcon = view.findViewById(R.id.event_dots);
         ImageView toolbarBackIcon = view.findViewById(R.id.back_button);
+        ImageView userImageIcon = view.findViewById(R.id.slice_profile_image);
+        TextView userNameText = view.findViewById(R.id.slice_toolbar_profile_name);
+        TextView cottageHouseText = view.findViewById(R.id.cottage_house_txt);
+        TextView barbequeText = view.findViewById(R.id.barbq_txt);
 
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, PostsFragment.newInstance());
-                transaction.commit();
+                getActivity().onBackPressed();
             }
         });
 
@@ -89,7 +95,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
-                transaction.commit();
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -100,6 +106,41 @@ public class SliceFragment extends Fragment {
             }
         });
 
+        userImageIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        userNameText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        cottageHouseText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventBusinessFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        barbequeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventMenuItemsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
         TextView share = bottomSheetView.findViewById(R.id.share_title);
         TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
@@ -124,8 +165,8 @@ public class SliceFragment extends Fragment {
                     Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
                     bottomSheetDialog.dismiss();
                 }else if (!loginStatus){
-                    Intent intent = new Intent(getActivity(),SignupActivity.class);
-                    intent.putExtra("BookmarkIntent","completeSignup");
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    intent.putExtra("BookmarkIntent","bookmark");
                     startActivity(intent);
 
                 }

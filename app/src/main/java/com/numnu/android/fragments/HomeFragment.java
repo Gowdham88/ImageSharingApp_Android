@@ -110,11 +110,6 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Utils.hideKeyboard(getActivity());
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -144,11 +139,11 @@ public class HomeFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new PostsFragment(), "Posts");
-        adapter.addFragment(new UsersFragment(), "Users");
-        adapter.addFragment(new EventMenuItemsFragment(), "Items");
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
+        adapter.addFragment(new EventMenuItemsFragment(), "Items");
+        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(new UsersFragment(), "Users");
         adapter.addFragment(new EventBusinessFragment(), "Lists");
         viewPager.setAdapter(adapter);
     }
