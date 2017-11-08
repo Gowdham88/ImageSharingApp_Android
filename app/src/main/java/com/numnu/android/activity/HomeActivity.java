@@ -100,4 +100,16 @@ public class HomeActivity extends MyActivity {
 
         }
     }
+//    @Override
+//    public void onBackPressed() {
+//
+//        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+//        if (backStackEntryCount == 0) {
+//            // write your code to switch between fragments.
+//
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
+
 }
