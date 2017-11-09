@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -45,6 +46,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.google.android.gms:play-services:11.4.0'
 }
 
 

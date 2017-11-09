@@ -2,6 +2,7 @@ package com.numnu.android.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +26,13 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PastEventsAdapter;
@@ -39,6 +47,9 @@ import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by thulir on 9/10/17.
@@ -187,6 +198,8 @@ public class HomeFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 if (!searchViewFood.getText().toString().trim().equals("")){
                     searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+
+                    findPlace(getView());
                 }else{
                     searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
@@ -194,6 +207,7 @@ public class HomeFragment extends Fragment {
 
 
         });
+
         searchViewLocation.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -212,12 +226,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 if (!searchViewLocation.getText().toString().trim().equals("")){
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                    findPlace(searchViewLocation);
                 }else{
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
@@ -261,7 +277,38 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void findPlace(View view) {
+        try {
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(getActivity());
+            startActivityForResult(intent,1);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                // retrive the data by using getPlace() method.
+                Place place = PlaceAutocomplete.getPlace(getActivity(), data);
+                Log.e("Tag", "Place: " + place.getAddress() + place.getPhoneNumber());
+
+//                ((EditText) getActivity().findViewById(R.id.et_search_food))
+                    searchViewFood.setText(place.getName());
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(getActivity(), data);
+                // TODO: Handle the error.
+                Log.e("Tag", status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
