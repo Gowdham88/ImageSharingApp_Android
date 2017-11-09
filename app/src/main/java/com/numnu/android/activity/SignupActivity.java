@@ -33,7 +33,7 @@ import java.util.Arrays;
 public class SignupActivity extends MyActivity  {
 
     private static final String TAG ="SignUpActivity";
-    TextView textView;
+    TextView textView,TxtEmai,TxtPass;
     EditText mEmailField, mPasswordField;
 
     // [START declare_auth]
@@ -47,16 +47,31 @@ public class SignupActivity extends MyActivity  {
         setContentView(R.layout.activity_signup);
 
         textView=findViewById(R.id.textView3);
+        TxtEmai=findViewById(R.id.textView5);
+        TxtPass=findViewById(R.id.textView6);
         mEmailField =findViewById(R.id.et_email);
         mPasswordField =findViewById(R.id.et_password);
-
+//    mEmailField.setOnClickListener(new View.OnClickListener() {
+//    @Override
+//    public void onClick(View view) {
+//       TxtEmai.setTextColor(getResources().getColor(R.color.blue));
+//    }
+//    });
+//
+//        mPasswordField.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                TxtEmai.setTextColor(getResources().getColor(R.color.black));
+//                TxtPass.setTextColor(getResources().getColor(R.color.blue));
+//            }
+//        });
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
-        Button loginButton = findViewById(R.id.signup_btn_facebook);
+        Button loginButton = findViewById(R.id.sinup_btn_facebook);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

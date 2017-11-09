@@ -2,28 +2,19 @@ package com.numnu.android.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,12 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.LoginActivity;
-import com.numnu.android.activity.MainActivity;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
-import com.numnu.android.fragments.EventDetail.EventReviewsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventPostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -57,6 +46,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private TextView viewEventMap, eventName, city, eventDate, eventTime;
     private ImageView eventImageView;
     private ExpandableTextView eventDescription;
+    private AppBarLayout appBarLayout;
 
 
     public static EventDetailFragment newInstance() {
@@ -110,9 +100,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         ImageView collapsedtoolbarIcon = view.findViewById(R.id.toolbar_image1);
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         ImageView collapsedtoolbarBackIcon = view.findViewById(R.id.toolbar_back1);
+        final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
 
         toolbarBackIcon.setOnClickListener(this);
         collapsedtoolbarBackIcon.setOnClickListener(this);
+        toolbar1.setOnClickListener(this);
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,8 +119,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
             }
         });
 
-        final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
-        AppBarLayout appBarLayout = view.findViewById(R.id.appbar);
+
+         appBarLayout = view.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
@@ -221,8 +213,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventMenuItemsFragment(), "Items");
-        adapter.addFragment(new EventReviewsFragment(), "Posts");
+        adapter.addFragment(new EventItemsFragment(), "Items");
+        adapter.addFragment(new EventPostsFragment(), "Posts");
         viewPager.setAdapter(adapter);
     }
 
@@ -263,6 +255,10 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
             case R.id.toolbar_back1:
                 getActivity().onBackPressed();
+                break;
+
+            case R.id.toolbar1:
+                appBarLayout.setExpanded(true);
                 break;
 
         }

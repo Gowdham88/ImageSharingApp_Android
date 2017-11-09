@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.fragments.home.EventsFragment;
 import com.numnu.android.fragments.home.SliceFragment;
@@ -79,7 +79,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventMenuItemsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventItemsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

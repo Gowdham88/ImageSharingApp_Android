@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -21,15 +21,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PastEventsAdapter;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsFragment;
 import com.numnu.android.fragments.home.CurrentEventsFragment;
 import com.numnu.android.fragments.home.EventsFragment;
 import com.numnu.android.fragments.home.PastEventsFragment;
@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> stringlist,stringlist1;
     Context context;
     BottomNavigationView mBottomNavigationView;
+    private ImageView toolbarBackIcon;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -67,16 +68,17 @@ public class HomeFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        ImageView imageView = getActivity().findViewById(R.id.toolbar_back);
-//        if (savedInstanceState == null){
-//            imageView.setVisibility(View.GONE);
-//        }else{
-//            imageView.setVisibility(View.VISIBLE);
-//        }
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        int fragments = getFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            toolbarBackIcon.setVisibility(View.GONE);
+        }
+        else {
+            toolbarBackIcon.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,6 +94,14 @@ public class HomeFragment extends Fragment {
         searchViewLocation=view.findViewById(R.id.et_search_location);
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
+
+        toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +135,6 @@ public class HomeFragment extends Fragment {
                 transaction.addToBackStack(null).commit();
             }
         });
-        checkKeyBoardUp(view);
         setupRecyclerView();
         setupSearchListener();
         return view;
@@ -154,11 +163,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-//    public void toolBarVisibility(){
-//        ImageView imageView = getActivity().findViewById(R.id.toolbar_back);
-//
-//            imageView.setVisibility(View.GONE);
-//    }
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupSearchListener() {
@@ -292,7 +296,7 @@ public class HomeFragment extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventMenuItemsFragment(), "Items");
+        adapter.addFragment(new EventItemsFragment(), "Items");
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
         adapter.addFragment(new EventBusinessFragment(), "Lists");

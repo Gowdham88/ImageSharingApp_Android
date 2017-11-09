@@ -7,10 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -18,7 +15,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsFragment;
 import com.numnu.android.fragments.home.EventsFragment;
 import com.numnu.android.fragments.home.PostsFragment;
 import com.numnu.android.fragments.home.UsersFragment;
@@ -108,7 +105,7 @@ public class HomeSearchFragment extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventMenuItemsFragment(), "Items");
+        adapter.addFragment(new EventItemsFragment(), "Items");
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
         adapter.addFragment(new EventBusinessFragment(), "Lists");

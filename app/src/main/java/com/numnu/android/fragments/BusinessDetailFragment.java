@@ -19,9 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.MainActivity;
-import com.numnu.android.fragments.EventDetail.EventPostsFragment;
-import com.numnu.android.fragments.home.PostsFragment;
+import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -29,21 +27,15 @@ import com.numnu.android.utils.PreferencesHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by thulir on 9/10/17.
- */
-
-public class ItemDetailFragment extends Fragment implements View.OnClickListener {
-
+public class BusinessDetailFragment extends Fragment implements View.OnClickListener {
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
-    private ImageView eventImageView;
+    private ViewPager viewPagerBusiness;
+    private TabLayout tabLayout;
     private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
 
-
-    public static ItemDetailFragment newInstance() {
-        return new ItemDetailFragment();
+    public static BusinessDetailFragment newInstance() {
+        return new BusinessDetailFragment();
     }
 
     @Override
@@ -56,80 +48,82 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_item_detail, container, false);
+        final View view=inflater.inflate(R.layout.frag_business_details, container, false);
 
-        ViewPager viewPager = view.findViewById(R.id.event_viewpager);
-        setupViewPager(viewPager);
-
-        viewEventMap = view.findViewById(R.id.txt_view_event_map);
-        eventDescription = view.findViewById(R.id.event_description);
-        eventName = view.findViewById(R.id.event_name);
-        city = view.findViewById(R.id.txt_city);
-        eventDate = view.findViewById(R.id.txt_event_date);
-        eventTime = view.findViewById(R.id.txt_event_time);
-
-        eventImageView = view.findViewById(R.id.current_event_image);
-
+        viewPagerBusiness = view.findViewById(R.id.business_viewpager);
+//        searchViewFood=view.findViewById(R.id.et_search_food);
+//        searchViewLocation=view.findViewById(R.id.et_search_location);
+        tabLayout = view.findViewById(R.id.business_tabs);
+        eventDescription = view.findViewById(R.id.business_detail_description);
         setupExpandableText();
-
-        TabLayout tabLayout = view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-        TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(R.string.item);
-        TextView toolbarTitle1 = view.findViewById(R.id.toolbar_title1);
-        toolbarTitle1.setText(R.string.item);
-        ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView collapsedtoolbarIcon = view.findViewById(R.id.toolbar_image1);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-        ImageView collapsedtoolbarBackIcon = view.findViewById(R.id.toolbar_back1);
+        setupViewPager(viewPagerBusiness);
+        tabLayout.setupWithViewPager(viewPagerBusiness);
+        TextView toolbarTitleBuss = view.findViewById(R.id.toolbar_title);
+        toolbarTitleBuss.setText(getString(R.string.businesses));
+        TextView toolbarTitle1Buss = view.findViewById(R.id.toolbar_title1);
+        toolbarTitle1Buss.setText(getString(R.string.businesses));
+        ImageView toolbarIconBuss = view.findViewById(R.id.toolbar_image);
+        ImageView collapsedtoolbarIconBuss = view.findViewById(R.id.toolbar_image1);
+        ImageView toolbarBackIconBuss = view.findViewById(R.id.toolbar_back_image);
+        ImageView collapsedtoolbarBackIconBuss = view.findViewById(R.id.toolbar_back1);
         final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
 
-        toolbarBackIcon.setOnClickListener(this);
-        collapsedtoolbarBackIcon.setOnClickListener(this);
+        toolbarBackIconBuss.setOnClickListener(this);
+        collapsedtoolbarBackIconBuss.setOnClickListener(this);
         toolbar1.setOnClickListener(this);
 
-        toolbarIcon.setOnClickListener(new View.OnClickListener() {
+        toolbarIconBuss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomSheet(inflater);
             }
         });
-        collapsedtoolbarIcon.setOnClickListener(new View.OnClickListener() {
+        collapsedtoolbarIconBuss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomSheet(inflater);
             }
         });
-
+        toolbarBackIconBuss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+        collapsedtoolbarBackIconBuss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
 
         appBarLayout = view.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-             switch (state.name()){
+                switch (state.name()){
 
-                 case "EXPANDED":
-                     toolbar1.setVisibility(View.GONE);
-                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                     break;
+                    case "EXPANDED":
+                        toolbar1.setVisibility(View.GONE);
+                        view.findViewById(R.id.business_tabs).setVisibility(View.VISIBLE);
+                        break;
 
-                 case "IDLE":
-                     toolbar1.setVisibility(View.GONE);
-                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                     break;
-                 case "COLLAPSED":
-                     toolbar1.setVisibility(View.VISIBLE);
-                     view.findViewById(R.id.tabs).setVisibility(View.GONE);
-                     break;
-             }
+                    case "IDLE":
+                        toolbar1.setVisibility(View.GONE);
+                        view.findViewById(R.id.business_tabs).setVisibility(View.VISIBLE);
+                        break;
+                    case "COLLAPSED":
+                        toolbar1.setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.business_tabs).setVisibility(View.GONE);
+                        break;
+                }
 
 
             }
         });
-
         return view;
     }
+
 
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
@@ -157,7 +151,9 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             public void onClick(View view) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.putExtra("EventBookmarkIntent","eventbookmark");
+                    startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
                     Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
@@ -165,7 +161,6 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             }
         });
     }
-
     private void setupExpandableText() {
         eventDescription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,26 +175,16 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     }
 
 
-
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new PostsFragment(), "Posts");
-        adapter.addFragment(new LocationItemsFragment(), "Locations");
-        adapter.addFragment(new EventPostsFragment(), "Events");
+       ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(new Menuitems(), "Menu Items");
+        adapter.addFragment(new Post(), "Post");
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.toolbar_back:
-                getActivity().onBackPressed();
-                break;
-
-            case R.id.toolbar_back1:
-                getActivity().onBackPressed();
-                break;
-
             case R.id.toolbar1:
                 appBarLayout.setExpanded(true);
                 break;
@@ -237,9 +222,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onAttach(Context context) {
-        this.context = context;
+        this.context=context;
         super.onAttach(context);
     }
-
 }
-

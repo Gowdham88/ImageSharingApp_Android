@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventMenuItemsAdapter;
 import com.numnu.android.adapter.LocationItemsAdapter;
 
 import java.util.ArrayList;

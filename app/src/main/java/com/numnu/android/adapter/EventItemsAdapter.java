@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.ItemDetailFragment;
-import com.numnu.android.fragments.home.CurrentEventsFragment;
 
 import java.util.ArrayList;
 
@@ -20,12 +19,12 @@ import java.util.ArrayList;
  * Created by thulir on 10/10/17.
  */
 
-public class EventMenuItemsAdapter extends RecyclerView.Adapter<EventMenuItemsAdapter.ViewHolder> {
+public class EventItemsAdapter extends RecyclerView.Adapter<EventItemsAdapter.ViewHolder> {
 
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
 
-    public EventMenuItemsAdapter(Context context, ArrayList<String> stringArrayList) {
+    public EventItemsAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
         this.stringArrayList=stringArrayList;
     }
@@ -67,9 +66,9 @@ public class EventMenuItemsAdapter extends RecyclerView.Adapter<EventMenuItemsAd
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.business_name);
+            this.textViewName =  itemView.findViewById(R.id.txt_itemname);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
-            this.imageViewIcon = itemView.findViewById(R.id.notification_image);
+            this.imageViewIcon = itemView.findViewById(R.id.imageView_forward);
         }
     }
 }

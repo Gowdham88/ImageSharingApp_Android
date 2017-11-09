@@ -2,33 +2,27 @@ package com.numnu.android.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
-import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
-import com.numnu.android.fragments.EventDetail.EventReviewsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventPostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
-import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
@@ -43,6 +37,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     private Context context;
     private TextView viewEventMap, eventName, city, eventDate, eventTime;
     private ImageView eventImageView;
+    private AppBarLayout appBarLayout;
 
 
     public static LocationDetailFragment newInstance() {
@@ -85,9 +80,11 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         ImageView collapsedtoolbarIcon = view.findViewById(R.id.toolbar_image1);
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         ImageView collapsedtoolbarBackIcon = view.findViewById(R.id.toolbar_back1);
+        final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
 
         toolbarBackIcon.setOnClickListener(this);
         collapsedtoolbarBackIcon.setOnClickListener(this);
+        toolbar1.setOnClickListener(this);
 
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +100,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
             }
         });
 
-        final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
-        AppBarLayout appBarLayout = view.findViewById(R.id.appbar);
+        appBarLayout = view.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
@@ -172,8 +168,8 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventReviewsFragment(), "Posts");
-        adapter.addFragment(new EventMenuItemsFragment(), "Items");
+        adapter.addFragment(new EventPostsFragment(), "Posts");
+        adapter.addFragment(new EventItemsFragment(), "Items");
         viewPager.setAdapter(adapter);
     }
 
@@ -187,7 +183,9 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
             case R.id.toolbar_back1:
                 getActivity().onBackPressed();
                 break;
-
+            case R.id.toolbar1:
+                appBarLayout.setExpanded(true);
+                break;
         }
     }
 

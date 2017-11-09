@@ -83,41 +83,15 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:id="@+id/cottage_house_icon"
-            android:layout_below="@+id/post_interests_layout"
-            android:src="@drawable/ic_calendar"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_weight="1"
-            android:layout_toRightOf="@id/cottage_house_icon"
-            android:layout_toEndOf="@id/cottage_house_icon"
-            android:layout_below="@+id/post_interests_layout"
-            android:text="Cottage House"
-            android:textSize="15sp"
-            android:layout_marginStart="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:id="@+id/cottage_house_txt" />
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
             android:layout_weight="1"
             android:id="@+id/barbq_icon"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/cottage_house_txt"
-            android:src="@drawable/ic_calendar"
+            android:src="@drawable/dish_ico"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_weight="1"
-            android:layout_below="@id/cottage_house_txt"
-            android:layout_toRightOf="@id/barbq_icon"
-            android:layout_toEndOf="@id/barbq_icon"
             android:gravity="center_vertical"
             android:textSize="15sp"
             android:layout_marginStart="5dp"
@@ -125,6 +99,26 @@
             android:layout_marginTop="10dp"
             android:text="Barbeque side platter"
             android:id="@+id/barbq_txt" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/cottage_house_icon"
+            android:src="@drawable/restaurant_ico"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="Cottage House"
+            android:textSize="15sp"
+            android:layout_marginStart="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:id="@+id/cottage_house_txt" />
+
     </LinearLayout>
     <ImageView
         android:layout_width="20dp"

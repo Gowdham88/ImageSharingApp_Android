@@ -2,6 +2,7 @@ package com.numnu.android.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -15,13 +16,17 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
@@ -34,6 +39,7 @@ import com.android.ex.chips.RecipientEditTextView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 import com.numnu.android.Manifest;
 import com.numnu.android.R;
+import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -52,6 +58,9 @@ public class CompleteSignupActivity extends AppCompatActivity {
     private String mGenderValue = "";
     private DatePickerDialog.OnDateSetListener datePickerDialog;
     private SimpleDateFormat dateFormat;
+    RecyclerView recyclerView;
+    FoodAdapter adapter;
+    LinearLayout FoodLinearLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +69,12 @@ public class CompleteSignupActivity extends AppCompatActivity {
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Complete Sign Up");
+        recyclerView=(RecyclerView)findViewById(R.id.food_recyclerview);
+        FoodLinearLay=(LinearLayout) findViewById(R.id.food_layout);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        adapter = new FoodAdapter(this,CompleteSignupActivity.this);
+//        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
         ImageView toolbarBackIcon = findViewById(R.id.toolbar_back);
         toolbarBackIcon.setVisibility(View.GONE);
 
@@ -73,7 +88,13 @@ public class CompleteSignupActivity extends AppCompatActivity {
         mDob = findViewById(R.id.et_signup_dob);
 //        mFoodPreferences = findViewById(R.id.et_signup_food_preferences);
         mCompleteSignUp = findViewById(R.id.button_complete_signup);
-
+        mFoodPreferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FoodLinearLay.setVisibility(View.VISIBLE);
+                hideKeyboardFrom();
+            }
+        });
 
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
@@ -157,7 +178,10 @@ public class CompleteSignupActivity extends AppCompatActivity {
 
     }
 
-
+    public void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
 
 }
 

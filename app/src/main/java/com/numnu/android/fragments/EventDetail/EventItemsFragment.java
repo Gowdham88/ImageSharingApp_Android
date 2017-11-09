@@ -11,8 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventMenuItemsAdapter;
-import com.numnu.android.adapter.EventReviewsAdapter;
+import com.numnu.android.adapter.EventItemsAdapter;
 
 import java.util.ArrayList;
 
@@ -20,13 +19,13 @@ import java.util.ArrayList;
  * Created by thulir on 9/10/17.
  */
 
-public class EventReviewsFragment extends Fragment {
+public class EventItemsFragment extends Fragment {
 
     private RecyclerView menuitemsRecyclerView;
-    Context context;
+    private Context context;
 
-    public static EventReviewsFragment newInstance() {
-        return new EventReviewsFragment();
+    public static EventItemsFragment newInstance() {
+        return new EventItemsFragment();
     }
 
     @Override
@@ -38,9 +37,9 @@ public class EventReviewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-    View  view= inflater.inflate(R.layout.fragment_event_reviews, container, false);
+    View  view= inflater.inflate(R.layout.fragment_event_menu_items, container, false);
 
-    menuitemsRecyclerView = view.findViewById(R.id.reviews_recyclerview);
+    menuitemsRecyclerView = view.findViewById(R.id.menu_items_recyclerview);
     RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
         menuitemsRecyclerView.setLayoutManager(layoutManager);
     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(menuitemsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
@@ -62,9 +61,9 @@ public class EventReviewsFragment extends Fragment {
         ArrayList<String> stringlist = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            stringlist.add("Review item " + i);
+            stringlist.add("Menu item " + i);
 
-            EventReviewsAdapter currentUpAdapter = new EventReviewsAdapter(context, stringlist);
+            EventItemsAdapter currentUpAdapter = new EventItemsAdapter(context, stringlist);
             menuitemsRecyclerView.setAdapter(currentUpAdapter);
         }
 

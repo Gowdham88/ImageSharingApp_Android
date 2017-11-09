@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.CompleteSignupActivity;
-import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.LoginActivity;
-import com.numnu.android.activity.MainActivity;
-import com.numnu.android.activity.SignupActivity;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
-import com.numnu.android.fragments.HomeFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsFragment;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.utils.PreferencesHelper;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Thulirsoft on 20/10/2017.
@@ -137,7 +128,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventMenuItemsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventItemsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
