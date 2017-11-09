@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.ItemDetailFragment;
+import com.numnu.android.fragments.ItemInfoFragment;
 
 import java.util.ArrayList;
 
@@ -48,11 +49,10 @@ public class EventItemsAdapter extends RecyclerView.Adapter<EventItemsAdapter.Vi
             public void onClick(View view) {
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, ItemInfoFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
-
     }
 
     @Override

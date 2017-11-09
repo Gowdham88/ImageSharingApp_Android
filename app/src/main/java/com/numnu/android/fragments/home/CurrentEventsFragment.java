@@ -62,7 +62,7 @@ public class CurrentEventsFragment extends Fragment {
         stringlist1 = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            stringlist.add("Item " + i);
+            stringlist.add("E" + i);
         }
 
         currentEventsList.setHasFixedSize(true);
@@ -72,7 +72,6 @@ public class CurrentEventsFragment extends Fragment {
 
         CurrentEventsAdapter currentEventsAdapter = new CurrentEventsAdapter(context, stringlist);
         currentEventsList.setAdapter(currentEventsAdapter);
-
 
     }
 }

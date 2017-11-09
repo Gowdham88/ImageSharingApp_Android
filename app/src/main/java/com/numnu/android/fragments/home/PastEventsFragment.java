@@ -58,10 +58,8 @@ public class PastEventsFragment extends Fragment {
     private void setupRecyclerView() {
         stringlist1 = new ArrayList<>();
 
-
-
         for (int i = 1; i <= 10; i++) {
-            stringlist1.add("Event " + i);
+            stringlist1.add("E" + i);
         }
             PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
             pastEventsList.setAdapter(pastEventsAdapter);
