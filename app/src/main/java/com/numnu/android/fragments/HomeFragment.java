@@ -34,6 +34,7 @@ import com.numnu.android.fragments.home.CurrentEventsFragment;
 import com.numnu.android.fragments.home.EventsFragment;
 import com.numnu.android.fragments.home.PastEventsFragment;
 import com.numnu.android.fragments.home.PostsFragment;
+import com.numnu.android.fragments.home.SearchListFragment;
 import com.numnu.android.fragments.home.UsersFragment;
 import com.numnu.android.utils.Utils;
 
@@ -305,7 +306,7 @@ public class HomeFragment extends Fragment {
         adapter.addFragment(new EventItemsFragment(), "Items");
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
-        adapter.addFragment(new EventBusinessFragment(), "Lists");
+        adapter.addFragment(new SearchListFragment(), "Lists");
         viewPager.setAdapter(adapter);
     }
 

@@ -8,10 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,7 @@ import com.numnu.android.utils.PreferencesHelper;
 public class SliceFragment extends Fragment {
 
     Context context;
+    private PopupWindow pw;
 
     public static SliceFragment newInstance() {
         SliceFragment fragment = new SliceFragment();
@@ -70,9 +75,17 @@ public class SliceFragment extends Fragment {
         ImageView moreIcon = view.findViewById(R.id.event_dots);
         ImageView toolbarBackIcon = view.findViewById(R.id.back_button);
         ImageView userImageIcon = view.findViewById(R.id.slice_profile_image);
+        ImageView contentImage = view.findViewById(R.id.content_image);
         TextView userNameText = view.findViewById(R.id.slice_toolbar_profile_name);
         TextView cottageHouseText = view.findViewById(R.id.cottage_house_txt);
         TextView barbequeText = view.findViewById(R.id.barbq_txt);
+
+        contentImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initiatePopupWindow();
+            }
+        });
 
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,5 +177,30 @@ public class SliceFragment extends Fragment {
             }
         });
         return view;
+    }
+
+
+
+    private void initiatePopupWindow() {
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.image_popup,null);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        pw = new PopupWindow(layout, lp.width, lp.height, true);
+        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+
+
+        ImageButton btncancel = layout.findViewById(R.id.btncancelcat);
+
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pw.dismiss();
+            }
+        });
+
     }
 }

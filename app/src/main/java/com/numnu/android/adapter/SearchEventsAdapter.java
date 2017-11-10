@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetailFragment;
+import com.numnu.android.fragments.ItemInfoFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.search_event_item, parent, false);
 
-        //view.setOnClickListener(MainActivity.myOnClickListener);
 
         return new ViewHolder(view);
     }
@@ -43,6 +43,24 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        holder.textViewName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
     }
 
     @Override
@@ -56,9 +74,9 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
 
         ViewHolder(View itemView) {
             super(itemView);
-//            this.textViewName =  itemView.findViewById(R.id.text_event);
+            this.textViewName =  itemView.findViewById(R.id.text_event);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
-//            this.imageViewIcon = itemView.findViewById(R.id.current_event_image);
+            this.imageViewIcon = itemView.findViewById(R.id.current_event_image);
         }
     }
 }

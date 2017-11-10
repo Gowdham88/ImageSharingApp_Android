@@ -11,10 +11,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     private ImageView eventImageView;
     private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
+    private PopupWindow pw;
 
 
     public static ItemDetailFragment newInstance() {
@@ -69,6 +74,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         eventTime = view.findViewById(R.id.txt_event_time);
 
         eventImageView = view.findViewById(R.id.current_event_image);
+        eventImageView.setOnClickListener(this);
 
         setupExpandableText();
 
@@ -203,6 +209,10 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             case R.id.toolbar1:
                 appBarLayout.setExpanded(true);
                 break;
+
+            case R.id.current_event_image:
+                initiatePopupWindow();
+                break;
         }
     }
 
@@ -237,9 +247,32 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onAttach(Context context) {
+
         this.context = context;
         super.onAttach(context);
     }
 
+    private void initiatePopupWindow() {
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.image_popup,null);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        pw = new PopupWindow(layout, lp.width, lp.height, true);
+        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+
+
+        ImageButton btncancel = layout.findViewById(R.id.btncancelcat);
+
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pw.dismiss();
+            }
+        });
+
+    }
 }
 
