@@ -53,6 +53,15 @@ public class EventItemsAdapter extends RecyclerView.Adapter<EventItemsAdapter.Vi
                 transaction.addToBackStack(null).commit();
             }
         });
+        holder.textViewName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ItemInfoFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
     }
 
     @Override

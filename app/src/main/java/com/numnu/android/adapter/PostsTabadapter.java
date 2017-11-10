@@ -15,12 +15,7 @@ import com.numnu.android.R;
 
 public class PostsTabadapter extends RecyclerView.Adapter<PostsTabadapter.ViewHolder> {
 
-    String[] arr = {"Category", "Category", "Category", "Category", "Category", "Category", "Category", "Category", "Category"
-            , "Category", "Category","Category", "Category", "Category", "Category", "Category", "Category", "Category",
-            "Category", "Category"};
-//    int[] image = {R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg,
-//            R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg, R.drawable.biryaniimg,
-//            R.drawable.biryaniimg, R.drawable.biryaniimg};
+    String[] arr = {"Category", "Category", "Category", "Category", "Category", "Category", "Category", "Category", "Category", "Category", "Category", "Category",};
     Context context;
     LayoutInflater layout;
 
@@ -31,11 +26,12 @@ public class PostsTabadapter extends RecyclerView.Adapter<PostsTabadapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView PostcategoryTxt;
+        TextView PostcategoryTxt,postcountTxt;
 
         public ViewHolder(View itemView) {
             super(itemView);
             PostcategoryTxt=(TextView)itemView.findViewById(R.id.post_category_text);
+            postcountTxt=(TextView)itemView.findViewById(R.id.post_count_text);
         }
     }
 

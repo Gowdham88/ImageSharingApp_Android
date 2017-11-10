@@ -177,7 +177,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
     private void setupViewPager(ViewPager viewPager) {
        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new Menuitems(), "Menu Items");
+        adapter.addFragment(new Items(), "Items");
         adapter.addFragment(new Post(), "Post");
         viewPager.setAdapter(adapter);
     }

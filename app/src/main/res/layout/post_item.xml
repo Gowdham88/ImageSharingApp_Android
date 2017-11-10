@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/slice_toolbar_profile_name"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginLeft="1dp"
         android:layout_toRightOf="@id/slice_profile_image"
@@ -28,16 +28,17 @@
         fontPath="fonts/Proxima-Nova-Bold.otf"
         tools:ignore="MissingPrefix"
         />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_toRightOf="@id/slice_toolbar_profile_name"
-        android:text="Ottawa"
-        android:gravity="center"
-        android:layout_marginLeft="3dp"
         fontPath="fonts/Proxima-Nova-Bold.otf"
-        tools:ignore="MissingPrefix"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/slice_toolbar_profile_name"
+        android:layout_alignLeft="@+id/slice_toolbar_profile_name"
+        android:layout_alignStart="@+id/slice_toolbar_profile_name"
+        android:gravity="center"
+        android:text="username"
+        tools:ignore="MissingPrefix" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,6 +56,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/title"
         android:layout_below="@id/slice_profile_image"
+        android:layout_marginTop="10dp"
         android:text="It was a Great night !! Amazing food very long one Header ..."
         fontPath="fonts/Proxima-Nova-Bold.otf"
         tools:ignore="MissingPrefix" />

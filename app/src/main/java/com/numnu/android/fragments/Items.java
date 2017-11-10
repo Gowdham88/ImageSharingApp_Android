@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.MenuItemsAdapter;
+import com.numnu.android.adapter.ItemsAdapter;
 
-public class Menuitems extends Fragment {
+public class Items extends Fragment {
     RecyclerView Rv;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class Menuitems extends Fragment {
         //Change R.layout.tab1 in you classes
         View v = inflater.inflate(R.layout.fragment_menuitems, container, false);
         Rv =(RecyclerView)v.findViewById(R.id.business_menuitems_recyclerview);
-        MenuItemsAdapter adapter = new MenuItemsAdapter(getActivity());
+        ItemsAdapter adapter = new ItemsAdapter(getActivity());
         Rv.setAdapter(adapter);
         Rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
