@@ -24,6 +24,7 @@
         android:gravity="center"
         android:layout_marginLeft="1dp"
         android:layout_toRightOf="@id/slice_profile_image"
+        android:layout_toEndOf="@id/slice_profile_image"
         android:text="Marc Chiriqui,"
         fontPath="fonts/Proxima-Nova-Bold.otf"
         tools:ignore="MissingPrefix"
