@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
@@ -58,7 +59,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> stringlist,stringlist1;
     Context context;
     BottomNavigationView mBottomNavigationView;
-    private ImageView toolbarBackIcon;
+    private ImageView toolbarBackIcon,mSearchIcon,mLocationIcon;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -116,7 +117,15 @@ public class HomeFragment extends Fragment {
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
-
+        locationIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    searchViewLocation.setEnabled(true);
+                    searchViewLocation.requestFocus();
+                }
+            }
+        });
         ImageView viewCurrentEventsList = view.findViewById(R.id.view_current_event_list);
 
         ImageView viewPastEventsList = view.findViewById(R.id.view_past_event_list);
