@@ -156,6 +156,7 @@
             android:layout_marginTop="10dp"
             android:id="@+id/post_interests_layout">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -240,6 +241,47 @@
         <!--android:textSize="15sp"-->
         <!--android:gravity="center_vertical"-->
         <!--/>-->
+=======
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:id="@+id/heart_icon"
+        android:src="@drawable/ic_heart"
+        android:layout_alignParentLeft="true"
+        android:visibility="gone"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:id="@+id/heart_count"
+        android:layout_toRightOf="@id/heart_icon"
+        android:layout_toEndOf="@id/heart_icon"
+        android:text="15"
+        android:visibility="gone"
+        android:textSize="15sp"
+        android:gravity="center_vertical"
+        />
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/heart_count"
+        android:layout_toEndOf="@id/heart_count"
+        android:src="@drawable/ic_chat_bubble_outline"
+        android:id="@+id/comment"
+        android:visibility="gone"
+        />
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:id="@+id/comment_count"
+        android:layout_toRightOf="@id/comment"
+        android:layout_toEndOf="@id/comment"
+        android:text="8"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        />
+>>>>>>> ebb9983cae86c23f13f5f28ecb5d1b8d3bb625d8
     <ImageView
         android:layout_width="35dp"
         android:layout_height="30dp"

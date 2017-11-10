@@ -33,144 +33,169 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:scrollbars="vertical">
-    <LinearLayout
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text_user_name_label"
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/settings_padding"
-            android:gravity="center_vertical"
-            android:padding="@dimen/settings_padding"
-            android:text="@string/user_name" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_signup_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/text_name_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="@dimen/settings_padding"
-            android:text="@string/name" />
-
-        <EditText
-            android:id="@+id/et_signup_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/text_city_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="@dimen/settings_padding"
-            android:text="@string/city" />
-
-        <EditText
-            android:id="@+id/et_signup_city"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
-
-        <TextView
-            android:id="@+id/text_gender_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="@dimen/settings_padding"
-            android:text="@string/gender" />
-        <RadioGroup
-
-            android:id="@+id/radio_group"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <RadioButton
+            <TextView
+                android:id="@+id/text_user_name_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/male_radio"
-                android:text="Male"
-                android:textSize="16sp"
-                android:layout_weight="1"
-                android:textColor="@color/primary_text_material_light"
-                />
-            <RadioButton
+                android:layout_marginTop="@dimen/settings_padding"
+                android:gravity="center_vertical"
+                android:padding="@dimen/settings_padding"
+                android:text="@string/user_name" />
+
+            <EditText
+                android:id="@+id/et_signup_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/female_radio"
-                android:layout_weight="1"
-                android:text="Female"
-                android:textSize="16sp"
-                android:textColor="@color/primary_text_material_light"
-                />
-        </RadioGroup>
+                android:inputType="text" />
 
-        <!--<EditText-->
+            <TextView
+                android:id="@+id/text_name_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/settings_padding"
+                android:text="@string/name" />
+
+            <EditText
+                android:id="@+id/et_signup_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/text_city_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/settings_padding"
+                android:text="@string/city" />
+
+            <EditText
+                android:id="@+id/et_signup_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:id="@+id/text_gender_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/settings_padding"
+                android:text="@string/gender" />
+            <RadioGroup
+
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/male_radio"
+                    android:text="Male"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/primary_text_material_light"
+                    />
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/female_radio"
+                    android:layout_weight="1"
+                    android:text="Female"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_text_material_light"
+                    />
+            </RadioGroup>
+
+            <!--<EditText-->
             <!--android:id="@+id/et_signup_gender"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:inputType="text" />-->
-        <TextView
-            android:id="@+id/text_dob"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="@dimen/settings_padding"
-            android:text="Date of Birth" />
-
-        <EditText
-            android:id="@+id/et_signup_dob"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="date" />
-        <TextView
-            android:id="@+id/text_food_preferences_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="@dimen/settings_padding"
-            android:text="@string/foodpreferences" />
-
-        <com.robertlevonyan.views.chip.Chip
-            android:id="@+id/et_signup_food_preferences"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mcv_closable="true"
-            app:mcv_chipText="Burger"
-             />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="15dp"
-            android:id="@+id/food_layout">
-            <android.support.v7.widget.RecyclerView
+            <TextView
+                android:id="@+id/text_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/food_recyclerview"
-                android:orientation="vertical"
-                android:scrollbars="vertical">
+                android:gravity="center_vertical"
+                android:padding="@dimen/settings_padding"
+                android:text="Date of Birth" />
 
-            </android.support.v7.widget.RecyclerView>
+            <EditText
+                android:id="@+id/et_signup_dob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+            <TextView
+                android:id="@+id/text_food_preferences_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/settings_padding"
+                android:text="@string/foodpreferences" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:orientation="vertical"
+                android:id="@+id/food_layout">
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/food_recyclerview"
+                    android:orientation="vertical"
+                    android:scrollbars="vertical">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+            <!--<com.android.ex.chips.RecipientEditTextView-->
+            <!--android:id="@+id/et_signup_food_preferences"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--/>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <AutoCompleteTextView
+                    android:singleLine="true"
+                    android:id="@+id/autoCompleteTextView1"
+                    android:layout_width="280dp"
+                    android:imeOptions="actionDone"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:id="@+id/add_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="18dp"
+                    android:textColor="@color/blue"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_complete_signup"
+                android:text="@string/complete_sign_up"
+                style="@style/login_button"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        <Button
-            android:id="@+id/button_complete_signup"
-            android:text="@string/complete_sign_up"
-            style="@style/login_button"
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-</LinearLayout>
     </ScrollView>
 </LinearLayout>

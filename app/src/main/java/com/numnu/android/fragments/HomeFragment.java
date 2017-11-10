@@ -1,8 +1,11 @@
 package com.numnu.android.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,9 +14,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -46,6 +54,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView currentEventsList, pastEventsList;
     private ArrayList<String> stringlist,stringlist1;
     Context context;
+    BottomNavigationView mBottomNavigationView;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -55,7 +64,19 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
+
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        ImageView imageView = getActivity().findViewById(R.id.toolbar_back);
+//        if (savedInstanceState == null){
+//            imageView.setVisibility(View.GONE);
+//        }else{
+//            imageView.setVisibility(View.VISIBLE);
+//        }
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,10 +125,140 @@ public class HomeFragment extends Fragment {
                 transaction.addToBackStack(null).commit();
             }
         });
-
+        checkKeyBoardUp(view);
         setupRecyclerView();
-
+        setupSearchListener();
         return view;
+    }
+
+    private void checkKeyBoardUp(final View view) {
+
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                View bottomNavigationView = getActivity().findViewById(R.id.navigation);
+                Rect r = new Rect();
+                view.getWindowVisibleDisplayFrame(r);
+                int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
+
+                if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
+                    //ok now we know the keyboard is up...
+                    bottomNavigationView.setVisibility(View.GONE);
+
+
+                }else{
+                    //ok now we know the keyboard is down...
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+//    public void toolBarVisibility(){
+//        ImageView imageView = getActivity().findViewById(R.id.toolbar_back);
+//
+//            imageView.setVisibility(View.GONE);
+//    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void setupSearchListener() {
+
+        searchViewFood.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!searchViewFood.getText().toString().trim().equals("")){
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                }else{
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
+                if (!searchViewLocation.getText().toString().trim().equals("")){
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                }else {
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!searchViewFood.getText().toString().trim().equals("")){
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                }else{
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
+            }
+
+
+        });
+        searchViewLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!searchViewFood.getText().toString().trim().equals("")){
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                }else{
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
+                if (!searchViewLocation.getText().toString().trim().equals("")){
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                }else {
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!searchViewLocation.getText().toString().trim().equals("")){
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                }else{
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
+
+            }
+        });
+
+        searchViewFood.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if (searchViewFood.getCompoundDrawables()[2]!= null){
+                        if (motionEvent.getX() >=(searchViewFood.getRight()-searchViewFood.getLeft() - searchViewFood.getCompoundDrawables()[2].getBounds().width())){
+                            searchViewFood.setText("");
+                            searchViewFood.clearFocus();
+                                Utils.hideKeyboard(getActivity());
+
+                        }
+                    }
+                }
+                checkKeyBoardUp(view);
+                return false;
+            }
+        });
+        searchViewLocation.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if (searchViewLocation.getCompoundDrawables()[2]!= null){
+                        if (motionEvent.getX() >=(searchViewLocation.getRight()-searchViewLocation.getLeft() - searchViewLocation.getCompoundDrawables()[2].getBounds().width())){
+                            searchViewLocation.setText("");
+                            searchViewLocation.clearFocus();
+                            Utils.hideKeyboard(getActivity());
+                        }
+                    }
+                }
+                checkKeyBoardUp(view);
+                return false;
+            }
+        });
+
     }
 
 

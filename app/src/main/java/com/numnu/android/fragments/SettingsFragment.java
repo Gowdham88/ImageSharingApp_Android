@@ -49,14 +49,14 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
-        {
-            getActivity().finish();
-            Intent intent = new Intent(getActivity(),LoginActivity.class);
-            intent.putExtra("ProfileIntent","profile");
-            startActivity(intent);
-
-        }
+//        if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
+//        {
+//            getActivity().finish();
+//            Intent intent = new Intent(getActivity(),LoginActivity.class);
+//            intent.putExtra("ProfileIntent","profile");
+//            startActivity(intent);
+//
+//        }
 
             View view = inflater.inflate(R.layout.fragment_settings, container, false);
 

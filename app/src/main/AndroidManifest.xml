@@ -70,14 +70,11 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 
-        <!--<activity-->
-            <!--android:name=".activity.CompleteSignupActivity"-->
-            <!--android:configChanges="orientation"-->
-            <!--android:screenOrientation="portrait"/>-->
+        <activity
+            android:name=".activity.CompleteSignupActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.BusinessDetailActivity"
-             android:configChanges="orientation"
-             android:screenOrientation="portrait"/>
 
     </application>
 

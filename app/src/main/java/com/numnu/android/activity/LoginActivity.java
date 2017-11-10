@@ -38,7 +38,7 @@ public class LoginActivity extends MyActivity  {
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
-    private Button login;
+    private Button login,loginButton;
     // [END declare_auth]
     private CallbackManager mCallbackManager;
 
@@ -58,24 +58,7 @@ public class LoginActivity extends MyActivity  {
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
-        //Intents from Signup Activity
-        mBookmarkIntent = getIntent().getStringExtra("BookmarkIntent");
-        mProfileIntent = getIntent().getStringExtra("ProfileIntent");
-        mEventBookmarkIntent = getIntent().getStringExtra("EventBookmarkIntent");
 
-        if (mProfileIntent!=null){
-            mReceivedIntent = mProfileIntent;
-        }else if (mBookmarkIntent!=null){
-            mReceivedIntent = mBookmarkIntent;
-        }else if (mEventBookmarkIntent!=null){
-            mReceivedIntent = mEventBookmarkIntent;
-        }else {
-            mReceivedIntent = null;
-        }
-
-        // [START initialize_fblogin]
-        // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
         Button loginButton = findViewById(R.id.login_btn_facebook);
@@ -110,6 +93,25 @@ public class LoginActivity extends MyActivity  {
                 // [END initialize_fblogin]
             }
         });
+        // [END initialize_auth]
+        // [END initialize_auth]
+        //Intents from Signup Activity
+        mBookmarkIntent = getIntent().getStringExtra("BookmarkIntent");
+        mProfileIntent = getIntent().getStringExtra("ProfileIntent");
+        mEventBookmarkIntent = getIntent().getStringExtra("EventBookmarkIntent");
+
+        if (mProfileIntent!=null){
+            mReceivedIntent = mProfileIntent;
+        }else if (mBookmarkIntent!=null){
+            mReceivedIntent = mBookmarkIntent;
+        }else if (mEventBookmarkIntent!=null){
+            mReceivedIntent = mEventBookmarkIntent;
+        }else {
+            mReceivedIntent = null;
+        }
+
+        // [START initialize_fblogin]
+        // Initialize Facebook Login button
 
         login = findViewById(R.id.button_login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +137,14 @@ public class LoginActivity extends MyActivity  {
         // Pass the activity result back to the Facebook SDK
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
+
+
+    public void forgetPassword(View view) {
+        Intent mainIntent = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
+        LoginActivity.this.startActivity(mainIntent);
+    }
+
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
         // [START_EXCLUDE silent]
@@ -148,11 +158,11 @@ public class LoginActivity extends MyActivity  {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.d(TAG, "signUpWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.w(TAG, "signUpWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
@@ -163,11 +173,6 @@ public class LoginActivity extends MyActivity  {
                         // [END_EXCLUDE]
                     }
                 });
-    }
-
-    public void forgetPassword(View view) {
-        Intent mainIntent = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
-        LoginActivity.this.startActivity(mainIntent);
     }
 
 

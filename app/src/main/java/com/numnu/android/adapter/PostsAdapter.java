@@ -35,8 +35,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.post_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.post_item, parent, false);
 
         ViewHolder myViewHolder = new ViewHolder(view);
         return myViewHolder;

@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -42,8 +43,6 @@ import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.utils.PreferencesHelper;
-import com.robertlevonyan.views.chip.Chip;
-import com.robertlevonyan.views.chip.OnChipClickListener;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -63,6 +62,10 @@ public class CompleteSignupActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FoodAdapter adapter;
     LinearLayout FoodLinearLay;
+    TextView AddTxt;
+    String AutocomStr;
+    AutoCompleteTextView autoComplete;
+    String[] arr = {"Biryani", "Mutton Biryani","Mutton Ticka","Mutton 65","Mutton Curry","Mutton Fry","Chicken Curry","Chicken 65","Chicken Fry"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,18 +93,17 @@ public class CompleteSignupActivity extends AppCompatActivity {
         mDob = findViewById(R.id.et_signup_dob);
 //        mFoodPreferences = findViewById(R.id.et_signup_food_preferences);
         mCompleteSignUp = findViewById(R.id.button_complete_signup);
-        mFoodPreferences.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FoodLinearLay.setVisibility(View.VISIBLE);
-                hideKeyboardFrom();
-            }
-        });
+//        mFoodPreferences.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FoodLinearLay.setVisibility(View.VISIBLE);
+//                hideKeyboardFrom();
+//            }
+//        });
+
 
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
-
-        Chip chip = findViewById(R.id.et_signup_food_preferences);
 
 //        final RecipientEditTextView recipientEditTextView = findViewById(R.id.et_signup_food_preferences);
 //        recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());

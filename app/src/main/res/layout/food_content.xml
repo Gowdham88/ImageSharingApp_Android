@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        style="@style/TagStyle"
-        android:layout_marginTop="5dp"
-        android:id="@+id/food_txt"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/chips_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="food" />
+        android:layout_below="@+id/business_name"
+        android:layout_toRightOf="@id/card_view"
+        android:scrollbarSize="0.5dp">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tag_background"
+            android:layout_marginBottom="@dimen/event_details_margin"
+            android:layout_marginLeft="@dimen/event_details_margin"
+            android:layout_marginRight="@dimen/event_details_margin"
+            android:layout_marginTop="@dimen/event_details_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:id="@+id/food_txt"
+                android:text="food" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/ic_close"
+                android:background="@color/materialWhiteDark"
+                android:id="@+id/cancel_button"/>
+
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 </LinearLayout>

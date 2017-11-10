@@ -1,13 +1,21 @@
 package com.numnu.android.adapter;
 
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
+import com.numnu.android.fragments.EventDetail.EventMenuItemsFragment;
+import com.numnu.android.fragments.SettingsFragment;
+import com.numnu.android.fragments.home.EventsFragment;
+import com.numnu.android.fragments.home.SliceFragment;
 
 import java.util.ArrayList;
 
@@ -34,7 +42,49 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
+        holder.profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        holder.cottageHouseText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventBusinessFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        holder.barbequeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventMenuItemsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.eventName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
     }
 
@@ -46,10 +96,16 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageViewIcon;
         private  ImageView profileImage;
+        private TextView eventName;
+        private TextView cottageHouseText;
+        private TextView barbequeText;
         public ViewHolder(View itemView) {
             super(itemView);
             this.imageViewIcon = itemView.findViewById(R.id.content_image);
             this.profileImage = itemView.findViewById(R.id.slice_profile_image);
+            this.cottageHouseText = itemView.findViewById(R.id.cottage_house_txt);
+            this.barbequeText = itemView.findViewById(R.id.barbq_txt);
+            this.eventName = itemView.findViewById(R.id.barbados_txt);
         }
     }
 }
