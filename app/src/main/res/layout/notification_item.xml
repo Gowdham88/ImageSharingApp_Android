@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/notification_item_margin"
+    android:layout_margin="@dimen/activity_horizontal_margin"
     tools:context="com.numnu.android.activity.HomeActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView

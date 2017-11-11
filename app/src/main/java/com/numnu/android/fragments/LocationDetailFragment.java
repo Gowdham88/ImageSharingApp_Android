@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
-import com.numnu.android.fragments.EventDetail.EventItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.PreferencesHelper;
@@ -169,7 +169,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventPostsFragment(), "Posts");
-        adapter.addFragment(new EventItemsFragment(), "Items");
+        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
         viewPager.setAdapter(adapter);
     }
 

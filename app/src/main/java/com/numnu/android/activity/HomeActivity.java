@@ -11,19 +11,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetailFragment;
 import com.numnu.android.fragments.HomeFragment;
-import com.numnu.android.fragments.HomeSearchFragment;
 import com.numnu.android.fragments.NotificationFragment;
-import com.numnu.android.fragments.ProfileFragment;
-import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.fragments.UserPostsFragment;
-import com.numnu.android.fragments.home.EventsFragment;
-import com.numnu.android.fragments.home.SliceFragment;
-import com.numnu.android.utils.Utils;
+import com.numnu.android.fragments.search.SliceFragment;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

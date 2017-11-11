@@ -3,14 +3,8 @@ package com.numnu.android.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +14,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
-import com.numnu.android.fragments.EventDetail.EventPostsFragment;
-import com.numnu.android.fragments.home.PostsFragment;
-import com.numnu.android.utils.AppBarStateChangeListener;
-import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by thulir on 9/10/17.
@@ -53,6 +40,8 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
         final View view = inflater.inflate(R.layout.item_header, container, false);
 
+        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        toolbarBackImage.setOnClickListener(this);
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.item);
 
@@ -94,6 +83,11 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     @Override
     public void onClick(View view) {

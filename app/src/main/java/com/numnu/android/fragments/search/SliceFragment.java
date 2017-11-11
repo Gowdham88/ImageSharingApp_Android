@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.home;
+package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.numnu.android.R;
 import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.ProfileFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.utils.PreferencesHelper;
@@ -141,7 +141,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventItemsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventItemsCategoryFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

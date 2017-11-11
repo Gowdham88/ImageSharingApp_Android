@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
 import com.numnu.android.fragments.EventDetailFragment;
 import com.numnu.android.fragments.ItemDetailFragment;
 
@@ -62,7 +63,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             public void onClick(View view) {
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventItemsListFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -71,7 +72,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventItemsListFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.home;
+package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentEventsAdapter;
-import com.numnu.android.adapter.CurrentUpEventsAdapter;
-import com.numnu.android.adapter.PastEventsAdapter;
 
 import java.util.ArrayList;
 

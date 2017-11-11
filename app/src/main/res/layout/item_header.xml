@@ -67,10 +67,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/event_details_margin"
-            android:layout_marginRight="@dimen/event_details_margin"
-            android:layout_marginLeft="@dimen/event_details_margin"
-            android:layout_marginTop="@dimen/event_details_margin"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
             android:orientation="horizontal">
 
         <TextView
@@ -153,8 +153,8 @@
             android:gravity="center_vertical"
             android:id="@+id/event_txt" />
         <com.numnu.android.utils.ExpandableTextView
-            android:layout_marginLeft="@dimen/event_details_margin"
-            android:layout_marginRight="@dimen/event_details_margin"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_small"
             android:layout_marginTop="16dp"
             android:id="@+id/event_description"
             android:layout_width="wrap_content"
@@ -171,7 +171,7 @@
             android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
             android:drawableRight="@drawable/ic_chevron_right_black_24dp"
             android:gravity="center_vertical"
-            android:padding="@dimen/settings_padding"
+            android:padding="@dimen/spacing_small"
             android:text="View item"
             android:layout_below="@id/event_description"
             android:focusable="true" />

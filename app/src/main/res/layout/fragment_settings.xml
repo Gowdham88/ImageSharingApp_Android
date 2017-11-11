@@ -62,11 +62,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
-                android:layout_marginTop="@dimen/settings_padding"
+                android:layout_marginTop="@dimen/spacing_small"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/share_the_app"
                 android:focusable="true" />
 
@@ -79,7 +79,7 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/rate_the_app"
                 android:focusable="true" />
 
@@ -92,7 +92,7 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/terms_of_service"
                 android:focusable="true" />
 
@@ -105,7 +105,7 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/privacy_policy"
                 android:focusable="true" />
 
@@ -115,7 +115,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/bookmarks"
                 android:textColor="@android:color/darker_gray" />
 
@@ -128,7 +128,7 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/events"
                 android:focusable="true" />
 
@@ -141,7 +141,7 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/business"
                 android:focusable="true" />
 
@@ -154,7 +154,7 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/items"
                 android:focusable="true" />
 
@@ -167,7 +167,7 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/posts"
                 android:focusable="true" />
 
@@ -180,7 +180,7 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/users"
                 android:focusable="true" />
 
@@ -191,7 +191,7 @@
                 android:background="@android:color/darker_gray"
                 android:clickable="true"
                 android:gravity="center_vertical|center"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="Logout"
                 android:focusable="true" />
 

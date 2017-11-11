@@ -44,9 +44,9 @@
                 android:id="@+id/text_user_name_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/settings_padding"
+                android:layout_marginTop="@dimen/spacing_small"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/user_name" />
 
             <EditText
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/name" />
 
             <EditText
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/city" />
 
             <EditText
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/gender" />
             <RadioGroup
 
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="Date of Birth" />
 
             <EditText
@@ -139,7 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="@dimen/settings_padding"
+                android:padding="@dimen/spacing_small"
                 android:text="@string/foodpreferences" />
             <LinearLayout
                 android:layout_width="match_parent"

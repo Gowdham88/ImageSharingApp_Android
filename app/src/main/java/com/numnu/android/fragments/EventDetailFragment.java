@@ -29,7 +29,7 @@ import android.widget.Toast;
 import com.numnu.android.R;
 import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
@@ -219,7 +219,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventItemsFragment(), "Items");
+        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
         adapter.addFragment(new EventPostsFragment(), "Posts");
         viewPager.setAdapter(adapter);
     }
