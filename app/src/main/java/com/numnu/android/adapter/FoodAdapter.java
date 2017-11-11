@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.CompleteSignupActivity;
+
+import java.util.ArrayList;
 
 /**
  * Created by lenovo on 11/6/2017.
@@ -17,24 +20,30 @@ import com.numnu.android.activity.CompleteSignupActivity;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
+
     String[] arr = {"Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani",  "Biryani", "Biryani"};
 //
     Context context;
     LayoutInflater layout;
+    ArrayList<String> list;
 
-    public FoodAdapter(CompleteSignupActivity completeSignupActivity, Context context) {
+    public FoodAdapter( Context context, ArrayList<String> mylist) {
         this.context = context;
+        this.list=mylist;
         layout = LayoutInflater.from(context);
 
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView FoodText;
+        ImageView cancleimg;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             FoodText=(TextView)itemView.findViewById(R.id.food_txt);
+            cancleimg=(ImageView)itemView.findViewById(R.id.cancel_button);
         }
     }
 
@@ -48,7 +57,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder Holder, final int position) {
 
-        Holder.FoodText.setText(arr[position]);
+       Holder.FoodText.setText( arr[position]);
+       Holder.cancleimg.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Toast.makeText(context, "item removed", Toast.LENGTH_SHORT).show();
+//            list.remove(position);
+//            notifyDataSetChanged();
+           }
+       });
 
 //
 
@@ -56,6 +73,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
+//        return (list == null) ? 0 : list.size();
         return arr.length;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -80,6 +80,8 @@
             <EditText
                 android:id="@+id/et_signup_city"
                 android:layout_width="match_parent"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 />
 
@@ -133,11 +135,13 @@
                 android:id="@+id/et_signup_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
                 android:inputType="date" />
             <TextView
                 android:id="@+id/text_food_preferences_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
                 android:gravity="center_vertical"
                 android:padding="@dimen/settings_padding"
                 android:text="@string/foodpreferences" />

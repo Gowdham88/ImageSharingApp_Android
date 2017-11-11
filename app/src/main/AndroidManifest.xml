@@ -22,7 +22,7 @@
             tools:replace="android:value" />
 
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.CompleteSignupActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -70,10 +70,10 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".activity.CompleteSignupActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+        <!--<activity-->
+            <!--android:name=".activity.CompleteSignupActivity"-->
+            <!--android:configChanges="orientation"-->
+            <!--android:screenOrientation="portrait"/>-->
 
 
     </application>

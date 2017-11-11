@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/signup_btn_facebook"
+        android:id="@+id/sinup_btn_facebook"
         style="@style/facebook_login_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/et_password_layout"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"
         android:layout_marginLeft="@dimen/signup_margin"
         app:layout_constraintLeft_toLeftOf="parent"
