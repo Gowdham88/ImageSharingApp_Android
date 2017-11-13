@@ -18,13 +18,6 @@ public class PreferencesHelper {
     public static final String PREFERENCE_PROFILE_PIC = ".profilePic";
     public static final String PREFERENCE_STATUS = ".status";
     public static final String PREFERENCE_IS_FIRST ="IsFirst";
-    public static final String PREFERENCE_SYNCED ="synced";
-    public static final String PREFERENCE_PWD ="pass";
-    public static final String PREFERENCE_OFFLINE_AMOUNT_LIMIT ="offline_limit";
-    public static final String PREFERENCE_ONLINE_AMOUNT_LIMIT ="online_limit";
-    public static final String PREFERENCE_COLLECTED_AMOUNT ="collected_amount";
-    public static final String PREFERENCE_COLLECTION_DATE ="collected_date";
-    public static final String PREFERENCE_LAST_BILL_NO ="last_bill_no";
     public static final String PREFERENCE_NAME ="name";
     public static final String PREFERENCE_CITY ="city";
     public static final String PREFERENCE_DOB ="dob";

@@ -18,7 +18,7 @@
                 android:id="@+id/search_food_layout"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:background="@color/onboardButton">
+                android:background="@color/colorAccent">
 
                 <ImageView
                     android:layout_width="45dp"
@@ -57,7 +57,7 @@
                 android:id="@+id/search_location_layout"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:background="@color/onboardButton">
+                android:background="@color/colorAccent">
 
                 <ImageView
                     android:layout_width="45dp"
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                app:tabTextColor="@color/tab_text_color"
+                app:tabTextColor="@color/dark_grey"
                 app:tabSelectedTextColor="@color/black"
                 app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                 app:tabMode="scrollable"

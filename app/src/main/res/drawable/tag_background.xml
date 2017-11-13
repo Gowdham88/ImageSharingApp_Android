@@ -3,5 +3,5 @@
     <padding android:left="7dp" android:top="7dp"
         android:right="7dp" android:bottom="7dp" />
     <corners android:radius="5dp" />
-    <solid android:color="@color/tag_grey"/>
+    <solid android:color="@color/lighter_grey"/>
 </shape>

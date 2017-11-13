@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         int fragments = getFragmentManager().getBackStackEntryCount();
-        if (fragments == 1) {
+        if (fragments <= 1) {
             toolbarBackIcon.setVisibility(View.GONE);
         }
         else {
@@ -105,11 +105,9 @@ public class HomeFragment extends Fragment {
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nestedScrollView.setVisibility(View.GONE);
-                tabLayout.setVisibility(View.VISIBLE);
-                viewPager.setVisibility(View.VISIBLE);
-                setupViewPager(viewPager);
-                tabLayout.setupWithViewPager(viewPager);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, HomeSearchFragment.newInstance());
+                transaction.addToBackStack(null).commit();
             }
         });
         locationIcon.setOnClickListener(new View.OnClickListener() {
@@ -300,46 +298,6 @@ public class HomeFragment extends Fragment {
             pastEventsList.setAdapter(pastEventsAdapter);
 
 
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventsFragment(), "Events");
-        adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new SearchItemsFragment(), "Items");
-        adapter.addFragment(new PostsFragment(), "Posts");
-        adapter.addFragment(new UsersFragment(), "Users");
-        adapter.addFragment(new SearchListFragment(), "Lists");
-        viewPager.setAdapter(adapter);
-    }
-
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
     }
 
 

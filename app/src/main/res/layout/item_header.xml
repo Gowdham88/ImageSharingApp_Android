@@ -165,7 +165,7 @@
             android:id="@+id/text_terms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/tag_grey"
+            android:background="@color/lighter_grey"
             android:clickable="true"
             android:layout_marginTop="10dp"
             android:drawableEnd="@drawable/ic_chevron_right_black_24dp"

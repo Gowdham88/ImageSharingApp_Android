@@ -62,7 +62,7 @@ public class HomeActivity extends MyActivity {
             //Manually displaying the first fragment - one time only
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
-            transaction.addToBackStack(null).commit();
+            transaction.commit();
         }else if (bookmarkBundle != null && bookmarkBundle.equals("bookmark")) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SliceFragment.newInstance());

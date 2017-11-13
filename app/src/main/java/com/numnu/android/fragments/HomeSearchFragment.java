@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -18,6 +20,8 @@ import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.search.SearchItemsFragment;
+import com.numnu.android.fragments.search.SearchListFragment;
 import com.numnu.android.fragments.search.UsersFragment;
 
 import java.util.ArrayList;
@@ -33,6 +37,8 @@ public class HomeSearchFragment extends Fragment {
     private Context context;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private NestedScrollView nestedScrollView;
+    private ImageView toolbarBackIcon;
 
     public static HomeSearchFragment newInstance() {
         return new HomeSearchFragment();
@@ -48,18 +54,30 @@ public class HomeSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view=inflater.inflate(R.layout.fragment_home_search, container, false);
+        View view=inflater.inflate(R.layout.fragment_home, container, false);
 
         viewPager = view.findViewById(R.id.viewpager);
         searchViewFood=view.findViewById(R.id.et_search_food);
         searchViewLocation=view.findViewById(R.id.et_search_location);
         tabLayout = view.findViewById(R.id.tabs);
+        nestedScrollView = view.findViewById(R.id.events_scroll_view);
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(getString(R.string.app_name));
-
+        toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+        
+        nestedScrollView.setVisibility(View.GONE);
+        tabLayout.setVisibility(View.VISIBLE);
+        viewPager.setVisibility(View.VISIBLE);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+        
         setupSearchListener();
 
         return view;
@@ -105,12 +123,13 @@ public class HomeSearchFragment extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
+        adapter.addFragment(new SearchItemsFragment(), "Items");
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
-        adapter.addFragment(new EventBusinessFragment(), "Lists");
+        adapter.addFragment(new SearchListFragment(), "Lists");
         viewPager.setAdapter(adapter);
     }
+
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
