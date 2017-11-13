@@ -60,7 +60,7 @@
     </style>
 
     <style name="login_heading_style">
-        <item name="android:textSize">@dimen/login_inner_app_or_text_size</item>
+        <item name="android:textSize">@dimen/font_larger</item>
         <item name="fontPath">fonts/Avenir-Roman.ttf</item>
     </style>
 

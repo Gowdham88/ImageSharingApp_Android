@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsFragment;
-import com.numnu.android.fragments.home.EventsFragment;
-import com.numnu.android.fragments.home.PostsFragment;
-import com.numnu.android.fragments.home.UsersFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
+import com.numnu.android.fragments.search.EventsFragment;
+import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.search.UsersFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +105,7 @@ public class HomeSearchFragment extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventItemsFragment(), "Items");
+        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
         adapter.addFragment(new EventBusinessFragment(), "Lists");

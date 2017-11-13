@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.home;
+package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.os.Bundle;

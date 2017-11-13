@@ -33,7 +33,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/numnu"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/login_app_text_size"
+        android:textSize="@dimen/font_extra_large"
         style="@style/SplashTextStyle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

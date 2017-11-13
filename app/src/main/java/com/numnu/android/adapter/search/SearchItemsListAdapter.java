@@ -1,4 +1,4 @@
-package com.numnu.android.adapter;
+package com.numnu.android.adapter.search;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
@@ -11,9 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetailFragment;
-import com.numnu.android.fragments.ItemInfoFragment;
-import com.squareup.picasso.Picasso;
+import com.numnu.android.fragments.ItemDetailFragment;
 
 import java.util.ArrayList;
 
@@ -21,12 +19,12 @@ import java.util.ArrayList;
  * Created by thulir on 10/10/17.
  */
 
-public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapter.ViewHolder> {
+public class SearchItemsListAdapter extends RecyclerView.Adapter<SearchItemsListAdapter.ViewHolder> {
 
-    private Context context;
-    private ArrayList<String> stringArrayList = new ArrayList<>();
+    Context context;
+    ArrayList<String> stringArrayList = new ArrayList<>();
 
-    public SearchEventsAdapter(Context context, ArrayList<String> stringArrayList) {
+    public SearchItemsListAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
         this.stringArrayList=stringArrayList;
     }
@@ -34,10 +32,12 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.search_event_item, parent, false);
+                .inflate(R.layout.items_list_item, parent, false);
 
+        //view.setOnClickListener(MainActivity.myOnClickListener);
 
-        return new ViewHolder(view);
+        ViewHolder myViewHolder = new ViewHolder(view);
+        return myViewHolder;
     }
 
     @Override
@@ -48,16 +48,16 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
             public void onClick(View view) {
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
-
         holder.textViewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -68,15 +68,15 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
         return stringArrayList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
         private TextView textViewName;
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.text_event);
+            this.textViewName =  itemView.findViewById(R.id.item_name);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
-            this.imageViewIcon = itemView.findViewById(R.id.current_event_image);
+            this.imageViewIcon = itemView.findViewById(R.id.item_image);
         }
     }
 }

@@ -2,7 +2,6 @@ package com.numnu.android.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,10 +14,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,20 +27,17 @@ import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PastEventsAdapter;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsFragment;
-import com.numnu.android.fragments.home.CurrentEventsFragment;
-import com.numnu.android.fragments.home.EventsFragment;
-import com.numnu.android.fragments.home.PastEventsFragment;
-import com.numnu.android.fragments.home.PostsFragment;
-import com.numnu.android.fragments.home.SearchListFragment;
-import com.numnu.android.fragments.home.UsersFragment;
+import com.numnu.android.fragments.search.CurrentEventsFragment;
+import com.numnu.android.fragments.search.EventsFragment;
+import com.numnu.android.fragments.search.PastEventsFragment;
+import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.search.SearchItemsFragment;
+import com.numnu.android.fragments.search.SearchListFragment;
+import com.numnu.android.fragments.search.UsersFragment;
 import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by thulir on 9/10/17.
@@ -312,7 +306,7 @@ public class HomeFragment extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventItemsFragment(), "Items");
+        adapter.addFragment(new SearchItemsFragment(), "Items");
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
         adapter.addFragment(new SearchListFragment(), "Lists");

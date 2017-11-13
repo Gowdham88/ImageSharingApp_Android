@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.SettingsFragment;
-import com.numnu.android.fragments.home.EventsFragment;
-import com.numnu.android.fragments.home.SliceFragment;
+import com.numnu.android.fragments.search.EventsFragment;
+import com.numnu.android.fragments.search.SliceFragment;
 
 import java.util.ArrayList;
 
@@ -73,7 +73,7 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventItemsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventItemsCategoryFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

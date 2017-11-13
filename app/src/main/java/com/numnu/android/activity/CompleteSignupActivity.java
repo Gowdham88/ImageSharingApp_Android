@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.ColorSpace;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -17,12 +18,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -46,6 +50,7 @@ import com.numnu.android.utils.PreferencesHelper;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -65,24 +70,68 @@ public class CompleteSignupActivity extends AppCompatActivity {
     TextView AddTxt;
     String AutocomStr;
     AutoCompleteTextView autoComplete;
-    String[] arr = {"Biryani", "Mutton Biryani","Mutton Ticka","Mutton 65","Mutton Curry","Mutton Fry","Chicken Curry","Chicken 65","Chicken Fry"};
+    String ItemModelList;
+    String mainAutotxt;
+    ArrayList<String> mylist;
 
+    private RecyclerView myRecyclerView;
+    private LinearLayoutManager linearLayoutManager;
+
+
+    String[] arr = {"Biryani", "Mutton Biryani","Mutton Ticka","Mutton 65", "Idly", "Idly Uttapam", "Idly Sambar","Mutton Curry","Mutton Fry","Chicken Curry","Chicken 65","Chicken Fry"};
+    String AutocompleteStr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_signup);
-
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Complete Sign Up");
         recyclerView=(RecyclerView)findViewById(R.id.food_recyclerview);
         FoodLinearLay=(LinearLayout) findViewById(R.id.food_layout);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        adapter = new FoodAdapter(this,CompleteSignupActivity.this);
-//        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-        ImageView toolbarBackIcon = findViewById(R.id.toolbar_back);
-        toolbarBackIcon.setVisibility(View.GONE);
 
+
+//
+
+
+//        adapter.setClickListener(this);
+        autoComplete =(AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
+        AddTxt=(TextView)findViewById(R.id.add_txt);
+
+
+        final ArrayAdapter<String> vairam = new ArrayAdapter<String>(this, R.layout.auto_dialog,R.id.lbl_name, arr);
+        autoComplete.setThreshold(1);
+        autoComplete.setAdapter(vairam);
+
+
+        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemModelList = vairam.getItem(position).toString();
+//                list.add(AutocomStr);
+                AddTxt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                         mylist = new ArrayList<String>();
+                        mylist.add("AutocomStr");
+
+//                        ItemModelList.add(AutocomStr);
+                        Toast.makeText(CompleteSignupActivity.this,AutocomStr, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+            }
+        });
+//         mainAutotxt=AutocomStr;
+//        ItemModelList = new ArrayList<String>();
+
+
+
+
+        adapter = new FoodAdapter(context,mylist);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+//
         mUserName = findViewById(R.id.et_signup_user_name);
         mName = findViewById(R.id.et_signup_name);
         mCity = findViewById(R.id.et_signup_city);
@@ -116,16 +165,16 @@ public class CompleteSignupActivity extends AppCompatActivity {
 
 
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-            if (checkedId == R.id.male_radio) {
-                mGenderValue = "Male";
+                if (checkedId == R.id.male_radio) {
+                    mGenderValue = "Male";
 
-            } else  if (checkedId == R.id.female_radio) {
-                mGenderValue = "Female";
+                } else  if (checkedId == R.id.female_radio) {
+                    mGenderValue = "Female";
+                }
             }
-        }
         });
 
         mDob.setOnClickListener(new View.OnClickListener() {
@@ -154,35 +203,35 @@ public class CompleteSignupActivity extends AppCompatActivity {
                 String city = mCity.getText().toString().trim();
                 String gender = mGenderValue.trim();
                 String dob = mDob.getText().toString().trim();
-                String foodPreferences = mFoodPreferences.getText().toString();
+//                String foodPreferences = mFoodPreferences.getText().toString();
 
 
                 if (userName.equals("")) {
                     Toast.makeText(context, "UserName is mandatory", Toast.LENGTH_SHORT).show();
                 }
-//                 else if (!(userName.equals("") && name.equals("") && city.equals("") && dob.equals("") && foodPreferences.equals(""))) {
-                else {
-                        Intent intent = new Intent(CompleteSignupActivity.this, HomeActivity.class);
-                        intent.putExtra("completesignup", "showprofilefragment");
-                        startActivity(intent);
+                else if (!(userName.equals("") && name.equals("") && city.equals("") && dob.equals(""))) {
 
-                        CompleteSignupActivity.this.finish();
-                        PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_LOGGED_IN, true);
-                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_NAME, name);
-                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_USER_NAME, userName);
-                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_CITY, city);
-                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
-                        if (!(gender.equals(""))) {
-                            PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_GENDER, gender);
-                        }
+                    Intent intent = new Intent(CompleteSignupActivity.this, HomeActivity.class);
+                    intent.putExtra("completesignup", "showprofilefragment");
+                    startActivity(intent);
 
-                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
+                    CompleteSignupActivity.this.finish();
+                    PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_LOGGED_IN, true);
+                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_NAME, name);
+                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_USER_NAME, userName);
+                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_CITY, city);
+                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
+                    if (!(gender.equals(""))) {
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_GENDER, gender);
                     }
+
+                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
+                }
 
             }
         });
-
     }
+
 
     public void hideKeyboardFrom() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);

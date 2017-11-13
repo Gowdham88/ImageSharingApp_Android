@@ -31,7 +31,7 @@
         android:padding="16dp"
         fontPath="fonts/avenir95black.ttf"
         android:lineSpacingExtra="10dp"
-        android:textSize="@dimen/onboard_text_size"
+        android:textSize="@dimen/font_larger"
         android:textColor="@android:color/white"
         android:text="@string/onboard_text"
         app:layout_constraintBottom_toTopOf="@+id/button_letme"

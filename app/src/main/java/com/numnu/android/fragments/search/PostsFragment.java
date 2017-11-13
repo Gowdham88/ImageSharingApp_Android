@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.home;
+package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.PostsAdapter;
-import com.numnu.android.adapter.UsersAdapter;
 
 import java.util.ArrayList;
 
@@ -20,12 +19,13 @@ import java.util.ArrayList;
  * Created by thulir on 9/10/17.
  */
 
-public class UsersFragment extends Fragment {
-    private RecyclerView usersRecyclerView;
+public class PostsFragment extends Fragment {
+
+    private RecyclerView menuitemsRecyclerView;
     Context context;
 
-    public static UsersFragment newInstance() {
-        UsersFragment fragment = new UsersFragment();
+    public static PostsFragment newInstance() {
+        PostsFragment fragment = new PostsFragment();
         return fragment;
     }
 
@@ -37,17 +37,20 @@ public class UsersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_users, container, false);
-        usersRecyclerView = view.findViewById(R.id.users_recycler);
+
+        View view = inflater.inflate(R.layout.fragment_posts, container, false);
+
+        menuitemsRecyclerView = view.findViewById(R.id.reviews_recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        usersRecyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(usersRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
-        usersRecyclerView.addItemDecoration(dividerItemDecoration);
+        menuitemsRecyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(menuitemsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
+        menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
 
         setupRecyclerView();
 
         return view;
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -55,16 +58,16 @@ public class UsersFragment extends Fragment {
         this.context = context;
     }
 
+
     private void setupRecyclerView() {
         ArrayList<String> stringlist = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            stringlist.add("Users Item " + i);
+            stringlist.add("Post item " + i);
 
-            UsersAdapter usersAdapter = new UsersAdapter(context, stringlist);
-            usersRecyclerView.setAdapter(usersAdapter);
+            PostsAdapter currentUpAdapter = new PostsAdapter(context, stringlist);
+            menuitemsRecyclerView.setAdapter(currentUpAdapter);
         }
 
     }
 }
-

@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
-import com.numnu.android.fragments.home.PostsFragment;
+import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;

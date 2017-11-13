@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.EventDetail;
+package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventItemsAdapter;
+import com.numnu.android.adapter.search.SearchItemsListAdapter;
 
 import java.util.ArrayList;
 
@@ -19,13 +19,13 @@ import java.util.ArrayList;
  * Created by thulir on 9/10/17.
  */
 
-public class EventItemsFragment extends Fragment {
+public class SearchItemsFragment extends Fragment {
 
     private RecyclerView menuitemsRecyclerView;
     private Context context;
 
-    public static EventItemsFragment newInstance() {
-        return new EventItemsFragment();
+    public static SearchItemsFragment newInstance() {
+        return new SearchItemsFragment();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class EventItemsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-    View  view= inflater.inflate(R.layout.fragment_event_menu_items, container, false);
+    View  view= inflater.inflate(R.layout.fragment_search_category_items, container, false);
 
     menuitemsRecyclerView = view.findViewById(R.id.menu_items_recyclerview);
     RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
@@ -63,7 +63,7 @@ public class EventItemsFragment extends Fragment {
         for (int i = 1; i <= 10; i++) {
             stringlist.add("Menu item " + i);
 
-            EventItemsAdapter currentUpAdapter = new EventItemsAdapter(context, stringlist);
+            SearchItemsListAdapter currentUpAdapter = new SearchItemsListAdapter(context, stringlist);
             menuitemsRecyclerView.setAdapter(currentUpAdapter);
         }
 
