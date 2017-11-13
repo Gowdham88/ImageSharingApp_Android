@@ -27,19 +27,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/card_view"
-        android:text="Event Name  "
+        android:text="Event Name"
         android:layout_marginTop="4dp"
         android:textSize="16sp"
         style="@style/BoldTextStyle"/>
-    <RelativeLayout
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_event">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/event_item_city"
         android:text=" Montreal"
+        android:layout_below="@id/text_event"
         android:drawableLeft="@drawable/ic_city"
         android:layout_marginTop="4dp"
         android:textSize="12sp"
@@ -51,10 +49,10 @@
         android:text=" 09/11/2017"
         android:layout_marginTop="4dp"
         android:textSize="12sp"
+        android:layout_below="@id/text_event"
         android:layout_marginLeft="10dp"
         android:drawableLeft="@drawable/ic_calendar_dim"
         android:layout_toRightOf="@id/event_item_city"
         android:layout_toEndOf="@id/event_item_city"
         />
-    </RelativeLayout>
 </RelativeLayout>

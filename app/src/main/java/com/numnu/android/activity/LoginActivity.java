@@ -193,32 +193,13 @@ public class LoginActivity extends MyActivity  {
                             String profileBundle = "profile";
                             String eventBookmarkBundle = "eventbookmark";
                             if (mReceivedIntent == null){
-                                Intent mainIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                LoginActivity.this.startActivity(mainIntent);
-                                LoginActivity.this.finish();
-                                PreferencesHelper.setPreference(LoginActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
+                                goToHomeActivity(null,null,email);
                             } else if (mReceivedIntent.equals(bookmarkBundle)) {
-                                Intent mainIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                mainIntent.putExtra("BookmarkIntent",bookmarkBundle);
-                                LoginActivity.this.startActivity(mainIntent);
-                                LoginActivity.this.finish();
-                                PreferencesHelper.setPreference(LoginActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
+                                goToHomeActivity("BookmarkIntent",bookmarkBundle,email);
                             }else if (mReceivedIntent.equals(profileBundle)){
-                                Intent mainIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                mainIntent.putExtra("ProfileIntent",profileBundle);
-                                LoginActivity.this.startActivity(mainIntent);
-                                LoginActivity.this.finish();
-                                PreferencesHelper.setPreference(LoginActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
+                                goToHomeActivity("ProfileIntent",profileBundle,email);
                             }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
-                                Intent mainIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                mainIntent.putExtra("EventBookmarkIntent", eventBookmarkBundle);
-                                LoginActivity.this.startActivity(mainIntent);
-                                LoginActivity.this.finish();
-                                PreferencesHelper.setPreference(LoginActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
+                                goToHomeActivity("EventBookmarkIntent",eventBookmarkBundle,email);
                             }
                         } else {
                             // If sign in fails, display a message to the user.
@@ -261,10 +242,6 @@ public class LoginActivity extends MyActivity  {
         return valid;
     }
 
-
-
-
-
     @Override
     public void onStop() {
         super.onStop();
@@ -277,30 +254,30 @@ public class LoginActivity extends MyActivity  {
         String profileBundle = "profile";
         String eventBookmarkBundle = "eventbookmark";
         if (mReceivedIntent == null){
-            Intent mainIntent = new Intent(this,SignupActivity.class);
-            this.startActivity(mainIntent);
-            this.finish();
-        }
-        else if (mReceivedIntent.equals(bookmarkBundle)) {
-            Intent mainIntent = new Intent(LoginActivity.this, SignupActivity.class);
-//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mainIntent.putExtra("BookmarkIntent",bookmarkBundle);
-            LoginActivity.this.startActivity(mainIntent);
-            LoginActivity.this.finish();
-
+            signUpCall(null,null);
+        } else if (mReceivedIntent.equals(bookmarkBundle)) {
+            signUpCall("BookmarkIntent",bookmarkBundle);
         }else if (mReceivedIntent.equals(profileBundle)){
-            Intent mainIntent = new Intent(LoginActivity.this, SignupActivity.class);
-//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mainIntent.putExtra("ProfileIntent",bookmarkBundle);
-            LoginActivity.this.startActivity(mainIntent);
-            LoginActivity.this.finish();
+            signUpCall("ProfileIntent",profileBundle);
         }else if (mReceivedIntent.equals(eventBookmarkBundle)){
-            Intent mainIntent = new Intent(LoginActivity.this, SignupActivity.class);
-//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mainIntent.putExtra("EventBookmarkIntent",bookmarkBundle);
-            LoginActivity.this.startActivity(mainIntent);
-            LoginActivity.this.finish();
+            signUpCall("EventBookmarkIntent",bookmarkBundle);
         }
+    }
+
+    private void signUpCall(String intentName, String intentValue){
+        Intent mainIntent = new Intent(LoginActivity.this, SignupActivity.class);
+        mainIntent.putExtra(intentName,intentValue);
+        LoginActivity.this.startActivity(mainIntent);
+        LoginActivity.this.finish();
+    }
+
+    private void goToHomeActivity(String intentName, String intentValue, String email){
+        Intent mainIntent = new Intent(LoginActivity.this, HomeActivity.class);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        mainIntent.putExtra(intentName,intentValue);
+        LoginActivity.this.startActivity(mainIntent);
+        LoginActivity.this.finish();
+        PreferencesHelper.setPreference(LoginActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
     }
 }
 
