@@ -161,12 +161,6 @@
                 </android.support.v7.widget.RecyclerView>
 
             </LinearLayout>
-            <!--<com.android.ex.chips.RecipientEditTextView-->
-            <!--android:id="@+id/et_signup_food_preferences"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--/>-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.CompleteSignupActivity;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     LayoutInflater layout;
     ArrayList<String> list;
 
-    public FoodAdapter( Context context, ArrayList<String> mylist) {
+    public FoodAdapter(Context context, ArrayList<String> mylist) {
         this.context = context;
         this.list=mylist;
         layout = LayoutInflater.from(context);
@@ -38,12 +38,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView FoodText;
         ImageView cancleimg;
+        LinearLayout linearLay;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             FoodText=(TextView)itemView.findViewById(R.id.food_txt);
-            cancleimg=(ImageView)itemView.findViewById(R.id.cancel_button);
+            cancleimg=(ImageView)itemView.findViewById(R.id.food_cancel_button);
+            linearLay=(LinearLayout)itemView.findViewById(R.id.food_linlay);
+
         }
     }
 
@@ -57,13 +60,13 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder Holder, final int position) {
 
-       Holder.FoodText.setText( arr[position]);
+       Holder.FoodText.setText( list.get(position));
        Holder.cancleimg.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Toast.makeText(context, "item removed", Toast.LENGTH_SHORT).show();
-//            list.remove(position);
-//            notifyDataSetChanged();
+//               Toast.makeText(context,  list.remove(position)+ " "+"removed", Toast.LENGTH_SHORT).show();
+        list.remove(position);
+        notifyDataSetChanged();
            }
        });
 
@@ -73,8 +76,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-//        return (list == null) ? 0 : list.size();
-        return arr.length;
+        return (list == null) ? 0 : list.size();
+//        return arr.length;
     }
 }
 

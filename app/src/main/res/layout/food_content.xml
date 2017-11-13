@@ -6,17 +6,15 @@
 
     <HorizontalScrollView
         android:id="@+id/chips_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/business_name"
-        android:layout_toRightOf="@id/card_view"
         android:scrollbarSize="0.5dp">
 
 
         <LinearLayout
+            android:id="@+id/food_linlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/tag_background"
             android:layout_marginBottom="@dimen/spacing_small"
             android:layout_marginLeft="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
@@ -27,16 +25,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
+                android:background="@drawable/tag_background"
                 android:id="@+id/food_txt"
                 android:text="food" />
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:id="@+id/food_cancel_button"
+                android:layout_width="28dp"
+                android:layout_height="24dp"
                 android:layout_marginTop="2dp"
-                android:src="@drawable/ic_close"
-                android:background="@color/materialWhiteDark"
-                android:id="@+id/cancel_button"/>
+                android:padding="4dp"
+                android:src="@drawable/redcross" />
 
 
         </LinearLayout>

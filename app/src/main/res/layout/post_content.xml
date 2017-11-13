@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/toolbar_background_color">
     <LinearLayout
+        android:id="@+id/post_lin_lay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -36,8 +37,9 @@
             />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="15dp"
+            android:id="@+id/post_forward_img"
+            android:layout_width="23dp"
+            android:layout_height="18dp"
             android:layout_gravity="center"
             android:src="@drawable/forwardarrow"
             android:layout_marginLeft="5dp"/>

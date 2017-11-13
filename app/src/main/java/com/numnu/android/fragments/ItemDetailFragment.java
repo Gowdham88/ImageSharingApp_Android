@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
+import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
@@ -191,7 +192,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new LocationItemsFragment(), "Locations");
-        adapter.addFragment(new EventPostsFragment(), "Events");
+        adapter.addFragment(new EventsFragment(), "Events");
         viewPager.setAdapter(adapter);
     }
 

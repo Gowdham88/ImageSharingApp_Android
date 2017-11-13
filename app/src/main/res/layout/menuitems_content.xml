@@ -39,8 +39,8 @@
 
         <ImageView
             android:id="@+id/item_category_img"
-            android:layout_width="20dp"
-            android:layout_height="15dp"
+            android:layout_width="23dp"
+            android:layout_height="18dp"
             android:layout_gravity="center"
             android:src="@drawable/forwardarrow"
             android:layout_marginLeft="5dp"/>
