@@ -72,13 +72,13 @@ public class CompleteSignupActivity extends AppCompatActivity {
     AutoCompleteTextView autoComplete;
     String ItemModelList;
     String mainAutotxt;
-    ArrayList<String> mylist;
+    ArrayList<String> mylist=new ArrayList<>();
 
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
 
 
-    String[] arr = {"Biryani", "Mutton Biryani","Mutton Ticka","Mutton 65", "Idly", "Idly Uttapam", "Idly Sambar","Mutton Curry","Mutton Fry","Chicken Curry","Chicken 65","Chicken Fry"};
+    String[] arr = {"Biryani", "Mutton Biryani","Mutton Ticka","Mutton 65","Mutton Curry","Mutton Fry","Chicken Curry","Chicken 65","Chicken Fry"};
     String AutocompleteStr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,33 +105,43 @@ public class CompleteSignupActivity extends AppCompatActivity {
 
         autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ItemModelList = vairam.getItem(position).toString();
-//                list.add(AutocomStr);
-                AddTxt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                         mylist = new ArrayList<String>();
-                        mylist.add("AutocomStr");
-
-//                        ItemModelList.add(AutocomStr);
-                        Toast.makeText(CompleteSignupActivity.this,AutocomStr, Toast.LENGTH_SHORT).show();
-                    }
-                });
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                ItemModelList =vairam.getItem(position).toString() ;
 
 
             }
         });
-//         mainAutotxt=AutocomStr;
-//        ItemModelList = new ArrayList<String>();
+        AddTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            if(!ItemModelList.isEmpty()){
+//                    mylist.add(ItemModelList);
+//                    adapter = new FoodAdapter(context,mylist);
+//                    recyclerView.setAdapter(adapter);
+                    if(mylist.contains(ItemModelList)){
+                        Toast.makeText(CompleteSignupActivity.this,"already added", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        mylist.add(ItemModelList);
+                        adapter = new FoodAdapter(context,mylist);
+                        recyclerView.setAdapter(adapter);
+                    }
 
+            }else{
+                Toast.makeText(CompleteSignupActivity.this,"please choose the food Preference", Toast.LENGTH_SHORT).show();
+
+            }
+       autoComplete.setText(null);
+
+            }
+        });
 
 
 
         adapter = new FoodAdapter(context,mylist);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-//
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
         mUserName = findViewById(R.id.et_signup_user_name);
         mName = findViewById(R.id.et_signup_name);
         mCity = findViewById(R.id.et_signup_city);
@@ -209,7 +219,7 @@ public class CompleteSignupActivity extends AppCompatActivity {
                 if (userName.equals("")) {
                     Toast.makeText(context, "UserName is mandatory", Toast.LENGTH_SHORT).show();
                 }
-                else if (!(userName.equals("") && name.equals("") && city.equals("") && dob.equals(""))) {
+                else if (!(userName.equals("") && name.equals("") && city.equals("") && dob.equals("")&& ItemModelList.equals(""))) {
 
                     Intent intent = new Intent(CompleteSignupActivity.this, HomeActivity.class);
                     intent.putExtra("completesignup", "showprofilefragment");

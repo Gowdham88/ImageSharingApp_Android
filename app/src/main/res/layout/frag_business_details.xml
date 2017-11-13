@@ -197,7 +197,7 @@
                         android:layout_marginLeft="13dp"/>
 
                     <ImageView
-                        android:layout_width="20dp"
+                        android:layout_width="23dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="225dp"
