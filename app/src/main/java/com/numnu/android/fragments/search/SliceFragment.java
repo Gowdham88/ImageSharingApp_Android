@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,7 @@ public class SliceFragment extends Fragment {
         TextView userNameText = view.findViewById(R.id.slice_toolbar_profile_name);
         TextView cottageHouseText = view.findViewById(R.id.cottage_house_txt);
         TextView barbequeText = view.findViewById(R.id.barbq_txt);
+        TextView eventText = view.findViewById(R.id.barbados_txt);
 
         contentImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +144,15 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, EventItemsCategoryFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        eventText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
