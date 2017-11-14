@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.activity.GoogleMapActivity;
 import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
@@ -90,6 +91,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         eventImageView = view.findViewById(R.id.current_event_image);
         eventImageView.setOnClickListener(this);
+        viewEventMap.setOnClickListener(this);
 
         setupExpandableText();
 
@@ -270,6 +272,12 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
             case R.id.current_event_image:
                 initiatePopupWindow();
                 break;
+
+            case R.id.txt_view_event_map:
+                startActivity(new Intent(context, GoogleMapActivity.class));
+                break;
+
+
         }
     }
 

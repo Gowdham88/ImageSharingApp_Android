@@ -62,4 +62,6 @@
     <string name="item">Item</string>
     <string name="location">Location</string>
 
+    <string name="google_maps_api_key">AIzaSyAuKzAZP8SLYJf_jfVUsxdcjChIU00FmDQ</string>
+
 </resources>

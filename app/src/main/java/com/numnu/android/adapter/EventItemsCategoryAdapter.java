@@ -26,6 +26,8 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
 
+    String[] arr = {"Festival", "Wine", "Party", "Rum", "Festival", "Wine", "Party", "Rum", "Festival", "Wine", "Party", "Rum",};
+
     public EventItemsCategoryAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
         this.stringArrayList=stringArrayList;
@@ -45,7 +47,9 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
+        holder.textViewName.setText(arr[position]);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -54,15 +58,7 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
                 transaction.addToBackStack(null).commit();
             }
         });
-        holder.textViewName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventItemsListFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
     }
 
     @Override

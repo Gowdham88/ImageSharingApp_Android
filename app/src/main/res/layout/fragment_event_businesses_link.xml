@@ -10,10 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-        <include layout="@layout/toolbar"
-            android:visibility="gone"/>
+        <include layout="@layout/toolbar" />
     </android.support.design.widget.AppBarLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/business_recyclerview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

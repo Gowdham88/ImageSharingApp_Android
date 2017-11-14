@@ -58,7 +58,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         Holder.ItemTxt.setText(arr[position]);
 
-        Holder.ItemTxt.setOnClickListener(new View.OnClickListener() {
+        Holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -68,14 +68,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             }
         });
 
-        Holder.Itemimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventItemsListFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
     }
 
     @Override
