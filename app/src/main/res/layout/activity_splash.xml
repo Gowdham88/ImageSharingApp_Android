@@ -26,6 +26,7 @@
 
     <TextView
         android:id="@+id/textView15"
+        style="@style/SplashTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -34,7 +35,6 @@
         android:text="@string/numnu"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_extra_large"
-        style="@style/SplashTextStyle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
