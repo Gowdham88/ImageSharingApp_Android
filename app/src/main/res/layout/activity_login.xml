@@ -216,5 +216,4 @@
         android:layout_marginStart="@dimen/spacing_huge"
         android:layout_marginEnd="@dimen/spacing_huge"
         app:layout_constraintHorizontal_bias="0.0" />
-
 </android.support.constraint.ConstraintLayout>

@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +40,7 @@ public class LoginActivity extends MyActivity  {
     private Button login;
     private CallbackManager mCallbackManager;
     // [END declare_auth]
-    String mBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
+    String mPostBookmarkIntent,mBusinessBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,16 +92,19 @@ public class LoginActivity extends MyActivity  {
         // [END initialize_auth]
         // [END initialize_auth]
         //Intents from Signup Activity
-        mBookmarkIntent = getIntent().getStringExtra("BookmarkIntent");
+        mPostBookmarkIntent = getIntent().getStringExtra("BookmarkIntent");
         mProfileIntent = getIntent().getStringExtra("ProfileIntent");
         mEventBookmarkIntent = getIntent().getStringExtra("EventBookmarkIntent");
+        mBusinessBookmarkIntent = getIntent().getStringExtra("BusinessBookmarkIntent");
 
         if (mProfileIntent!=null){
             mReceivedIntent = mProfileIntent;
-        }else if (mBookmarkIntent!=null){
-            mReceivedIntent = mBookmarkIntent;
+        }else if (mPostBookmarkIntent !=null){
+            mReceivedIntent = mPostBookmarkIntent;
         }else if (mEventBookmarkIntent!=null){
             mReceivedIntent = mEventBookmarkIntent;
+        }else if (mBusinessBookmarkIntent!=null){
+            mReceivedIntent = mBusinessBookmarkIntent;
         }else {
             mReceivedIntent = null;
         }
@@ -115,13 +117,13 @@ public class LoginActivity extends MyActivity  {
 
             }
         });
-        if (mEmailField.isEnabled()){
-            TextView textView = findViewById(R.id.textView5);
-            textView.setTextColor(getResources().getColor(R.color.blue));
-        }else if (mPasswordField.isEnabled()){
-            TextView textView = findViewById(R.id.textView6);
-            textView.setTextColor(getResources().getColor(R.color.blue));
-        }
+//        if (mEmailField.isEnabled()){
+//            TextView textView = findViewById(R.id.textView5);
+//            textView.setTextColor(getResources().getColor(R.color.blue));
+//        }else if (mPasswordField.isEnabled()){
+//            TextView textView = findViewById(R.id.textView6);
+//            textView.setTextColor(getResources().getColor(R.color.blue));
+//        }
     }
 
 
@@ -192,6 +194,7 @@ public class LoginActivity extends MyActivity  {
                             String bookmarkBundle = "bookmark";
                             String profileBundle = "profile";
                             String eventBookmarkBundle = "eventbookmark";
+                            String businessBookmarkBundle = "businessbookmark";
                             if (mReceivedIntent == null){
                                 goToHomeActivity(null,null,email);
                             } else if (mReceivedIntent.equals(bookmarkBundle)) {
@@ -200,6 +203,8 @@ public class LoginActivity extends MyActivity  {
                                 goToHomeActivity("ProfileIntent",profileBundle,email);
                             }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
                                 goToHomeActivity("EventBookmarkIntent",eventBookmarkBundle,email);
+                            }else if (mReceivedIntent.equals(businessBookmarkBundle)) {
+                                goToHomeActivity("BusinessBookmarkIntent",businessBookmarkBundle,email);
                             }
                         } else {
                             // If sign in fails, display a message to the user.
@@ -253,6 +258,7 @@ public class LoginActivity extends MyActivity  {
         String bookmarkBundle = "bookmark";
         String profileBundle = "profile";
         String eventBookmarkBundle = "eventbookmark";
+        String businessBookmarkBundle = "businessbookmark";
         if (mReceivedIntent == null){
             signUpCall(null,null);
         } else if (mReceivedIntent.equals(bookmarkBundle)) {
@@ -261,6 +267,8 @@ public class LoginActivity extends MyActivity  {
             signUpCall("ProfileIntent",profileBundle);
         }else if (mReceivedIntent.equals(eventBookmarkBundle)){
             signUpCall("EventBookmarkIntent",bookmarkBundle);
+        }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+            signUpCall("BusinessBookmarkIntent",businessBookmarkBundle);
         }
     }
 

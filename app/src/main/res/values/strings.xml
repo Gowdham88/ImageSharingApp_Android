@@ -61,5 +61,6 @@
     <string name="past_events_title">Past events</string>
     <string name="item">Item</string>
     <string name="location">Location</string>
+    <string name="username">\@username</string>
 
 </resources>

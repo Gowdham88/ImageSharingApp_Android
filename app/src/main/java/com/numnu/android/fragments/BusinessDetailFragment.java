@@ -152,7 +152,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    intent.putExtra("EventBookmarkIntent","eventbookmark");
+                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
                     startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){

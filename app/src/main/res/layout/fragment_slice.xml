@@ -83,8 +83,8 @@
     android:background="@color/toolbar_background_color">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:id="@+id/slice_profile_image"
             android:layout_alignParentTop="true"
             android:src="@drawable/dup_men_image"
@@ -95,7 +95,7 @@
         <TextView
             android:id="@+id/slice_toolbar_profile_name"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="25dp"
             android:gravity="center"
             android:layout_marginLeft="1dp"
             android:layout_toRightOf="@id/slice_profile_image"
@@ -105,9 +105,10 @@
             />
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_toRightOf="@id/slice_toolbar_profile_name"
-            android:text="Ottawa"
+            android:layout_height="20dp"
+            android:layout_below="@id/slice_toolbar_profile_name"
+            android:layout_toRightOf="@id/slice_profile_image"
+            android:text="@string/username"
             android:gravity="center"
             android:layout_marginLeft="3dp"
             fontPath="fonts/Avenir_next.ttf"
@@ -116,11 +117,12 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="20dp"
             android:id="@+id/time"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="2hrs"
+            android:layout_below="@id/slice_toolbar_profile_name"
             android:gravity="center"
             fontPath="fonts/Proxima-Nova-Bold.otf"
             tools:ignore="MissingPrefix"
