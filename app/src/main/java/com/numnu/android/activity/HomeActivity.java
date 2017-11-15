@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.BusinessDetailFragment;
 import com.numnu.android.fragments.EventDetailFragment;
 import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.fragments.NotificationFragment;
@@ -58,7 +59,8 @@ public class HomeActivity extends MyActivity {
         String bookmarkBundle = getIntent().getStringExtra("BookmarkIntent");
         String profileBundle = getIntent().getStringExtra("ProfileIntent");
         String eventBookmarkBundle = getIntent().getStringExtra("EventBookmarkIntent");
-        if (bookmarkBundle==null && profileBundle == null && eventBookmarkBundle ==null) {
+        String businessBookmarkBundle = getIntent().getStringExtra("BusinessBookmarkIntent");
+        if (bookmarkBundle==null && profileBundle == null && eventBookmarkBundle ==null && businessBookmarkBundle == null) {
             //Manually displaying the first fragment - one time only
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
@@ -74,6 +76,10 @@ public class HomeActivity extends MyActivity {
         }else if (eventBookmarkBundle != null && eventBookmarkBundle.equals("eventbookmark")) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+            transaction.addToBackStack(null).commit();
+        }else if (businessBookmarkBundle != null && businessBookmarkBundle.equals("businessbookmark")) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, BusinessDetailFragment.newInstance());
             transaction.addToBackStack(null).commit();
         }
         //Used to select an item programmatically

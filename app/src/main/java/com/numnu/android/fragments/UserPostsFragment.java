@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.LoginActivity;
@@ -50,6 +53,10 @@ public class UserPostsFragment extends Fragment {
         }
 
         View view = inflater.inflate(R.layout.fragment_user_posts, container, false);
+
+        TextView toolbarTitle=view.findViewById(R.id.slice_title);
+        toolbarTitle.setText("POST");
+
         mUserPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mUserPostsRecycler.setLayoutManager(layoutManager);
@@ -57,6 +64,20 @@ public class UserPostsFragment extends Fragment {
         mUserPostsRecycler.addItemDecoration(dividerItemDecoration);
 
         setupRecyclerView();
+
+        ImageView toolbarIcon = view.findViewById(R.id.slice_toolbar_icon);
+        ImageView moreIcon = view.findViewById(R.id.event_dots);
+        ImageView toolbarBackIcon = view.findViewById(R.id.back_button);
+
+        toolbarIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
 
         return view;
     }
