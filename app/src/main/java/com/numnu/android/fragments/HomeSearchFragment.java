@@ -20,6 +20,7 @@ import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.search.SearchBusinessFragment;
 import com.numnu.android.fragments.search.SearchItemsFragment;
 import com.numnu.android.fragments.search.SearchListFragment;
 import com.numnu.android.fragments.search.UsersFragment;
@@ -122,11 +123,11 @@ public class HomeSearchFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventsFragment(), "Events");
-        adapter.addFragment(new EventBusinessFragment(), "Businesses");
+        adapter.addFragment(new SearchBusinessFragment(), "Businesses");
         adapter.addFragment(new SearchItemsFragment(), "Items");
         adapter.addFragment(new PostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
-        adapter.addFragment(new SearchListFragment(), "Lists");
+//        adapter.addFragment(new SearchListFragment(), "Lists");
         viewPager.setAdapter(adapter);
     }
 
