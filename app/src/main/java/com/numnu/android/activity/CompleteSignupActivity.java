@@ -113,9 +113,7 @@ public class CompleteSignupActivity extends AppCompatActivity {
 
             if(!autoComplete.getText().toString().isEmpty()&&ItemModelList!=null) {
                 if (!ItemModelList.isEmpty()) {
-//                    mylist.add(ItemModelList);
-//                    adapter = new FoodAdapter(context,mylist);
-//                    recyclerView.setAdapter(adapter);
+
                     if (mylist.contains(ItemModelList)) {
                         Toast.makeText(CompleteSignupActivity.this, "already added", Toast.LENGTH_SHORT).show();
                     } else {
