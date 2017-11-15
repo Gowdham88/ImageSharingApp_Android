@@ -134,12 +134,11 @@
                     android:elevation="10dp"
                     android:layout_below="@+id/location_layout"
                     app:cardCornerRadius="@dimen/image_card_corner_radius">
-                    <ImageView
-                        android:id="@+id/locations_image"
+                    <fragment
+                        android:id="@+id/location_detailmap"
+                        class="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/montreal" />
+                        android:layout_height="match_parent"/>
                 </android.support.v7.widget.CardView>
                 <include
                     layout="@layout/business_entity_item"

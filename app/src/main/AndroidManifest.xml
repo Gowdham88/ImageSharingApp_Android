@@ -23,11 +23,9 @@
             tools:replace="android:value" />
 
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
+            android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
+
 
         <activity
             android:name=".activity.SplashActivity"
@@ -58,9 +56,7 @@
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-        </activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ForgetPasswordActivity"
             android:configChanges="orientation"
@@ -77,12 +73,10 @@
             android:name=".activity.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.CompleteSignupActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.GoogleMapActivity" />
 
     </application>
