@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 /**
@@ -23,6 +26,7 @@ import com.numnu.android.utils.PreferencesHelper;
 public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
+    TextView ItemInfoTxt;
 
     public static ItemInfoFragment newInstance() {
         return new ItemInfoFragment();
@@ -44,6 +48,15 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         toolbarBackImage.setOnClickListener(this);
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.item);
+        ItemInfoTxt=(TextView)view.findViewById(R.id.text_terms);
+        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
         return view;
     }

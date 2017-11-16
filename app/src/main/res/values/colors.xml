@@ -8,9 +8,9 @@
     <color name="dark_grey">#8f8d8d</color>
     <color name="light_grey">#bdbdbd</color>
     <color name="lighter_grey">#e6e6e6</color>
-    <color name="black">#000000</color>
+    <color name="black">#2A2A2A</color>
     <color name="toolbar_background_color">#ffffff</color>
     <color name="transparent">#00ffffff</color>
     <color name="primary_text_material_light">#757575</color>
-    <color name="color_search_icon_background">#c9342b</color>
+    <color name="color_search_icon_background">#c93229</color>
 </resources>

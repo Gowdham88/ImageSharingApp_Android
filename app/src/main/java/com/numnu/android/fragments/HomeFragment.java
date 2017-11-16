@@ -23,12 +23,15 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toolbar;
+
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PastEventsAdapter;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.search.CurrentEventsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
+import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
 import com.numnu.android.fragments.search.PastEventsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SearchItemsFragment;
@@ -53,6 +56,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView currentEventsList, pastEventsList;
     private ArrayList<String> stringlist,stringlist1;
     Context context;
+    Toolbar toolbar;
     BottomNavigationView mBottomNavigationView;
     private ImageView toolbarBackIcon,mSearchIcon,mLocationIcon;
 
@@ -93,7 +97,6 @@ public class HomeFragment extends Fragment {
         searchViewLocation=view.findViewById(R.id.et_search_location);
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
-
         toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,8 +129,9 @@ public class HomeFragment extends Fragment {
         viewCurrentEventsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, CurrentEventsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -136,7 +140,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, PastEventsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
