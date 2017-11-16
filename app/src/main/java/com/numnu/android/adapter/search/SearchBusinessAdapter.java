@@ -1,4 +1,4 @@
-package com.numnu.android.adapter;
+package com.numnu.android.adapter.search;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
@@ -8,12 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
-import com.numnu.android.fragments.ItemInfoFragment;
+import com.numnu.android.fragments.BusinessDetailFragment;
+import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -21,14 +22,13 @@ import java.util.ArrayList;
  * Created by thulir on 10/10/17.
  */
 
-public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCategoryAdapter.ViewHolder> {
+public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAdapter.ViewHolder> {
 
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
 
-    String[] arr = {"Festival", "Wine", "Party", "Rum", "Festival", "Wine", "Party", "Rum", "Festival", "Wine", "Party", "Rum",};
 
-    public EventItemsCategoryAdapter(Context context, ArrayList<String> stringArrayList) {
+    public SearchBusinessAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
         this.stringArrayList=stringArrayList;
     }
@@ -36,7 +36,7 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.event_menuitems_item, parent, false);
+                .inflate(R.layout.event_business_item, parent, false);
 
         //view.setOnClickListener(MainActivity.myOnClickListener);
 
@@ -47,14 +47,24 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.textViewName.setText(arr[position]);
+        holder.textViewName.setText(stringArrayList.get(position));
 
+        Picasso.with(context).load("null")
+                .placeholder(R.drawable.food_2616456_1920)
+                .into(holder.imageViewIcon);
+        holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventItemsListFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -72,9 +82,9 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.txt_itemname);
+            this.textViewName =  itemView.findViewById(R.id.business_name);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
-            this.imageViewIcon = itemView.findViewById(R.id.imageView_forward);
+            this.imageViewIcon = itemView.findViewById(R.id.notification_image);
         }
     }
 }

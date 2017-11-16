@@ -1,5 +1,6 @@
 package com.numnu.android.fragments;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.numnu.android.R;
+import com.numnu.android.activity.GoogleMapActivity;
 import com.numnu.android.activity.MainActivity;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
@@ -28,16 +36,23 @@ import com.numnu.android.utils.PreferencesHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * Created by thulir on 9/10/17.
  */
 
-public class LocationDetailFragment extends Fragment implements View.OnClickListener {
+public class LocationDetailFragment extends Fragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks  {
 
     private Context context;
     private TextView viewEventMap, eventName, city, eventDate, eventTime;
     private ImageView eventImageView;
     private AppBarLayout appBarLayout;
+    private SupportMapFragment mapFragment;
+    private GoogleMap map;
+    private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
+    private static final int RC_LOCATION_PERM = 1;
+
 
 
     public static LocationDetailFragment newInstance() {
@@ -125,7 +140,45 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
             }
         });
 
+        mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.location_detailmap));
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap map) {
+                    loadMap(map);
+                }
+            });
+        } else {
+            Toast.makeText(context, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+        }
+
         return view;
+    }
+
+    protected void loadMap(GoogleMap googleMap) {
+        map = googleMap;
+        if (map != null) {
+            // Map is ready
+            if (hasLocationPermission()) {
+
+                // Add a marker in Montreal and move the camera
+                LatLng sydney = new LatLng(45.5088400, -73.5878100);
+                map.addMarker(new MarkerOptions().position(sydney).title("Marker in Montreal"));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,17));
+            }else {
+                // Ask for one permission
+                EasyPermissions.requestPermissions(
+                        getActivity(),
+                        getString(R.string.rationale_location),
+                        RC_LOCATION_PERM,
+                        LOCATION);
+            }
+
+        }
+    }
+
+    private boolean hasLocationPermission() {
+        return EasyPermissions.hasPermissions(getActivity(), LOCATION);
     }
 
     private void showBottomSheet(LayoutInflater inflater) {
@@ -187,6 +240,16 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
                 appBarLayout.setExpanded(true);
                 break;
         }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {

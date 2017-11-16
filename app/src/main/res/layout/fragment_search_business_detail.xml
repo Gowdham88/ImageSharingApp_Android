@@ -106,46 +106,68 @@
                     android:textSize="16sp"
                     tools:ignore="MissingPrefix" />
 
-                <LinearLayout
-                    android:id="@+id/location_layout"
-                    android:layout_width="wrap_content"
+                <HorizontalScrollView
+                    android:id="@+id/chips_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/event_name"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:layout_marginRight="@dimen/spacing_small"
-                    android:orientation="horizontal">
+                    android:scrollbars="none">
 
-                    <TextView
-                        android:id="@+id/txt_city"
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_city"
-                        android:drawablePadding="4dp"
-                        android:padding="4dp"
-                        android:text="Montreal" />
+                        android:layout_marginBottom="@dimen/spacing_small"
+                        android:layout_marginLeft="@dimen/spacing_small"
+                        android:layout_marginRight="@dimen/spacing_small"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_view_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                        <TextView
+                            style="@style/TagStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="food" />
+
+                        <TextView
+                            style="@style/TagStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginStart="4dp"
+                            android:text="Rum" />
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <com.numnu.android.utils.ExpandableTextView
+                    android:id="@+id/event_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/chips_layout"
                     android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_marginRight="@dimen/spacing_small"
-                    android:elevation="10dp"
-                    android:layout_below="@+id/location_layout"
-                    app:cardCornerRadius="@dimen/image_card_corner_radius">
-                    <fragment
-                        android:id="@+id/location_detailmap"
-                        class="com.google.android.gms.maps.SupportMapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </android.support.v7.widget.CardView>
+                    android:layout_marginTop="16dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_below="@+id/event_description"
+                    android:layout_width="match_parent"
+                    android:visibility="visible"
+                    android:layout_height="1dp"
+                    android:background="@color/light_grey"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="@dimen/spacing_small"
+                    android:layout_marginRight="@dimen/spacing_small"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent" />
                 <include
                     layout="@layout/business_entity_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/card_view_location" />
-
+                    android:layout_below="@+id/view_divider" />
             </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -153,7 +175,6 @@
         <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar1"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/toolbar_background_color"
@@ -198,7 +219,6 @@
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
-
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"

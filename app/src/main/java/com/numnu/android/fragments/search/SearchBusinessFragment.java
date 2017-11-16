@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.EventDetail;
+package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.EventBusinessAdapter;
+import com.numnu.android.adapter.search.SearchBusinessAdapter;
 
 import java.util.ArrayList;
 
@@ -19,13 +20,13 @@ import java.util.ArrayList;
  * Created by thulir on 9/10/17.
  */
 
-public class EventBusinessFragment extends Fragment {
+public class SearchBusinessFragment extends Fragment {
 
     private RecyclerView businessRecyclerView;
     private Context context;
 
-    public static EventBusinessFragment newInstance() {
-        return new EventBusinessFragment();
+    public static SearchBusinessFragment newInstance() {
+        return new SearchBusinessFragment();
     }
 
     @Override
@@ -63,7 +64,7 @@ public class EventBusinessFragment extends Fragment {
         for (int i = 1; i <= 10; i++) {
             stringlist.add("business " + i);
 
-            EventBusinessAdapter currentUpAdapter = new EventBusinessAdapter(context, stringlist);
+            SearchBusinessAdapter currentUpAdapter = new SearchBusinessAdapter(context, stringlist);
             businessRecyclerView.setAdapter(currentUpAdapter);
         }
 

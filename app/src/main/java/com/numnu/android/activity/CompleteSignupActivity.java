@@ -89,10 +89,6 @@ public class CompleteSignupActivity extends AppCompatActivity {
         recyclerView=(RecyclerView)findViewById(R.id.food_recyclerview);
         FoodLinearLay=(LinearLayout) findViewById(R.id.food_layout);
 
-
-//
-
-
 //        adapter.setClickListener(this);
         autoComplete =(AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
         AddTxt=(TextView)findViewById(R.id.add_txt);
@@ -114,24 +110,25 @@ public class CompleteSignupActivity extends AppCompatActivity {
         AddTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            if(!ItemModelList.isEmpty()){
-//                    mylist.add(ItemModelList);
-//                    adapter = new FoodAdapter(context,mylist);
-//                    recyclerView.setAdapter(adapter);
-                    if(mylist.contains(ItemModelList)){
-                        Toast.makeText(CompleteSignupActivity.this,"already added", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+
+            if(!autoComplete.getText().toString().isEmpty()&&ItemModelList!=null) {
+                if (!ItemModelList.isEmpty()) {
+
+                    if (mylist.contains(ItemModelList)) {
+                        Toast.makeText(CompleteSignupActivity.this, "already added", Toast.LENGTH_SHORT).show();
+                    } else {
                         mylist.add(ItemModelList);
-                        adapter = new FoodAdapter(context,mylist);
+                        adapter = new FoodAdapter(context, mylist);
                         recyclerView.setAdapter(adapter);
                     }
 
-            }else{
-                Toast.makeText(CompleteSignupActivity.this,"please choose the food Preference", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CompleteSignupActivity.this, "please choose the food Preference", Toast.LENGTH_SHORT).show();
 
+                }
+            }else {
+                Toast.makeText(CompleteSignupActivity.this, "please choose the food Preference", Toast.LENGTH_SHORT).show();
             }
-       autoComplete.setText(null);
 
             }
         });
