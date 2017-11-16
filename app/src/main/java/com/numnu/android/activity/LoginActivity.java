@@ -1,12 +1,15 @@
 package com.numnu.android.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,6 +42,7 @@ public class LoginActivity extends MyActivity  {
     private FirebaseAuth mAuth;
     private Button login;
     private CallbackManager mCallbackManager;
+    ConstraintLayout ConsLay;
     // [END declare_auth]
     String mPostBookmarkIntent,mBusinessBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     @Override
@@ -51,7 +55,13 @@ public class LoginActivity extends MyActivity  {
         mPasswordField = findViewById(R.id.et_password);
 
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
+        ConsLay=findViewById(R.id.const_lay);
+        ConsLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                hidekeyboard();
+            }
+        });
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
 
@@ -125,6 +135,11 @@ public class LoginActivity extends MyActivity  {
 //            textView.setTextColor(getResources().getColor(R.color.blue));
 //        }
     }
+
+//    private void hidekeyboard() {
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(ConsLay.getWindowToken(), 0);
+//    }
 
 
     public void forgetPassword(View view) {

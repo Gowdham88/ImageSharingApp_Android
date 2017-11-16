@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/const_lay"
     tools:context="com.numnu.android.activity.LoginActivity"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">
@@ -29,7 +30,8 @@
 
     <TextView
         android:id="@+id/textView"
-        style="@style/login_heading_style"
+        style="@style/FontAvenirheavy"
+        android:textSize="@dimen/text24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_with_email"
@@ -66,10 +68,11 @@
 
     <TextView
         android:id="@+id/or_txt"
-        style="@style/login_heading_style"
+        style="@style/FontAvenirLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size10"
+        android:textSize="@dimen/text12"
         android:text="or"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -98,6 +101,9 @@
 
     <TextView
         android:id="@+id/textView2"
+        style="@style/FontAvenirMedium"
+        android:textSize="@dimen/text13"
+        android:textColor="@color/loginpass_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/don_t_have_an_account_yet"
@@ -113,12 +119,14 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
+        style="@style/FontAvenirMedium"
+        android:textSize="@dimen/text13"
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_up"
         android:visibility="visible"
-        android:textColor="@color/blue"
+        android:textColor="@color/weblink_color"
         android:layout_marginStart="@dimen/size8"
         android:onClick="signUp"
         android:layout_marginLeft="@dimen/size8"
@@ -126,7 +134,8 @@
         app:layout_constraintTop_toTopOf="@+id/textView2" />
 
     <EditText
-        style="@style/MyEditTextStyle"
+       style="@style/FontAvenirMedium"
+        android:textSize="@dimen/text14"
         android:id="@+id/et_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -145,7 +154,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/et_password_layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size45"
         app:passwordToggleEnabled="true"
         android:layout_marginLeft="@dimen/spacing_huge"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -158,6 +167,8 @@
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/et_password"
+            style="@style/FontAvenirMedium"
+            android:textSize="@dimen/text14"
             android:paddingTop="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,6 +180,9 @@
 
     <TextView
         android:id="@+id/txt_forget_pwd"
+        style="@style/FontAvenirMedium"
+        android:textSize="@dimen/text14"
+        android:textColor="@color/loginpass_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/forgot_password"
@@ -177,7 +191,9 @@
         app:layout_constraintTop_toBottomOf="@+id/et_password_layout" />
 
     <TextView
+        style="@style/FontAvenirMedium"
         android:id="@+id/textView5"
+        android:textSize="@dimen/text14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email_address"
@@ -186,7 +202,9 @@
         app:layout_constraintTop_toBottomOf="@+id/or_txt" />
 
     <TextView
+        style="@style/FontAvenirMedium"
         android:id="@+id/textView6"
+        android:textSize="@dimen/text14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/password"

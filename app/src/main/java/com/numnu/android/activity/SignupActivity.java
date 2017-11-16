@@ -1,12 +1,15 @@
 package com.numnu.android.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,6 +42,7 @@ public class SignupActivity extends MyActivity  {
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
+    ConstraintLayout SignupConsLay;
     // [END declare_auth]
     String mBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     @Override
@@ -66,6 +70,7 @@ public class SignupActivity extends MyActivity  {
 //            }
 //        });
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        SignupConsLay=findViewById(R.id.const_lay);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -125,6 +130,14 @@ public class SignupActivity extends MyActivity  {
                 createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
             }
         });
+    }
+
+    private void hidekeyboard() {
+
+//        InputMethodManager imm = (InputMethodManager)
+//                getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.showSoftInput(EDITABLE_VIEW,
+//                InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override

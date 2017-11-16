@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="image_card_corner_radius">8dp</dimen>
+    <dimen name="image_newcard_corner_radius">5dp</dimen>
 
     <!-- font sizes -->
     <dimen name="font_extra_large">30sp</dimen>

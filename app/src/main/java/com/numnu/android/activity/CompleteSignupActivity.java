@@ -57,7 +57,7 @@ import java.util.Locale;
 
 public class CompleteSignupActivity extends AppCompatActivity {
     Context context = this;
-    EditText mUserName,mName,mCity,mGender,mDob,mFoodPreferences;
+    EditText mEmail,mName,mCity,mGender,mDob,mFoodPreferences;
     Button mCompleteSignUp;
     RadioGroup mRadioGroup;
     RadioButton mRadioMale,mRadioFemale;
@@ -85,7 +85,7 @@ public class CompleteSignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_signup);
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Complete Sign Up");
+        toolbarTitle.setText("Complete Profile");
         recyclerView=(RecyclerView)findViewById(R.id.food_recyclerview);
         FoodLinearLay=(LinearLayout) findViewById(R.id.food_layout);
 
@@ -126,6 +126,7 @@ public class CompleteSignupActivity extends AppCompatActivity {
                     Toast.makeText(CompleteSignupActivity.this, "please choose the food Preference", Toast.LENGTH_SHORT).show();
 
                 }
+
             }else {
                 Toast.makeText(CompleteSignupActivity.this, "please choose the food Preference", Toast.LENGTH_SHORT).show();
             }
@@ -139,7 +140,7 @@ public class CompleteSignupActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        mUserName = findViewById(R.id.et_signup_user_name);
+        mEmail = findViewById(R.id.et_signup_email);
         mName = findViewById(R.id.et_signup_name);
         mCity = findViewById(R.id.et_signup_city);
 //        mGender = findViewById(R.id.et_signup_gender);
@@ -205,7 +206,7 @@ public class CompleteSignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String userName = mUserName.getText().toString().trim();
+                String userName = mEmail.getText().toString().trim();
                 String name = mName.getText().toString().trim();
                 String city = mCity.getText().toString().trim();
                 String gender = mGenderValue.trim();

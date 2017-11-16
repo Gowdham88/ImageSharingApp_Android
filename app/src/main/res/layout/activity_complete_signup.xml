@@ -21,17 +21,33 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/dup_men_image" />
+
+        <TextView
+            style="@style/FontAvenirBook"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text15"
+            android:id="@+id/user_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/profile_image"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:gravity="center_vertical"
+            android:padding="@dimen/spacing_small"
+            android:text="Jack Dorsey" />
+
+
 
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="5dp"
         android:scrollbars="vertical">
         <LinearLayout
             android:layout_marginLeft="16dp"
@@ -41,35 +57,51 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/FontAvenirBook"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="@dimen/text14"
                 android:id="@+id/text_user_name_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 android:padding="@dimen/spacing_small"
-                android:text="@string/user_name" />
-
-            <EditText
-                android:id="@+id/et_signup_user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-
-            <TextView
-                android:id="@+id/text_name_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
                 android:text="@string/name" />
 
             <EditText
+                style="@style/FontAvenirBook"
+                android:textColor="@color/name_black"
+                android:textSize="@dimen/text14"
                 android:id="@+id/et_signup_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
 
             <TextView
+                style="@style/FontAvenirBook"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="@dimen/text14"
+                android:id="@+id/text_name_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/spacing_small"
+                android:text="@string/email_address" />
+
+            <EditText
+                style="@style/FontAvenirBook"
+                android:textColor="@color/name_black"
+                android:textSize="@dimen/text14"
+                android:id="@+id/et_signup_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+            <TextView
+                style="@style/FontAvenirBook"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="@dimen/text14"
                 android:id="@+id/text_city_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,6 +110,9 @@
                 android:text="@string/city" />
 
             <EditText
+                style="@style/FontAvenirBook"
+                android:textColor="@color/name_black"
+                android:textSize="@dimen/text14"
                 android:id="@+id/et_signup_city"
                 android:layout_width="match_parent"
                 android:imeOptions="actionNext"
@@ -86,6 +121,9 @@
                 />
 
             <TextView
+                style="@style/FontAvenirBook"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="@dimen/text14"
                 android:id="@+id/text_gender_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,22 +137,25 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <RadioButton
+                    style="@style/FontAvenirBook"
+                    android:textColor="@color/completesignup_clr"
+                    android:textSize="@dimen/text14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/male_radio"
                     android:text="Male"
-                    android:textSize="16sp"
                     android:layout_weight="1"
-                    android:textColor="@color/primary_text_material_light"
+
                     />
                 <RadioButton
+                    style="@style/FontAvenirBook"
+                    android:textColor="@color/completesignup_clr"
+                    android:textSize="@dimen/text14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/female_radio"
                     android:layout_weight="1"
                     android:text="Female"
-                    android:textSize="16sp"
-                    android:textColor="@color/primary_text_material_light"
                     />
             </RadioGroup>
 
@@ -124,6 +165,9 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:inputType="text" />-->
             <TextView
+                style="@style/FontAvenirBook"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="@dimen/text14"
                 android:id="@+id/text_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,13 +176,18 @@
                 android:text="Date of Birth" />
 
             <EditText
+                android:textSize="@dimen/text14"
                 android:id="@+id/et_signup_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/name_black"
                 android:imeOptions="actionNext"
                 android:focusable="false"
                 android:inputType="date" />
             <TextView
+                style="@style/FontAvenirBook"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="@dimen/text14"
                 android:id="@+id/text_food_preferences_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -169,6 +218,9 @@
 
 
                 <AutoCompleteTextView
+                    style="@style/FontAvenirBook"
+                    android:textColor="@color/name_black"
+                    android:textSize="@dimen/text14"
                     android:singleLine="true"
                     android:id="@+id/autoCompleteTextView1"
                     android:layout_width="280dp"
@@ -178,19 +230,20 @@
                     android:layout_height="wrap_content"
                     />
                 <TextView
+                    style="@style/FontAvenirBook"
                     android:id="@+id/add_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/text13"
                     android:textColor="@color/blue"/>
             </LinearLayout>
 
             <Button
                 android:id="@+id/button_complete_signup"
-                android:text="@string/complete_sign_up"
+                android:text="@string/save"
                 style="@style/login_button"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
