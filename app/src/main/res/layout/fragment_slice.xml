@@ -49,10 +49,11 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="Marc Chiriqui"
+                    fontpath="fonts/Avenir-Light.ttf"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_large"
                     android:layout_centerInParent="true"
-                    />
+                    tools:ignore="MissingPrefix" />
             <ImageView
                 android:id="@+id/slice_toolbar_icon"
                 android:layout_width="24dp"
