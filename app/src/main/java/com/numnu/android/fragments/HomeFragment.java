@@ -39,6 +39,8 @@ import com.numnu.android.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 /**
  * Created by thulir on 9/10/17.
  */
@@ -285,14 +287,14 @@ public class HomeFragment extends Fragment {
         stringlist1 = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            stringlist.add("Item " + i);
+            stringlist.add("Flatron");
         }
             CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context, stringlist);
             currentEventsList.setAdapter(currentUpAdapter);
 
 
         for (int i = 1; i <= 10; i++) {
-            stringlist1.add("Event " + i);
+            stringlist1.add("Flatron");
         }
             PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
             pastEventsList.setAdapter(pastEventsAdapter);

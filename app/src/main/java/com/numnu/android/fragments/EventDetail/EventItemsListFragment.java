@@ -26,6 +26,7 @@ public class EventItemsListFragment extends Fragment implements View.OnClickList
 
     private RecyclerView menuitemsRecyclerView;
     private Context context;
+    private String title;
 
     public static EventItemsListFragment newInstance() {
         return new EventItemsListFragment();
@@ -34,6 +35,10 @@ public class EventItemsListFragment extends Fragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            title = bundle.getString("category", "Festival");
+        }
     }
 
     @Override
@@ -53,7 +58,7 @@ public class EventItemsListFragment extends Fragment implements View.OnClickList
         toolbarBackImage.setOnClickListener(this);
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Items List");
+        toolbarTitle.setText(title);
 
         setupRecyclerView();
         return view;

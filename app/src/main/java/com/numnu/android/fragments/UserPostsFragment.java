@@ -54,20 +54,28 @@ public class UserPostsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_user_posts, container, false);
 
-        TextView toolbarTitle=view.findViewById(R.id.slice_title);
-        toolbarTitle.setText("POST");
+        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+
+        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("@Marc chiriqui");
 
         mUserPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mUserPostsRecycler.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mUserPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
         mUserPostsRecycler.addItemDecoration(dividerItemDecoration);
+        mUserPostsRecycler.setNestedScrollingEnabled(false);
 
         setupRecyclerView();
 
         ImageView toolbarIcon = view.findViewById(R.id.slice_toolbar_icon);
-        ImageView moreIcon = view.findViewById(R.id.event_dots);
-        ImageView toolbarBackIcon = view.findViewById(R.id.back_button);
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
