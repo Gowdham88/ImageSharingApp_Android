@@ -3,12 +3,24 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="4dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginBottom="7dp"
     tools:context="com.numnu.android.activity.HomeActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:text="November 2017"
+        android:id="@+id/tx_date_view"
+        android:textSize="20sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        />
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="200dp"
-        android:layout_height="130dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/tx_date_view"
         app:cardCornerRadius="@dimen/image_card_corner_radius"
         android:elevation="10dp">
 
@@ -26,33 +38,129 @@
         android:id="@+id/text_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/card_view"
+        android:layout_toRightOf="@id/card_view"
+        android:layout_toEndOf="@id/card_view"
+        android:layout_below="@id/tx_date_view"
+        android:layout_centerHorizontal="true"
         android:text="Event Name"
         android:layout_marginTop="4dp"
-        android:textSize="16sp"
-        style="@style/BoldTextStyle"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/category1"
+        android:layout_below="@id/text_event"
+        android:layout_toRightOf="@id/card_view"
+        android:layout_toEndOf="@id/card_view"
+        android:text="Category1,"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/category2"
+        android:layout_below="@id/text_event"
+        android:layout_toRightOf="@id/category1"
+        android:layout_toEndOf="@id/category1"
+        android:text="Category2"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_date"
+        android:layout_below="@id/category1"
+        android:layout_toRightOf="@id/card_view"
+        android:layout_toEndOf="@id/card_view"
+        android:text="November 1,"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_city"
+        android:layout_below="@id/category2"
+        android:layout_toRightOf="@id/event_date"
+        android:layout_toEndOf="@id/event_date"
+        android:text="Montreal"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_view">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/event_item_city"
-        android:text=" Montreal"
-        android:layout_below="@id/text_event"
-        android:drawableLeft="@drawable/ic_city"
-        android:layout_marginTop="4dp"
-        android:textSize="12sp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/event_item_date"
-        android:text=" 09/11/2017"
-        android:layout_marginTop="4dp"
-        android:textSize="12sp"
-        android:layout_below="@id/text_event"
-        android:layout_marginLeft="10dp"
-        android:drawableLeft="@drawable/ic_calendar_dim"
-        android:layout_toRightOf="@id/event_item_city"
-        android:layout_toEndOf="@id/event_item_city"
-        />
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="@dimen/image_card_corner_radius"
+            android:elevation="10dp">
+
+            <ImageView
+                android:id="@+id/current_event_image2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/food_for_lunch_mom"/>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/text_event2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/card_view2"
+            android:layout_toEndOf="@id/card_view2"
+            android:layout_centerHorizontal="true"
+            android:text="Event Name"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/category12"
+            android:layout_below="@id/text_event2"
+            android:layout_toRightOf="@id/card_view2"
+            android:layout_toEndOf="@id/card_view2"
+            android:text="Category1,"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/category22"
+            android:layout_below="@id/text_event2"
+            android:layout_toRightOf="@id/category12"
+            android:layout_toEndOf="@id/category12"
+            android:text="Category2"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_date2"
+            android:layout_below="@id/category12"
+            android:layout_toRightOf="@id/card_view2"
+            android:layout_toEndOf="@id/card_view2"
+            android:text="November 1,"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_city2"
+            android:layout_below="@id/category22"
+            android:layout_toRightOf="@id/event_date2"
+            android:layout_toEndOf="@id/event_date2"
+            android:text="Montreal"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"/>
+    </RelativeLayout>
 </RelativeLayout>
