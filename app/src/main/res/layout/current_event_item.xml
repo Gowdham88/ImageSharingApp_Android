@@ -7,7 +7,7 @@
     tools:context="com.numnu.android.activity.HomeActivity">
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="200dp"
+        android:layout_width="160dp"
         android:layout_height="130dp"
         app:cardCornerRadius="@dimen/image_card_corner_radius"
         android:elevation="10dp">

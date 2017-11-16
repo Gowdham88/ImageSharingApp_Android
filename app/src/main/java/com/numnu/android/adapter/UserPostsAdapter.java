@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
+import com.numnu.android.fragments.LinkBusinessesFragment;
+import com.numnu.android.fragments.LinkEventsFragment;
 import com.numnu.android.fragments.SettingsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
@@ -64,7 +66,7 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventBusinessFragment.newInstance());
+                transaction.replace(R.id.frame_layout, LinkBusinessesFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -81,7 +83,7 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, LinkEventsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
