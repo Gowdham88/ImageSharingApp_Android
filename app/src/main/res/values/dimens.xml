@@ -4,7 +4,7 @@
     <dimen name="image_card_corner_radius">5dp</dimen>
 
     <!-- font sizes -->
-    <dimen name="font_extra_large">30sp</dimen>
+    <dimen name="font_extra_large">33sp</dimen>
     <dimen name="font_larger">24sp</dimen>
     <dimen name="font_large">18sp</dimen>
     <dimen name="font_normal">16sp</dimen>

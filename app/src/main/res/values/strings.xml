@@ -10,7 +10,7 @@
     <string name="numnu_logo">Numnu logo</string>
     <string name="by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"><![CDATA[By signing up you agree to our Terms of\nService & Privacy Policy]]></string>
     <string name="loading">Loading..</string>
-    <string name="yum_let_me_in">Yum! Let me in!</string>
+    <string name="yum_let_me_in">Yum ! Let me in !</string>
     <string name="enabling_notifications"><![CDATA[Enabling notifications & location services would optimize the user experience]]></string>
     <string name="onboard_text">Discover delicious food and drink at events and festivals near you</string>
     <string name="home">Home</string>
@@ -19,11 +19,11 @@
     <string name="current_upcoming_events"><![CDATA[Current & Upcoming Events]]></string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="past_events">Past events</string>
-    <string name="login_with_email">SignIn</string>
+    <string name="login_with_email">Sign In</string>
     <string name="password">Password</string>
     <string name="email_address">Email Address</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="signup_with_email">Signup</string>
+    <string name="signup_with_email">Sign Up</string>
     <string name="sign_up">Sign Up</string>
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password_label">Forgot Password</string>

@@ -19,6 +19,7 @@ import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.LoginActivity;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.activity.SignupActivity;
 import com.numnu.android.utils.PreferencesHelper;
 
 import static com.facebook.FacebookSdk.getApplicationContext;

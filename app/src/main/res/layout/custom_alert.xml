@@ -13,6 +13,9 @@
         android:src="@drawable/notification"
         android:contentDescription="@string/app_name" />
     <TextView
+        style="@style/FontAvenirMedium"
+        android:textSize="@dimen/text12"
+        android:textColor="@color/autotxt_in_color"
         android:text="@string/enabling_notifications"
         android:layout_width="match_parent"
         android:gravity="center"
@@ -21,7 +24,7 @@
         <Button
             android:text="@string/ok"
             android:id="@+id/ok_button"
-            style="@style/login_button"
+            style="@style/ok_button"
             android:layout_gravity="center_horizontal"
             android:layout_width="130dp"
             android:textSize="18dp"

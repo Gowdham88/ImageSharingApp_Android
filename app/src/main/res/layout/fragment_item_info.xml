@@ -1,141 +1,240 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/toolbar_background_color"
-            app:contentInsetStart="0dp"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+        <include layout="@layout/toolbar" />
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="@color/toolbar_background_color"-->
+            <!--app:contentInsetStart="0dp"-->
+            <!--app:layout_scrollFlags="scroll|enterAlwaysCollapsed"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay">-->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                <ImageView
-                    android:id="@+id/toolbar_back"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_height"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:layout_marginStart="@dimen/spacing_small"
-                    app:srcCompat="@drawable/back_arrow" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/toolbar_back"-->
+                    <!--android:layout_width="@dimen/toolbar_icon_width"-->
+                    <!--android:layout_height="@dimen/toolbar_icon_height"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="@dimen/spacing_small"-->
+                    <!--android:layout_marginStart="@dimen/spacing_small"-->
+                    <!--app:srcCompat="@drawable/back_arrow" />-->
 
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/app_name"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_large" />
+                <!--<TextView-->
+                    <!--android:id="@+id/toolbar_title"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:text="@string/app_name"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textSize="@dimen/font_large" />-->
 
-                <ImageView
-                    android:id="@+id/toolbar_image"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_height"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:layout_marginRight="@dimen/spacing_small"
-                    app:srcCompat="@drawable/event_dots" />
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:id="@+id/toolbar_image"-->
+                    <!--android:layout_width="@dimen/toolbar_icon_width"-->
+                    <!--android:layout_height="@dimen/toolbar_icon_height"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginEnd="@dimen/spacing_small"-->
+                    <!--android:layout_marginRight="@dimen/spacing_small"-->
+                    <!--app:srcCompat="@drawable/event_dots" />-->
 
-        </android.support.v7.widget.Toolbar>
+            <!--</RelativeLayout>-->
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:fitsSystemWindows="true"
-            android:focusableInTouchMode="false"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="Numnu1">
-
-         <include layout="@layout/item_header"/>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar1"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/toolbar_background_color"
-            app:contentInsetStart="0dp"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/toolbar_back1"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_height"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:layout_marginStart="@dimen/spacing_small"
-                    app:srcCompat="@drawable/back_arrow" />
-
-                <TextView
-                    android:id="@+id/toolbar_title1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/app_name"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_large" />
-
-                <ImageView
-                    android:id="@+id/toolbar_image1"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_height"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:layout_marginRight="@dimen/spacing_small"
-                    app:srcCompat="@drawable/event_dots" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:tabGravity="center"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/black"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabTextColor="@color/dark_grey" />
+        <!--</android.support.v7.widget.Toolbar>-->
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/event_viewpager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tabs"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="269dp"
+        android:layout_below="@id/appbar"
+        tools:layout_editor_absoluteY="3dp">
 
-</android.support.design.widget.CoordinatorLayout>
+        <android.support.v7.widget.CardView
+            android:id="@+id/content_image_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="5dp">
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/image_corner_radius"
+                android:scaleType="centerCrop"
+                android:src="@drawable/food_for_lunch_mom" />
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/content_image_card"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="$3.63"
+            android:textColor="@color/materialGreenDark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/item_header_event_name"
+            style="@style/BoldTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/content_image_card"
+            android:text="Barbadous food and rum festival" />
+
+        <HorizontalScrollView
+            android:id="@+id/chips_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_header_event_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/content_image_card"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/size10"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TagStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="food" />
+
+                <TextView
+                    style="@style/TagStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="Rum" />
+
+                <TextView
+                    style="@style/TagStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="Wine" />
+
+                <TextView
+                    style="@style/TagStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="Wine" />
+
+                <TextView
+                    style="@style/TagStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="Wine" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <ImageView
+            android:id="@+id/cottage_house_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/chips_layout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/content_image_card"
+            android:src="@drawable/restaurant_ico" />
+
+        <TextView
+            android:id="@+id/cottage_house_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@+id/chips_layout"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/cottage_house_icon"
+            android:layout_toRightOf="@id/cottage_house_icon"
+            android:gravity="center_vertical"
+            android:text="Cottage House"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/event_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/cottage_house_icon"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/content_image_card"
+            android:src="@drawable/ic_calendar" />
+
+        <TextView
+            android:id="@+id/event_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@+id/cottage_house_txt"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/cottage_house_icon"
+            android:layout_toRightOf="@id/cottage_house_icon"
+            android:gravity="center_vertical"
+            android:text="Barbadous food and rum festival"
+            android:textSize="15sp" />
+
+        <com.numnu.android.utils.ExpandableTextView
+            android:id="@+id/event_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_txt"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_marginTop="16dp"
+            android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
+
+        <TextView
+            android:id="@+id/text_terms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/event_description"
+            android:layout_marginTop="10dp"
+            android:background="@color/lighter_grey"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+            android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="@dimen/spacing_small"
+            android:text="View item"
+            android:textColor="@color/blue" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

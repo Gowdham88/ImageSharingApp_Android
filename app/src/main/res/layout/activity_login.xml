@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size8"
         android:layout_marginRight="@dimen/size8"
-        android:layout_marginTop="@dimen/size30"
+        android:layout_marginTop="@dimen/size25"
         android:contentDescription="@string/app_name"
         android:src="@drawable/loginicon"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,11 +31,12 @@
     <TextView
         android:id="@+id/textView"
         style="@style/FontAvenirheavy"
-        android:textSize="@dimen/text24"
+        android:textColor="@color/sinin_lblcolor"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_with_email"
+        android:layout_height="40dp"
         android:layout_marginTop="@dimen/size10"
+        android:text="@string/login_with_email"
+        android:textSize="@dimen/text19"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -47,24 +48,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/facebook_sign_in"
-        android:textSize="@dimen/text10"
-        android:layout_marginTop="@dimen/size10"
+        android:textSize="@dimen/text11"
+        android:layout_marginTop="10dp"
         android:drawableStart="@drawable/fb_logo__blue_29"
         android:drawableLeft="@drawable/fb_logo__blue_29"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="@dimen/spacing_huge"
-        android:layout_marginRight="@dimen/spacing_huge"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:layout_marginStart="@dimen/spacing_huge"
         android:layout_marginEnd="@dimen/spacing_huge"
         android:paddingLeft="@dimen/size60"
         android:paddingStart="@dimen/size60"
         android:paddingRight="@dimen/size60"
         android:paddingEnd="@dimen/size60"
-        android:paddingBottom="@dimen/size8"
+        android:paddingBottom="@dimen/size7"
         app:layout_constraintTop_toBottomOf="@+id/textView"/>
-
 
     <TextView
         android:id="@+id/or_txt"
@@ -102,15 +102,15 @@
     <TextView
         android:id="@+id/textView2"
         style="@style/FontAvenirMedium"
-        android:textSize="@dimen/text13"
-        android:textColor="@color/loginpass_color"
+        android:textSize="@dimen/text11"
+        android:textColor="@color/Already_txtcolor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/don_t_have_an_account_yet"
         android:visibility="visible"
         android:layout_marginStart="@dimen/size8"
         android:layout_marginEnd="@dimen/size8"
-        android:layout_marginTop="@dimen/size25"
+        android:layout_marginTop="@dimen/size10"
         android:layout_marginLeft="@dimen/size8"
         android:layout_marginRight="@dimen/size8"
         app:layout_constraintHorizontal_bias="0.376"
@@ -120,7 +120,7 @@
 
     <TextView
         style="@style/FontAvenirMedium"
-        android:textSize="@dimen/text13"
+        android:textSize="@dimen/text11"
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -181,8 +181,8 @@
     <TextView
         android:id="@+id/txt_forget_pwd"
         style="@style/FontAvenirMedium"
-        android:textSize="@dimen/text14"
-        android:textColor="@color/loginpass_color"
+        android:textSize="@dimen/text11"
+        android:textColor="@color/Already_txtcolor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/forgot_password"
@@ -192,8 +192,9 @@
 
     <TextView
         style="@style/FontAvenirMedium"
-        android:id="@+id/textView5"
         android:textSize="@dimen/text14"
+        android:textColor="@color/email_color"
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email_address"
@@ -203,8 +204,9 @@
 
     <TextView
         style="@style/FontAvenirMedium"
-        android:id="@+id/textView6"
         android:textSize="@dimen/text14"
+        android:textColor="@color/email_color"
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/password"
@@ -226,19 +228,20 @@
 
     <TextView
         android:id="@+id/textView4"
+        style="@style/FontAvenirMedium"
         android:layout_width="0dp"
-        android:visibility="invisible"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
         android:layout_marginLeft="@dimen/spacing_huge"
         android:layout_marginRight="@dimen/spacing_huge"
-        android:text="@string/by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"
         android:gravity="center_horizontal"
+        android:text="@string/by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"
+        android:textColor="@color/Already_txtcolor"
+        android:textSize="@dimen/text11"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="@dimen/spacing_huge"
-        android:layout_marginEnd="@dimen/spacing_huge"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
