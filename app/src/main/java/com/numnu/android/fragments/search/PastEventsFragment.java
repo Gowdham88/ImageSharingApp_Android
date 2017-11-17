@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -43,6 +44,14 @@ public class PastEventsFragment extends Fragment {
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.past_events_title);
+
+        ImageView toolbarBackIcon = view.findViewById(R.id.back_button);
+        toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
         setupRecyclerView();
 
         return view;
