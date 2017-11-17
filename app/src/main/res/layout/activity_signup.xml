@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:id="@+id/sign_const_lay"
     android:layout_height="wrap_content"
-    tools:context="com.numnu.android.activity.LoginActivity">
+    tools:context="com.numnu.android.activity.LoginFragment">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -118,17 +118,16 @@
     <TextView
         style="@style/FontAvenirMedium"
         android:textSize="@dimen/text11"
-        android:id="@+id/textView3"
+        android:id="@+id/textView_signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in"
         android:textColor="@color/weblink_color"
-        android:onClick="signIn"
         android:layout_marginStart="@dimen/size8"
         android:layout_marginLeft="@dimen/size8"
         app:layout_constraintLeft_toRightOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@+id/textView2"
-        tools:ignore="OnClick" />
+         />
 
     <EditText
         style="@style/FontAvenirMedium"

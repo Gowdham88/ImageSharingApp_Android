@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.LoginActivity;
+import com.numnu.android.activity.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.ProfileFragment;
@@ -180,7 +180,7 @@ public class SliceFragment extends Fragment {
                     Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
                     bottomSheetDialog.dismiss();
                 }else if (!loginStatus){
-                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    Intent intent = new Intent(getActivity(),LoginFragment.class);
                     intent.putExtra("BookmarkIntent","bookmark");
                     startActivity(intent);
 

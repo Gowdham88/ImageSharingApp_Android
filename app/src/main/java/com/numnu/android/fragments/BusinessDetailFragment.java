@@ -22,8 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.LoginActivity;
-import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
+import com.numnu.android.activity.LoginFragment;
 import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
@@ -178,7 +177,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             public void onClick(View view) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginFragment.class);
                     intent.putExtra("BusinessBookmarkIntent","businessbookmark");
                     startActivity(intent);
                     bottomSheetDialog.dismiss();

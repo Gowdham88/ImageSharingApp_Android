@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.INotificationSideChannel;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.HomeActivity;
-import com.numnu.android.activity.LoginActivity;
-import com.numnu.android.activity.MainActivity;
-import com.numnu.android.activity.SignupActivity;
+import com.numnu.android.activity.LoginFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -53,7 +49,7 @@ public class SettingsFragment extends Fragment {
 //        if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
 //        {
 //            getActivity().finish();
-//            Intent intent = new Intent(getActivity(),LoginActivity.class);
+//            Intent intent = new Intent(getActivity(),LoginFragment.class);
 //            intent.putExtra("ProfileIntent","profile");
 //            startActivity(intent);
 //
@@ -126,7 +122,7 @@ public class SettingsFragment extends Fragment {
     private void logout() {
 
         PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,false);
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(context, LoginFragment.class);
         startActivity(intent);
     }
 

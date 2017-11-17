@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
-import com.numnu.android.activity.LoginActivity;
+import com.numnu.android.activity.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
@@ -182,7 +182,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
             public void onClick(View view) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginFragment.class);
                     intent.putExtra("EventBookmarkIntent","eventbookmark");
                     startActivity(intent);
                     bottomSheetDialog.dismiss();

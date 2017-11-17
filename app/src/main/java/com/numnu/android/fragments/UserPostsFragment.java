@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.LoginActivity;
-import com.numnu.android.adapter.PostsAdapter;
+import com.numnu.android.activity.LoginFragment;
+import com.numnu.android.activity.SignupFragment;
 import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -46,10 +46,10 @@ public class UserPostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
         {
-            getActivity().finish();
-            Intent intent = new Intent(getActivity(),LoginActivity.class);
-            intent.putExtra("ProfileIntent","profile");
-            startActivity(intent);
+            SignupFragment signupFragment=new SignupFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout,signupFragment);
+            transaction.addToBackStack(null).commit();
         }
 
         View view = inflater.inflate(R.layout.fragment_user_posts, container, false);

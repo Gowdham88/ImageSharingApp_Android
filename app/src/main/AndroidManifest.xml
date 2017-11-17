@@ -62,7 +62,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SignupActivity"
+            android:name=".activity.SignupFragment"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
@@ -71,7 +71,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.LoginFragment"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity

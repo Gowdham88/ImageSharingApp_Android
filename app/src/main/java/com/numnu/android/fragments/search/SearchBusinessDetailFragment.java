@@ -2,16 +2,13 @@ package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -27,9 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.GoogleMapActivity;
-import com.numnu.android.activity.LoginActivity;
-import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
+import com.numnu.android.activity.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
@@ -171,7 +166,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             public void onClick(View view) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    Intent intent = new Intent(getActivity(), LoginFragment.class);
                     intent.putExtra("EventBookmarkIntent","eventbookmark");
                     startActivity(intent);
                     bottomSheetDialog.dismiss();

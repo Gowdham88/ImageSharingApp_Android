@@ -1,15 +1,20 @@
 package com.numnu.android.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,11 +38,14 @@ import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;
 
-public class SignupActivity extends MyActivity  {
+import static com.facebook.FacebookSdk.getApplicationContext;
+
+public class SignupFragment extends Fragment {
 
     private static final String TAG ="SignUpActivity";
-    TextView textView,TxtEmai,TxtPass;
+    TextView textViewSignIn,TxtEmai,TxtPass;
     EditText mEmailField, mPasswordField;
+    public ProgressDialog mProgressDialog;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -45,42 +53,43 @@ public class SignupActivity extends MyActivity  {
     ConstraintLayout SignupConsLay;
     // [END declare_auth]
     String mBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+    private Context context;
 
-        textView=findViewById(R.id.textView3);
-        TxtEmai=findViewById(R.id.textView5);
-        TxtPass=findViewById(R.id.textView6);
-        mEmailField =findViewById(R.id.et_email);
-        mPasswordField =findViewById(R.id.et_password);
-//    mEmailField.setOnClickListener(new View.OnClickListener() {
-//    @Override
-//    public void onClick(View view) {
-//       TxtEmai.setTextColor(getResources().getColor(R.color.blue));
-//    }
-//    });
-//
-//        mPasswordField.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                TxtEmai.setTextColor(getResources().getColor(R.color.black));
-//                TxtPass.setTextColor(getResources().getColor(R.color.blue));
-//            }
-//        });
-        textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        SignupConsLay=findViewById(R.id.const_lay);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            mBookmarkIntent = bundle.getString("BookmarkIntent");
+            mProfileIntent = bundle.getString("ProfileIntent");
+            mEventBookmarkIntent = bundle.getString("EventBookmarkIntent");
+        }
+
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_signup, null);
+        textViewSignIn=view.findViewById(R.id.textView_signin);
+        TxtEmai=view.findViewById(R.id.textView5);
+        TxtPass=view.findViewById(R.id.textView6);
+        mEmailField =view.findViewById(R.id.et_email);
+        mPasswordField =view.findViewById(R.id.et_password);
+
+        textViewSignIn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        SignupConsLay=view.findViewById(R.id.const_lay);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
-        Button loginButton = findViewById(R.id.sinup_btn_facebook);
+        Button loginButton = view.findViewById(R.id.sinup_btn_facebook);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginManager.getInstance().logInWithReadPermissions(SignupActivity.this, Arrays.asList("email", "public_profile"));
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
                 LoginManager.getInstance().registerCallback(mCallbackManager,
                         new FacebookCallback<LoginResult>()
                         {
@@ -110,9 +119,7 @@ public class SignupActivity extends MyActivity  {
         });
         // [END initialize_auth]
 
-        mBookmarkIntent = getIntent().getStringExtra("BookmarkIntent");
-        mProfileIntent = getIntent().getStringExtra("ProfileIntent");
-        mEventBookmarkIntent = getIntent().getStringExtra("EventBookmarkIntent");
+
 
         if (mProfileIntent!=null){
             mReceivedIntent = mProfileIntent;
@@ -124,28 +131,35 @@ public class SignupActivity extends MyActivity  {
             mReceivedIntent = null;
         }
 
-        findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mPasswordField.getText().toString().trim().length()>1) {
                     createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 }else {
-                    Toast.makeText(SignupActivity.this, "Password should be 2 or more characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Password should be 2 or more characters", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        textViewSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+            }
+        });
+
+        return view;
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
-    private void hidekeyboard() {
-
-//        InputMethodManager imm = (InputMethodManager)
-//                getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.showSoftInput(EDITABLE_VIEW,
-//                InputMethodManager.SHOW_IMPLICIT);
-    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Pass the activity result back to the Facebook SDK
@@ -159,7 +173,7 @@ public class SignupActivity extends MyActivity  {
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -169,7 +183,7 @@ public class SignupActivity extends MyActivity  {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signUpWithCredential:failure", task.getException());
-                            Toast.makeText(SignupActivity.this, "Authentication failed.",
+                            Toast.makeText(context, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
                         }
@@ -182,8 +196,8 @@ public class SignupActivity extends MyActivity  {
     }
 
     public void forgetPassword(View view) {
-        Intent mainIntent = new Intent(this,ForgetPasswordActivity.class);
-        this.startActivity(mainIntent);
+//        Intent mainIntent = new Intent(this,ForgetPasswordActivity.class);
+//        this.startActivity(mainIntent);
     }
 
 
@@ -206,7 +220,7 @@ public class SignupActivity extends MyActivity  {
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -218,43 +232,38 @@ public class SignupActivity extends MyActivity  {
                             String profileBundle = "profile";
                             String eventBookmarkBundle = "eventbookmark";
 
+                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
+                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+
                             if (mReceivedIntent == null){
-                                Intent mainIntent = new Intent(SignupActivity.this, CompleteSignupActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                SignupActivity.this.startActivity(mainIntent);
-                                SignupActivity.this.finish();
-                                PreferencesHelper.setPreference(SignupActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
-                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                            }else if (mReceivedIntent.equals(bookmarkBundle)){
-                                Intent mainIntent = new Intent(SignupActivity.this, CompleteSignupActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                mainIntent.putExtra("BookmarkIntent",bookmarkBundle);
-                                SignupActivity.this.startActivity(mainIntent);
-                                SignupActivity.this.finish();
-                                PreferencesHelper.setPreference(SignupActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
-                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+
+                                LoginFragment loginFragment1=new LoginFragment();
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                transaction.replace(R.id.frame_layout,loginFragment1);
+                                transaction.addToBackStack(null).commit();
+                            }
+                            else if(mReceivedIntent.equals(bookmarkBundle)) {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("BookmarkIntent",  bookmarkBundle);
+                                showFragment(bundle);
+
                             }else if (mReceivedIntent.equals(profileBundle)){
-                                Intent mainIntent = new Intent(SignupActivity.this, CompleteSignupActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                mainIntent.putExtra("ProfileIntent",profileBundle);
-                                SignupActivity.this.startActivity(mainIntent);
-                                SignupActivity.this.finish();
-                                PreferencesHelper.setPreference(SignupActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
-                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                            }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
-                                Intent mainIntent = new Intent(SignupActivity.this, CompleteSignupActivity.class);
-                                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                mainIntent.putExtra("EventBookmarkIntent", eventBookmarkBundle);
-                                SignupActivity.this.startActivity(mainIntent);
-                                SignupActivity.this.finish();
-                                PreferencesHelper.setPreference(SignupActivity.this, PreferencesHelper.PREFERENCE_EMAIL, email);
-                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("ProfileIntent",  bookmarkBundle);
+                                showFragment(bundle);
+                            }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("EventBookmarkIntent",  bookmarkBundle);
+                                showFragment(bundle);
                             }
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignupActivity.this, "Authentication failed.",
+                            Toast.makeText(context, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
 
@@ -272,7 +281,7 @@ public class SignupActivity extends MyActivity  {
 
 //    private void sendEmailVerification() {
 //        // Disable button
-//        findViewById(R.id.verify_email_button).setEnabled(false);
+//        view.findViewById(R.id.verify_email_button).setEnabled(false);
 //
 //        // Send verification email
 //        // [START send_email_verification]
@@ -283,15 +292,15 @@ public class SignupActivity extends MyActivity  {
 //                    public void onComplete(@NonNull Task<Void> task) {
 //                        // [START_EXCLUDE]
 //                        // Re-enable button
-//                        findViewById(R.id.verify_email_button).setEnabled(true);
+//                        view.findViewById(R.id.verify_email_button).setEnabled(true);
 //
 //                        if (task.isSuccessful()) {
-//                            Toast.makeText(LoginActivity.this,
+//                            Toast.makeText(LoginFragment.this,
 //                                    "Verification email sent to " + user.getEmail(),
 //                                    Toast.LENGTH_SHORT).show();
 //                        } else {
 //                            Log.e(TAG, "sendEmailVerification", task.getException());
-//                            Toast.makeText(LoginActivity.this,
+//                            Toast.makeText(LoginFragment.this,
 //                                    "Failed to send verification email.",
 //                                    Toast.LENGTH_SHORT).show();
 //                        }
@@ -332,34 +341,59 @@ public class SignupActivity extends MyActivity  {
         hideProgressDialog();
     }
 
-    public void signIn(View view) {
+    public void signIn() {
         String bookmarkBundle = "bookmark";
         String profileBundle = "profile";
         String eventBookmarkBundle = "eventbookmark";
         if (mReceivedIntent == null){
-            Intent mainIntent = new Intent(SignupActivity.this,LoginActivity.class);
-            this.startActivity(mainIntent);
-            this.finish();
+
+            LoginFragment loginFragment1=new LoginFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout,loginFragment1);
+            transaction.commit();
         }
         else if(mReceivedIntent.equals(bookmarkBundle)) {
-            Intent mainIntent = new Intent(SignupActivity.this, LoginActivity.class);
-//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mainIntent.putExtra("BookmarkIntent",bookmarkBundle);
-            SignupActivity.this.startActivity(mainIntent);
-            SignupActivity.this.finish();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("BookmarkIntent",  bookmarkBundle);
+            showFragment(bundle);
 
         }else if (mReceivedIntent.equals(profileBundle)){
-            Intent mainIntent = new Intent(SignupActivity.this, LoginActivity.class);
-//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mainIntent.putExtra("ProfileIntent",bookmarkBundle);
-            SignupActivity.this.startActivity(mainIntent);
-            SignupActivity.this.finish();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("ProfileIntent",  bookmarkBundle);
+            showFragment(bundle);
         }else if (mReceivedIntent.equals(eventBookmarkBundle)){
-            Intent mainIntent = new Intent(SignupActivity.this, LoginActivity.class);
-//            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mainIntent.putExtra("EventBookmarkIntent",bookmarkBundle);
-            SignupActivity.this.startActivity(mainIntent);
-            SignupActivity.this.finish();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("EventBookmarkIntent",  bookmarkBundle);
+            showFragment(bundle);
+        }
+    }
+
+    private void showFragment(Bundle bundle) {
+
+        LoginFragment loginFragment=new LoginFragment();
+        loginFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout,loginFragment);
+        transaction.commit();
+    }
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
         }
     }
 }
