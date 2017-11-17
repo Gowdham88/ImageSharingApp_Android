@@ -9,17 +9,22 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.LoginActivity;
+import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
+import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -33,6 +38,9 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private TabLayout tabLayout;
     private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
+    LinearLayout linearLayout;
+    ImageView Viewimage;
+    TextView ViewTxt;
 
     public static BusinessDetailFragment newInstance() {
         return new BusinessDetailFragment();
@@ -67,6 +75,25 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         ImageView toolbarBackIconBuss = view.findViewById(R.id.toolbar_back_image);
         ImageView collapsedtoolbarBackIconBuss = view.findViewById(R.id.toolbar_back1);
         final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
+        linearLayout=(LinearLayout)view.findViewById(R.id.business_viewlay);
+        Viewimage=(ImageView)view.findViewById(R.id.business_viewimg) ;
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        Viewimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
         toolbarBackIconBuss.setOnClickListener(this);
         collapsedtoolbarBackIconBuss.setOnClickListener(this);

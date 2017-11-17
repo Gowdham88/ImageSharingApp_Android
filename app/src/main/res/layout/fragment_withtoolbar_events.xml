@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.numnu.android.activity.HomeActivity">
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:id="@+id/appbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+        <android.support.v7.widget.Toolbar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/event_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background_color"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:contentInsetStart="0dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/toolbar_back"
+                    app:srcCompat="@drawable/back_arrow"
+                    android:layout_marginLeft="@dimen/spacing_small"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="@dimen/toolbar_icon_width"
+                    android:layout_height="@dimen/toolbar_icon_height" />
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:text="Event"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_large"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/event_toolbar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:reverseLayout="false">
+        </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

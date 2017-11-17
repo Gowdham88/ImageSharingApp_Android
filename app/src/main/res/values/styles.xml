@@ -15,6 +15,8 @@
 
     <style name="login_button">
         <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
         <item name="android:background">@drawable/button_background_login</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
@@ -68,6 +70,22 @@
         <item name="fontPath">fonts/ProximaNova-Bold.ttf</item>
     </style>
 
+    <style name="FontAvenirheavy">
+        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
+    </style>
+
+    <style name="FontAvenirLight">
+        <item name="fontPath">fonts/Avenir-Light.ttf</item>
+    </style>
+
+    <style name="FontAvenirMedium">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+    </style>
+
+    <style name="FontAvenirBook">
+        <item name="fontPath">fonts/Avenir-Book.ttf</item>
+    </style>
+
     <style name="clear_button">
         <item name="android:textAllCaps">false</item>
         <item name="android:background">@android:color/transparent</item>
@@ -91,11 +109,23 @@
     </style>
 
     <style name="TagStyle">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">4dp</item>
         <item name="android:background">@drawable/tag_background</item>
+
+    </style>
+
+    <style name="TagStyleFood">
+        <item name="fontPath">fonts/Avenir-Book.ttf</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:background">@drawable/tag_background</item>
+
     </style>
 
 </resources>

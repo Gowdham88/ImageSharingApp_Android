@@ -9,7 +9,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,8 +26,6 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
-import com.numnu.android.fragments.EventDetail.EventPostsFragment;
-import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
@@ -47,6 +47,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
 
+    TextView ItemInfoTxt;
 
     public static ItemInfoFragment newInstance() {
         return new ItemInfoFragment();
@@ -81,6 +82,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.item);
+
         TextView toolbarTitle1 = view.findViewById(R.id.toolbar_title1);
         toolbarTitle1.setText(R.string.item);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
@@ -111,7 +113,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                switch (state.name()){
+                switch (state.name()) {
 
                     case "EXPANDED":
                         toolbar1.setVisibility(View.GONE);
@@ -127,8 +129,17 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
                         view.findViewById(R.id.tabs).setVisibility(View.GONE);
                         break;
                 }
+            }
+        });
 
 
+        ItemInfoTxt=(TextView)view.findViewById(R.id.text_terms);
+        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
             }
         });
 
