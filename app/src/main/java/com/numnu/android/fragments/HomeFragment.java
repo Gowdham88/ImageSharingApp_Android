@@ -198,6 +198,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                searchingTexts(charSequence);
             }
 
             @Override
@@ -278,6 +279,12 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
+
+    }
+
+    private void searchingTexts(CharSequence charSequence) {
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
     }
 

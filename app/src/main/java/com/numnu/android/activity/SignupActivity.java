@@ -127,7 +127,11 @@ public class SignupActivity extends MyActivity  {
         findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                if (mPasswordField.getText().toString().trim().length()>1) {
+                    createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                }else {
+                    Toast.makeText(SignupActivity.this, "Password should be 2 or more characters", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
