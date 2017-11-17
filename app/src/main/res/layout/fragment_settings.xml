@@ -17,30 +17,35 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/business_viewcolor">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:src="@drawable/dup_men_image" />
 
         <TextView
+            style="@style/FontAvenirMedium"
+            android:textSize="@dimen/text17"
+            android:textColor="@color/name_black"
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_image"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:text="User Name"
-            android:textSize="20sp" />
+            android:text="March"
+            android:layout_marginBottom="@dimen/size15"
+           />
 
         <ImageView
             android:id="@+id/imageView_profile_edit"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_above="@+id/textView16"
             android:layout_alignEnd="@+id/profile_image"
             android:layout_alignRight="@+id/profile_image"
@@ -58,20 +63,27 @@
 
             <TextView
                 android:id="@+id/text_share_app"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
                 android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
-                android:layout_marginTop="@dimen/spacing_small"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:focusable="true"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
                 android:text="@string/share_the_app"
-                android:focusable="true" />
+                android:textColor="@color/dark_grey"
+               />
 
             <TextView
                 android:id="@+id/text_rate_app"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/settings_list_item_background"
@@ -79,12 +91,14 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
                 android:text="@string/rate_the_app"
                 android:focusable="true" />
 
             <TextView
                 android:id="@+id/text_terms"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/settings_list_item_background"
@@ -92,12 +106,14 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
                 android:text="@string/terms_of_service"
                 android:focusable="true" />
 
             <TextView
                 android:id="@+id/text_privacy"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/settings_list_item_background"
@@ -105,17 +121,18 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
                 android:text="@string/privacy_policy"
                 android:focusable="true" />
 
             <TextView
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
                 android:text="@string/bookmarks"
                 android:textColor="@android:color/darker_gray" />
 
@@ -128,7 +145,9 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:text="@string/events"
                 android:focusable="true" />
 
@@ -141,7 +160,9 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:text="@string/business"
                 android:focusable="true" />
 
@@ -154,7 +175,9 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:text="@string/items"
                 android:focusable="true" />
 
@@ -167,7 +190,9 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:text="@string/posts"
                 android:focusable="true" />
 
@@ -180,7 +205,9 @@
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
                 android:text="@string/users"
                 android:focusable="true" />
 

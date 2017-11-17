@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
@@ -29,12 +30,14 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
     private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final int RC_LOCATION_PERM = 1;
     private static final String TAG = "Onboarding";
+    TextView textView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
+        textView=(TextView)findViewById(R.id.textView_info);
 
     }
 
