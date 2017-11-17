@@ -5,8 +5,9 @@
     <color name="colorAccent">#f13a30</color>
     <color name="facebookButton">#3b5998</color>
     <color name="blue">#69a3e6</color>
-    <color name="dark_grey">#8f8d8d</color>
-    <color name="light_grey">#bdbdbd</color>
+    <color name="darker_grey">#2A2A2A</color>
+    <color name="dark_grey">#757A82</color>
+    <color name="light_grey">#727377</color>
     <color name="lighter_grey">#e6e6e6</color>
     <color name="black">#000000</color>
     <color name="name_black">#2A2A2A</color>

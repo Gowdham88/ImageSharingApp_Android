@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="image_card_corner_radius">8dp</dimen>
-    <dimen name="image_newcard_corner_radius">5dp</dimen>
+    <dimen name="image_card_corner_radius">5dp</dimen>
 
     <!-- font sizes -->
     <dimen name="font_extra_large">30sp</dimen>
     <dimen name="font_larger">24sp</dimen>
     <dimen name="font_large">18sp</dimen>
     <dimen name="font_normal">16sp</dimen>
-    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="font_smaller">12sp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_huge">32dp</dimen>

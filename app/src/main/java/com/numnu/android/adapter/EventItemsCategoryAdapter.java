@@ -1,6 +1,7 @@
 package com.numnu.android.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.textViewName.setText(arr[position]);
 
@@ -53,8 +54,13 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
             @Override
             public void onClick(View view) {
 
+
+                Bundle bundle = new Bundle();
+                bundle.putString("category",  holder.textViewName.getText().toString());
+                EventItemsListFragment eventItemsListFragment=EventItemsListFragment.newInstance();
+                eventItemsListFragment.setArguments(bundle);
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventItemsListFragment.newInstance());
+                transaction.replace(R.id.frame_layout,eventItemsListFragment);
                 transaction.addToBackStack(null).commit();
             }
         });

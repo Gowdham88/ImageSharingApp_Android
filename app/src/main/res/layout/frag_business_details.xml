@@ -94,7 +94,7 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:elevation="10dp"
-                            app:cardCornerRadius="@dimen/image_newcard_corner_radius">
+                            app:cardCornerRadius="@dimen/image_card_corner_radius">
 
                             <ImageView
                                 android:id="@+id/notification_image"

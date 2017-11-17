@@ -42,6 +42,8 @@ import com.numnu.android.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 /**
  * Created by thulir on 9/10/17.
  */
@@ -53,7 +55,7 @@ public class HomeFragment extends Fragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     NestedScrollView nestedScrollView;
-    private RecyclerView currentEventsList, pastEventsList;
+    private RecyclerView currentEventsList,currentEventsList1,currentEventsList2, pastEventsList;
     private ArrayList<String> stringlist,stringlist1;
     Context context;
     Toolbar toolbar;
@@ -89,6 +91,8 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         currentEventsList = view.findViewById(R.id.current_up_recyclerview);
+        currentEventsList1 = view.findViewById(R.id.current_up_recyclerview1);
+        currentEventsList2 = view.findViewById(R.id.current_up_recyclerview2);
         pastEventsList = view.findViewById(R.id.past_recyclerview);
         ImageView searchIcon = view.findViewById(R.id.search_icon);
         ImageView locationIcon = view.findViewById(R.id.location_icon);
@@ -289,17 +293,23 @@ public class HomeFragment extends Fragment {
         stringlist1 = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
-            stringlist.add("Item " + i);
+            stringlist.add("Flatron");
         }
             CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context, stringlist);
             currentEventsList.setAdapter(currentUpAdapter);
 
+        CurrentUpEventsAdapter currentUpAdapter1 = new CurrentUpEventsAdapter(context, stringlist);
+        currentEventsList1.setAdapter(currentUpAdapter1);
+
+        CurrentUpEventsAdapter currentUpAdapter2 = new CurrentUpEventsAdapter(context, stringlist);
+        currentEventsList2.setAdapter(currentUpAdapter2);
+
 
         for (int i = 1; i <= 10; i++) {
-            stringlist1.add("Event " + i);
+            stringlist1.add("Flatron");
         }
-            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
-            pastEventsList.setAdapter(pastEventsAdapter);
+//            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
+//            pastEventsList.setAdapter(pastEventsAdapter);
 
 
     }
