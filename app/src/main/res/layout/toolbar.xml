@@ -27,7 +27,7 @@
             android:id="@+id/toolbar_title"
             android:text="@string/app_name"
             android:textColor="@color/black"
-            android:textSize="@dimen/font_large"
+            android:textSize="@dimen/font_normal"
             fontpath="fonts/Avenir-Light.ttf"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"

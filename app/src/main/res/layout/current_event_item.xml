@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/event_item_date"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:drawableLeft="@drawable/ic_city"
         android:text=" Montreal"
         android:textSize="@dimen/font_small" />

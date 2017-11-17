@@ -16,7 +16,7 @@
         <RelativeLayout
             android:id="@+id/search_food_layout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:background="@color/colorAccent"
             android:gravity="center"
             android:focusable="true"
@@ -25,37 +25,41 @@
 
             <ImageView
                 android:id="@+id/search_icon"
-                android:layout_width="45dp"
-                android:layout_height="40dp"
+                android:layout_width="41dp"
+                android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/search_image_corner_radius"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:src="@drawable/ic_search" />
 
             <EditText
                 android:id="@+id/et_search_food"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="5dp"
-                android:gravity="center_vertical"
+                android:layout_height="45dp"
+                android:layout_marginBottom="6dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="11dp"
                 android:layout_toRightOf="@+id/search_icon"
                 android:background="@drawable/edittext_corner_radius"
                 android:hint="Search"
+                fontPath="fonts/Avenir-Book.ttf"
+                tools:ignore="MissingPrefix"
+                android:textSize="14sp"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
-                android:paddingRight="8dp" />
+                android:paddingRight="8dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/search_location_layout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="45dp"
             android:background="@color/colorAccent"
             android:gravity="center"
             android:focusable="true"
@@ -64,31 +68,34 @@
 
             <ImageView
                 android:id="@+id/location_icon"
-                android:layout_width="45dp"
-                android:layout_height="40dp"
+                android:layout_width="41dp"
+                android:layout_height="45dp"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="11dp"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/search_image_corner_radius"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:src="@drawable/ic_search_location" />
 
             <EditText
                 android:id="@+id/et_search_location"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="10dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="11dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
+                android:layout_marginTop="6dp"
                 android:layout_toRightOf="@+id/location_icon"
                 android:background="@drawable/edittext_corner_radius"
                 android:hint="Location"
+                fontPath="fonts/Avenir-Book.ttf"
+                tools:ignore="MissingPrefix"
+                android:textSize="14sp"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
-                android:paddingRight="8dp" />
+                android:paddingRight="8dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"/>
         </RelativeLayout>
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -128,7 +135,9 @@
                     android:layout_margin="10dp"
                     android:text="@string/current_upcoming_events"
                     android:textColor="@color/dark_grey"
-                    android:textSize="18sp" />
+                    fontPath="fonts/Avenir-Medium.ttf"
+                    android:textSize="13sp"
+                    tools:ignore="MissingPrefix" />
 
                 <ImageView
                     android:id="@+id/view_current_event_list"
@@ -168,7 +177,9 @@
                     android:layout_margin="10dp"
                     android:text="@string/current_upcoming_events"
                     android:textColor="@color/dark_grey"
-                    android:textSize="18sp" />
+                    fontPath="fonts/Avenir-Medium.ttf"
+                    android:textSize="13sp"
+                    tools:ignore="MissingPrefix" />
 
                 <ImageView
                     android:id="@+id/view_current_event_list1"
@@ -206,7 +217,9 @@
                     android:layout_margin="10dp"
                     android:text="@string/current_upcoming_events"
                     android:textColor="@color/dark_grey"
-                    android:textSize="18sp" />
+                    fontPath="fonts/Avenir-Medium.ttf"
+                    android:textSize="13sp"
+                    tools:ignore="MissingPrefix" />
 
                 <ImageView
                     android:id="@+id/view_current_event_list2"
