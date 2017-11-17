@@ -127,10 +127,32 @@ public class HomeFragment extends Fragment {
             }
         });
         ImageView viewCurrentEventsList = view.findViewById(R.id.view_current_event_list);
+        ImageView viewCurrentEventsList1 = view.findViewById(R.id.view_current_event_list1);
+        ImageView viewCurrentEventsList2 = view.findViewById(R.id.view_current_event_list2);
 
         ImageView viewPastEventsList = view.findViewById(R.id.view_past_event_list);
 
         viewCurrentEventsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        viewCurrentEventsList1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        viewCurrentEventsList2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

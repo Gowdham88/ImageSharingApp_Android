@@ -20,8 +20,9 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:paddingTop="16dp"
         app:itemTextColor="@android:color/darker_gray"
         app:menu="@menu/bottom_navigation_items"/>
 </RelativeLayout>

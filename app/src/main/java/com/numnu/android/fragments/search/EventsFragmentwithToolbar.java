@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.search.SearchEventsAdapter;
@@ -43,8 +44,8 @@ public class EventsFragmentwithToolbar extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_withtoolbar_events, container, false);
         searchEventsList = view.findViewById(R.id.search_recyclerview);
-             toolbar=(Toolbar)view.findViewById(R.id.event_toolbar);
-//             toolbar.setTitle("Event");
+        TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.events);
         toolbackimg=(ImageView)view.findViewById(R.id.toolbar_back);
         toolbackimg.setOnClickListener(new View.OnClickListener() {
             @Override

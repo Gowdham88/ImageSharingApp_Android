@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
     android:id="@+id/action_item1"
     android:icon="@drawable/bottom_menu_home"
     android:title=""/>
 <item
     android:id="@+id/action_item2"
-    android:icon="@drawable/bottom_menu_notification"
+    android:icon="@drawable/ic_bottom_nav_notification"
     android:title=""/>
 <item
     android:id="@+id/action_item3"
