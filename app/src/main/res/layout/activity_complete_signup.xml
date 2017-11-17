@@ -96,7 +96,7 @@
                 android:id="@+id/et_signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="textEmailAddress" />
 
             <TextView
                 style="@style/FontAvenirBook"

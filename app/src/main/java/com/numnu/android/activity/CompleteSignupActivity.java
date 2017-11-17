@@ -206,36 +206,41 @@ public class CompleteSignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String userName = mEmail.getText().toString().trim();
+                String email = mEmail.getText().toString().trim();
                 String name = mName.getText().toString().trim();
                 String city = mCity.getText().toString().trim();
                 String gender = mGenderValue.trim();
                 String dob = mDob.getText().toString().trim();
 //                String foodPreferences = mFoodPreferences.getText().toString();
 
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-                if (userName.equals("")) {
-                    Toast.makeText(context, "UserName is mandatory", Toast.LENGTH_SHORT).show();
-                }
-                else if (!(userName.equals("") && name.equals("") && city.equals("") && dob.equals("")&& ItemModelList.equals(""))) {
+                if (email.equals("")) {
+                    Toast.makeText(context, "Email is mandatory", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (email.matches(emailPattern)&&(!(email.equals("") && name.equals("") && city.equals("") && dob.equals("") && ItemModelList.equals("")))) {
+                        Intent intent = new Intent(CompleteSignupActivity.this, HomeActivity.class);
+                        intent.putExtra("completesignup", "showprofilefragment");
+                        startActivity(intent);
 
-                    Intent intent = new Intent(CompleteSignupActivity.this, HomeActivity.class);
-                    intent.putExtra("completesignup", "showprofilefragment");
-                    startActivity(intent);
+                        CompleteSignupActivity.this.finish();
+                        PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_LOGGED_IN, true);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_NAME, name);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_USER_NAME, email);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_CITY, city);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
+                        if (!(gender.equals(""))) {
+                            PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_GENDER, gender);
+                        }
 
-                    CompleteSignupActivity.this.finish();
-                    PreferencesHelper.setPreferenceBoolean(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_LOGGED_IN, true);
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_NAME, name);
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_USER_NAME, userName);
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_CITY, city);
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
-                    if (!(gender.equals(""))) {
-                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_GENDER, gender);
+                        PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
                     }
 
-                    PreferencesHelper.setPreference(CompleteSignupActivity.this, PreferencesHelper.PREFERENCE_DOB, dob);
-                }
 
+                }
             }
         });
     }
