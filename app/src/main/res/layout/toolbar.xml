@@ -1,6 +1,7 @@
 <android.support.v7.widget.Toolbar
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
@@ -26,11 +27,13 @@
             android:id="@+id/toolbar_title"
             android:text="@string/app_name"
             android:textColor="@color/black"
-            android:textSize="@dimen/font_large"
+            android:textSize="@dimen/font_normal"
+            fontpath="fonts/Avenir-Light.ttf"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="MissingPrefix" />
     </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
