@@ -57,6 +57,11 @@ public class LoginFragment extends Fragment {
     // [END declare_auth]
     String mPostBookmarkIntent,mBusinessBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     private Context context;
+    public static LoginFragment newInstance() {
+        LoginFragment fragment = new LoginFragment();
+        return fragment;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

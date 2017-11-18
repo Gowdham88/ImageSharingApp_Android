@@ -30,7 +30,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     public FoodAdapter(Context context, ArrayList<String> mylist) {
         this.context = context;
         this.list=mylist;
-        layout = LayoutInflater.from(context);
+//        layout = LayoutInflater.from(context);
 
     }
 

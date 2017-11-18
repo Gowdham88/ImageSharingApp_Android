@@ -8,6 +8,7 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.LoginFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -122,8 +124,9 @@ public class SettingsFragment extends Fragment {
     private void logout() {
 
         PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,false);
-        Intent intent = new Intent(context, LoginFragment.class);
-        startActivity(intent);
+        FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, LoginFragment.newInstance());
+        transaction.addToBackStack(null).commit();
     }
 
     private void editProfile() {

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,7 +55,10 @@ public class SignupFragment extends Fragment {
     // [END declare_auth]
     String mBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     private Context context;
-
+    public static SignupFragment newInstance() {
+        SignupFragment fragment = new SignupFragment();
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +143,14 @@ public class SignupFragment extends Fragment {
                 }else {
                     Toast.makeText(context, "Password should be 2 or more characters", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, CompleteSignupFragment.newInstance());
+                transaction.addToBackStack(null).commit();
             }
         });
 
