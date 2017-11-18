@@ -131,7 +131,8 @@
         android:onClick="signUp"
         android:layout_marginLeft="@dimen/size8"
         app:layout_constraintLeft_toRightOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        tools:ignore="OnClick" />
 
     <EditText
        style="@style/FontAvenirMedium"

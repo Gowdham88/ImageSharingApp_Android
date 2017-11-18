@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
+import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;
@@ -45,6 +47,7 @@ public class LoginFragment extends Fragment {
     TextView textViewSignup;
     EditText mEmailField, mPasswordField;
     public ProgressDialog mProgressDialog;
+    TextView ForgetPassTxt;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -77,6 +80,15 @@ public class LoginFragment extends Fragment {
         textViewSignup = view.findViewById(R.id.textView_signup);
         mEmailField = view.findViewById(R.id.et_email);
         mPasswordField = view.findViewById(R.id.et_password);
+        ForgetPassTxt=(TextView)view.findViewById(R.id.txt_forget_pwd);
+        ForgetPassTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ForgetPassWordFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
         textViewSignup.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         ConsLay=view.findViewById(R.id.const_lay);
@@ -167,10 +179,10 @@ public class LoginFragment extends Fragment {
 
 
 
-    public void forgetPassword(View view) {
-        Intent mainIntent = new Intent(context,ForgetPasswordActivity.class);
-        LoginFragment.this.startActivity(mainIntent);
-    }
+//    public void forgetPassword(View view) {
+//        Intent mainIntent = new Intent(context,ForgetPasswordActivity.class);
+//        LoginFragment.this.startActivity(mainIntent);
+//    }
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
