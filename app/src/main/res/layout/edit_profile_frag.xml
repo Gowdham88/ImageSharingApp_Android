@@ -75,8 +75,8 @@
 
             <EditText
                 style="@style/FontAvenirBook"
-                android:drawableBottom="@color/completesignup_clr"
                 android:textColor="@color/name_black"
+                android:drawableBottom="@color/completesignup_clr"
                 android:textSize="@dimen/text12"
                 android:id="@+id/et_signup_name"
                 android:layout_width="match_parent"
@@ -98,8 +98,8 @@
             <EditText
                 style="@style/FontAvenirBook"
                 android:textColor="@color/name_black"
-                android:textSize="@dimen/text12"
                 android:drawableBottom="@color/completesignup_clr"
+                android:textSize="@dimen/text12"
                 android:id="@+id/et_signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,8 +119,8 @@
             <EditText
                 style="@style/FontAvenirBook"
                 android:textColor="@color/name_black"
-                android:textSize="@dimen/text12"
                 android:drawableBottom="@color/completesignup_clr"
+                android:textSize="@dimen/text12"
                 android:id="@+id/et_signup_city"
                 android:layout_width="match_parent"
                 android:imeOptions="actionNext"
@@ -148,6 +148,7 @@
                     style="@style/FontAvenirBook"
                     android:textColor="@color/completesignup_clr"
                     android:textSize="@dimen/text12"
+                    android:imeOptions="actionNext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/male_radio"
@@ -186,10 +187,10 @@
             <EditText
                 android:textSize="@dimen/text12"
                 android:id="@+id/et_signup_dob"
-                android:drawableBottom="@color/completesignup_clr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/name_black"
+                android:drawableBottom="@color/completesignup_clr"
                 android:imeOptions="actionNext"
                 android:focusable="false"
                 android:inputType="date" />
@@ -230,8 +231,8 @@
                     style="@style/FontAvenirBook"
                     android:textColor="@color/name_black"
                     android:textSize="@dimen/text12"
-                    android:singleLine="true"
                     android:drawableBottom="@color/completesignup_clr"
+                    android:singleLine="true"
                     android:id="@+id/autoCompleteTextView1"
                     android:layout_width="280dp"
                     android:imeOptions="actionDone"

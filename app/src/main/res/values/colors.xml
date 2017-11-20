@@ -32,6 +32,10 @@
     <color name="Already_txtcolor">#888F9E</color>
     <color name="bysignup_txtcolor">#88909F</color>
     <color name="sinin_lblcolor">#373737</color>
+    <color name="taginside_color">#F0F0F0</color>
+    <color name="Edittxt_lineclr">#E5E5E5</color>
+
+
 
 
 </resources>

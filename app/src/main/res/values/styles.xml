@@ -119,20 +119,14 @@
 
     <style name="TagStyle">
         <item name="fontPath">fonts/Avenir-Medium.ttf</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
+        <item name="android:alpha">13</item>
         <item name="android:background">@drawable/tag_background</item>
 
     </style>
 
     <style name="TagStyleFood">
         <item name="fontPath">fonts/Avenir-Book.ttf</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
+        <item name="android:alpha">13</item>
         <item name="android:background">@drawable/tag_background</item>
 
     </style>
