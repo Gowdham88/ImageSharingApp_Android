@@ -12,6 +12,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -82,6 +85,19 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
+        ImageView toolbarBackImage = findViewById(R.id.toolbar_back);
+
+        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        TextView toolbarTitle=findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Map View");
+
+
     }
 
     protected void loadMap(GoogleMap googleMap) {
@@ -102,7 +118,7 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
                         RC_LOCATION_PERM,
                         LOCATION);
             }
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();

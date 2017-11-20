@@ -45,7 +45,7 @@ public class CurrentEventsFragment extends Fragment {
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.current_upcoming);
 
-        ImageView toolbarBackIcon = view.findViewById(R.id.back_button);
+        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

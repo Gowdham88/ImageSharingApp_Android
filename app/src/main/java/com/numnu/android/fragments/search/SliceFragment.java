@@ -62,19 +62,12 @@ public class SliceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_slice, container, false);
 
-        TextView toolbarTitle=view.findViewById(R.id.slice_title);
-        toolbarTitle.setText("POST");
-
-        TextView textView = view.findViewById(R.id.liked_counts);
-        textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
 
-        ImageView toolbarIcon = view.findViewById(R.id.slice_toolbar_icon);
         ImageView moreIcon = view.findViewById(R.id.event_dots);
-        ImageView toolbarBackIcon = view.findViewById(R.id.back_button);
+        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         ImageView userImageIcon = view.findViewById(R.id.slice_profile_image);
         ImageView contentImage = view.findViewById(R.id.content_image);
         TextView userNameText = view.findViewById(R.id.slice_toolbar_profile_name);
@@ -96,14 +89,8 @@ public class SliceFragment extends Fragment {
             }
         });
 
-        toolbarIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Post");
 
         moreIcon.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.LoginFragment;
+import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
+import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
@@ -37,8 +39,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private TabLayout tabLayout;
     private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
-    LinearLayout linearLayout;
-    ImageView Viewimage;
+    TextView linearLayout;
+    TextView Viewimage;
     TextView ViewTxt;
 
     public static BusinessDetailFragment newInstance() {
@@ -74,16 +76,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         ImageView toolbarBackIconBuss = view.findViewById(R.id.toolbar_back_image);
         ImageView collapsedtoolbarBackIconBuss = view.findViewById(R.id.toolbar_back1);
         final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
-        linearLayout=(LinearLayout)view.findViewById(R.id.business_viewlay);
-        Viewimage=(ImageView)view.findViewById(R.id.business_viewimg) ;
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+        Viewimage= view.findViewById(R.id.business_viewtxt);
+
 
         Viewimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,8 +197,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
     private void setupViewPager(ViewPager viewPager) {
        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new Items(), "Items");
-        adapter.addFragment(new Post(), "Post");
+        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
+        adapter.addFragment(new PostsFragment(), "Post");
         viewPager.setAdapter(adapter);
     }
 

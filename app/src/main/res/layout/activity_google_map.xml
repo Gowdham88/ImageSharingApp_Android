@@ -3,9 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.GoogleMapActivity" >
-
+    <include layout="@layout/toolbar"/>
     <fragment
         android:id="@+id/map"
+        android:layout_below="@+id/toolbar"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

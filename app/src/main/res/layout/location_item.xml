@@ -28,8 +28,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_toRightOf="@id/card_view"
-        android:text="Items"
-        android:textSize="20sp" />
+        android:text="Items" />
 
 
     <HorizontalScrollView

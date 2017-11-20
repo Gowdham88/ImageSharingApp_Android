@@ -58,7 +58,7 @@ public class EventItemsListFragment extends Fragment implements View.OnClickList
         toolbarBackImage.setOnClickListener(this);
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Festival");
+        toolbarTitle.setText(title);
 
         setupRecyclerView();
         return view;

@@ -45,7 +45,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class LocationDetailFragment extends Fragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks  {
 
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,openMap;
     private ImageView eventImageView;
     private AppBarLayout appBarLayout;
     private SupportMapFragment mapFragment;
@@ -80,6 +80,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         city = view.findViewById(R.id.txt_city);
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
+        openMap = view.findViewById(R.id.txt_open_map);
 
         eventImageView = view.findViewById(R.id.current_event_image);
 
@@ -100,6 +101,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         toolbarBackIcon.setOnClickListener(this);
         collapsedtoolbarBackIcon.setOnClickListener(this);
         toolbar1.setOnClickListener(this);
+        openMap.setOnClickListener(this);
 
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
@@ -238,6 +240,9 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.toolbar1:
                 appBarLayout.setExpanded(true);
+                break;
+            case R.id.txt_open_map:
+                startActivity(new Intent(context,GoogleMapActivity.class));
                 break;
         }
     }

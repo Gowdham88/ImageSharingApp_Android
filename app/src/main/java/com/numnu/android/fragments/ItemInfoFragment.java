@@ -86,7 +86,6 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
-        linearLayout=(LinearLayout)view.findViewById(R.id.business_viewlay);
         ItemInfoTxt=(TextView) view.findViewById(R.id.text_terms) ;
         ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +97,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         });
 
 
-//        toolbarBackIcon.setOnClickListener(this);
+        toolbarBackIcon.setOnClickListener(this);
 //        collapsedtoolbarBackIcon.setOnClickListener(this);
 //        toolbar1.setOnClickListener(this);
 //
