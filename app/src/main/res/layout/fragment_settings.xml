@@ -18,7 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/business_viewcolor">
+        android:background="@color/taginside_color">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"

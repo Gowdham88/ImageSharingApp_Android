@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.activity.CompleteSignupFragment;
 import com.numnu.android.activity.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
 import com.numnu.android.utils.PreferencesHelper;
@@ -29,6 +30,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class SettingsFragment extends Fragment {
 
     private Context context;
+    String name;
 
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
@@ -131,7 +133,7 @@ public class SettingsFragment extends Fragment {
 
     private void editProfile() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+        transaction.replace(R.id.frame_layout, EditProfileFragment.newInstance());
         transaction.addToBackStack(null).commit();
     }
 

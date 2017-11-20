@@ -1,4 +1,4 @@
-package com.numnu.android.activity;
+package com.numnu.android.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
@@ -33,24 +32,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.utils.PreferencesHelper;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
-import static android.graphics.BitmapFactory.decodeFile;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by lenovo on 11/18/2017.
  */
 
-public class CompleteSignupFragment extends Fragment {
+public class EditProfileFragment extends Fragment {
 
     Context context;
     EditText mEmail, mName, mCity, mGender, mDob, mFoodPreferences;
@@ -86,8 +83,8 @@ public class CompleteSignupFragment extends Fragment {
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
 
-    public static CompleteSignupFragment newInstance() {
-        CompleteSignupFragment fragment = new CompleteSignupFragment();
+    public static EditProfileFragment newInstance() {
+        EditProfileFragment fragment = new EditProfileFragment();
         return fragment;
     }
 
@@ -102,9 +99,9 @@ public class CompleteSignupFragment extends Fragment {
 
         //Returning the layout file after inflating
         //Change R.layout.tab1 in you classes
-        View v = inflater.inflate(R.layout.activity_complete_signup, container, false);
-        final TextView toolbarTitle = v.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Complete SignUp");
+        View v = inflater.inflate(R.layout.edit_profile_frag, container, false);
+        TextView toolbarTitle = v.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Edit Profile");
         recyclerView = (RecyclerView) v.findViewById(R.id.food_recyclerview);
         FoodLinearLay = (LinearLayout) v.findViewById(R.id.food_layout);
         EditBtn = (ImageView) v.findViewById(R.id.imageView_profile_edit);
@@ -147,11 +144,12 @@ public class CompleteSignupFragment extends Fragment {
                             mylist.add(ItemModelList);
                             adapter = new FoodAdapter(context, mylist);
                             recyclerView.setAdapter(adapter);
+                            vairam.notifyDataSetChanged();
                         }
 
                     } else {
                         Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-                        autoComplete.setText(" ");
+
                     }
 
                 } else {
@@ -159,14 +157,12 @@ public class CompleteSignupFragment extends Fragment {
                 }
 
             }
-
         });
 
 
         adapter = new FoodAdapter(context, mylist);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-
 
         mEmail = v.findViewById(R.id.et_signup_email);
         mName = v.findViewById(R.id.et_signup_name);
@@ -289,7 +285,7 @@ public class CompleteSignupFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 bottomSheetDialog.dismiss();
             }
@@ -376,11 +372,13 @@ public class CompleteSignupFragment extends Fragment {
 
         Cursor cursor = getApplicationContext().getContentResolver().query(selectedImage,
                 filePathColumn, null, null, null);
+        cursor.moveToFirst();
 
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         String picturePath = cursor.getString(columnIndex);
         cursor.close();
         return picturePath;
-
     }
+
+
 }

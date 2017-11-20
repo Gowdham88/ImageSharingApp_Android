@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Numnu Android.iml" filepath="$PROJECT_DIR$/Numnu Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/numnu_android_master.iml" filepath="$PROJECT_DIR$/numnu_android_master.iml" />
       <module fileurl="file://F:\CZSM\Numnu Android\numnu_android_master.iml" filepath="F:\CZSM\Numnu Android\numnu_android_master.iml" />
     </modules>
   </component>

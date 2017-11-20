@@ -48,6 +48,7 @@ public class SignupFragment extends Fragment {
     EditText mEmailField, mPasswordField;
     public ProgressDialog mProgressDialog;
 
+    String Signupname;
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
@@ -138,21 +139,19 @@ public class SignupFragment extends Fragment {
         view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mPasswordField.getText().toString().trim().length()>1) {
+//
                     createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-                }else {
-                    Toast.makeText(context, "Password should be 2 or more characters", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
-        view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, CompleteSignupFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+//        view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_layout, CompleteSignupFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
 
         textViewSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,7 +248,7 @@ public class SignupFragment extends Fragment {
 
                             if (mReceivedIntent == null){
 
-                                LoginFragment loginFragment1=new LoginFragment();
+                                CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                 transaction.replace(R.id.frame_layout,loginFragment1);
                                 transaction.addToBackStack(null).commit();
@@ -334,7 +333,7 @@ public class SignupFragment extends Fragment {
         }
 
         String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password) || password.length()<2) {
             mPasswordField.setError("Required.");
             valid = false;
         } else {

@@ -16,15 +16,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_small"
-            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginLeft="@dimen/size3"
             android:layout_marginRight="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_small"
             android:orientation="horizontal">
 
             <TextView
                 style="@style/TagStyleFood"
-                android:textColor="@color/name_black"
-                android:textSize="@dimen/text14"
+                android:textColor="@color/tag_inside_text_color"
+                android:textSize="@dimen/text12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
