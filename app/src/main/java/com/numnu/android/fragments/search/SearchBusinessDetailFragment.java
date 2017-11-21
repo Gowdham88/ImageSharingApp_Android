@@ -271,7 +271,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
 
-        ImageButton btncancel = layout.findViewById(R.id.btncancelcat);
+        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

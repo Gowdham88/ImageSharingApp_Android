@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,304 +6,258 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
-        android:focusableInTouchMode="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="false">
 
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
-            app:title="Numnu1"
-            android:focusableInTouchMode="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:focusableInTouchMode="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="Numnu1">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible"
                 app:layout_collapseMode="pin"
                 app:layout_collapseParallaxMultiplier="0.7">
 
-                <android.support.v7.widget.Toolbar
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/toolbar"
-                    app:layout_collapseMode="pin"
+                <include layout="@layout/toolbar_with_options" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/toolbar_background_color"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:contentInsetStart="0dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:orientation="horizontal">
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/business_detail_image"-->
+                    <!--android:layout_width="80dp"-->
+                    <!--android:layout_height="80dp"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@drawable/biryaniimg"-->
+                    <!--/>-->
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_view"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:elevation="10dp"
+                        app:cardCornerRadius="@dimen/image_card_corner_radius">
+
+                        <ImageView
+                            android:id="@+id/notification_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/food_for_lunch_mom" />
+                    </android.support.v7.widget.CardView>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/toolbar_back_image"
-                            app:srcCompat="@drawable/back_arrow"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="@dimen/toolbar_icon_width"
-                            android:layout_height="@dimen/toolbar_icon_height" />
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
+
                         <TextView
+                            android:id="@+id/text_business_detail_image"
                             style="@style/FontAvenirMedium"
-                            android:id="@+id/toolbar_title"
-                            android:text="Business"
-                            android:textColor="@color/name_black"
-                            android:textSize="@dimen/font_normal"
-                            android:layout_centerInParent="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <ImageView
-                            android:id="@+id/toolbar_image"
-                            app:srcCompat="@drawable/event_dots"
-                            android:layout_marginRight="@dimen/spacing_small"
-                            android:layout_marginEnd="@dimen/spacing_small"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_width="@dimen/toolbar_icon_width"
-                            android:layout_height="@dimen/toolbar_icon_height" />
-                    </RelativeLayout>
-
-                </android.support.v7.widget.Toolbar>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="13dp"
-                        android:layout_marginBottom="4dp"
-                        android:orientation="horizontal">
-
-                            <!--<ImageView-->
-                                <!--android:id="@+id/business_detail_image"-->
-                                <!--android:layout_width="80dp"-->
-                                <!--android:layout_height="80dp"-->
-                                <!--android:scaleType="centerCrop"-->
-                                <!--android:src="@drawable/biryaniimg"-->
-                                <!--/>-->
-
-                        <android.support.v7.widget.CardView
-                            android:id="@+id/card_view"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:elevation="10dp"
-                            app:cardCornerRadius="@dimen/image_card_corner_radius">
-
-                            <ImageView
-                                android:id="@+id/notification_image"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/food_for_lunch_mom" />
-                        </android.support.v7.widget.CardView>
-                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:orientation="vertical">
+                            android:text="Business name"
+                            android:textColor="@color/name_black"
+                            android:textSize="@dimen/text14" />
 
-                            <TextView
-                                style="@style/FontAvenirMedium"
-                                android:id="@+id/text_business_detail_image"
+                        <HorizontalScrollView
+                            android:id="@+id/business_chips_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/text_business_detail_image">
+
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Business name"
-                                android:layout_centerVertical="true"
-                                android:textSize="@dimen/text14"
-                                android:textColor="@color/name_black"
-                                android:layout_alignBaseline="@+id/card_view"
-                                android:layout_toRightOf="@+id/card_view"
-                                android:layout_toEndOf="@+id/card_view"
-                                app:layout_constraintLeft_toRightOf="@+id/card_view"
-                                app:layout_constraintHorizontal_bias="0.293"
-                                app:layout_constraintTop_toTopOf="@+id/card_view"
-                                />
+                                android:layout_marginBottom="@dimen/spacing_tiny"
+                                android:layout_marginRight="@dimen/spacing_small"
+                                android:layout_marginTop="@dimen/spacing_tiny"
+                                android:orientation="horizontal">
 
-                            <HorizontalScrollView
-                                android:id="@+id/business_chips_layout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/event_name">
-
-
-                                <LinearLayout
+                                <TextView
+                                    style="@style/TagStyle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/spacing_small"
-                                    android:layout_marginRight="@dimen/spacing_small"
-                                    android:layout_marginTop="8dp"
-                                    android:orientation="horizontal">
+                                    android:text="food"
+                                    android:textColor="@color/tag_inside_text_color"
+                                    android:textSize="@dimen/size12" />
 
-                                    <TextView
-                                        style="@style/TagStyle"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="food"
-                                        android:textColor="@color/tag_inside_text_color"
-                                        android:textSize="@dimen/size12" />
+                                <TextView
+                                    style="@style/TagStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/size5"
+                                    android:text="food"
+                                    android:textColor="@color/tag_inside_text_color"
+                                    android:textSize="@dimen/size12" />
 
-                                    <TextView
-                                        style="@style/TagStyle"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="food"
-                                        android:layout_marginLeft="@dimen/size5"
-                                        android:textColor="@color/tag_inside_text_color"
-                                        android:textSize="@dimen/size12" />
-
-                                </LinearLayout>
-
-                            </HorizontalScrollView>
-                            <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_calendar"/>
-
-                            <TextView
-                                style="@style/FontAvenirMedium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:textColor="@color/time_color"
-                            android:text="BarBados food and num festival"
-                            android:textSize="@dimen/text12"
-                                android:layout_marginTop="1dp"
-                            android:gravity="center"
-                            tools:ignore="MissingPrefix" />
                             </LinearLayout>
 
-                        </LinearLayout>
+                        </HorizontalScrollView>
 
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/img_calender"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_below="@+id/business_chips_layout"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            style="@style/FontAvenirMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/business_chips_layout"
+                            android:paddingLeft="@dimen/spacing_tiny"
+                            android:layout_toRightOf="@+id/img_calender"
+                            android:layout_toEndOf="@+id/img_calender"
+                            android:layout_alignBaseline="@+id/img_calender"
+                            android:text="BarBados food and num festival"
+                            android:textColor="@color/time_color"
+                            android:textSize="@dimen/text12" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
                 <!--</android.support.v7.widget.CardView>-->
 
                 <com.numnu.android.utils.ExpandableTextView
-                    style="@style/FontAvenirMedium"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginRight="@dimen/spacing_small"
-                    android:textSize="@dimen/text13"
-                    android:textColor="@color/time_color"
                     android:id="@+id/business_detail_description"
+                    style="@style/FontAvenirMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="@dimen/spacing_small"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/weblinks_layout"
-                    android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
+                    android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+                    android:textColor="@color/time_color"
+                    android:textSize="@dimen/text13" />
 
-                    <TextView
-                        style="@style/FontAvenirMedium"
-                        android:id="@+id/business_viewtxt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="View Profile"
-                        android:background="@color/lighter_grey"
-                        android:padding="@dimen/spacing_small"
-                        android:layout_gravity="center_vertical"
-                        android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-                        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-                        android:textColor="@color/weblink_color"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/business_viewtxt"
+                    style="@style/FontAvenirMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/lighter_grey"
+                    android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+                    android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/spacing_small"
+                    android:text="View Profile"
+                    android:textColor="@color/weblink_color" />
 
-                </LinearLayout>
+            </LinearLayout>
 
 
-                <!--<LinearLayout-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="4dp"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:orientation="horizontal">-->
+            <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:orientation="horizontal">-->
 
-                    <!--<ImageView-->
-                        <!--android:layout_width="25dp"-->
-                        <!--android:layout_height="20dp"-->
-                        <!--android:layout_marginLeft="8dp"-->
-                        <!--android:src="@drawable/ic_calendar"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:src="@drawable/ic_calendar"/>-->
 
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Event name which can be very very long"-->
-                        <!--android:textSize="15dp"-->
-                        <!--fontPath="fonts/Avenir-Roman.ttf"-->
-                        <!--android:gravity="center"-->
-                        <!--android:layout_marginLeft="5dp"-->
-                        <!--tools:ignore="MissingPrefix" />-->
-                <!--</LinearLayout>-->
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Event name which can be very very long"-->
+            <!--android:textSize="15dp"-->
+            <!--fontPath="fonts/Avenir-Roman.ttf"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--tools:ignore="MissingPrefix" />-->
+            <!--</LinearLayout>-->
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
-        <android.support.v7.widget.Toolbar
+
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/toolbar1"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/toolbar_background_color"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:contentInsetStart="0dp"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:contentInsetStart="0dp">
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/toolbar_back1"
-                    app:srcCompat="@drawable/back_arrow"
+                    android:layout_width="@dimen/toolbar_icon_width"
+                    android:layout_height="@dimen/toolbar_icon_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_marginStart="@dimen/spacing_small"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_height" />
+                    app:srcCompat="@drawable/back_arrow" />
+
                 <TextView
-                    style="@style/FontAvenirMedium"
                     android:id="@+id/toolbar_title1"
+                    style="@style/FontAvenirMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="@string/businesses"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_normal"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="@dimen/font_normal" />
+
                 <ImageView
                     android:id="@+id/toolbar_image1"
-                    app:srcCompat="@drawable/event_dots"
-                    android:layout_marginRight="@dimen/spacing_small"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_height" />
+                    android:layout_height="@dimen/toolbar_icon_height"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:layout_marginRight="@dimen/spacing_small"
+                    app:srcCompat="@drawable/event_dots" />
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/business_tabs"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             app:tabSelectedTextColor="@color/name_black"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabTextColor="@color/tab_unselected_color" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/business_viewpager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tabs" />
+        android:layout_below="@+id/tabs"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>

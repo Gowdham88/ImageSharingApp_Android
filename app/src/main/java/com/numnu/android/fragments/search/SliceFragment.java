@@ -191,7 +191,7 @@ public class SliceFragment extends Fragment {
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
 
-        ImageButton btncancel = layout.findViewById(R.id.btncancelcat);
+        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

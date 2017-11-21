@@ -9,7 +9,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar_with_options" />
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
@@ -37,14 +37,15 @@
         </android.support.v7.widget.CardView>
 
         <TextView
+            android:id="@+id/txt_amount"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/content_image_card"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:gravity="center_horizontal"
             android:text="$3.63"
-            android:textColor="@color/materialGreenDark"
-            android:textSize="18sp" />
+            android:textColor="@color/green"
+            android:textSize="@dimen/font_small" />
 
         <TextView
             android:id="@+id/item_header_event_name"
@@ -69,10 +70,9 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_small"
-                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_tiny"
                 android:layout_marginRight="@dimen/size10"
-                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_tiny"
                 android:orientation="horizontal">
 
                 <TextView
@@ -117,31 +117,31 @@
             android:layout_height="20dp"
             android:layout_below="@+id/chips_layout"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:layout_toRightOf="@id/content_image_card"
             android:src="@drawable/restaurant_ico" />
 
         <TextView
             android:id="@+id/cottage_house_txt"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/chips_layout"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:layout_toEndOf="@id/cottage_house_icon"
             android:layout_toRightOf="@id/cottage_house_icon"
             android:gravity="center_vertical"
             android:text="Cottage House"
-            android:textSize="15sp" />
+            android:textSize="@dimen/font_small" />
 
         <ImageView
             android:id="@+id/event_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="15dp"
+            android:layout_height="16dp"
             android:layout_below="@+id/cottage_house_icon"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:layout_toRightOf="@id/content_image_card"
             android:src="@drawable/ic_calendar" />
 
@@ -152,21 +152,21 @@
             android:layout_below="@+id/cottage_house_txt"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:layout_toEndOf="@id/cottage_house_icon"
             android:layout_toRightOf="@id/cottage_house_icon"
             android:gravity="center_vertical"
             android:text="Barbadous food and rum festival"
-            android:textSize="15sp" />
+            android:textSize="@dimen/font_small" />
 
         <com.numnu.android.utils.ExpandableTextView
             android:id="@+id/event_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/event_txt"
+            android:layout_below="@+id/txt_amount"
             android:layout_marginLeft="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_small"
             android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
 
         <TextView

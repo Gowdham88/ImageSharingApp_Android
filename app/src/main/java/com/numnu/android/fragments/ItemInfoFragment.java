@@ -98,46 +98,13 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
 
         toolbarBackIcon.setOnClickListener(this);
-//        collapsedtoolbarBackIcon.setOnClickListener(this);
-//        toolbar1.setOnClickListener(this);
-//
-//        toolbarIcon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showBottomSheet(inflater);
-//            }
-//        });
-//        collapsedtoolbarIcon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showBottomSheet(inflater);
-//            }
-//        });
 
-
-//        appBarLayout = view.findViewById(R.id.appbar);
-//        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-//            @Override
-//            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-//                switch (state.name()) {
-//
-//                    case "EXPANDED":
-//                        toolbar1.setVisibility(View.GONE);
-//                        view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-//                        break;
-//
-//                    case "IDLE":
-//                        toolbar1.setVisibility(View.GONE);
-//                        view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-//                        break;
-//                    case "COLLAPSED":
-//                        toolbar1.setVisibility(View.VISIBLE);
-//                        view.findViewById(R.id.tabs).setVisibility(View.GONE);
-//                        break;
-//                }
-//            }
-//        });
-
+        toolbarIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheet(inflater);
+            }
+        });
 
         ItemInfoTxt=(TextView)view.findViewById(R.id.text_terms);
         ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
@@ -245,7 +212,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
 
-        ImageButton btncancel = layout.findViewById(R.id.btncancelcat);
+        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,5 +222,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         });
 
     }
+
+
 }
 

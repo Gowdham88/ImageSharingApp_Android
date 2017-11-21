@@ -73,7 +73,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         toolbarTitle1Buss.setText(getString(R.string.businesses));
         ImageView toolbarIconBuss = view.findViewById(R.id.toolbar_image);
         ImageView collapsedtoolbarIconBuss = view.findViewById(R.id.toolbar_image1);
-        ImageView toolbarBackIconBuss = view.findViewById(R.id.toolbar_back_image);
+        ImageView toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
         ImageView collapsedtoolbarBackIconBuss = view.findViewById(R.id.toolbar_back1);
         final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
         Viewimage= view.findViewById(R.id.business_viewtxt);
@@ -104,18 +104,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 showBottomSheet(inflater);
             }
         });
-        toolbarBackIconBuss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
-        collapsedtoolbarBackIconBuss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
+
+
 
         appBarLayout = view.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -207,6 +197,13 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         switch (view.getId()) {
             case R.id.toolbar1:
                 appBarLayout.setExpanded(true);
+                break;
+
+            case R.id.toolbar_back:
+                 getActivity().onBackPressed();
+                break;
+            case R.id.toolbar_back1:
+                getActivity().onBackPressed();
                 break;
         }
     }
