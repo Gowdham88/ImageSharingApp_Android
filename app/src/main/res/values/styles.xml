@@ -127,7 +127,7 @@
 
     <style name="TagStyleFood">
         <item name="fontPath">fonts/Avenir-Book.ttf</item>
-        <item name="android:alpha">13</item>
+        <item name="android:alpha">39</item>
         <item name="android:background">@drawable/tag_background</item>
 
     </style>

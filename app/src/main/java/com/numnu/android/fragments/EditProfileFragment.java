@@ -1,20 +1,30 @@
 package com.numnu.android.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +44,26 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
+import com.numnu.android.activity.MainActivity;
+import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.FoodAdapter;
+import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.Manifest.permission_group.LOCATION;
+import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.numnu.android.utils.Utils.hideKeyboard;
 
@@ -49,7 +71,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by lenovo on 11/18/2017.
  */
 
-public class EditProfileFragment extends Fragment {
+public class EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
 
     Context context;
     EditText mEmail, mName, mCity, mGender, mDob, mFoodPreferences;
@@ -83,7 +105,8 @@ public class EditProfileFragment extends Fragment {
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private static final int CAMERA_REQUEST = 1888;
-    boolean Food=false;
+    private static final String[] CAMERA= {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final int RC_LOCATION_PER = 1;
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
 
@@ -204,30 +227,15 @@ public class EditProfileFragment extends Fragment {
         mEmail = v.findViewById(R.id.et_signup_email);
         mName = v.findViewById(R.id.et_signup_name);
         mCity = v.findViewById(R.id.et_signup_city);
-//        mGender = findViewById(R.id.et_signup_gender);
+
         mRadioGroup = v.findViewById(R.id.radio_group);
         mRadioMale = v.findViewById(R.id.male_radio);
         mRadioFemale = v.findViewById(R.id.female_radio);
         mDob = v.findViewById(R.id.et_signup_dob);
-//        mFoodPreferences = findViewById(R.id.et_signup_food_preferences);
+
         mCompleteSignUp = v.findViewById(R.id.button_complete_signup);
-//        mFoodPreferences.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FoodLinearLay.setVisibility(View.VISIBLE);
-//                hideKeyboardFrom();
-//            }
-//        });
-
-
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
-
-//        final RecipientEditTextView recipientEditTextView = findViewById(R.id.et_signup_food_preferences);
-//        recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//        BaseRecipientAdapter recipientAdapter = new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE,context);
-//        recipientAdapter.setShowMobileOnly(false);
-//        recipientEditTextView.setAdapter(recipientAdapter);
 
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
@@ -309,6 +317,38 @@ public class EditProfileFragment extends Fragment {
     }
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+
+
+    private boolean hasLocationPermission() {
+        return EasyPermissions.hasPermissions(getActivity(), CAMERA);
+    }
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog directing them to enable the permission in app settings.
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+
+    }
+
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
         View bottomSheetView = inflater.inflate(R.layout.dialo_camera_bottomsheet, null);
@@ -322,10 +362,22 @@ public class EditProfileFragment extends Fragment {
         Camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (hasLocationPermission()) {
+                    // Have permissions, do the thing!
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                    bottomSheetDialog.dismiss();
+                } else {
+//
+                    EasyPermissions.requestPermissions(
+                            getActivity(),
+                            getString(R.string.rationale_location),
+                            RC_LOCATION_PER,
+                            CAMERA);
+                }
 
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                bottomSheetDialog.dismiss();
+
+
             }
         });
 
@@ -344,15 +396,6 @@ public class EditProfileFragment extends Fragment {
         });
     }
 
-//    public Uri setImageUri() {
-//        // Store image in dcim
-//        File file = new File(Environment.getExternalStorageDirectory()
-//                + "/DCIM/", "image" + new Date().getTime() + ".png");
-//        Uri imgUri = Uri.fromFile(file);
-//        this.imgPath = file.getAbsolutePath();
-//        return imgUri;
-//    }
-//
     public String getImagePath() {
         return imgPath;
     }
@@ -360,14 +403,31 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == PICK_IMAGE) {
-                selectedImagePath = getAbsolutePath(data);
-                viewImage.setImageBitmap(decodeFile(selectedImagePath));
-            } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    Uri contentURI = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), contentURI);
+                        viewImage.setImageBitmap(bitmap);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//                bottomSheetDialog.dismiss();
+                Toast.makeText(getActivity(), "Camera:"+(hasLocationPermission()?"yes":"no"), Toast.LENGTH_SHORT).show();
+            }else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK){
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 viewImage.setImageBitmap(photo);
             }
+
             } else {
                 super.onActivityResult(requestCode, resultCode,
                         data);
@@ -404,7 +464,6 @@ public class EditProfileFragment extends Fragment {
     }
 
     private String getAbsolutePath(Intent data) {
-        @SuppressWarnings("deprecation")
         Uri selectedImage = data.getData();
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
 

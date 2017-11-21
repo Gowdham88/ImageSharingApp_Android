@@ -1,5 +1,6 @@
 package com.numnu.android.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,12 +39,19 @@ import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.Manifest.permission_group.LOCATION;
+import static android.content.ContentValues.TAG;
 import static android.graphics.BitmapFactory.decodeFile;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.numnu.android.utils.Utils.hideKeyboard;
@@ -51,7 +60,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by lenovo on 11/18/2017.
  */
 
-public class CompleteSignupFragment extends Fragment {
+public class CompleteSignupFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
 
     Context context;
     EditText mEmail, mName, mCity, mGender, mDob, mFoodPreferences;
@@ -84,6 +93,8 @@ public class CompleteSignupFragment extends Fragment {
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private static final int CAMERA_REQUEST = 1888;
+    private static final String[] CAMERA= {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final int RC_LOCATION_PER = 1;
 
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
@@ -138,21 +149,12 @@ public class CompleteSignupFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 ItemModelList = vairam.getItem(position).toString();
-
-
-            }
-        });
-        AddTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if ( !autoComplete.getText().toString().isEmpty()&& ItemModelList != null && !autoComplete.getText().toString().equals(null)){
+                if ( !autoComplete.getText().toString().isEmpty()&& ItemModelList != null && !autoComplete.getText().toString().equals(null)) {
                     if (!ItemModelList.isEmpty()) {
-                        if (mylist.contains(ItemModelList)) {
 
+                        if (mylist.contains(ItemModelList)) {
                             Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
                         } else {
-
                             mylist.add(ItemModelList);
                             adapter = new FoodAdapter(context, mylist);
                             recyclerView.setAdapter(adapter);
@@ -160,23 +162,46 @@ public class CompleteSignupFragment extends Fragment {
                             autoComplete.setText(null);
                         }
 
-
-                    }
-
-                    else {
+                    } else {
                         Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
 
                     }
 
                 } else {
                     Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+                }
 
+
+            }
+        });
+        AddTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String autoTxt=autoComplete.getText().toString();
+                if ( !autoComplete.getText().toString().isEmpty() && !autoComplete.getText().toString().equals(null)) {
+                    if (!autoTxt.isEmpty()) {
+
+                        if (mylist.contains(autoTxt)) {
+                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mylist.add(autoTxt);
+                            adapter = new FoodAdapter(context, mylist);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            autoComplete.setText(null);
+                        }
+
+                    } else {
+                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-
-
         adapter = new FoodAdapter(context, mylist);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
@@ -289,6 +314,38 @@ public class CompleteSignupFragment extends Fragment {
         return v;
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+
+
+    private boolean hasLocationPermission() {
+        return EasyPermissions.hasPermissions(getActivity(), CAMERA);
+    }
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog directing them to enable the permission in app settings.
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+
+    }
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
         View bottomSheetView = inflater.inflate(R.layout.dialo_camera_bottomsheet, null);
@@ -302,10 +359,22 @@ public class CompleteSignupFragment extends Fragment {
         Camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (hasLocationPermission()) {
+                    // Have permissions, do the thing!
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                    bottomSheetDialog.dismiss();
+                } else {
+//
+                    EasyPermissions.requestPermissions(
+                            getActivity(),
+                            getString(R.string.rationale_location),
+                            RC_LOCATION_PER,
+                            CAMERA);
+                }
 
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                bottomSheetDialog.dismiss();
+
+
             }
         });
 
@@ -340,20 +409,36 @@ public class CompleteSignupFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == PICK_IMAGE) {
-                selectedImagePath = getAbsolutePath(data);
-                viewImage.setImageBitmap(decodeFile(selectedImagePath));
-            } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    Uri contentURI = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), contentURI);
+                        viewImage.setImageBitmap(bitmap);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//                bottomSheetDialog.dismiss();
+                Toast.makeText(getActivity(), "Camera:"+(hasLocationPermission()?"yes":"no"), Toast.LENGTH_SHORT).show();
+            }else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK){
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 viewImage.setImageBitmap(photo);
             }
-            } else {
-                super.onActivityResult(requestCode, resultCode,
-                        data);
-            }
-        }
 
+        } else {
+            super.onActivityResult(requestCode, resultCode,
+                    data);
+        }
+    }
 
 
     public Bitmap decodeFile(String path) {

@@ -115,7 +115,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
                     // Ask for one permission
                     EasyPermissions.requestPermissions(
                             OnboardingActivity.this,
-                            getString(R.string.rationale_location),
+                             getString(R.string.rationale_location),
                             RC_LOCATION_PERM,
                             LOCATION);
                 }
