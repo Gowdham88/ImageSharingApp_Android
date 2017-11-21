@@ -3,6 +3,7 @@ package com.numnu.android.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.numnu.android.R;
 import com.numnu.android.fragments.HomeFragment;
 
 import static com.facebook.GraphRequest.TAG;
+import static com.numnu.android.utils.Utils.hideKeyboard;
 
 /**
  * Created by lenovo on 11/18/2017.
@@ -26,7 +28,7 @@ import static com.facebook.GraphRequest.TAG;
 
 public class ForgetPassWordFragment extends Fragment {
     Button Resetbutton;
-
+ConstraintLayout Constainlay;
     public static ForgetPassWordFragment newInstance() {
         ForgetPassWordFragment fragment = new ForgetPassWordFragment();
         return fragment;
@@ -69,6 +71,12 @@ public class ForgetPassWordFragment extends Fragment {
                     }
                 }
 
+        });
+        Constainlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(getActivity());
+            }
         });
         return v;
     }

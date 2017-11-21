@@ -40,6 +40,7 @@ import com.numnu.android.utils.PreferencesHelper;
 import java.util.Arrays;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.numnu.android.utils.Utils.hideKeyboard;
 
 public class SignupFragment extends Fragment {
 
@@ -84,8 +85,13 @@ public class SignupFragment extends Fragment {
         mPasswordField =view.findViewById(R.id.et_password);
 
         textViewSignIn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        SignupConsLay=view.findViewById(R.id.const_lay);
-
+        SignupConsLay=view.findViewById(R.id.signup_const_lay);
+        SignupConsLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(getActivity());
+            }
+        });
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();

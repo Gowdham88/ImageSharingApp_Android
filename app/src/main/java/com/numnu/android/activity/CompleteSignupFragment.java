@@ -45,6 +45,7 @@ import java.util.Locale;
 
 import static android.graphics.BitmapFactory.decodeFile;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.numnu.android.utils.Utils.hideKeyboard;
 
 /**
  * Created by lenovo on 11/18/2017.
@@ -74,6 +75,7 @@ public class CompleteSignupFragment extends Fragment {
     TextView Camera;
     ImageView GalleryIcon;
     ImageView CameraIcon;
+    LinearLayout CompleteSignupLay;
     private String selectedImagePath = "";
     final private int PICK_IMAGE = 1;
     final private int CAPTURE_IMAGE = 2;
@@ -116,7 +118,13 @@ public class CompleteSignupFragment extends Fragment {
                 showBottomSheet(inflater);
             }
         });
-
+        CompleteSignupLay=(LinearLayout)v.findViewById(R.id.Complete_Linlay);
+        CompleteSignupLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(getActivity());
+            }
+        });
 
 //        adapter.setClickListener(this);
         autoComplete = (AutoCompleteTextView) v.findViewById(R.id.autoCompleteTextView1);
@@ -138,28 +146,34 @@ public class CompleteSignupFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if (!autoComplete.getText().toString().isEmpty() && ItemModelList != null) {
+                if ( !autoComplete.getText().toString().isEmpty()&& ItemModelList != null && !autoComplete.getText().toString().equals(null)){
                     if (!ItemModelList.isEmpty()) {
-
                         if (mylist.contains(ItemModelList)) {
+
                             Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
                         } else {
+
                             mylist.add(ItemModelList);
                             adapter = new FoodAdapter(context, mylist);
                             recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            autoComplete.setText(null);
                         }
 
-                    } else {
+
+                    }
+
+                    else {
                         Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-                        autoComplete.setText(" ");
+
                     }
 
                 } else {
                     Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+
                 }
 
             }
-
         });
 
 

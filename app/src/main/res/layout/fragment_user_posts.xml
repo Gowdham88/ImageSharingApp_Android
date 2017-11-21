@@ -71,18 +71,18 @@
                android:layout_height="wrap_content"
                android:layout_width="wrap_content"/>
 
-           <View
-               android:id="@+id/view_divider"
-               android:layout_below="@+id/event_description"
-               android:layout_width="match_parent"
-               android:visibility="visible"
-               android:layout_height="1dp"
-               android:background="@color/light_grey"
-               android:layout_marginBottom="8dp"
-               android:layout_marginTop="4dp"
-               android:layout_marginLeft="@dimen/spacing_small"
-               android:layout_marginRight="@dimen/spacing_small"
-               />
+           <!--<View-->
+               <!--android:id="@+id/view_divider"-->
+               <!--android:layout_below="@+id/event_description"-->
+               <!--android:layout_width="match_parent"-->
+               <!--android:visibility="visible"-->
+               <!--android:layout_height="1dp"-->
+               <!--android:background="@color/light_grey"-->
+               <!--android:layout_marginBottom="8dp"-->
+               <!--android:layout_marginTop="4dp"-->
+               <!--android:layout_marginLeft="@dimen/spacing_small"-->
+               <!--android:layout_marginRight="@dimen/spacing_small"-->
+               <!--/>-->
 
            <android.support.v7.widget.RecyclerView
                android:id="@+id/user_posts_recycler"
