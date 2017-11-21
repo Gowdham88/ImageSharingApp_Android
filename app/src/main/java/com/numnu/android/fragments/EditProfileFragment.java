@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.numnu.android.utils.Utils.hideKeyboard;
 
 /**
  * Created by lenovo on 11/18/2017.
@@ -75,11 +77,13 @@ public class EditProfileFragment extends Fragment {
     final private int PICK_IMAGE = 1;
     final private int CAPTURE_IMAGE = 2;
     private String imgPath;
+    RelativeLayout EditReLay;
+    LinearLayout EditLinearLay;
 
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private static final int CAMERA_REQUEST = 1888;
-
+    boolean Food=false;
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
 
@@ -113,8 +117,20 @@ public class EditProfileFragment extends Fragment {
                 showBottomSheet(inflater);
             }
         });
-
-
+        EditLinearLay=(LinearLayout)v.findViewById(R.id.linear_lay);
+        EditReLay=(RelativeLayout) v.findViewById(R.id.editrel_lay);
+        EditLinearLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(getActivity());
+            }
+        });
+        EditReLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(getActivity());
+            }
+        });
 //        adapter.setClickListener(this);
         autoComplete = (AutoCompleteTextView) v.findViewById(R.id.autoCompleteTextView1);
         AddTxt = (TextView) v.findViewById(R.id.add_txt);
@@ -127,15 +143,7 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 ItemModelList = vairam.getItem(position).toString();
-
-
-            }
-        });
-        AddTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (!autoComplete.getText().toString().isEmpty() && ItemModelList != null) {
+                if ( !autoComplete.getText().toString().isEmpty()&& ItemModelList != null && !autoComplete.getText().toString().equals(null)) {
                     if (!ItemModelList.isEmpty()) {
 
                         if (mylist.contains(ItemModelList)) {
@@ -144,7 +152,37 @@ public class EditProfileFragment extends Fragment {
                             mylist.add(ItemModelList);
                             adapter = new FoodAdapter(context, mylist);
                             recyclerView.setAdapter(adapter);
-                            vairam.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
+                            autoComplete.setText(null);
+                        }
+
+                    } else {
+                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+        AddTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            String autoTxt=autoComplete.getText().toString();
+                if ( !autoComplete.getText().toString().isEmpty() && !autoComplete.getText().toString().equals(null)) {
+                    if (!autoTxt.isEmpty()) {
+
+                        if (mylist.contains(autoTxt)) {
+                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mylist.add(autoTxt);
+                            adapter = new FoodAdapter(context, mylist);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                           autoComplete.setText(null);
                         }
 
                     } else {
@@ -158,7 +196,6 @@ public class EditProfileFragment extends Fragment {
 
             }
         });
-
 
         adapter = new FoodAdapter(context, mylist);
         recyclerView.setAdapter(adapter);
@@ -270,6 +307,7 @@ public class EditProfileFragment extends Fragment {
 
         return v;
     }
+
 
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());

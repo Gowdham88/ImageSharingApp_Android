@@ -36,11 +36,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
+import com.numnu.android.fragments.HomeFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.numnu.android.utils.Utils.hideKeyboard;
 
 public class LoginFragment extends Fragment {
     private static final String TAG ="LoginFragment";
@@ -100,7 +102,7 @@ public class LoginFragment extends Fragment {
         ConsLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                hidekeyboard();
+         hideKeyboard(getActivity());
             }
         });
         // [START initialize_auth]
@@ -344,11 +346,11 @@ public class LoginFragment extends Fragment {
     private void goToHomeActivity(String intentName, String intentValue){
         Bundle bundle = new Bundle();
         bundle.putString(intentName,  intentValue);
-        SignupFragment signupFragment=new SignupFragment();
-        signupFragment.setArguments(bundle);
+        HomeFragment homeFragment=new HomeFragment();
+        homeFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout,signupFragment);
+        transaction.replace(R.id.frame_layout,homeFragment);
         transaction.commit();
 
     }

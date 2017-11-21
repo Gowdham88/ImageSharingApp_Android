@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/Complete_Linlay"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -227,6 +229,7 @@
 
 
                 <AutoCompleteTextView
+                    android:inputType="textAutoComplete|textAutoCorrect"
                     style="@style/FontAvenirBook"
                     android:textColor="@color/name_black"
                     android:textSize="@dimen/text12"

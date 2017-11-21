@@ -14,6 +14,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/editrel_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/taginside_color">
@@ -55,6 +56,7 @@
         android:layout_marginTop="5dp"
         android:scrollbars="vertical">
         <LinearLayout
+            android:id="@+id/linear_lay"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_width="match_parent"
@@ -228,6 +230,7 @@
 
 
                 <AutoCompleteTextView
+                    android:inputType="textAutoComplete|textAutoCorrect"
                     style="@style/FontAvenirBook"
                     android:textColor="@color/name_black"
                     android:textSize="@dimen/text12"
