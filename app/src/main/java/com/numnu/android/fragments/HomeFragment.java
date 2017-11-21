@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,6 +29,7 @@ import android.widget.Toolbar;
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PastEventsAdapter;
+import com.numnu.android.adapter.search.SearchResultsAdapter;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.search.CurrentEventsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
@@ -40,6 +42,7 @@ import com.numnu.android.fragments.search.UsersFragment;
 import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -52,7 +55,7 @@ public class HomeFragment extends Fragment {
 
 
     EditText searchViewFood,searchViewLocation;
-    private ViewPager viewPager;
+    private RecyclerView searchListView;
     private TabLayout tabLayout;
     NestedScrollView nestedScrollView;
     private RecyclerView currentEventsList,currentEventsList1,currentEventsList2, pastEventsList;
@@ -96,7 +99,7 @@ public class HomeFragment extends Fragment {
         pastEventsList = view.findViewById(R.id.past_recyclerview);
         ImageView searchIcon = view.findViewById(R.id.search_icon);
         ImageView locationIcon = view.findViewById(R.id.location_icon);
-        viewPager = view.findViewById(R.id.viewpager);
+        searchListView = view.findViewById(R.id.search_results_recyclerview);
         searchViewFood=view.findViewById(R.id.et_search_food);
         searchViewLocation=view.findViewById(R.id.et_search_location);
         tabLayout = view.findViewById(R.id.tabs);
@@ -220,7 +223,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-//                searchingTexts(charSequence);
+                search(charSequence);
+
             }
 
             @Override
@@ -254,6 +258,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                search(charSequence);
 
             }
 
@@ -304,11 +309,39 @@ public class HomeFragment extends Fragment {
 
     }
 
-//    private void searchingTexts(CharSequence charSequence) {
-//        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-//                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-//
-//    }
+    private void search(CharSequence charSequence) {
+       if(!charSequence.toString().equals("")){
+           nestedScrollView.setVisibility(View.GONE);
+           searchListView.setVisibility(View.VISIBLE);
+
+           final String[] arr = {"montreal", "location1", "location2", "location3", "location4", "location5", "location6", "location7",};
+
+           ArrayList<String> stringArrayList=new ArrayList<>();
+           stringArrayList.addAll(Arrays.asList(arr));
+           SearchResultsAdapter searchResultsAdapter = new SearchResultsAdapter(context, stringArrayList);
+
+           searchResultsAdapter.setOnItemClickListener( new SearchResultsAdapter.OnItemClickListener() {
+               @Override
+               public void onRecyclerItemClick(View view, int position) {
+                   searchViewLocation.setText(arr[position]);
+                   searchViewFood.setText(arr[position]);
+                   Bundle bundle = new Bundle();
+                   bundle.putString("keyword", arr[position]);
+                   HomeSearchFragment searchFragment=HomeSearchFragment.newInstance();
+                   searchFragment.setArguments(bundle);
+                   FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+                   transaction.replace(R.id.frame_layout,searchFragment);
+                   transaction.addToBackStack(null).commit();
+               }
+           });
+
+           searchListView.setAdapter(searchResultsAdapter);
+
+       }else {
+           nestedScrollView.setVisibility(View.VISIBLE);
+           searchListView.setVisibility(View.GONE);
+       }
+    }
 
 
     @Override

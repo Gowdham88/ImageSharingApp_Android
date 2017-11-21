@@ -40,6 +40,7 @@ public class HomeSearchFragment extends Fragment {
     private TabLayout tabLayout;
     private NestedScrollView nestedScrollView;
     private ImageView toolbarBackIcon;
+    private String searchKeyword;
 
     public static HomeSearchFragment newInstance() {
         return new HomeSearchFragment();
@@ -48,7 +49,11 @@ public class HomeSearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            searchKeyword = bundle.getString("keyword", "Festival");
 
+        }
     }
 
     @Override
@@ -78,7 +83,9 @@ public class HomeSearchFragment extends Fragment {
         viewPager.setVisibility(View.VISIBLE);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-        
+
+        searchViewFood.setText(searchKeyword);
+        searchViewLocation.setText(searchKeyword);
         setupSearchListener();
 
         return view;

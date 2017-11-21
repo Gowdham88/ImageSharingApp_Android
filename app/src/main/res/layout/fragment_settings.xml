@@ -134,7 +134,8 @@
                 android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:text="@string/bookmarks"
-                android:textColor="@android:color/darker_gray" />
+                android:background="@color/taginside_color"
+                android:textColor="@color/tag_text_color" />
 
             <TextView
                 android:id="@+id/text_events"
@@ -215,7 +216,8 @@
                 android:id="@+id/text_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:background="@color/taginside_color"
+                android:textColor="@color/tag_text_color"
                 android:clickable="true"
                 android:gravity="center_vertical|center"
                 android:padding="@dimen/spacing_small"

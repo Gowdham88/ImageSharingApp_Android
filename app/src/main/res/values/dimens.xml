@@ -6,7 +6,7 @@
     <!-- font sizes -->
     <dimen name="font_extra_large">33sp</dimen>
     <dimen name="font_larger">24sp</dimen>
-    <dimen name="font_large">18sp</dimen>
+    <dimen name="font_large">19sp</dimen>
     <dimen name="font_normal">16sp</dimen>
     <dimen name="font_small">14sp</dimen>
     <dimen name="font_smaller">12sp</dimen>
