@@ -229,7 +229,6 @@
 
 
                 <AutoCompleteTextView
-                    android:inputType="textAutoComplete|textAutoCorrect"
                     style="@style/FontAvenirBook"
                     android:textColor="@color/name_black"
                     android:textSize="@dimen/text12"
