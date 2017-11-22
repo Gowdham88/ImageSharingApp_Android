@@ -62,7 +62,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:orientation="vertical">
 
@@ -115,13 +115,14 @@
                             android:id="@+id/img_calender"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="4dp"
                             android:layout_below="@+id/business_chips_layout"
                             android:src="@drawable/ic_calendar" />
 
                         <TextView
                             style="@style/FontAvenirMedium"
                             android:layout_width="wrap_content"
+                            android:gravity="center"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/business_chips_layout"
                             android:paddingLeft="@dimen/spacing_tiny"

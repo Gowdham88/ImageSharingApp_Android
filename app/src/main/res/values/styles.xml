@@ -131,5 +131,12 @@
         <item name="android:background">@drawable/tag_background</item>
 
     </style>
+    <style name="TabStyle">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:alpha">14</item>
+        <item name="android:textColor">@color/event_map</item>
+
+
+    </style>
 
 </resources>

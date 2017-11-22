@@ -47,6 +47,7 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+
 /**
  * Created by thulir on 9/10/17.
  */
@@ -105,6 +106,7 @@ public class HomeFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
         toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,6 +179,7 @@ public class HomeFragment extends Fragment {
         setupSearchListener();
         return view;
     }
+
 
     private void checkKeyBoardUp(final View view) {
 
@@ -375,6 +378,7 @@ public class HomeFragment extends Fragment {
 
 
     }
+
 
 
 }

@@ -44,6 +44,7 @@ import java.util.Arrays;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.numnu.android.utils.Utils.hideKeyboard;
 
+
 public class LoginFragment extends Fragment {
     private static final String TAG ="LoginFragment";
     TextView textViewSignup;
@@ -185,7 +186,6 @@ public class LoginFragment extends Fragment {
     }
 
 
-
 //    public void forgetPassword(View view) {
 //        Intent mainIntent = new Intent(context,ForgetPasswordActivity.class);
 //        LoginFragment.this.startActivity(mainIntent);
@@ -278,6 +278,7 @@ public class LoginFragment extends Fragment {
                             Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show();
                         }
                         hideProgressDialog();
+
                         // [END_EXCLUDE]
                     }
                 });

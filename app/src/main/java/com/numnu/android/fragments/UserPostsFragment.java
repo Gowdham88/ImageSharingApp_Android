@@ -69,8 +69,8 @@ public class UserPostsFragment extends Fragment {
         mUserPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mUserPostsRecycler.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mUserPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
-        mUserPostsRecycler.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mUserPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
+//        mUserPostsRecycler.addItemDecoration(dividerItemDecoration);
         mUserPostsRecycler.setNestedScrollingEnabled(false);
 
         setupRecyclerView();

@@ -2,8 +2,8 @@
     <string name="app_name">Numnu</string>
     <string name="businesses">Businesses</string>
     <string name="numnu">Numnu</string>
-    <string name="facebook_sign_in">Facebook Sign In</string>
-    <string name="facebook_sign_up">Facebook Sign Up</string>
+    <string name="facebook_sign_in">Sign In with Facebook</string>
+    <string name="facebook_sign_up">Sign Up with Facebook</string>
     <string name="create_an_account">Create an Account</string>
     <string name="sign_in">Sign In</string>
     <string name="already_have_an_account">Already have an account?</string>
