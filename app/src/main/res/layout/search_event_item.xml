@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -6,6 +7,7 @@
     android:layout_marginLeft="10dp"
     android:layout_marginStart="10dp"
     android:layout_marginBottom="7dp"
+    android:background="@color/White_clr"
     tools:context="com.numnu.android.activity.HomeActivity">
 
     <android.support.v7.widget.CardView
