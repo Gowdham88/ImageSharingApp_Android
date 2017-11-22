@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/White_clr"
     >
 
     <android.support.design.widget.AppBarLayout
@@ -67,11 +68,12 @@
            android:orientation="vertical"
            android:layout_width="match_parent"
            android:layout_height="match_parent">
+
            <include
-               layout="@layout/user_profile_header"
                android:id="@+id/user_profile_header"
-               android:layout_height="wrap_content"
-               android:layout_width="wrap_content"/>
+               layout="@layout/user_profile_header"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
 
            <!--<View-->
                <!--android:id="@+id/view_divider"-->

@@ -127,6 +127,7 @@ public class SignupFragment extends Fragment {
 
                 // [END initialize_fblogin]
             }
+
         });
         // [END initialize_auth]
 
@@ -286,8 +287,10 @@ public class SignupFragment extends Fragment {
 
                         // [START_EXCLUDE]
                         hideProgressDialog();
+                        getActivity().finish();
                         // [END_EXCLUDE]
                     }
+
                 });
         // [END create_user_with_email]
     }
@@ -413,4 +416,5 @@ public class SignupFragment extends Fragment {
             mProgressDialog.dismiss();
         }
     }
+
 }

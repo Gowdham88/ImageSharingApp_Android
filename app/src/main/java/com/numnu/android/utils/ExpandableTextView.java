@@ -84,7 +84,7 @@ public class ExpandableTextView extends AppCompatTextView {
 
                 if (getLineCount() >= maxLines) {
 
-                    int lineEndIndex = getLayout().getLineEnd(maxLines - 1);
+                    int lineEndIndex = getLayout().getLineStart(maxLines - 1);
 
                     String truncatedText = getText().subSequence(0, lineEndIndex - readMoreText.length() + 1) + readMoreText;
 

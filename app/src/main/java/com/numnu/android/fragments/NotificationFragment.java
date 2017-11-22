@@ -47,8 +47,8 @@ public class NotificationFragment extends Fragment {
         notificationRecyclerView = view.findViewById(R.id.notification_recycler_view);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
         notificationRecyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(notificationRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
-        notificationRecyclerView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(notificationRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
+//        notificationRecyclerView.addItemDecoration(dividerItemDecoration);
 
         ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
 

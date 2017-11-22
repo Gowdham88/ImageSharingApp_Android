@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+    android:background="@color/White_clr"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -42,14 +43,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
+    >
     <Button
         android:id="@+id/login_btn_facebook"
         style="@style/facebook_login_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/facebook_sign_in"
-        android:textSize="@dimen/text11"
+        android:textSize="@dimen/text10"
         android:layout_marginTop="10dp"
         android:drawableStart="@drawable/fb_logo__blue_29"
         android:drawableLeft="@drawable/fb_logo__blue_29"
@@ -62,11 +63,10 @@
         android:layout_marginEnd="@dimen/spacing_huge"
         android:paddingLeft="@dimen/size60"
         android:paddingStart="@dimen/size60"
-        android:paddingRight="@dimen/size60"
-        android:paddingEnd="@dimen/size60"
+        android:paddingRight="@dimen/size50"
+        android:paddingEnd="@dimen/size50"
         android:paddingBottom="@dimen/size7"
         app:layout_constraintTop_toBottomOf="@+id/textView"/>
-
     <TextView
         android:id="@+id/or_txt"
         style="@style/FontAvenirLight"
@@ -190,7 +190,8 @@
         android:text="@string/forgot_password"
         android:onClick="forgetPassword"
         app:layout_constraintRight_toRightOf="@+id/et_password_layout"
-        app:layout_constraintTop_toBottomOf="@+id/et_password_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/et_password_layout"
+        tools:ignore="OnClick" />
 
     <TextView
         style="@style/FontAvenirMedium"

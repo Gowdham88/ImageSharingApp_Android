@@ -137,7 +137,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                 hideKeyboard(getActivity());
             }
         });
-
 //        adapter.setClickListener(this);
         autoComplete = (AutoCompleteTextView) v.findViewById(R.id.autoCompleteTextView1);
         AddTxt = (TextView) v.findViewById(R.id.add_txt);

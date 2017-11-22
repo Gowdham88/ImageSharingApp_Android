@@ -3,20 +3,14 @@ package com.numnu.android.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -31,43 +25,25 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBufferResponse;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.RuntimeRemoteException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
-import com.numnu.android.adapter.PastEventsAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.search.SearchResultsAdapter;
-import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.search.CurrentEventsFragment;
-import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
-import com.numnu.android.fragments.search.PastEventsFragment;
-import com.numnu.android.fragments.search.PostsFragment;
-import com.numnu.android.fragments.search.SearchItemsFragment;
-import com.numnu.android.fragments.search.SearchListFragment;
-import com.numnu.android.fragments.search.UsersFragment;
 import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.content.ContentValues.TAG;
-import static com.facebook.FacebookSdk.getApplicationContext;
+
 
 /**
  * Created by thulir on 9/10/17.
@@ -151,6 +127,7 @@ public class HomeFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
         toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,8 +193,6 @@ public class HomeFragment extends Fragment {
         setupSearchListener();
         return view;
     }
-
-
 
     /**
      * Listener that handles selections from suggestions from the AutoCompleteTextView that
@@ -471,6 +446,7 @@ public class HomeFragment extends Fragment {
 
 
     }
+
 
 
 }

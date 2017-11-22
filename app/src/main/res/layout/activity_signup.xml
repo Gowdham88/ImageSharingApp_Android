@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+    android:background="@color/White_clr"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -41,29 +42,29 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <Button
-        android:id="@+id/sinup_btn_facebook"
-        style="@style/facebook_login_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/facebook_sign_up"
-        android:textSize="@dimen/text11"
-        android:layout_marginTop="10dp"
-        android:drawableStart="@drawable/fb_logo__blue_29"
-        android:drawableLeft="@drawable/fb_logo__blue_29"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginStart="@dimen/spacing_huge"
-        android:layout_marginEnd="@dimen/spacing_huge"
-        android:paddingLeft="@dimen/size60"
-        android:paddingStart="@dimen/size60"
-        android:paddingRight="@dimen/size60"
-        android:paddingEnd="@dimen/size60"
-        android:paddingBottom="@dimen/size7"
-        app:layout_constraintTop_toBottomOf="@+id/textView"/>
+            <Button
+                android:id="@+id/sinup_btn_facebook"
+                style="@style/facebook_login_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/facebook_sign_up"
+                android:textSize="@dimen/text10"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/fb_logo__blue_29"
+                android:drawableLeft="@drawable/fb_logo__blue_29"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginStart="@dimen/spacing_huge"
+                android:layout_marginEnd="@dimen/spacing_huge"
+                android:paddingLeft="@dimen/size60"
+                android:paddingStart="@dimen/size60"
+                android:paddingRight="@dimen/size50"
+                android:paddingEnd="@dimen/size50"
+                android:paddingBottom="@dimen/size7"
+                app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
     <TextView
         android:id="@+id/signup_or_txt"

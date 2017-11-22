@@ -12,6 +12,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
@@ -52,6 +56,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     ImageView Viewimage;
     TextView ViewTxt;
     TextView ItemInfoTxt;
+    private RecyclerView mPostsRecycler;
 
     public static ItemInfoFragment newInstance() {
         return new ItemInfoFragment();
@@ -78,7 +83,14 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         eventTime = view.findViewById(R.id.txt_event_time);
 
         setupExpandableText();
+        mPostsRecycler = view.findViewById(R.id.user_posts_recycler);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        mPostsRecycler.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
+        mPostsRecycler.addItemDecoration(dividerItemDecoration);
+        mPostsRecycler.setNestedScrollingEnabled(false);
 
+        setupRecyclerView();
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.item);
@@ -87,14 +99,14 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
         ItemInfoTxt=(TextView) view.findViewById(R.id.text_terms) ;
-        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+//        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
 
 
         toolbarBackIcon.setOnClickListener(this);
@@ -106,7 +118,6 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        ItemInfoTxt=(TextView)view.findViewById(R.id.text_terms);
         ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,6 +128,17 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         });
 
         return view;
+    }
+
+    private void setupRecyclerView() {
+
+        ArrayList<String> stringlist = new ArrayList<>();
+
+        for (int i = 1; i <= 10; i++) {
+            stringlist.add("Post item " + i);
+            UserPostsAdapter userPostAdapter = new UserPostsAdapter(context, stringlist);
+            mPostsRecycler.setAdapter(userPostAdapter);
+        }
     }
 
     private void showBottomSheet(LayoutInflater inflater) {

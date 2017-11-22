@@ -40,8 +40,8 @@ public class UsersFragment extends Fragment {
         usersRecyclerView = view.findViewById(R.id.users_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         usersRecyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(usersRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
-        usersRecyclerView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(usersRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
+//        usersRecyclerView.addItemDecoration(dividerItemDecoration);
 
         setupRecyclerView();
 

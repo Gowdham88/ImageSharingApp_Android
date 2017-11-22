@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/White_clr"
     android:layout_margin="@dimen/spacing_small"
     tools:context="com.numnu.android.activity.HomeActivity">
 

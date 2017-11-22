@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/White_clr"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
@@ -98,7 +99,7 @@
 
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size16"
+                    android:layout_marginLeft="@dimen/size8"
                     android:layout_marginRight="@dimen/spacing_small"
                     android:id="@+id/event_name"
                    style="@style/FontAvenirMedium"
@@ -119,7 +120,7 @@
 
 
                 <LinearLayout
-                    android:layout_marginLeft="@dimen/size16"
+                    android:layout_marginLeft="@dimen/size8"
                     android:layout_marginRight="@dimen/spacing_small"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:layout_marginBottom="@dimen/spacing_small"
@@ -140,7 +141,7 @@
                 </HorizontalScrollView>
 
                 <LinearLayout
-                    android:layout_marginLeft="@dimen/size16"
+                    android:layout_marginLeft="@dimen/size6"
                     android:layout_marginRight="@dimen/spacing_small"
                     android:id="@+id/date_time_layout"
                     android:layout_width="wrap_content"
@@ -188,7 +189,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginLeft="@dimen/size16"
+                    android:layout_marginLeft="@dimen/size6"
                     android:layout_marginRight="@dimen/spacing_small"
                     android:id="@+id/location_layout"
                     android:layout_width="wrap_content"
@@ -223,7 +224,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginLeft="@dimen/size25"
+                    android:layout_marginLeft="@dimen/size8"
                     android:layout_marginRight="@dimen/spacing_small"
                     android:id="@+id/weblinks_layout"
                     android:layout_width="wrap_content"
@@ -235,8 +236,8 @@
                         style="@style/FontAvenirMedium"
                         android:id="@+id/txt_weblink_1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="4dp"
+                        android:layout_height="@dimen/size20"
+                        android:layout_marginLeft="@dimen/size10"
                         android:textColor="@color/weblink_color"
                         android:textSize="@dimen/text11"
                         android:text="Weblink 1" />
@@ -246,9 +247,9 @@
                         android:id="@+id/txt_weblink_2"
                         android:textColor="@color/weblink_color"
                         android:textSize="@dimen/text11"
+                        android:layout_marginLeft="@dimen/size10"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="4dp"
+                        android:layout_height="@dimen/size20"
                         android:text="Weblink 2" />
 
                     <TextView
@@ -256,20 +257,20 @@
                         android:id="@+id/txt_weblink_3"
                         android:textColor="@color/weblink_color"
                         android:textSize="@dimen/text11"
+                        android:layout_marginLeft="@dimen/size10"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="4dp"
+                        android:layout_height="@dimen/size20"
                         android:text="Weblink 3" />
                 </LinearLayout>
 
                 <com.numnu.android.utils.ExpandableTextView
                     style="@style/FontAvenirMedium"
                     android:textColor="@color/descri_color"
-                    android:layout_marginLeft="@dimen/size16"
+                    android:layout_marginLeft="@dimen/size8"
                     android:layout_marginRight="@dimen/spacing_small"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="14dp"
                     android:textSize="@dimen/text13"
-                    android:layout_marginBottom="@dimen/size25"
+                    android:layout_marginBottom="@dimen/size15"
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -307,8 +308,9 @@
                 <TextView
                     android:id="@+id/toolbar_title1"
                     android:text="@string/app_name"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_large"
+                    style="@style/FontAvenirMedium"
+                    android:textColor="@color/name_black"
+                    android:textSize="@dimen/font_normal"
                     android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -343,9 +345,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            app:tabSelectedTextColor="@color/black"
+            app:tabSelectedTextColor="@color/event_map"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabTextColor="@color/dark_grey" />
+            app:tabTextColor="@color/tab_unselected_color" />
     </android.support.design.widget.AppBarLayout>
 
             <android.support.v4.view.ViewPager

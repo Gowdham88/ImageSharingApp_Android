@@ -43,8 +43,8 @@ public class PostsFragment extends Fragment {
         menuitemsRecyclerView = view.findViewById(R.id.reviews_recyclerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         menuitemsRecyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(menuitemsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
-        menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(menuitemsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
+//        menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
 
         setupRecyclerView();
 

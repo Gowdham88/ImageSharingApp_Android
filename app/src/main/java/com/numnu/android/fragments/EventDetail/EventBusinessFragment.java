@@ -42,8 +42,8 @@ public class EventBusinessFragment extends Fragment {
         businessRecyclerView = view.findViewById(R.id.business_recyclerview);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
         businessRecyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(businessRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
-        businessRecyclerView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(businessRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
+//        businessRecyclerView.addItemDecoration(dividerItemDecoration);
 
         setupRecyclerView();
         return view;
