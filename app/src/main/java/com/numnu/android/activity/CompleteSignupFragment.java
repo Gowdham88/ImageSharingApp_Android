@@ -18,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by lenovo on 11/18/2017.
  */
 
-public class CompleteSignupFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
+public class CompleteSignupFragment extends Fragment implements EasyPermissions.PermissionCallbacks,View.OnKeyListener{
 
     Context context;
     EditText mEmail, mName, mCity, mGender, mDob, mFoodPreferences;
@@ -314,6 +315,14 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(this);
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -441,45 +450,15 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     }
 
 
-    public Bitmap decodeFile(String path) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, o);
-            // The new size we want to scale to
-            final int REQUIRED_SIZE = 70;
-
-            // Find the correct scale value. It should be the power of
-            // 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE
-                    && o.outHeight / scale / 2 >= REQUIRED_SIZE)
-                scale *= 2;
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeFile(path, o2);
-        } catch (Throwable e) {
-            e.printStackTrace();
+    @Override
+    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                getActivity().finish();
+                return true;
+            }
         }
-        return null;
 
-    }
-
-    private String getAbsolutePath(Intent data) {
-        @SuppressWarnings("deprecation")
-        Uri selectedImage = data.getData();
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-        Cursor cursor = getApplicationContext().getContentResolver().query(selectedImage,
-                filePathColumn, null, null, null);
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        return picturePath;
-
+        return false;
     }
 }

@@ -76,7 +76,7 @@
     </style>
 
     <style name="SplashTextStyle">
-        <item name="fontPath">fonts/ProximaNova-Bold.ttf</item>
+        <item name="fontPath">fonts/ProximaNova-Black.otf</item>
     </style>
 
     <style name="FontAvenirheavy">

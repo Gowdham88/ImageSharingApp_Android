@@ -2,7 +2,6 @@ package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -24,8 +22,8 @@ import com.numnu.android.R;
 import com.numnu.android.activity.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.ProfileFragment;
-import com.numnu.android.fragments.SettingsFragment;
+import com.numnu.android.fragments.UserDetailsFragment;
+import com.numnu.android.fragments.UserPostsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 /**
@@ -103,7 +101,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -112,7 +110,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

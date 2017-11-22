@@ -16,19 +16,38 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBufferResponse;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.RuntimeRemoteException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PastEventsAdapter;
+import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.search.SearchResultsAdapter;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.search.CurrentEventsFragment;
@@ -47,6 +66,9 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static android.content.ContentValues.TAG;
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by thulir on 9/10/17.
  */
@@ -54,7 +76,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class HomeFragment extends Fragment {
 
 
-    EditText searchViewFood,searchViewLocation;
+    EditText searchViewFood;
     private RecyclerView searchListView;
     private TabLayout tabLayout;
     NestedScrollView nestedScrollView;
@@ -64,6 +86,26 @@ public class HomeFragment extends Fragment {
     Toolbar toolbar;
     BottomNavigationView mBottomNavigationView;
     private ImageView toolbarBackIcon,mSearchIcon,mLocationIcon;
+
+
+    /**
+     * GeoDataClient wraps our service connection to Google Play services and provides access
+     * to the Google Places API for Android.
+     */
+    protected GeoDataClient mGeoDataClient;
+
+    private PlaceAutocompleteAdapter mAdapter;
+
+    private AutoCompleteTextView searchViewLocation;
+
+    private TextView mPlaceDetailsText;
+
+    private TextView mPlaceDetailsAttribution;
+
+    private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(
+            new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
+    private ImageView googleLogo;
+
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -86,6 +128,8 @@ public class HomeFragment extends Fragment {
         else {
             toolbarBackIcon.setVisibility(View.VISIBLE);
         }
+
+        googleLogo.setVisibility(View.GONE);
     }
 
     @Override
@@ -93,6 +137,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        googleLogo = view.findViewById(R.id.img_google);
         currentEventsList = view.findViewById(R.id.current_up_recyclerview);
         currentEventsList1 = view.findViewById(R.id.current_up_recyclerview1);
         currentEventsList2 = view.findViewById(R.id.current_up_recyclerview2);
@@ -112,23 +158,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, HomeSearchFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-        locationIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    searchViewLocation.setEnabled(true);
-                    searchViewLocation.requestFocus();
-                }
-            }
-        });
+
         ImageView viewCurrentEventsList = view.findViewById(R.id.view_current_event_list);
         ImageView viewCurrentEventsList1 = view.findViewById(R.id.view_current_event_list1);
         ImageView viewCurrentEventsList2 = view.findViewById(R.id.view_current_event_list2);
@@ -174,9 +204,51 @@ public class HomeFragment extends Fragment {
             }
         });
         setupRecyclerView();
+
+
+        // Construct a GeoDataClient for the Google Places API for Android.
+        mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
+        searchViewLocation.setOnItemClickListener(mAutocompleteClickListener);
+
+        // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
+        mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, BOUNDS_GREATER_SYDNEY, null);
+        searchViewLocation.setAdapter(mAdapter);
         setupSearchListener();
         return view;
     }
+
+
+
+    /**
+     * Listener that handles selections from suggestions from the AutoCompleteTextView that
+     * displays Place suggestions.
+     * Gets the place id of the selected item and issues a request to the Places Geo Data Client
+     * to retrieve more details about the place.
+     *
+     * @see GeoDataClient#getPlaceById(String...)
+     */
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            /*
+             Retrieve the place ID of the selected item from the Adapter.
+             The adapter stores each Place suggestion in a AutocompletePrediction from which we
+             read the place ID and title.
+              */
+            final AutocompletePrediction item = mAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+            final CharSequence primaryText = item.getPrimaryText(null);
+
+            Log.i(TAG, "Autocomplete item selected: " + primaryText);
+
+            googleLogo.setVisibility(View.GONE);
+            Utils.hideKeyboard(getActivity());
+            locationSearch(primaryText);
+        }
+    };
+
+
 
     private void checkKeyBoardUp(final View view) {
 
@@ -223,7 +295,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                search(charSequence);
+                foodSearch(charSequence);
 
             }
 
@@ -243,32 +315,16 @@ public class HomeFragment extends Fragment {
         searchViewLocation.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!searchViewFood.getText().toString().trim().equals("")){
-                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                }else{
-                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-                }
-                if (!searchViewLocation.getText().toString().trim().equals("")){
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                }else {
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-                }
+
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                search(charSequence);
-
+                googleLogo.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!searchViewLocation.getText().toString().trim().equals("")){
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                }else{
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-                }
 
             }
         });
@@ -307,40 +363,80 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        searchViewFood.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //do here your stuff f
+                    Utils.hideKeyboard(getActivity());
+                    return true;
+                }
+                return false;
+            }
+
+        });
+
+        searchViewLocation.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //do here your stuff f
+                    Utils.hideKeyboard(getActivity());
+                    return true;
+                }
+                return false;
+            }
+
+        });
+
     }
 
-    private void search(CharSequence charSequence) {
+    private void locationSearch(CharSequence charSequence) {
        if(!charSequence.toString().equals("")){
-           nestedScrollView.setVisibility(View.GONE);
-           searchListView.setVisibility(View.VISIBLE);
 
-           final String[] arr = {"montreal", "location1", "location2", "location3", "location4", "location5", "location6", "location7",};
-
-           ArrayList<String> stringArrayList=new ArrayList<>();
-           stringArrayList.addAll(Arrays.asList(arr));
-           SearchResultsAdapter searchResultsAdapter = new SearchResultsAdapter(context, stringArrayList);
-
-           searchResultsAdapter.setOnItemClickListener( new SearchResultsAdapter.OnItemClickListener() {
-               @Override
-               public void onRecyclerItemClick(View view, int position) {
-                   searchViewLocation.setText(arr[position]);
-                   searchViewFood.setText(arr[position]);
                    Bundle bundle = new Bundle();
-                   bundle.putString("keyword", arr[position]);
+                   bundle.putString("keyword",charSequence.toString());
+                   bundle.putString("type","location");
                    HomeSearchFragment searchFragment=HomeSearchFragment.newInstance();
                    searchFragment.setArguments(bundle);
                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
                    transaction.replace(R.id.frame_layout,searchFragment);
                    transaction.addToBackStack(null).commit();
-               }
-           });
-
-           searchListView.setAdapter(searchResultsAdapter);
-
-       }else {
-           nestedScrollView.setVisibility(View.VISIBLE);
-           searchListView.setVisibility(View.GONE);
        }
+    }
+
+    private void foodSearch(CharSequence charSequence) {
+        if(!charSequence.toString().equals("")){
+            nestedScrollView.setVisibility(View.GONE);
+            searchListView.setVisibility(View.VISIBLE);
+
+            final String[] arr = {"montreal", "location1", "location2", "location3", "location4", "location5", "location6", "location7",};
+
+            ArrayList<String> stringArrayList=new ArrayList<>();
+            stringArrayList.addAll(Arrays.asList(arr));
+            SearchResultsAdapter searchResultsAdapter = new SearchResultsAdapter(context, stringArrayList);
+
+            searchResultsAdapter.setOnItemClickListener( new SearchResultsAdapter.OnItemClickListener() {
+                @Override
+                public void onRecyclerItemClick(View view, int position) {
+                    searchViewFood.setText(arr[position]);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("keyword", arr[position]);
+                    bundle.putString("type","food");
+                    HomeSearchFragment searchFragment=HomeSearchFragment.newInstance();
+                    searchFragment.setArguments(bundle);
+                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout,searchFragment);
+                    transaction.addToBackStack(null).commit();
+                }
+            });
+
+            searchListView.setAdapter(searchResultsAdapter);
+
+        }else {
+            nestedScrollView.setVisibility(View.VISIBLE);
+            searchListView.setVisibility(View.GONE);
+        }
     }
 
 

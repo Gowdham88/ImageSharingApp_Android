@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Created by thulir on 10/10/17.
  */
 
-public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.ViewHolder> {
+public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.ViewHolder>  {
 
 
     public interface OnItemClickListener {

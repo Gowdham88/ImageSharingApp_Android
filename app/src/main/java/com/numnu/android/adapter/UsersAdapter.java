@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.ProfileFragment;
-import com.numnu.android.fragments.search.SliceFragment;
+import com.numnu.android.fragments.UserDetailsFragment;
+import com.numnu.android.fragments.UserPostsFragment;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -51,7 +51,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ProfileFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
