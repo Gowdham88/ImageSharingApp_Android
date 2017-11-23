@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.BusinessDetailFragment;
-import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
+import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -1,37 +1,31 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.detail;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.GoogleMapActivity;
-import com.numnu.android.activity.LoginFragment;
-import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.EventDetail.EventPostsFragment;
+import com.numnu.android.activity.MainActivity;
+import com.numnu.android.fragments.LocationItemsFragment;
+import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -43,20 +37,18 @@ import java.util.List;
  * Created by thulir on 9/10/17.
  */
 
-public class EventDetailFragment extends Fragment implements View.OnClickListener {
+public class ItemDetailFragment extends Fragment implements View.OnClickListener {
 
-    SearchView searchViewFood, searchViewLocation;
     private Context context;
-    TextView weblink1, weblink2, weblink3;
     private TextView viewEventMap, eventName, city, eventDate, eventTime;
     private ImageView eventImageView;
     private ExpandableTextView eventDescription;
-    private AppBarLayout appBarLayout;
     private PopupWindow pw;
+    private NestedScrollView nestedScrollView;
 
 
-    public static EventDetailFragment newInstance() {
-        return new EventDetailFragment();
+    public static ItemDetailFragment newInstance() {
+        return new ItemDetailFragment();
     }
 
     @Override
@@ -69,18 +61,10 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
+        final View view = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
         ViewPager viewPager = view.findViewById(R.id.event_viewpager);
         setupViewPager(viewPager);
-
-        weblink1 = view.findViewById(R.id.txt_weblink_1);
-        weblink2 = view.findViewById(R.id.txt_weblink_2);
-        weblink3 = view.findViewById(R.id.txt_weblink_3);
-
-        weblink1.setOnClickListener(this);
-        weblink2.setOnClickListener(this);
-        weblink3.setOnClickListener(this);
 
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
@@ -88,68 +72,29 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         city = view.findViewById(R.id.txt_city);
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
+        nestedScrollView= view.findViewById(R.id.nestedScrollView);
 
         eventImageView = view.findViewById(R.id.current_event_image);
         eventImageView.setOnClickListener(this);
-        viewEventMap.setOnClickListener(this);
 
         setupExpandableText();
-
-        setupWebLinks();
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(R.string.event);
-        TextView toolbarTitle1 = view.findViewById(R.id.toolbar_title1);
-        toolbarTitle1.setText(R.string.event);
+        toolbarTitle.setText(R.string.item);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView collapsedtoolbarIcon = view.findViewById(R.id.toolbar_image1);
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-        ImageView collapsedtoolbarBackIcon = view.findViewById(R.id.toolbar_back1);
-        final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbarBackIcon.setOnClickListener(this);
-        collapsedtoolbarBackIcon.setOnClickListener(this);
-        toolbar1.setOnClickListener(this);
+        toolbar.setOnClickListener(this);
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomSheet(inflater);
-            }
-        });
-        collapsedtoolbarIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showBottomSheet(inflater);
-            }
-        });
-
-
-         appBarLayout = view.findViewById(R.id.appbar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-            @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-             switch (state.name()){
-
-                 case "EXPANDED":
-                     toolbar1.setVisibility(View.GONE);
-                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                     break;
-
-                 case "IDLE":
-                     toolbar1.setVisibility(View.GONE);
-                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                     break;
-                 case "COLLAPSED":
-                     toolbar1.setVisibility(View.VISIBLE);
-                     view.findViewById(R.id.tabs).setVisibility(View.GONE);
-                     break;
-             }
-
-
             }
         });
 
@@ -182,9 +127,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
             public void onClick(View view) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    Intent intent = new Intent(getActivity(), LoginFragment.class);
-                    intent.putExtra("EventBookmarkIntent","eventbookmark");
-                    startActivity(intent);
+                    startActivity(new Intent(getActivity(), MainActivity.class));
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
                     Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
@@ -206,77 +149,30 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         });
     }
 
-    private void setupWebLinks() {
-
-
-        weblink1.setTextColor(ContextCompat.getColor(context, R.color.blue));
-        weblink2.setTextColor(ContextCompat.getColor(context, R.color.blue));
-        weblink3.setTextColor(ContextCompat.getColor(context, R.color.blue));
-
-
-//        viewEventMap.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-    }
 
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventBusinessFragment(), "Businesses");
-        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
-        adapter.addFragment(new EventPostsFragment(), "Posts");
+        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(new LocationItemsFragment(), "Locations");
+//        adapter.addFragment(new EventsFragment(), "Events");
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.txt_weblink_1:
-
-                String url = "https://www.youtube.com/";
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                // set toolbar color
-                builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(context, Uri.parse(url));
-                break;
-
-            case R.id.txt_weblink_2:
-                String url2 = "https://www.google.com/";
-                CustomTabsIntent.Builder builder2 = new CustomTabsIntent.Builder();
-                // set toolbar color
-                builder2.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
-                customTabsIntent = builder2.build();
-                customTabsIntent.launchUrl(context, Uri.parse(url2));
-                break;
-
-            case R.id.txt_weblink_3:
-                String url3 = "https://www.facebook.com/";
-                CustomTabsIntent.Builder builder3 = new CustomTabsIntent.Builder();
-                // set toolbar color
-                builder3.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
-                customTabsIntent = builder3.build();
-                customTabsIntent.launchUrl(context, Uri.parse(url3));
-                break;
-
             case R.id.toolbar_back:
                 getActivity().onBackPressed();
                 break;
 
-            case R.id.toolbar_back1:
-                getActivity().onBackPressed();
-                break;
-
-            case R.id.toolbar1:
-                appBarLayout.setExpanded(true);
+            case R.id.toolbar:
+                nestedScrollView.scrollTo(0,0);
                 break;
 
             case R.id.current_event_image:
                 initiatePopupWindow();
                 break;
-
-            case R.id.txt_view_event_map:
-                startActivity(new Intent(context, GoogleMapActivity.class));
-                break;
-
 
         }
     }
@@ -312,6 +208,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onAttach(Context context) {
+
         this.context = context;
         super.onAttach(context);
     }
@@ -338,6 +235,5 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         });
 
     }
-
 }
 

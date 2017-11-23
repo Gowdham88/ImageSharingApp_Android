@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
-import com.numnu.android.fragments.EventDetailFragment;
-import com.numnu.android.fragments.ItemDetailFragment;
 
 
 /**

@@ -1,8 +1,7 @@
-package com.numnu.android.activity;
+package com.numnu.android.fragments.auth;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -35,8 +34,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
-import com.numnu.android.fragments.HomeFragment;
+import com.numnu.android.fragments.home.HomeFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;

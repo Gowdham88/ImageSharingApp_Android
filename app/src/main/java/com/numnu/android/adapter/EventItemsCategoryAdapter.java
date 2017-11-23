@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
-import com.numnu.android.fragments.ItemInfoFragment;
 
 import java.util.ArrayList;
 

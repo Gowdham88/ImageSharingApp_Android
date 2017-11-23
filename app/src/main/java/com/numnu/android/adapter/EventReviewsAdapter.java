@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.SettingsFragment;
+import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 

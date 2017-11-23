@@ -13,11 +13,11 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.BusinessDetailFragment;
-import com.numnu.android.fragments.EventDetailFragment;
-import com.numnu.android.fragments.HomeFragment;
-import com.numnu.android.fragments.NotificationFragment;
-import com.numnu.android.fragments.UserPostsFragment;
+import com.numnu.android.fragments.detail.BusinessDetailFragment;
+import com.numnu.android.fragments.detail.EventDetailFragment;
+import com.numnu.android.fragments.home.HomeFragment;
+import com.numnu.android.fragments.home.NotificationFragment;
+import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 
 import java.security.MessageDigest;

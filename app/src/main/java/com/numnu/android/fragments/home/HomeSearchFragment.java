@@ -1,4 +1,4 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,13 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SearchBusinessFragment;
 import com.numnu.android.fragments.search.SearchItemsFragment;
-import com.numnu.android.fragments.search.SearchListFragment;
 import com.numnu.android.fragments.search.UsersFragment;
 
 import java.util.ArrayList;

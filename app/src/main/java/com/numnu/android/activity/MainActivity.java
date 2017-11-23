@@ -25,6 +25,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
+import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.auth.SignupFragment;
 
 import java.util.Arrays;
 

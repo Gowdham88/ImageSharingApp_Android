@@ -11,8 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.UserDetailsFragment;
-import com.numnu.android.fragments.UserPostsFragment;
+import com.numnu.android.fragments.detail.UserDetailsFragment;
 
 import java.util.ArrayList;
 

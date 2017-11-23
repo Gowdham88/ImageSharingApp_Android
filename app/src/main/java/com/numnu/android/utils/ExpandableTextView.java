@@ -15,12 +15,12 @@ import android.support.v7.widget.AppCompatTextView;
 
 public class ExpandableTextView extends AppCompatTextView {
 
-    private final String readMoreText = " ...more";
-    private final String readLessText = " ...less";
+    private final String readMoreText = "more";
+    private final String readLessText = "less";
     private final int readMoreColor = Color.parseColor("#4A90E2");
     private Boolean isExpanded = false;
 
-    private int _maxLines = 4;
+    private int _maxLines = 5;
     private CharSequence originalText;
 
     public ExpandableTextView(Context context) {
@@ -84,9 +84,9 @@ public class ExpandableTextView extends AppCompatTextView {
 
                 if (getLineCount() >= maxLines) {
 
-                    int lineEndIndex = getLayout().getLineStart(maxLines - 1);
+                    int lineEndIndex = getLayout().getLineEnd(maxLines - 2);
 
-                    String truncatedText = getText().subSequence(0, lineEndIndex - readMoreText.length() + 1) + readMoreText;
+                    String truncatedText = getText().subSequence(0, lineEndIndex ) + "\n"+readMoreText;
 
                     Spannable spannable = new SpannableString(truncatedText);
                     spannable.setSpan(new ForegroundColorSpan(readMoreColor), truncatedText.length() - readMoreText.length(), truncatedText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -120,7 +120,7 @@ public class ExpandableTextView extends AppCompatTextView {
                 obs.removeGlobalOnLayoutListener(this);
 
                 int lineEndIndex = getLayout().getLineEnd(getLineCount() - 1);
-                String truncatedText = getText().subSequence(0, lineEndIndex) + readLessText;
+                String truncatedText = getText().subSequence(0, lineEndIndex) + "\n"+readLessText;
 
                 Spannable spannable = new SpannableString(truncatedText);
                 spannable.setSpan(new ForegroundColorSpan(readMoreColor), truncatedText.length() - readLessText.length(), truncatedText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

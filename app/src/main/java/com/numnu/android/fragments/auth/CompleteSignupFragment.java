@@ -1,30 +1,21 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.auth;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,18 +29,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
-import com.numnu.android.activity.MainActivity;
-import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.FoodAdapter;
-import com.numnu.android.fragments.search.SearchBusinessDetailFragment;
 import com.numnu.android.utils.PreferencesHelper;
-import com.numnu.android.utils.Utils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -58,12 +44,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static android.Manifest.permission_group.LOCATION;
 import static android.content.ContentValues.TAG;
+import static android.graphics.BitmapFactory.decodeFile;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.numnu.android.utils.Utils.hideKeyboard;
 
@@ -71,7 +56,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by lenovo on 11/18/2017.
  */
 
-public class EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
+public class CompleteSignupFragment extends Fragment implements EasyPermissions.PermissionCallbacks,View.OnKeyListener{
 
     Context context;
     EditText mEmail, mName, mCity, mGender, mDob, mFoodPreferences;
@@ -95,23 +80,23 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
     TextView Camera;
     ImageView GalleryIcon;
     ImageView CameraIcon;
+    LinearLayout CompleteSignupLay;
     private String selectedImagePath = "";
     final private int PICK_IMAGE = 1;
     final private int CAPTURE_IMAGE = 2;
     private String imgPath;
-    RelativeLayout EditReLay;
-    LinearLayout EditLinearLay;
 
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private static final int CAMERA_REQUEST = 1888;
     private static final String[] CAMERA= {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
     private static final int RC_LOCATION_PER = 1;
+
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
 
-    public static EditProfileFragment newInstance() {
-        EditProfileFragment fragment = new EditProfileFragment();
+    public static CompleteSignupFragment newInstance() {
+        CompleteSignupFragment fragment = new CompleteSignupFragment();
         return fragment;
     }
 
@@ -126,9 +111,9 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
 
         //Returning the layout file after inflating
         //Change R.layout.tab1 in you classes
-        View v = inflater.inflate(R.layout.edit_profile_frag, container, false);
-        TextView toolbarTitle = v.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Edit Profile");
+        View v = inflater.inflate(R.layout.activity_complete_signup, container, false);
+        final TextView toolbarTitle = v.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Complete SignUp");
         recyclerView = (RecyclerView) v.findViewById(R.id.food_recyclerview);
         FoodLinearLay = (LinearLayout) v.findViewById(R.id.food_layout);
         EditBtn = (ImageView) v.findViewById(R.id.imageView_profile_edit);
@@ -140,15 +125,8 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
                 showBottomSheet(inflater);
             }
         });
-        EditLinearLay=(LinearLayout)v.findViewById(R.id.linear_lay);
-        EditReLay=(RelativeLayout) v.findViewById(R.id.editrel_lay);
-        EditLinearLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideKeyboard(getActivity());
-            }
-        });
-        EditReLay.setOnClickListener(new View.OnClickListener() {
+        CompleteSignupLay=(LinearLayout)v.findViewById(R.id.Complete_Linlay);
+        CompleteSignupLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hideKeyboard(getActivity());
@@ -194,7 +172,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         AddTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            String autoTxt=autoComplete.getText().toString();
+                String autoTxt=autoComplete.getText().toString();
                 if ( !autoComplete.getText().toString().isEmpty() && !autoComplete.getText().toString().equals(null)) {
                     if (!autoTxt.isEmpty()) {
 
@@ -205,7 +183,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
                             adapter = new FoodAdapter(context, mylist);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
-                           autoComplete.setText(null);
+                            autoComplete.setText(null);
                         }
 
                     } else {
@@ -219,23 +197,38 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
 
             }
         });
-
         adapter = new FoodAdapter(context, mylist);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
+
         mEmail = v.findViewById(R.id.et_signup_email);
         mName = v.findViewById(R.id.et_signup_name);
         mCity = v.findViewById(R.id.et_signup_city);
-
+//        mGender = findViewById(R.id.et_signup_gender);
         mRadioGroup = v.findViewById(R.id.radio_group);
         mRadioMale = v.findViewById(R.id.male_radio);
         mRadioFemale = v.findViewById(R.id.female_radio);
         mDob = v.findViewById(R.id.et_signup_dob);
-
+//        mFoodPreferences = findViewById(R.id.et_signup_food_preferences);
         mCompleteSignUp = v.findViewById(R.id.button_complete_signup);
+//        mFoodPreferences.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FoodLinearLay.setVisibility(View.VISIBLE);
+//                hideKeyboardFrom();
+//            }
+//        });
+
+
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
+
+//        final RecipientEditTextView recipientEditTextView = findViewById(R.id.et_signup_food_preferences);
+//        recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+//        BaseRecipientAdapter recipientAdapter = new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE,context);
+//        recipientAdapter.setShowMobileOnly(false);
+//        recipientEditTextView.setAdapter(recipientAdapter);
 
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
@@ -316,6 +309,14 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(this);
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -348,7 +349,6 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         }
 
     }
-
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
         View bottomSheetView = inflater.inflate(R.layout.dialo_camera_bottomsheet, null);
@@ -396,6 +396,15 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         });
     }
 
+//    public Uri setImageUri() {
+//        // Store image in dcim
+//        File file = new File(Environment.getExternalStorageDirectory()
+//                + "/DCIM/", "image" + new Date().getTime() + ".png");
+//        Uri imgUri = Uri.fromFile(file);
+//        this.imgPath = file.getAbsolutePath();
+//        return imgUri;
+//    }
+//
     public String getImagePath() {
         return imgPath;
     }
@@ -428,54 +437,22 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
                 viewImage.setImageBitmap(photo);
             }
 
-            } else {
-                super.onActivityResult(requestCode, resultCode,
-                        data);
+        } else {
+            super.onActivityResult(requestCode, resultCode,
+                    data);
+        }
+    }
+
+
+    @Override
+    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                getActivity().finish();
+                return true;
             }
         }
 
-
-
-    public Bitmap decodeFile(String path) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, o);
-            // The new size we want to scale to
-            final int REQUIRED_SIZE = 70;
-
-            // Find the correct scale value. It should be the power of
-            // 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE
-                    && o.outHeight / scale / 2 >= REQUIRED_SIZE)
-                scale *= 2;
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeFile(path, o2);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return null;
-
+        return false;
     }
-
-    private String getAbsolutePath(Intent data) {
-        Uri selectedImage = data.getData();
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-        Cursor cursor = getApplicationContext().getContentResolver().query(selectedImage,
-                filePathColumn, null, null, null);
-        cursor.moveToFirst();
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        return picturePath;
-    }
-
-
 }

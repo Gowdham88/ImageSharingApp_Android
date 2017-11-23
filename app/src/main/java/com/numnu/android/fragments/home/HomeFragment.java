@@ -1,4 +1,4 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -74,10 +74,6 @@ public class HomeFragment extends Fragment {
 
     private AutoCompleteTextView searchViewLocation;
 
-    private TextView mPlaceDetailsText;
-
-    private TextView mPlaceDetailsAttribution;
-
     private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(
             new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
     private ImageView googleLogo;
@@ -119,8 +115,6 @@ public class HomeFragment extends Fragment {
         currentEventsList1 = view.findViewById(R.id.current_up_recyclerview1);
         currentEventsList2 = view.findViewById(R.id.current_up_recyclerview2);
         pastEventsList = view.findViewById(R.id.past_recyclerview);
-        ImageView searchIcon = view.findViewById(R.id.search_icon);
-        ImageView locationIcon = view.findViewById(R.id.location_icon);
         searchListView = view.findViewById(R.id.search_results_recyclerview);
         searchViewFood=view.findViewById(R.id.et_search_food);
         searchViewLocation=view.findViewById(R.id.et_search_location);

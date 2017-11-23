@@ -1,4 +1,4 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.detail;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,9 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.SignupFragment;
 import com.numnu.android.adapter.UserPostsAdapter;
-import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.fragments.home.SettingsFragment;
 
 import java.util.ArrayList;
 

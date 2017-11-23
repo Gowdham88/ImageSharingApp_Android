@@ -1,264 +1,172 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/White_clr"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/White_clr">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusableInTouchMode="false">
+        android:layout_height="wrap_content">
 
+        <include layout="@layout/toolbar_with_options" />
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:fitsSystemWindows="true"
-            android:focusableInTouchMode="false"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="Numnu1">
+            android:orientation="vertical"
+            android:visibility="visible">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="visible"
-                app:layout_collapseMode="pin"
-                app:layout_collapseParallaxMultiplier="0.7">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:orientation="horizontal">
 
-                <include layout="@layout/toolbar_with_options" />
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="@dimen/image_card_corner_radius">
 
-                <LinearLayout
+                    <ImageView
+                        android:id="@+id/notification_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/food_for_lunch_mom" />
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
 
-                    <!--<ImageView-->
-                    <!--android:id="@+id/business_detail_image"-->
-                    <!--android:layout_width="80dp"-->
-                    <!--android:layout_height="80dp"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--android:src="@drawable/biryaniimg"-->
-                    <!--/>-->
+                    <TextView
+                        android:id="@+id/text_business_detail_image"
+                        style="@style/FontAvenirMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Business name"
+                        android:textColor="@color/name_black"
+                        android:textSize="@dimen/text14" />
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/card_view"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:elevation="10dp"
-                        app:cardCornerRadius="@dimen/image_card_corner_radius">
-
-                        <ImageView
-                            android:id="@+id/notification_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/food_for_lunch_mom" />
-                    </android.support.v7.widget.CardView>
-
-                    <RelativeLayout
+                    <HorizontalScrollView
+                        android:id="@+id/business_chips_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="vertical">
+                        android:layout_below="@+id/text_business_detail_image">
 
-                        <TextView
-                            android:id="@+id/text_business_detail_image"
-                            style="@style/FontAvenirMedium"
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Business name"
-                            android:textColor="@color/name_black"
-                            android:textSize="@dimen/text14" />
+                            android:layout_marginBottom="@dimen/spacing_tiny"
+                            android:layout_marginRight="@dimen/spacing_small"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            android:orientation="horizontal">
 
-                        <HorizontalScrollView
-                            android:id="@+id/business_chips_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/text_business_detail_image">
-
-
-                            <LinearLayout
+                            <TextView
+                                style="@style/TagStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/spacing_tiny"
-                                android:layout_marginRight="@dimen/spacing_small"
-                                android:layout_marginTop="@dimen/spacing_tiny"
-                                android:orientation="horizontal">
+                                android:text="food"
+                                android:textColor="@color/tag_inside_text_color"
+                                android:textSize="@dimen/size12" />
 
-                                <TextView
-                                    style="@style/TagStyle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="food"
-                                    android:textColor="@color/tag_inside_text_color"
-                                    android:textSize="@dimen/size12" />
+                            <TextView
+                                style="@style/TagStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/size5"
+                                android:text="food"
+                                android:textColor="@color/tag_inside_text_color"
+                                android:textSize="@dimen/size12" />
 
-                                <TextView
-                                    style="@style/TagStyle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/size5"
-                                    android:text="food"
-                                    android:textColor="@color/tag_inside_text_color"
-                                    android:textSize="@dimen/size12" />
+                        </LinearLayout>
 
-                            </LinearLayout>
+                    </HorizontalScrollView>
 
-                        </HorizontalScrollView>
+                    <ImageView
+                        android:id="@+id/img_calender"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_below="@+id/business_chips_layout"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_calendar" />
 
-                        <ImageView
-                            android:id="@+id/img_calender"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_below="@+id/business_chips_layout"
-                            android:src="@drawable/ic_calendar" />
+                    <TextView
+                        style="@style/FontAvenirMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/img_calender"
+                        android:layout_below="@+id/business_chips_layout"
+                        android:layout_toEndOf="@+id/img_calender"
+                        android:layout_toRightOf="@+id/img_calender"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/spacing_tiny"
+                        android:text="BarBados food and num festival"
+                        android:textColor="@color/time_color"
+                        android:textSize="@dimen/text12" />
 
-                        <TextView
-                            style="@style/FontAvenirMedium"
-                            android:layout_width="wrap_content"
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/business_chips_layout"
-                            android:paddingLeft="@dimen/spacing_tiny"
-                            android:layout_toRightOf="@+id/img_calender"
-                            android:layout_toEndOf="@+id/img_calender"
-                            android:layout_alignBaseline="@+id/img_calender"
-                            android:text="BarBados food and num festival"
-                            android:textColor="@color/time_color"
-                            android:textSize="@dimen/text12" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <!--</android.support.v7.widget.CardView>-->
-
-                <com.numnu.android.utils.ExpandableTextView
-                    android:id="@+id/business_detail_description"
-                    style="@style/FontAvenirMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginRight="@dimen/spacing_small"
-                    android:layout_marginTop="10dp"
-                    android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
-                    android:textColor="@color/time_color"
-                    android:textSize="@dimen/text13" />
-
-                <TextView
-                    android:id="@+id/business_viewtxt"
-                    style="@style/FontAvenirMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/lighter_grey"
-                    android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-                    android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/spacing_small"
-                    android:text="View Profile"
-                    android:textColor="@color/weblink_color" />
+                </RelativeLayout>
 
             </LinearLayout>
 
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="4dp"-->
-            <!--android:layout_marginLeft="5dp"-->
-            <!--android:orientation="horizontal">-->
+            <com.numnu.android.utils.ExpandableTextView
+                android:id="@+id/business_detail_description"
+                style="@style/FontAvenirMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginTop="10dp"
+                android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+                android:textColor="@color/time_color"
+                android:textSize="@dimen/text13" />
 
-            <!--<ImageView-->
-            <!--android:layout_width="25dp"-->
-            <!--android:layout_height="20dp"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:src="@drawable/ic_calendar"/>-->
-
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Event name which can be very very long"-->
-            <!--android:textSize="15dp"-->
-            <!--fontPath="fonts/Avenir-Roman.ttf"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_marginLeft="5dp"-->
-            <!--tools:ignore="MissingPrefix" />-->
-            <!--</LinearLayout>-->
-
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar1"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/toolbar_background_color"
-            app:contentInsetStart="0dp"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <RelativeLayout
+            <TextView
+                android:id="@+id/business_viewtxt"
+                style="@style/FontAvenirMedium"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:background="@color/lighter_grey"
+                android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_small"
+                android:text="View Profile"
+                android:textColor="@color/weblink_color" />
 
-                <ImageView
-                    android:id="@+id/toolbar_back1"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_height"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/spacing_small"
-                    android:layout_marginStart="@dimen/spacing_small"
-                    app:srcCompat="@drawable/back_arrow" />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                app:tabSelectedTextColor="@color/name_black"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabTextColor="@color/tab_unselected_color" />
 
-                <TextView
-                    android:id="@+id/toolbar_title1"
-                    style="@style/FontAvenirMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/businesses"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_normal" />
-
-                <ImageView
-                    android:id="@+id/toolbar_image1"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_height"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/spacing_small"
-                    android:layout_marginRight="@dimen/spacing_small"
-                    app:srcCompat="@drawable/event_dots" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/business_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:tabSelectedTextColor="@color/name_black"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            app:tabTextColor="@color/tab_unselected_color" />
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/business_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tabs"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-</android.support.design.widget.CoordinatorLayout>
+            <com.numnu.android.utils.ContentWrappingViewPager
+                android:id="@+id/business_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

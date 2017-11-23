@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetailFragment;
+import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

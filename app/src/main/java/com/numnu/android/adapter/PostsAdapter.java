@@ -14,8 +14,7 @@ import com.numnu.android.R;
 import com.numnu.android.fragments.LinkBusinessesFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
 import com.numnu.android.fragments.LinkEventsFragment;
-import com.numnu.android.fragments.SettingsFragment;
-import com.numnu.android.fragments.search.EventsFragment;
+import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 
 import java.util.ArrayList;

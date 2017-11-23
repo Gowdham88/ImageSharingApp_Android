@@ -1,12 +1,10 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.LoginFragment;
-import com.numnu.android.activity.SignupFragment;
 import com.numnu.android.adapter.UserPostsAdapter;
+import com.numnu.android.fragments.auth.SignupFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;

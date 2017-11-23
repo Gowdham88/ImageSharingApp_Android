@@ -1,57 +1,56 @@
-package com.numnu.android.fragments.search;
+package com.numnu.android.fragments.detail;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.LoginFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.EventDetail.EventPostsFragment;
-import com.numnu.android.utils.AppBarStateChangeListener;
+import com.numnu.android.activity.MainActivity;
+import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by thulir on 9/10/17.
  */
 
-public class SearchBusinessDetailFragment extends Fragment implements View.OnClickListener {
+public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
-    SearchView searchViewFood, searchViewLocation;
     private Context context;
-    TextView weblink1, weblink2, weblink3;
     private TextView viewEventMap, eventName, city, eventDate, eventTime;
     private ImageView eventImageView;
     private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
+    LinearLayout linearLayout;
+    ImageView Viewimage;
+    TextView ViewTxt;
+    TextView ItemInfoTxt;
+    private RecyclerView mPostsRecycler;
 
-
-    public static SearchBusinessDetailFragment newInstance() {
-        return new SearchBusinessDetailFragment();
+    public static ItemInfoFragment newInstance() {
+        return new ItemInfoFragment();
     }
 
     @Override
@@ -64,39 +63,43 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_search_business_detail, container, false);
+        final View view = inflater.inflate(R.layout.fragment_item_info, container, false);
 
-        ViewPager viewPager = view.findViewById(R.id.event_viewpager);
-        setupViewPager(viewPager);
 
+        viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         city = view.findViewById(R.id.txt_city);
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
 
-        eventImageView = view.findViewById(R.id.current_event_image);
-        eventImageView.setOnClickListener(this);
-
-
         setupExpandableText();
+        mPostsRecycler = view.findViewById(R.id.user_posts_recycler);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        mPostsRecycler.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
+        mPostsRecycler.addItemDecoration(dividerItemDecoration);
+        mPostsRecycler.setNestedScrollingEnabled(false);
 
-        TabLayout tabLayout = view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        setupRecyclerView();
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(R.string.business);
-        TextView toolbarTitle1 = view.findViewById(R.id.toolbar_title1);
-        toolbarTitle1.setText(R.string.business);
+        toolbarTitle.setText(R.string.item);
+
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView collapsedtoolbarIcon = view.findViewById(R.id.toolbar_image1);
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-        ImageView collapsedtoolbarBackIcon = view.findViewById(R.id.toolbar_back1);
-        final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
+        ItemInfoTxt=(TextView) view.findViewById(R.id.text_terms) ;
+//        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
+
 
         toolbarBackIcon.setOnClickListener(this);
-        collapsedtoolbarBackIcon.setOnClickListener(this);
-        toolbar1.setOnClickListener(this);
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,40 +107,28 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
                 showBottomSheet(inflater);
             }
         });
-        collapsedtoolbarIcon.setOnClickListener(new View.OnClickListener() {
+
+        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showBottomSheet(inflater);
-            }
-        });
-
-
-         appBarLayout = view.findViewById(R.id.appbar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-            @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-             switch (state.name()){
-
-                 case "EXPANDED":
-                     toolbar1.setVisibility(View.GONE);
-                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                     break;
-
-                 case "IDLE":
-                     toolbar1.setVisibility(View.GONE);
-                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                     break;
-                 case "COLLAPSED":
-                     toolbar1.setVisibility(View.VISIBLE);
-                     view.findViewById(R.id.tabs).setVisibility(View.GONE);
-                     break;
-             }
-
-
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
             }
         });
 
         return view;
+    }
+
+    private void setupRecyclerView() {
+
+        ArrayList<String> stringlist = new ArrayList<>();
+
+        for (int i = 1; i <= 10; i++) {
+            stringlist.add("Post item " + i);
+            UserPostsAdapter userPostAdapter = new UserPostsAdapter(context, stringlist);
+            mPostsRecycler.setAdapter(userPostAdapter);
+        }
     }
 
     private void showBottomSheet(LayoutInflater inflater) {
@@ -166,9 +157,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             public void onClick(View view) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    Intent intent = new Intent(getActivity(), LoginFragment.class);
-                    intent.putExtra("EventBookmarkIntent","eventbookmark");
-                    startActivity(intent);
+                    startActivity(new Intent(getActivity(), MainActivity.class));
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
                     Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
@@ -192,69 +181,25 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
 
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
-        adapter.addFragment(new EventPostsFragment(), "Posts");
-        adapter.addFragment(new EventsFragment(), "Events");
-        viewPager.setAdapter(adapter);
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.toolbar_back:
                 getActivity().onBackPressed();
-                break;
-
-            case R.id.toolbar_back1:
-                getActivity().onBackPressed();
-                break;
-
-            case R.id.toolbar1:
-                appBarLayout.setExpanded(true);
                 break;
 
             case R.id.current_event_image:
                 initiatePopupWindow();
                 break;
 
-
         }
     }
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
+
         this.context = context;
         super.onAttach(context);
     }
@@ -281,6 +226,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         });
 
     }
+
 
 }
 

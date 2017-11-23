@@ -1,4 +1,4 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.CompleteSignupFragment;
-import com.numnu.android.activity.LoginFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
+import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import static com.facebook.FacebookSdk.getApplicationContext;

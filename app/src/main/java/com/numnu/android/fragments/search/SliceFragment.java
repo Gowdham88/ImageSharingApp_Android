@@ -19,11 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.LoginFragment;
+import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.UserDetailsFragment;
-import com.numnu.android.fragments.UserPostsFragment;
+import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 /**

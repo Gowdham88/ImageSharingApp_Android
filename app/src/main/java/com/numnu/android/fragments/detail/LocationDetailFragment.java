@@ -1,5 +1,6 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.detail;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,46 +11,53 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.numnu.android.R;
+import com.numnu.android.activity.GoogleMapActivity;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
-import com.numnu.android.fragments.search.EventsFragment;
-import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
-import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * Created by thulir on 9/10/17.
  */
 
-public class ItemDetailFragment extends Fragment implements View.OnClickListener {
+public class LocationDetailFragment extends Fragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks  {
 
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,openMap;
     private ImageView eventImageView;
-    private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
-    private PopupWindow pw;
+    private SupportMapFragment mapFragment;
+    private GoogleMap map;
+    private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
+    private static final int RC_LOCATION_PERM = 1;
+    private NestedScrollView nestedScrollView;
 
 
-    public static ItemDetailFragment newInstance() {
-        return new ItemDetailFragment();
+    public static LocationDetailFragment newInstance() {
+        return new LocationDetailFragment();
     }
 
     @Override
@@ -62,39 +70,36 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_item_detail, container, false);
+        final View view = inflater.inflate(R.layout.fragment_location_detail, container, false);
 
         ViewPager viewPager = view.findViewById(R.id.event_viewpager);
         setupViewPager(viewPager);
 
+
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
-        eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         city = view.findViewById(R.id.txt_city);
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
+        openMap = view.findViewById(R.id.txt_open_map);
 
         eventImageView = view.findViewById(R.id.current_event_image);
-        eventImageView.setOnClickListener(this);
 
-        setupExpandableText();
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(R.string.item);
-        TextView toolbarTitle1 = view.findViewById(R.id.toolbar_title1);
-        toolbarTitle1.setText(R.string.item);
+        toolbarTitle.setText(R.string.location);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView collapsedtoolbarIcon = view.findViewById(R.id.toolbar_image1);
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-        ImageView collapsedtoolbarBackIcon = view.findViewById(R.id.toolbar_back1);
-        final Toolbar toolbar1 = view.findViewById(R.id.toolbar1);
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        nestedScrollView= view.findViewById(R.id.nestedScrollView);
 
         toolbarBackIcon.setOnClickListener(this);
-        collapsedtoolbarBackIcon.setOnClickListener(this);
-        toolbar1.setOnClickListener(this);
+        toolbar.setOnClickListener(this);
+        openMap.setOnClickListener(this);
+
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,40 +107,46 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 showBottomSheet(inflater);
             }
         });
-        collapsedtoolbarIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showBottomSheet(inflater);
-            }
-        });
 
-
-        appBarLayout = view.findViewById(R.id.appbar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-            @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-             switch (state.name()){
-
-                 case "EXPANDED":
-                     toolbar1.setVisibility(View.GONE);
-                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                     break;
-
-                 case "IDLE":
-                     toolbar1.setVisibility(View.GONE);
-                     view.findViewById(R.id.tabs).setVisibility(View.VISIBLE);
-                     break;
-                 case "COLLAPSED":
-                     toolbar1.setVisibility(View.VISIBLE);
-                     view.findViewById(R.id.tabs).setVisibility(View.GONE);
-                     break;
-             }
-
-
-            }
-        });
+        mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.location_detailmap));
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap map) {
+                    loadMap(map);
+                }
+            });
+        } else {
+            Toast.makeText(context, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+        }
 
         return view;
+    }
+
+    protected void loadMap(GoogleMap googleMap) {
+        map = googleMap;
+        if (map != null) {
+            // Map is ready
+            if (hasLocationPermission()) {
+
+                // Add a marker in Montreal and move the camera
+                LatLng sydney = new LatLng(45.5088400, -73.5878100);
+                map.addMarker(new MarkerOptions().position(sydney).title("Marker in Montreal"));
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,17));
+            }else {
+                // Ask for one permission
+                EasyPermissions.requestPermissions(
+                        getActivity(),
+                        getString(R.string.rationale_location),
+                        RC_LOCATION_PERM,
+                        LOCATION);
+            }
+
+        }
+    }
+
+    private boolean hasLocationPermission() {
+        return EasyPermissions.hasPermissions(getActivity(), LOCATION);
     }
 
     private void showBottomSheet(LayoutInflater inflater) {
@@ -173,26 +184,13 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         });
     }
 
-    private void setupExpandableText() {
-        eventDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (eventDescription.isExpanded()) {
-                    eventDescription.truncateText();
-                } else {
-                    eventDescription.expandText();
-                }
-            }
-        });
-    }
 
 
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new PostsFragment(), "Posts");
-        adapter.addFragment(new LocationItemsFragment(), "Locations");
-//        adapter.addFragment(new EventsFragment(), "Events");
+        adapter.addFragment(new EventPostsFragment(), "Posts");
+        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
         viewPager.setAdapter(adapter);
     }
 
@@ -203,19 +201,23 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 getActivity().onBackPressed();
                 break;
 
-            case R.id.toolbar_back1:
-                getActivity().onBackPressed();
+            case R.id.toolbar:
+                nestedScrollView.scrollTo(0,0);
                 break;
-
-            case R.id.toolbar1:
-                appBarLayout.setExpanded(true);
+            case R.id.txt_open_map:
+                startActivity(new Intent(context,GoogleMapActivity.class));
                 break;
-
-            case R.id.current_event_image:
-                initiatePopupWindow();
-                break;
-
         }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -249,32 +251,9 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onAttach(Context context) {
-
         this.context = context;
         super.onAttach(context);
     }
 
-    private void initiatePopupWindow() {
-
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.image_popup,null);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-
-
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
-
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pw.dismiss();
-            }
-        });
-
-    }
 }
 

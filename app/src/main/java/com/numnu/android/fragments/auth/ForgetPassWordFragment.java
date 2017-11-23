@@ -1,4 +1,4 @@
-package com.numnu.android.activity;
+package com.numnu.android.fragments.auth;
 
 
 import android.os.Bundle;
@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.numnu.android.R;
-import com.numnu.android.fragments.HomeFragment;
 
 import static com.facebook.GraphRequest.TAG;
 import static com.numnu.android.utils.Utils.hideKeyboard;

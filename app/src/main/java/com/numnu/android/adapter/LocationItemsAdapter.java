@@ -11,8 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.ItemDetailFragment;
-import com.numnu.android.fragments.LocationDetailFragment;
+import com.numnu.android.fragments.detail.LocationDetailFragment;
 
 import java.util.ArrayList;
 

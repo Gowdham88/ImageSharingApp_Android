@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
     android:id="@+id/action_item1"
-    android:icon="@drawable/homeicon"
+    android:icon="@drawable/ic_bottom_menu_home"
     android:title=""/>
 <item
     android:id="@+id/action_item2"
-    android:icon="@drawable/notificationicon"
+    android:icon="@drawable/ic_bottom_menu_notification"
     android:title=""/>
 <item
     android:id="@+id/action_item3"
-    android:icon="@drawable/profileicon"
+    android:icon="@drawable/ic_bottom_menu_profile"
     android:title=""/>
 </menu>

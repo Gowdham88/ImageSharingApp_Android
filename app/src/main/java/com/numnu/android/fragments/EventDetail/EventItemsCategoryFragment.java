@@ -42,6 +42,7 @@ public class EventItemsCategoryFragment extends Fragment {
     menuitemsRecyclerView = view.findViewById(R.id.menu_items_recyclerview);
     RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
         menuitemsRecyclerView.setLayoutManager(layoutManager);
+        menuitemsRecyclerView.setNestedScrollingEnabled(false);
     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(menuitemsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
         menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
 
