@@ -9,12 +9,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.numnu.android.R;
 import com.numnu.android.utils.Utils;
 
@@ -31,6 +34,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
     private static final int RC_LOCATION_PERM = 1;
     private static final String TAG = "Onboarding";
     TextView textView;
+    Animation slideUpAnimation,slidedownAnimation;
 
 
     @Override
@@ -132,5 +136,10 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
         }
         alertDialog1.show();
         alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(280,this),(int)Utils.convertDpToPixel(280,this));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alertDialog1.getWindow().getAttributes());
+        lp.gravity = Gravity.CENTER;
+        lp.windowAnimations = R.style.DialogAnimation;
+        alertDialog1.getWindow().setAttributes(lp);
     }
 }

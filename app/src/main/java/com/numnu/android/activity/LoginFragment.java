@@ -50,7 +50,7 @@ public class LoginFragment extends Fragment {
     TextView textViewSignup;
     EditText mEmailField, mPasswordField;
     public ProgressDialog mProgressDialog;
-    TextView ForgetPassTxt;
+    TextView ForgetPassTxt,EmailTxt,PassTxt;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -89,6 +89,33 @@ public class LoginFragment extends Fragment {
         mEmailField = view.findViewById(R.id.et_email);
         mPasswordField = view.findViewById(R.id.et_password);
         ForgetPassTxt=(TextView)view.findViewById(R.id.txt_forget_pwd);
+        EmailTxt=(TextView) view.findViewById(R.id.textView5);
+        PassTxt=(TextView) view.findViewById(R.id.textView6);
+
+
+        mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    EmailTxt.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    EmailTxt.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+        mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    PassTxt.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    PassTxt.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
         ForgetPassTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

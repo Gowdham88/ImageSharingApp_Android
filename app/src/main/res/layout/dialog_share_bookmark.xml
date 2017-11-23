@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
     android:id="@+id/custom_dialog_layout_design_user_input"
     android:background="#FAFAFA"
     android:paddingTop="20dp"
@@ -9,7 +11,7 @@
 
     <ImageView
         android:layout_width="60dp"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:id="@+id/dialog_image"
         android:background="#FAFAFA"
         android:layout_marginLeft="16dp"
@@ -21,19 +23,20 @@
 
 
     <TextView
+        style="@style/FontAvenirMedium"
         android:id="@+id/share_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Share"
-        android:textColor="@color/primary_text_material_light"
-        android:textSize="20sp"
+        android:textColor="@color/darker_grey"
+        android:textSize="16sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/bookmark_icon"
         android:layout_toEndOf="@+id/bookmark_icon" />
     <ImageView
         android:layout_width="60dp"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:id="@+id/bookmark_icon"
         android:background="#FAFAFA"
         android:layout_alignTop="@+id/bookmark_title"
@@ -43,14 +46,14 @@
 
 
     <TextView
+        style="@style/FontAvenirMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bookmark_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Bookmark"
-        android:textColor="@color/primary_text_material_light"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:textColor="@color/darker_grey"
+        android:textSize="16sp"
         android:layout_below="@+id/share_title"
         android:layout_alignLeft="@+id/share_title"
         android:layout_alignStart="@+id/share_title"

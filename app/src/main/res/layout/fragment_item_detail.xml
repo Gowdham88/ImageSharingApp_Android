@@ -97,6 +97,8 @@
                 </HorizontalScrollView>
 
                 <com.numnu.android.utils.ExpandableTextView
+                    style="@style/FontAvenirMedium"
+                    android:textSize="@dimen/text13"
                     android:id="@+id/event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

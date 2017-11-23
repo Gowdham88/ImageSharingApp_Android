@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by thulir on 9/10/17.
  */
 
-public class EventItemsCategoryFragment extends Fragment {
+public class  EventItemsCategoryFragment extends Fragment {
 
     private RecyclerView menuitemsRecyclerView;
     private Context context;

@@ -10,7 +10,7 @@
 
     <ImageView
         android:layout_width="60dp"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:id="@+id/camera_image"
         android:background="#FAFAFA"
         android:layout_marginLeft="16dp"
@@ -22,19 +22,20 @@
 
 
     <TextView
+        style="@style/FontAvenirMedium"
         android:id="@+id/camera_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Camera"
-        android:textColor="@color/primary_text_material_light"
-        android:textSize="20sp"
+        android:textColor="@color/darker_grey"
+        android:textSize="16sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/gallery_icon"
         android:layout_toEndOf="@+id/gallery_icon" />
     <ImageView
         android:layout_width="60dp"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:id="@+id/gallery_icon"
         android:background="#FAFAFA"
         android:layout_alignTop="@+id/gallery_title"
@@ -44,13 +45,14 @@
 
 
     <TextView
+        style="@style/FontAvenirMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/gallery_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Gallery"
-        android:textColor="@color/primary_text_material_light"
-        android:textSize="20sp"
+        android:textColor="@color/darker_grey"
+        android:textSize="16sp"
         android:layout_below="@+id/camera_title"
         android:layout_alignLeft="@+id/camera_title"
         android:layout_alignStart="@+id/camera_title"
