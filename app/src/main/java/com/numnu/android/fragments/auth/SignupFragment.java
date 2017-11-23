@@ -78,8 +78,8 @@ public class SignupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_signup, null);
         textViewSignIn=view.findViewById(R.id.textView_signin);
-        TxtEmai=view.findViewById(R.id.textView5);
-        TxtPass=view.findViewById(R.id.textView6);
+        TxtEmai=view.findViewById(R.id.signup_textView5);
+        TxtPass=view.findViewById(R.id.signup_textView6);
         mEmailField =view.findViewById(R.id.et_email);
         mPasswordField =view.findViewById(R.id.et_password);
 
@@ -89,6 +89,29 @@ public class SignupFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 hideKeyboard(getActivity());
+            }
+        });
+        mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    TxtEmai.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    TxtEmai.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+        mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    TxtPass.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    TxtPass.setTextColor(getResources().getColor(R.color.email_color));
+                }
             }
         });
         // [START initialize_auth]
@@ -369,6 +392,7 @@ public class SignupFragment extends Fragment {
             LoginFragment loginFragment1=new LoginFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout,loginFragment1);
+            transaction.addToBackStack(null);
             transaction.commit();
         }
         else if(mReceivedIntent.equals(bookmarkBundle)) {
@@ -397,6 +421,7 @@ public class SignupFragment extends Fragment {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout,loginFragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -415,5 +440,6 @@ public class SignupFragment extends Fragment {
             mProgressDialog.dismiss();
         }
     }
+
 
 }
