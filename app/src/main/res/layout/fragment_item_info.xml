@@ -53,6 +53,7 @@
             android:layout_below="@id/content_image_card"
             android:layout_marginTop="@dimen/spacing_tiny"
             android:text="$3.63"
+            style="@style/FontAvenirMedium"
             android:textStyle="bold"
             android:layout_marginLeft="10dp"
             android:gravity="center"

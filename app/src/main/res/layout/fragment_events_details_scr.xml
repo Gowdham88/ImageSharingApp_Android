@@ -93,7 +93,7 @@
                             android:layout_width="match_parent"
                             android:scaleType="centerCrop"
                             android:layout_height="match_parent"
-                            android:src="@drawable/food_for_lunch_mom" />
+                            android:src="@drawable/sasitem" />
                     </android.support.v7.widget.CardView>
 
 
@@ -249,7 +249,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="24dp"
                     android:layout_below="@+id/weblinks_layout"
-                    android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
+                    android:text="@string/event_description" />
             </LinearLayout>
 
 

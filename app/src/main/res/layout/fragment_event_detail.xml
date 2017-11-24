@@ -112,7 +112,7 @@
                     android:drawablePadding="4dp"
                     android:gravity="center"
                     android:padding="2dp"
-                    android:text="August 9,07:00 am"
+                    android:text="August 9, 07:00 am"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/text12" />
 
@@ -137,7 +137,7 @@
                     android:drawablePadding="4dp"
                     android:gravity="center"
                     android:padding="2dp"
-                    android:text="August 14,11:00pm"
+                    android:text="August 14, 11:00pm"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/text12" />
             </LinearLayout>

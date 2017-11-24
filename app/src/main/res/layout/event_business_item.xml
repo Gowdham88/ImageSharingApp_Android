@@ -118,7 +118,7 @@
         android:layout_below="@id/chips_layout"
         android:layout_toRightOf="@id/card_view"
         android:layout_toEndOf="@id/card_view"
-        android:text="August 30,Montreal"
+        android:text="August 30, Montreal"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp" />
 </RelativeLayout>
