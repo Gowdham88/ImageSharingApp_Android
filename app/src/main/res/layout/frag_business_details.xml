@@ -1,0 +1,172 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White_clr">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar_with_options" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="@dimen/image_card_corner_radius">
+
+                    <ImageView
+                        android:id="@+id/notification_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/sasitem" />
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_business_detail_image"
+                        style="@style/FontAvenirMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Barbadous food and rum festival"
+                        android:textColor="@color/name_black"
+                        android:textSize="@dimen/text14" />
+
+                    <HorizontalScrollView
+                        android:id="@+id/business_chips_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_business_detail_image">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/spacing_tiny"
+                            android:layout_marginRight="@dimen/spacing_small"
+                            android:layout_marginTop="@dimen/spacing_tiny"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TagStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Food"
+                                android:textColor="@color/tag_inside_text_color"
+                                android:textSize="@dimen/size12" />
+
+                            <TextView
+                                style="@style/TagStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/size5"
+                                android:text="Rum"
+                                android:textColor="@color/tag_inside_text_color"
+                                android:textSize="@dimen/size12" />
+
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+                    <ImageView
+                        android:id="@+id/img_calender"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_below="@+id/business_chips_layout"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_calendar" />
+
+                    <TextView
+                        style="@style/FontAvenirMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/img_calender"
+                        android:layout_below="@+id/business_chips_layout"
+                        android:layout_toEndOf="@+id/img_calender"
+                        android:layout_toRightOf="@+id/img_calender"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/spacing_tiny"
+                        android:text="BarBados food and num festival"
+                        android:textColor="@color/time_color"
+                        android:textSize="@dimen/text12" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <com.numnu.android.utils.ExpandableTextView
+                android:id="@+id/business_detail_description"
+                style="@style/FontAvenirMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginTop="10dp"
+                android:text="@string/event_description"
+                android:textColor="@color/time_color"
+                android:textSize="@dimen/text12" />
+
+            <TextView
+                android:id="@+id/business_viewtxt"
+                style="@style/FontAvenirMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:background="@color/lighter_grey"
+                android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_small"
+                android:text="View Profile"
+                android:textColor="@color/weblink_color" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                app:tabSelectedTextColor="@color/name_black"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabTextColor="@color/tab_unselected_color" />
+
+            <com.numnu.android.utils.ContentWrappingViewPager
+                android:id="@+id/business_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

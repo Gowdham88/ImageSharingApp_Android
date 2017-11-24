@@ -1,21 +1,12 @@
 package com.numnu.android.activity;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,21 +25,24 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
+import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.auth.SignupFragment;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MyActivity {
     private static final String TAG ="MainActivity" ;
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
     private CallbackManager mCallbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        FacebookSdk.sdkInitialize(getApplicationContext());
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
-        TextView textView=findViewById(R.id.textView3);
+        TextView textView=findViewById(R.id.textView_signin);
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         mAuth = FirebaseAuth.getInstance();
@@ -153,30 +147,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void createAccount(View view) {
-        Intent mainIntent = new Intent(MainActivity.this,SignupActivity.class);
+        Intent mainIntent = new Intent(MainActivity.this,SignupFragment.class);
         MainActivity.this.startActivity(mainIntent);
+
 
     }
 
     public void signIn(View view) {
-        Intent mainIntent = new Intent(this,LoginActivity.class);
+        Intent mainIntent = new Intent(this,LoginFragment.class);
         this.startActivity(mainIntent);
     }
 
-    public void showProgressDialog() {
-        RelativeLayout layout = new RelativeLayout(this);
-        ProgressBar progressBar = new ProgressBar(MainActivity.this,null,android.R.attr.progressBarStyleLarge);
-        progressBar.setIndeterminate(true);
-        progressBar.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100,100);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        layout.addView(progressBar,params);
-        setContentView(layout);
-    }
-
-    public void hideProgressDialog() {
-        setContentView(R.layout.activity_login);
-    }
 }
 
 
