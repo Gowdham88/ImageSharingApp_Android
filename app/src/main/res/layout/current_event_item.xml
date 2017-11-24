@@ -56,6 +56,6 @@
         android:layout_below="@id/event_item_date"
         android:layout_marginTop="4dp"
         android:drawableLeft="@drawable/ic_city"
-        android:text="  Montreal"
+        android:text="   Montreal"
         android:textSize="@dimen/font_small" />
 </RelativeLayout>

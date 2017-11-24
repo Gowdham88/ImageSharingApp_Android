@@ -23,7 +23,7 @@
     </android.support.v7.widget.CardView>
 
     <TextView
-       style="@style/FontAvenirMedium"
+        style="@style/FontAvenirMedium"
         android:textSize="@dimen/text12"
         android:id="@+id/item_name"
         android:textColor="@color/event_map"
@@ -126,15 +126,15 @@
         </LinearLayout>
 
     </HorizontalScrollView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/event_date"
-        android:layout_below="@id/chips_layout"
-        android:layout_toRightOf="@id/card_view"
-        android:layout_toEndOf="@id/card_view"
-        android:text="August 30, Montreal,canada otawa"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/event_date"-->
+        <!--android:layout_below="@id/chips_layout"-->
+        <!--android:layout_toRightOf="@id/card_view"-->
+        <!--android:layout_toEndOf="@id/card_view"-->
+        <!--android:text="August 30, Montreal,canada otawa"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginStart="8dp" />-->
 
 </RelativeLayout>

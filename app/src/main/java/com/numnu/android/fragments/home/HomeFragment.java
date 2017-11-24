@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
             });
         }
 
-  
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -440,7 +440,7 @@ public class HomeFragment extends Fragment {
             nestedScrollView.setVisibility(View.GONE);
             searchListView.setVisibility(View.VISIBLE);
 
-            final String[] arr = {"montreal", "location1", "location2", "location3", "location4", "location5", "location6", "location7",};
+            final String[] arr = {"burger", "chicken", "pizza", "mutton", "curry", "chicken burger", "mutton burger", "sandwich",};
 
             ArrayList<String> stringArrayList=new ArrayList<>();
             stringArrayList.addAll(Arrays.asList(arr));
