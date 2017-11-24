@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/White_clr"
+    android:layout_margin="@dimen/spacing_small"
+    tools:context="com.numnu.android.activity.HomeActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardCornerRadius="@dimen/image_card_corner_radius"
+        android:elevation="10dp">
+
+        <ImageView
+            android:id="@+id/review_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/food_for_lunch_mom" />
+
+        </android.support.v7.widget.CardView>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="9dp"
+        android:layout_below="@+id/card_view"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/text_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User name"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_below="@+id/card_view"
+        android:layout_alignBaseline="@+id/user_image"
+        android:layout_toRightOf="@+id/user_image"
+        android:layout_toEndOf="@+id/user_image" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/card_view"
+        android:layout_alignRight="@+id/card_view"
+        android:layout_below="@+id/card_view"
+        android:layout_alignBaseline="@+id/user_image"
+        app:srcCompat="@drawable/ic_favorite_border_black_24dp" />
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_favorite_border_black_24dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_below="@+id/card_view"
+        android:layout_alignBaseline="@+id/user_image"
+        android:layout_toLeftOf="@+id/imageView10"
+        android:layout_toStartOf="@+id/imageView10" />
+
+    <TextView
+        android:id="@+id/text_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="location"
+        android:drawableLeft="@drawable/ic_maplocation"
+        android:textSize="20sp"
+        android:layout_below="@+id/user_image"/>
+    <TextView
+        android:id="@+id/text_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item name"
+        android:drawableLeft="@drawable/ic_maplocation"
+        android:textSize="20sp"
+        android:layout_below="@+id/text_location"/>
+    <TextView
+        android:id="@+id/text_business_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Business name"
+        android:drawableLeft="@drawable/ic_maplocation"
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/text_item_name"
+        android:layout_toEndOf="@+id/text_item_name"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_below="@+id/text_location"/>
+    <TextView
+        android:id="@+id/text_event_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event name"
+        android:drawableLeft="@drawable/ic_maplocation"
+        android:textSize="20sp"
+        android:layout_below="@+id/text_item_name"/>
+    <TextView
+        android:id="@+id/text_users_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="users name"
+        android:drawableLeft="@drawable/ic_maplocation"
+        android:textSize="20sp"
+        android:layout_below="@+id/text_event_name"/>
+</RelativeLayout>

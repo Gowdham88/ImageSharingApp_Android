@@ -6,25 +6,51 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+        <item name="android:textColorPrimary">@color/primary_text_material_light</item>
+        <item name="editTextStyle">@style/MyEditTextStyle</item>
+        <item name="colorControlActivated">@color/blue</item>
+        <!--<item name="android:windowBackground">@android:color/white</item>-->
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
-<style name="login_button">
-   <item name="android:background">@drawable/button_background_login</item>
-    <item name="android:textColor">@android:color/white</item>
-</style>
+
+    <style name="login_button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:background">@drawable/button_background_login</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ok_button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
+        <item name="android:background">@drawable/button_background_login</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 
     <style name="cancel_button">
         <item name="android:background">@drawable/cancel_background</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="facebook_login_button">
         <item name="android:background">@drawable/fb_login_button_background</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
     </style>
 
     <style name="onboard_button">
-        <item name="android:background">@color/onboardButton</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
     </style>
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -32,5 +58,92 @@
         <!--<item name="android:textColorPrimary">@color/w</item>-->
         <item name="android:background">@drawable/fb_login_button_background</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Background for the search query section (e.g. EditText) -->
+        <item name="queryBackground">@drawable/search_view</item>
+        <!-- Close button icon -->
+        <item name="closeIcon">@android:drawable/ic_menu_close_clear_cancel</item>
+        <!-- Search button icon -->
+        <item name="searchIcon">@drawable/ic_search_location</item>
+    </style>
+
+    <style name="login_heading_style">
+        <item name="android:textSize">@dimen/font_larger</item>
+        <item name="fontPath">fonts/Avenir-Roman.ttf</item>
+    </style>
+
+    <style name="SplashTextStyle">
+        <item name="fontPath">fonts/ProximaNova-Black.otf</item>
+    </style>
+
+    <style name="FontAvenirheavy">
+        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
+    </style>
+
+    <style name="FontAvenirLight">
+        <item name="fontPath">fonts/Avenir-Light.ttf</item>
+    </style>
+
+    <style name="FontAvenirMedium">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+    </style>
+
+    <style name="FontAvenirBook">
+        <item name="fontPath">fonts/Avenir-Book.ttf</item>
+    </style>
+
+    <style name="clear_button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="MyEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="BoldTextStyle">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:textColor">@color/darker_grey</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="LightTextStyle">
+        <item name="fontPath">fonts/Avenir-Book.ttf</item>
+        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TagStyle">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:alpha">13</item>
+        <item name="android:textColor">@color/tag_text_color</item>
+        <item name="android:background">@drawable/tag_background</item>
+
+    </style>
+
+    <style name="TagStyleFood">
+        <item name="fontPath">fonts/Avenir-Book.ttf</item>
+        <item name="android:alpha">39</item>
+        <item name="android:background">@drawable/tag_background</item>
+
+    </style>
+    <style name="TabStyle">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:alpha">14</item>
+        <item name="android:textColor">@color/event_map</item>
+
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <!--<item name="android:windowExitAnimation">@anim/slide_bottom</item>-->
+   </style>
 
 </resources>
