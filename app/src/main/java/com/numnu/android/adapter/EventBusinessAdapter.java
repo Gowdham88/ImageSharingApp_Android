@@ -49,7 +49,7 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
         holder.textViewName.setText(stringArrayList.get(position));
 
         Picasso.with(context).load("null")
-                .placeholder(R.drawable.food_2616456_1920)
+                .placeholder(R.drawable.burger)
                 .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override

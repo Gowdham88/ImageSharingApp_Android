@@ -135,7 +135,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
             e.printStackTrace();
         }
         alertDialog1.show();
-        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(280,this),(int)Utils.convertDpToPixel(280,this));
+        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(220,this),(int)Utils.convertDpToPixel(250,this));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alertDialog1.getWindow().getAttributes());
         lp.gravity = Gravity.CENTER;

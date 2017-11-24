@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/food_for_lunch_mom" />
+                    android:src="@drawable/sasitem" />
             </android.support.v7.widget.CardView>
 
             <View
@@ -60,7 +60,7 @@
                 android:layout_marginLeft="@dimen/size8"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_marginTop="8dp"
-                android:text="Food and Rum Festival"
+                android:text="Barbadous and food Rum Festival"
                 android:textColor="@color/name_black"
                 android:textSize="16sp"
                 tools:ignore="MissingPrefix" />
@@ -226,9 +226,9 @@
                 android:layout_marginLeft="@dimen/size8"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_marginTop="14dp"
-                android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+                android:text="@string/event_description"
                 android:textColor="@color/descri_color"
-                android:textSize="@dimen/text13" />
+                android:textSize="@dimen/text12" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"

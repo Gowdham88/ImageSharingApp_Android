@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/food_for_lunch_mom" />
+                    android:src="@drawable/sasitem" />
             </android.support.v7.widget.CardView>
 
 
@@ -54,7 +54,7 @@
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_marginTop="4dp"
-                android:text="Food and Rum Festival"
+                android:text="Barbadous and rum food festival"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 tools:ignore="MissingPrefix" />

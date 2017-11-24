@@ -17,7 +17,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/food_for_lunch_mom"
+                android:src="@drawable/burger"
                 android:id="@+id/item_image"
                 android:background="@drawable/image_corner_radius"
                 android:scaleType="centerCrop" />
@@ -35,7 +35,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Barbadous food and rum festival"
+            android:text="Barbadous and rum food festival"
             android:layout_toRightOf="@id/content_image_card"
             style="@style/BoldTextStyle"
             android:layout_marginLeft="10dp"
@@ -147,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/event_txt"
-            android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." />
+            android:text="@string/event_description" />
         <TextView
             android:id="@+id/text_terms"
             android:layout_width="match_parent"

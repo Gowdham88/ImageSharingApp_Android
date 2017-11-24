@@ -1,10 +1,12 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/White_clr"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/home_linlay"
     tools:context="com.numnu.android.activity.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -126,7 +128,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,7 +142,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:id="@+id/search_linlay1">
 
                 <TextView
                     android:id="@+id/current_events_text"
@@ -179,7 +185,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:id="@+id/search_linlay2">
 
                 <TextView
                     android:id="@+id/current_events_text1"
@@ -219,7 +226,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:id="@+id/search_linlay3">
 
                 <TextView
                     android:id="@+id/current_events_text2"
@@ -301,7 +309,7 @@
             </RelativeLayout>
 
         </LinearLayout>
-
+</LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.v4.view.ViewPager
@@ -323,4 +331,4 @@
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
