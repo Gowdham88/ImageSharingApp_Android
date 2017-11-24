@@ -34,10 +34,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Places;
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.adapter.FoodAdapter;
+import com.numnu.android.adapter.PlaceAutocompleteAdapter;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -60,7 +66,8 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 public class EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
 
     Context context;
-    EditText mEmail, mName, mCity, mGender, mDob, mFoodPreferences;
+    EditText mEmail, mName, mGender, mDob, mFoodPreferences;
+    AutoCompleteTextView mCity;
     Button mCompleteSignUp;
     RadioGroup mRadioGroup;
     RadioButton mRadioMale, mRadioFemale;
@@ -95,6 +102,13 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
     private static final int RC_LOCATION_PER = 1;
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
+    /**
+     * GeoDataClient wraps our service connection to Google Play services and provides access
+     * to the Google Places API for Android.
+     */
+    protected GeoDataClient mGeoDataClient;
+
+    private PlaceAutocompleteAdapter mAdapter;
 
     public static EditProfileFragment newInstance() {
         EditProfileFragment fragment = new EditProfileFragment();
@@ -223,7 +237,13 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
 
+        // Construct a GeoDataClient for the Google Places API for Android.
+        mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
+        mCity.setOnItemClickListener(mAutocompleteClickListener);
 
+        // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
+        mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, null);
+        mCity.setAdapter(mAdapter);
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
 
@@ -301,6 +321,27 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
 
         return v;
     }
+
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            /*
+             Retrieve the place ID of the selected item from the Adapter.
+             The adapter stores each Place suggestion in a AutocompletePrediction from which we
+             read the place ID and title.
+              */
+            final AutocompletePrediction item = mAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+            final CharSequence primaryText = item.getPrimaryText(null);
+
+            Log.i(TAG, "Autocomplete item selected: " + primaryText);
+
+            Utils.hideKeyboard(getActivity());
+        }
+    };
+
+
 
 
     @Override

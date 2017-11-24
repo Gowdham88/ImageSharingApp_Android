@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -32,10 +33,17 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Places;
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.adapter.FoodAdapter;
+import com.numnu.android.adapter.PlaceAutocompleteAdapter;
+import com.numnu.android.fragments.home.UserPostsFragment;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -59,7 +67,8 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 public class CompleteSignupFragment extends Fragment implements EasyPermissions.PermissionCallbacks,View.OnKeyListener{
 
     Context context;
-    EditText mEmail, mName, mCity, mGender, mDob, mFoodPreferences;
+    EditText mEmail, mName, mGender, mDob, mFoodPreferences;
+    AutoCompleteTextView mCity;
     Button mCompleteSignUp;
     RadioGroup mRadioGroup;
     RadioButton mRadioMale, mRadioFemale;
@@ -94,7 +103,13 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
+    /**
+     * GeoDataClient wraps our service connection to Google Play services and provides access
+     * to the Google Places API for Android.
+     */
+    protected GeoDataClient mGeoDataClient;
 
+    private PlaceAutocompleteAdapter mAdapter;
     public static CompleteSignupFragment newInstance() {
         CompleteSignupFragment fragment = new CompleteSignupFragment();
         return fragment;
@@ -212,24 +227,19 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         mDob = v.findViewById(R.id.et_signup_dob);
 //        mFoodPreferences = findViewById(R.id.et_signup_food_preferences);
         mCompleteSignUp = v.findViewById(R.id.button_complete_signup);
-//        mFoodPreferences.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FoodLinearLay.setVisibility(View.VISIBLE);
-//                hideKeyboardFrom();
-//            }
-//        });
 
 
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
 
-//        final RecipientEditTextView recipientEditTextView = findViewById(R.id.et_signup_food_preferences);
-//        recipientEditTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//        BaseRecipientAdapter recipientAdapter = new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE,context);
-//        recipientAdapter.setShowMobileOnly(false);
-//        recipientEditTextView.setAdapter(recipientAdapter);
 
+        // Construct a GeoDataClient for the Google Places API for Android.
+        mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
+        mCity.setOnItemClickListener(mAutocompleteClickListener);
+
+        // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
+        mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, null);
+        mCity.setAdapter(mAdapter);
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
@@ -281,11 +291,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     Toast.makeText(context, "Email is mandatory", Toast.LENGTH_SHORT).show();
                 } else {
                     if (email.matches(emailPattern) && (!(email.equals("") && name.equals("") && city.equals("") && dob.equals("") && ItemModelList.equals("")))) {
-                        Intent intent = new Intent(getActivity(), HomeActivity.class);
-                        intent.putExtra("completesignup", "showprofilefragment");
-                        startActivity(intent);
 
-//                        context.getApplicationContext().this.finish();
                         PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
                         PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, name);
                         PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, email);
@@ -296,6 +302,12 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                         }
 
                         PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+
+                        UserPostsFragment loginFragment1= new UserPostsFragment();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout,loginFragment1);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                     } else {
                         Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
                     }
@@ -308,6 +320,28 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
         return v;
     }
+
+
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            /*
+             Retrieve the place ID of the selected item from the Adapter.
+             The adapter stores each Place suggestion in a AutocompletePrediction from which we
+             read the place ID and title.
+              */
+            final AutocompletePrediction item = mAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+            final CharSequence primaryText = item.getPrimaryText(null);
+
+            Log.i(TAG, "Autocomplete item selected: " + primaryText);
+
+            Utils.hideKeyboard(getActivity());
+        }
+    };
+
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

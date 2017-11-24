@@ -3,6 +3,7 @@ package com.numnu.android.fragments.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,8 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.style.CharacterStyle;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,8 +38,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
+import com.numnu.android.adapter.search.PlaceAutocompleteRecyclerViewAdapter;
 import com.numnu.android.adapter.search.SearchResultsAdapter;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
@@ -52,7 +57,7 @@ import static android.content.ContentValues.TAG;
 public class HomeFragment extends Fragment {
 
 
-    EditText searchViewFood;
+    EditText searchViewFood,searchViewLocation;
     private RecyclerView searchListView;
     private TabLayout tabLayout;
     NestedScrollView nestedScrollView;
@@ -70,12 +75,10 @@ public class HomeFragment extends Fragment {
      */
     protected GeoDataClient mGeoDataClient;
 
-    private PlaceAutocompleteAdapter mAdapter;
+    private PlaceAutocompleteRecyclerViewAdapter mAdapter;
 
-    private AutoCompleteTextView searchViewLocation;
 
-    private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(
-            new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
+
     private ImageView googleLogo;
 
 
@@ -102,6 +105,10 @@ public class HomeFragment extends Fragment {
         }
 
         googleLogo.setVisibility(View.GONE);
+        searchViewFood.setText("");
+        searchViewLocation.setText("");
+        nestedScrollView.setVisibility(View.VISIBLE);
+        searchListView.setVisibility(View.GONE);
     }
 
     @Override
@@ -179,11 +186,9 @@ public class HomeFragment extends Fragment {
 
         // Construct a GeoDataClient for the Google Places API for Android.
         mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
-        searchViewLocation.setOnItemClickListener(mAutocompleteClickListener);
+//        searchViewLocation.setOnItemClickListener(mAutocompleteClickListener);
 
-        // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
-        mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, BOUNDS_GREATER_SYDNEY, null);
-        searchViewLocation.setAdapter(mAdapter);
+
         setupSearchListener();
         return view;
     }
@@ -290,6 +295,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 googleLogo.setVisibility(View.VISIBLE);
+                locationSearch(charSequence);
             }
 
             @Override
@@ -360,17 +366,36 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void locationSearch(CharSequence charSequence) {
+    private void locationSearch(final CharSequence charSequence) {
        if(!charSequence.toString().equals("")){
 
+           nestedScrollView.setVisibility(View.GONE);
+           searchListView.setVisibility(View.VISIBLE);
+           // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
+           mAdapter = new PlaceAutocompleteRecyclerViewAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, null);
+           mAdapter.getFilter().filter(charSequence.toString());
+           mAdapter.setOnItemClickListener(new SearchResultsAdapter.OnItemClickListener() {
+               @Override
+               public void onRecyclerItemClick(View view, int position) {
+                   final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
+                   String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
+                   searchViewLocation.setText(s);
                    Bundle bundle = new Bundle();
-                   bundle.putString("keyword",charSequence.toString());
+                   bundle.putString("keyword",s);
                    bundle.putString("type","location");
                    HomeSearchFragment searchFragment=HomeSearchFragment.newInstance();
                    searchFragment.setArguments(bundle);
                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
                    transaction.replace(R.id.frame_layout,searchFragment);
                    transaction.addToBackStack(null).commit();
+               }
+           });
+           searchListView.setAdapter(mAdapter);
+
+       }else {
+           googleLogo.setVisibility(View.GONE);
+           nestedScrollView.setVisibility(View.VISIBLE);
+           searchListView.setVisibility(View.GONE);
        }
     }
 

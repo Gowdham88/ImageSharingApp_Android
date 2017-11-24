@@ -119,7 +119,7 @@
                 android:padding="@dimen/spacing_small"
                 android:text="@string/city" />
 
-            <EditText
+            <AutoCompleteTextView
                 style="@style/FontAvenirBook"
                 android:textColor="@color/name_black"
                 android:textSize="@dimen/text12"
