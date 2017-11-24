@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,31 @@ public class SignupFragment extends Fragment {
         }
 
 
+    }
+
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    getActivity().finish();
+                    // handle back button
+
+                    return true;
+
+                }
+
+                return false;
+            }
+        });
     }
 
     @Nullable
@@ -309,7 +335,7 @@ public class SignupFragment extends Fragment {
 
                         // [START_EXCLUDE]
                         hideProgressDialog();
-                        getActivity().finish();
+//                        getActivity().finish();
                         // [END_EXCLUDE]
                     }
 

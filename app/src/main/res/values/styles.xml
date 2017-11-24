@@ -29,6 +29,7 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+
     <style name="cancel_button">
         <item name="android:background">@drawable/cancel_background</item>
         <item name="android:textColor">@color/colorAccent</item>
@@ -76,7 +77,7 @@
     </style>
 
     <style name="SplashTextStyle">
-        <item name="fontPath">fonts/ProximaNova-Black.otf</item>
+        <item name="fontPath">fonts/ProximaNova-Bold.ttf</item>
     </style>
 
     <style name="FontAvenirheavy">

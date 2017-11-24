@@ -14,7 +14,7 @@
         android:layout_height="50dp"
         android:id="@+id/slice_profile_image"
         android:layout_alignParentTop="true"
-        android:src="@drawable/dup_men_image"
+        android:src="@drawable/profileimg"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"

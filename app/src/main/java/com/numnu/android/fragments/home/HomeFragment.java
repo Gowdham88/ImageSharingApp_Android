@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,11 +21,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -43,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
+import static com.numnu.android.utils.Utils.hideKeyboard;
 
 
 /**
@@ -62,6 +68,8 @@ public class HomeFragment extends Fragment {
     Toolbar toolbar;
     BottomNavigationView mBottomNavigationView;
     private ImageView toolbarBackIcon,mSearchIcon,mLocationIcon;
+    RelativeLayout Homelinlay1,Homelinlay2,Homelinlay3;
+    AppBarLayout AppLay;
 
 
     /**
@@ -102,7 +110,32 @@ public class HomeFragment extends Fragment {
         }
 
         googleLogo.setVisibility(View.GONE);
+
+        Finish();
     }
+
+    private void Finish() {
+
+            getView().setFocusableInTouchMode(true);
+            getView().requestFocus();
+            getView().setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                        getActivity().finish();
+                        // handle back button
+
+                        return true;
+
+                    }
+
+                    return false;
+                }
+            });
+        }
+
+  
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,11 +154,39 @@ public class HomeFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
         toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-
+        Homelinlay1=(RelativeLayout)view.findViewById(R.id.search_linlay1);
+        Homelinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
+        Homelinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
+        AppLay=(AppBarLayout)view.findViewById(R.id.appbar_layout);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        Homelinlay1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+            }
+        });
+        Homelinlay2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+            }
+        });
+        Homelinlay3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+            }
+        });
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().onBackPressed();
+            }
+        });
+        AppLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
             }
         });
 
@@ -416,26 +477,26 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        stringlist = new ArrayList<>();
-        stringlist1 = new ArrayList<>();
-
-        for (int i = 1; i <= 10; i++) {
-            stringlist.add("Flatron");
-        }
-            CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context, stringlist);
+//        stringlist = new ArrayList<>();
+//        stringlist1 = new ArrayList<>();
+//
+//        for (int i = 1; i <= 10; i++) {
+//            stringlist.add("Flatron");
+//        }
+            CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context);
             currentEventsList.setAdapter(currentUpAdapter);
 
-        CurrentUpEventsAdapter currentUpAdapter1 = new CurrentUpEventsAdapter(context, stringlist);
+        CurrentUpEventsAdapter currentUpAdapter1 = new CurrentUpEventsAdapter(context);
         currentEventsList1.setAdapter(currentUpAdapter1);
 
-        CurrentUpEventsAdapter currentUpAdapter2 = new CurrentUpEventsAdapter(context, stringlist);
+        CurrentUpEventsAdapter currentUpAdapter2 = new CurrentUpEventsAdapter(context);
         currentEventsList2.setAdapter(currentUpAdapter2);
 
 
-        for (int i = 1; i <= 10; i++) {
-            stringlist1.add("Flatron");
-        }
-//            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
+//        for (int i = 1; i <= 10; i++) {
+//            stringlist1.add("Flatron");
+//        }
+////            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
 //            pastEventsList.setAdapter(pastEventsAdapter);
 
 

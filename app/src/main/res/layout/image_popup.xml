@@ -10,7 +10,7 @@
         android:background="@android:color/black" >
         <com.numnu.android.utils.TouchImageView
             android:id="@+id/popup_image"
-            android:src="@drawable/food_for_lunch_mom"
+            android:src="@drawable/pasta"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_height="wrap_content" />

@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -24,6 +26,8 @@ import com.numnu.android.fragments.search.UsersFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.numnu.android.utils.Utils.hideKeyboard;
 
 /**
  * Created by thulir on 9/10/17.
@@ -38,6 +42,7 @@ public class HomeSearchFragment extends Fragment {
     private NestedScrollView nestedScrollView;
     private ImageView toolbarBackIcon;
     private String searchKeyword,type;
+    RelativeLayout SearchLinlay1,SearchLinlay2,SearchLinlay3;
 
     public static HomeSearchFragment newInstance() {
         return new HomeSearchFragment();
@@ -65,7 +70,9 @@ public class HomeSearchFragment extends Fragment {
         searchViewLocation=view.findViewById(R.id.et_search_location);
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
-
+        SearchLinlay1=(RelativeLayout)view.findViewById(R.id.search_linlay1);
+        SearchLinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
+        SearchLinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(getString(R.string.app_name));
         toolbarBackIcon = view.findViewById(R.id.toolbar_back);
@@ -75,7 +82,24 @@ public class HomeSearchFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        
+        SearchLinlay1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+            }
+        });
+        SearchLinlay2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+            }
+        });
+        SearchLinlay3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+            }
+        });
         nestedScrollView.setVisibility(View.GONE);
         tabLayout.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.VISIBLE);

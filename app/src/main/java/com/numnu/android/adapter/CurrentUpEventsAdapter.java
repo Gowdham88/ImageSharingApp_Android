@@ -23,11 +23,14 @@ import java.util.ArrayList;
 public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEventsAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<String> stringArrayList = new ArrayList<>();
+    //private ArrayList<String> stringArrayList = new ArrayList<>();
+    int imgarray[] = {R.drawable.pasta,R.drawable.burger,R.drawable.large_berger,R.drawable.sasitem };
+    String Titlearray[]={"Flatron","Masuike","Umami Burger","Ada Salad"};
+    String TitleCityarray[]={"Montreal","Miami","New Orleans","Miami"};
 
-    public CurrentUpEventsAdapter(Context context, ArrayList<String> stringArrayList) {
+    public CurrentUpEventsAdapter(Context context) {
         this.context=context;
-        this.stringArrayList=stringArrayList;
+//        this.stringArrayList=stringArrayList;
     }
 
     @Override
@@ -43,7 +46,9 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.textViewName.setText(stringArrayList.get(position));
+        holder.textViewName.setText(Titlearray[position]);
+        holder.imageViewIcon.setImageResource(imgarray[position]);
+        holder.textcity.setText(TitleCityarray[position]);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,25 +58,27 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
             }
         });
 
-        Picasso.with(context).load("null")
-                .placeholder(R.drawable.food_1631727_1920)
-                .into(holder.imageViewIcon);
+//        Picasso.with(context).load("null")
+//                .placeholder(R.drawable.food_1631727_1920)
+//                .into(holder.imageViewIcon);
     }
 
     @Override
     public int getItemCount() {
-        return stringArrayList.size();
+        return imgarray.length;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
-        private TextView textViewName;
+        private TextView textViewName,textcity;
 
         ViewHolder(View itemView) {
             super(itemView);
             this.textViewName =  itemView.findViewById(R.id.text_event);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.current_event_image);
+            this.textcity = itemView.findViewById(R.id.event_item_city);
+
         }
     }
 }

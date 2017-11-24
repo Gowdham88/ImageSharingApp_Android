@@ -65,5 +65,7 @@
 
     <string name="google_maps_api_key">AIzaSyAuKzAZP8SLYJf_jfVUsxdcjChIU00FmDQ</string>
     <string name="title_activity_maps">Map</string>
+    <string name="event_description">This much-talked-about festival brings all your favorite Food Network personalities and celebrity chefs to Miami for five days of events, from intimate dinners cooked by Sean Brock to a late-night Tacos After Dark session with Aarón Sanchez. If you\'ve always dreamed of drinking tiki cocktails with Guy Fieri or having a rosé brunch with Martha Stewart, the South Beach Wine &amp; Food Festival can make your wishes come true.
+</string>
 
 </resources>
