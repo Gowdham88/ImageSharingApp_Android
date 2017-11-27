@@ -438,7 +438,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 //                   transaction.addToBackStack(null).commit();
                    googleLogo.setVisibility(View.GONE);
                    searchListView.setVisibility(View.GONE);
-                   toolbarBackIcon.setVisibility(View.VISIBLE);
+                   nestedScrollView.setVisibility(View.VISIBLE);
+
                }
            });
            searchListView.setAdapter(mAdapter);
@@ -459,6 +460,9 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         viewPager.setVisibility(View.VISIBLE);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(this);
     }
 
     private void foodSearch(String fooditem) {
