@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
@@ -66,7 +67,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 public class EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
 
     Context context;
-    EditText mEmail, mName, mGender, mDob, mFoodPreferences;
+    EditText mEmail, mName, mGender, mDob, userDescription;
     AutoCompleteTextView mCity;
     Button mCompleteSignUp;
     RadioGroup mRadioGroup;
@@ -227,6 +228,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         mEmail = v.findViewById(R.id.et_signup_email);
         mName = v.findViewById(R.id.et_signup_name);
         mCity = v.findViewById(R.id.et_signup_city);
+        userDescription = v.findViewById(R.id.et_user_description);
 
         mRadioGroup = v.findViewById(R.id.radio_group);
         mRadioMale = v.findViewById(R.id.male_radio);
@@ -237,12 +239,14 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
 
+        setupFocusListeners(v);
+
         // Construct a GeoDataClient for the Google Places API for Android.
         mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
         mCity.setOnItemClickListener(mAutocompleteClickListener);
-
+        AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
         // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
-        mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, null);
+        mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, autocompleteFilter);
         mCity.setAdapter(mAdapter);
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
@@ -320,6 +324,76 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
 
 
         return v;
+    }
+
+    private void setupFocusListeners(View v) {
+        final TextView usernameLabel = v.findViewById(R.id.text_user_name_label);
+        final TextView emailLabel = v.findViewById(R.id.text_email_label);
+        final TextView citylLabel = v.findViewById(R.id.text_city_label);
+        final TextView foodlLabel = v.findViewById(R.id.text_food_preferences_label);
+        final TextView userdescriptionLabel = v.findViewById(R.id.text_user_description_label);
+
+        mName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    usernameLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    usernameLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+
+        mEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    emailLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    emailLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+
+        mCity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    citylLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    citylLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+        autoComplete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    foodlLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    foodlLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+        userDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    userdescriptionLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    userdescriptionLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
     }
 
     private AdapterView.OnItemClickListener mAutocompleteClickListener

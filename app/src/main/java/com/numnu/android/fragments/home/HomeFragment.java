@@ -10,7 +10,10 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -35,6 +38,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
@@ -45,12 +49,18 @@ import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.search.PlaceAutocompleteRecyclerViewAdapter;
 import com.numnu.android.adapter.search.SearchResultsAdapter;
+import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
+import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.search.SearchBusinessFragment;
+import com.numnu.android.fragments.search.SearchItemsFragment;
+import com.numnu.android.fragments.search.UsersFragment;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 import static com.numnu.android.utils.Utils.hideKeyboard;
@@ -75,6 +85,7 @@ public class HomeFragment extends Fragment {
     private ImageView toolbarBackIcon,mSearchIcon,mLocationIcon;
     RelativeLayout Homelinlay1,Homelinlay2,Homelinlay3;
     AppBarLayout AppLay;
+    private ViewPager viewPager;
 
 
     /**
@@ -118,6 +129,10 @@ public class HomeFragment extends Fragment {
         nestedScrollView.setVisibility(View.VISIBLE);
         searchListView.setVisibility(View.GONE);
 
+        if(viewPager.getVisibility()==View.VISIBLE) {
+            toolbarBackIcon.setVisibility(View.VISIBLE);
+        }
+
         Finish();
     }
 
@@ -130,9 +145,17 @@ public class HomeFragment extends Fragment {
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                     if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                        getActivity().finish();
-                        // handle back button
 
+                        if(viewPager.getVisibility()==View.VISIBLE){
+
+                            nestedScrollView.setVisibility(View.VISIBLE);
+                            tabLayout.setVisibility(View.GONE);
+                            viewPager.setVisibility(View.GONE);
+
+                        }else {
+                            getActivity().finish();
+                            // handle back button
+                        }
                         return true;
 
                     }
@@ -150,6 +173,7 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        viewPager = view.findViewById(R.id.viewpager);
         googleLogo = view.findViewById(R.id.img_google);
         currentEventsList = view.findViewById(R.id.current_up_recyclerview);
         currentEventsList1 = view.findViewById(R.id.current_up_recyclerview1);
@@ -187,7 +211,16 @@ public class HomeFragment extends Fragment {
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().onBackPressed();
+                if(viewPager.getVisibility()==View.VISIBLE){
+
+                    nestedScrollView.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.GONE);
+
+                }else {
+                    getActivity().finish();
+                    // handle back button
+                }
             }
         });
         AppLay.setOnClickListener(new View.OnClickListener() {
@@ -247,43 +280,10 @@ public class HomeFragment extends Fragment {
 
         // Construct a GeoDataClient for the Google Places API for Android.
         mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
-//        searchViewLocation.setOnItemClickListener(mAutocompleteClickListener);
-
 
         setupSearchListener();
         return view;
     }
-
-    /**
-     * Listener that handles selections from suggestions from the AutoCompleteTextView that
-     * displays Place suggestions.
-     * Gets the place id of the selected item and issues a request to the Places Geo Data Client
-     * to retrieve more details about the place.
-     *
-     * @see GeoDataClient#getPlaceById(String...)
-     */
-    private AdapterView.OnItemClickListener mAutocompleteClickListener
-            = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            /*
-             Retrieve the place ID of the selected item from the Adapter.
-             The adapter stores each Place suggestion in a AutocompletePrediction from which we
-             read the place ID and title.
-              */
-            final AutocompletePrediction item = mAdapter.getItem(position);
-            final String placeId = item.getPlaceId();
-            final CharSequence primaryText = item.getPrimaryText(null);
-
-            Log.i(TAG, "Autocomplete item selected: " + primaryText);
-
-            googleLogo.setVisibility(View.GONE);
-            Utils.hideKeyboard(getActivity());
-            locationSearch(primaryText);
-        }
-    };
-
-
 
     private void checkKeyBoardUp(final View view) {
 
@@ -432,23 +432,26 @@ public class HomeFragment extends Fragment {
 
            nestedScrollView.setVisibility(View.GONE);
            searchListView.setVisibility(View.VISIBLE);
+
+           AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
            // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
-           mAdapter = new PlaceAutocompleteRecyclerViewAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, null);
+           mAdapter = new PlaceAutocompleteRecyclerViewAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, autocompleteFilter);
            mAdapter.getFilter().filter(charSequence.toString());
            mAdapter.setOnItemClickListener(new SearchResultsAdapter.OnItemClickListener() {
                @Override
                public void onRecyclerItemClick(View view, int position) {
-                   final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
-                   String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
-                   searchViewLocation.setText(s);
-                   Bundle bundle = new Bundle();
-                   bundle.putString("keyword",s);
-                   bundle.putString("type","location");
-                   HomeSearchFragment searchFragment=HomeSearchFragment.newInstance();
-                   searchFragment.setArguments(bundle);
-                   FragmentTransaction transaction =  getFragmentManager().beginTransaction();
-                   transaction.replace(R.id.frame_layout,searchFragment);
-                   transaction.addToBackStack(null).commit();
+//                   final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
+//                   String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
+//                   searchViewLocation.setText(s);
+//                   Bundle bundle = new Bundle();
+//                   bundle.putString("keyword",s);
+//                   bundle.putString("type","location");
+//                   HomeSearchFragment searchFragment=HomeSearchFragment.newInstance();
+//                   searchFragment.setArguments(bundle);
+//                   FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+//                   transaction.replace(R.id.frame_layout,searchFragment);
+//                   transaction.addToBackStack(null).commit();
+                   showSearchResults();
                }
            });
            searchListView.setAdapter(mAdapter);
@@ -458,6 +461,17 @@ public class HomeFragment extends Fragment {
            nestedScrollView.setVisibility(View.VISIBLE);
            searchListView.setVisibility(View.GONE);
        }
+    }
+
+    private void showSearchResults() {
+        googleLogo.setVisibility(View.GONE);
+        searchListView.setVisibility(View.GONE);
+        toolbarBackIcon.setVisibility(View.VISIBLE);
+        nestedScrollView.setVisibility(View.GONE);
+        tabLayout.setVisibility(View.VISIBLE);
+        viewPager.setVisibility(View.VISIBLE);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void foodSearch(CharSequence charSequence) {
@@ -474,23 +488,65 @@ public class HomeFragment extends Fragment {
             searchResultsAdapter.setOnItemClickListener( new SearchResultsAdapter.OnItemClickListener() {
                 @Override
                 public void onRecyclerItemClick(View view, int position) {
-                    searchViewFood.setText(arr[position]);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("keyword", arr[position]);
-                    bundle.putString("type","food");
-                    HomeSearchFragment searchFragment=HomeSearchFragment.newInstance();
-                    searchFragment.setArguments(bundle);
-                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout,searchFragment);
-                    transaction.addToBackStack(null).commit();
+//                    searchViewFood.setText(arr[position]);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("keyword", arr[position]);
+//                    bundle.putString("type","food");
+//                    HomeSearchFragment searchFragment=HomeSearchFragment.newInstance();
+//                    searchFragment.setArguments(bundle);
+//                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.frame_layout,searchFragment);
+//                    transaction.addToBackStack(null).commit();
+                    showSearchResults();
                 }
             });
 
             searchListView.setAdapter(searchResultsAdapter);
 
         }else {
-            nestedScrollView.setVisibility(View.VISIBLE);
+            nestedScrollView.setVisibility(View.VISIBLE);googleLogo.setVisibility(View.GONE);
             searchListView.setVisibility(View.GONE);
+        }
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(new EventsFragment(), "Events");
+        adapter.addFragment(new SearchBusinessFragment(), "Businesses");
+        adapter.addFragment(new SearchItemsFragment(), "Items");
+        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(new UsersFragment(), "Users");
+//        adapter.addFragment(new SearchListFragment(), "Lists");
+        viewPager.setAdapter(adapter);
+    }
+
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 
