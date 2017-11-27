@@ -13,19 +13,29 @@
 
         <include layout="@layout/toolbar" />
     </android.support.design.widget.AppBarLayout>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size5"
+        android:scrollbars="vertical">
+        <LinearLayout
+            android:id="@+id/linear_lay"
+            android:layout_marginLeft="@dimen/size16"
+            android:layout_marginRight="@dimen/size16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/editrel_lay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/taginside_color">
+        android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/size80"
+            android:layout_height="@dimen/size80"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/size15"
             android:src="@drawable/dup_men_image" />
 
         <TextView
@@ -44,25 +54,14 @@
 
         <ImageView
             android:id="@+id/imageView_profile_edit"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/size25"
+            android:layout_height="@dimen/size25"
             android:layout_above="@+id/user_name_label"
             android:layout_alignEnd="@+id/profile_image"
             android:layout_alignRight="@+id/profile_image"
             app:srcCompat="@drawable/edit_profile" />
     </RelativeLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:scrollbars="vertical">
-        <LinearLayout
-            android:id="@+id/linear_lay"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+
 
             <TextView
                 style="@style/FontAvenirBook"
@@ -71,9 +70,9 @@
                 android:id="@+id/text_user_name_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/size8"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                android:padding="@dimen/size8"
                 android:text="@string/name" />
 
             <EditText
@@ -95,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:inputType="textEmailAddress"
-                android:padding="@dimen/spacing_small"
+                android:padding="@dimen/size8"
                 android:text="@string/email_address" />
 
             <EditText
@@ -116,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                android:padding="@dimen/size8"
                 android:text="@string/city" />
 
             <AutoCompleteTextView
@@ -139,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                android:padding="@dimen/size8"
                 android:text="@string/gender" />
             <RadioGroup
 
@@ -184,7 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                android:padding="@dimen/size8"
                 android:text="Date of Birth" />
 
             <EditText
@@ -206,7 +205,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:gravity="center_vertical"
-                android:padding="@dimen/spacing_small"
+                android:padding="@dimen/size8"
                 android:text="@string/foodpreferences" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -238,7 +237,7 @@
                     android:drawableBottom="@color/completesignup_clr"
                     android:singleLine="true"
                     android:id="@+id/autoCompleteTextView1"
-                    android:layout_width="280dp"
+                    android:layout_width="@dimen/size280"
                     android:imeOptions="actionDone"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
@@ -250,8 +249,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="@dimen/size8"
+                    android:layout_marginLeft="@dimen/size5"
                     android:textSize="@dimen/text13"
                     android:textColor="@color/blue"/>
             </LinearLayout>
@@ -260,7 +259,7 @@
                 android:id="@+id/button_complete_signup"
                 android:text="@string/save"
                 style="@style/login_button"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/size20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

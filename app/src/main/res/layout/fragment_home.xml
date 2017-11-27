@@ -19,40 +19,40 @@
         <RelativeLayout
             android:id="@+id/search_food_layout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/size40"
             android:background="@color/colorAccent"
             android:gravity="center"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:paddingLeft="20dp">
+            android:paddingLeft="@dimen/size20">
 
             <ImageView
                 android:id="@+id/search_icon"
-                android:layout_width="41dp"
-                android:layout_height="43dp"
+                android:layout_width="@dimen/size30"
+                android:layout_height="@dimen/size25"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/size15"
                 android:background="@drawable/search_image_corner_radius"
-                android:padding="6dp"
+                android:padding="@dimen/size7"
                 android:src="@drawable/ic_search" />
 
             <EditText
                 android:id="@+id/et_search_food"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="9dp"
+                android:layout_height="@dimen/size25"
+                android:layout_marginBottom="@dimen/size8"
+                android:layout_marginLeft="@dimen/size15"
+                android:layout_marginRight="@dimen/size15"
+                android:layout_marginTop="@dimen/size9"
                 android:layout_toRightOf="@+id/search_icon"
                 android:background="@drawable/edittext_corner_radius"
                 android:hint="Search"
                 fontPath="fonts/Avenir-Book.ttf"
                 tools:ignore="MissingPrefix"
-                android:textSize="14sp"
+                android:textSize="@dimen/text12"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
-                android:paddingRight="8dp"
+                android:paddingRight="@dimen/size8"
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
                 />
@@ -60,7 +60,7 @@
         <ImageView
             android:id="@+id/img_google"
             android:visibility="gone"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="@dimen/size15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -68,40 +68,40 @@
         <RelativeLayout
             android:id="@+id/search_location_layout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/size40"
             android:background="@color/colorAccent"
             android:gravity="center"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:paddingLeft="20dp">
+            android:paddingLeft="@dimen/size20">
 
             <ImageView
                 android:id="@+id/location_icon"
-                android:layout_width="41dp"
-                android:layout_height="43dp"
+                android:layout_width="@dimen/size30"
+                android:layout_height="@dimen/size25"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="@dimen/size15"
                 android:background="@drawable/search_image_corner_radius"
-                android:padding="6dp"
+                android:padding="@dimen/size6"
                 android:src="@drawable/ic_search_location" />
 
             <EditText
                 android:id="@+id/et_search_location"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginBottom="9dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="@dimen/size25"
+                android:layout_marginBottom="@dimen/size9"
+                android:layout_marginLeft="@dimen/size15"
+                android:layout_marginRight="@dimen/size15"
+                android:layout_marginTop="@dimen/size8"
                 android:layout_toRightOf="@+id/location_icon"
                 android:background="@drawable/edittext_corner_radius"
                 android:hint="Location"
                 fontPath="fonts/Avenir-Book.ttf"
                 tools:ignore="MissingPrefix"
-                android:textSize="14sp"
+                android:textSize="@dimen/text12"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
-                android:paddingRight="8dp"
+                android:paddingRight="@dimen/size8"
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"/>
 
@@ -147,20 +147,20 @@
                     android:id="@+id/current_events_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/size10"
                     android:text="@string/current_upcoming_events"
                     android:textColor="@color/dark_grey"
                     fontPath="fonts/Avenir-Medium.ttf"
-                    android:textSize="@dimen/font_normal"
+                    android:textSize="@dimen/text14"
                     tools:ignore="MissingPrefix" />
 
                 <ImageView
                     android:id="@+id/view_current_event_list"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_width"
+                    android:layout_width="@dimen/size20"
+                    android:layout_height="@dimen/size20"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/size1"
                     app:srcCompat="@drawable/ic_arrow" />
 
 
@@ -169,9 +169,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/current_events_text"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/size10"
+                    android:layout_marginRight="@dimen/size10"
+                    android:layout_marginTop="@dimen/size10"
                     android:orientation="horizontal"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:reverseLayout="false"/>
@@ -190,20 +190,20 @@
                     android:id="@+id/current_events_text1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/size10"
                     android:text="@string/current_upcoming_events"
                     android:textColor="@color/dark_grey"
                     fontPath="fonts/Avenir-Medium.ttf"
-                    android:textSize="@dimen/font_normal"
+                    android:textSize="@dimen/size14"
                     tools:ignore="MissingPrefix" />
 
                 <ImageView
                     android:id="@+id/view_current_event_list1"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_width"
+                    android:layout_width="@dimen/size20"
+                    android:layout_height="@dimen/size20"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/size10"
                     app:srcCompat="@drawable/ic_arrow" />
 
 
@@ -212,9 +212,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/current_events_text1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/size10"
+                    android:layout_marginRight="@dimen/size10"
+                    android:layout_marginTop="@dimen/size10"
                     android:orientation="horizontal"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:reverseLayout="false"/>
@@ -231,20 +231,20 @@
                     android:id="@+id/current_events_text2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/size10"
                     android:text="@string/current_upcoming_events"
                     android:textColor="@color/dark_grey"
                     fontPath="fonts/Avenir-Medium.ttf"
-                    android:textSize="@dimen/font_normal"
+                    android:textSize="@dimen/text14"
                     tools:ignore="MissingPrefix" />
 
                 <ImageView
                     android:id="@+id/view_current_event_list2"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_width"
+                    android:layout_width="@dimen/size25"
+                    android:layout_height="@dimen/size25"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/size10"
                     app:srcCompat="@drawable/ic_arrow" />
 
 
@@ -253,9 +253,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/current_events_text2"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/size10"
+                    android:layout_marginRight="@dimen/size10"
+                    android:layout_marginTop="@dimen/size10"
                     android:orientation="horizontal"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:reverseLayout="false"/>
@@ -272,21 +272,21 @@
                     android:id="@+id/past_events_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/size10"
+                    android:layout_marginLeft="@dimen/size10"
+                    android:layout_marginRight="@dimen/size10"
+                    android:layout_marginTop="@dimen/size10"
                     android:text="@string/past_events"
                     android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/font_normal" />
+                    android:textSize="@dimen/text16" />
 
                 <ImageView
                     android:id="@+id/view_past_event_list"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_width"
+                    android:layout_width="@dimen/size20"
+                    android:layout_height="@dimen/size20"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/size10"
                     app:srcCompat="@drawable/ic_arrow" />
 
 
@@ -295,9 +295,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/past_events_text"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/size10"
+                    android:layout_marginRight="@dimen/size10"
+                    android:layout_marginTop="@dimen/size10"
                     android:orientation="horizontal"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:reverseLayout="false">
