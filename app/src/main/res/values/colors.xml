@@ -3,14 +3,44 @@
     <color name="colorPrimary">#f13a30</color>
     <color name="colorPrimaryDark">#b71c1c</color>
     <color name="colorAccent">#f13a30</color>
-    <color name="onboardButton">#f13a30</color>
     <color name="facebookButton">#3b5998</color>
     <color name="blue">#69a3e6</color>
-    <color name="tab_text_color">#8f8d8d</color>
-    <color name="light_grey">#bdbdbd</color>
+    <color name="darker_grey">#2A2A2A</color>
+    <color name="dark_grey">#757A82</color>
+    <color name="light_grey">#727377</color>
+    <color name="lighter_grey">#e6e6e6</color>
+    <color name="green">#768f43</color>
     <color name="black">#000000</color>
+    <color name="name_black">#2A2A2A</color>
     <color name="toolbar_background_color">#ffffff</color>
     <color name="transparent">#00ffffff</color>
     <color name="primary_text_material_light">#757575</color>
-    <color name="color_search_icon_background">#c9342b</color>
+    <color name="color_search_icon_background">#c93229</color>
+    <color name="tag_inside_color">#D8D8D8</color>
+    <color name="tag_inside_text_color">#8C939C</color>
+    <color name="time_color">#757A82</color>
+    <color name="event_map">#2A2A2A</color>
+    <color name="weblink_color">#4A90E2</color>
+    <color name="descri_color">#757A82</color>
+    <color name="tab_unselected_color">#8A8E95</color>
+    <color name="business_viewcolor">#D8D8D8</color>
+    <color name="loginpass_color">#12213F</color>
+    <color name="email_color">#818790</color>
+    <color name="loginbutton_color">#F13A30</color>
+    <color name="completesignup_clr">#818790</color>
+    <color name="arrow_in_color">#757575</color>
+    <color name="autotxt_in_color">#545454</color>
+    <color name="Already_txtcolor">#888F9E</color>
+    <color name="bysignup_txtcolor">#88909F</color>
+    <color name="sinin_lblcolor">#373737</color>
+    <color name="taginside_color">#F0F0F0</color>
+    <color name="Edittxt_lineclr">#E5E5E5</color>
+    <color name="postBng_color">#26ebebeb</color>
+    <color name="tag_text_color">#8c939c</color>
+    <color name="White_clr">#FFFFFF</color>
+
+
+
+
+
 </resources>

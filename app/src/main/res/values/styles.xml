@@ -10,18 +10,31 @@
         <item name="android:textColorPrimary">@color/primary_text_material_light</item>
         <item name="editTextStyle">@style/MyEditTextStyle</item>
         <item name="colorControlActivated">@color/blue</item>
-
+        <!--<item name="android:windowBackground">@android:color/white</item>-->
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="login_button">
         <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
         <item name="android:background">@drawable/button_background_login</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="ok_button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
+        <item name="android:background">@drawable/button_background_login</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
     <style name="cancel_button">
         <item name="android:background">@drawable/cancel_background</item>
-        <item name="android:textColor">@color/onboardButton</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
@@ -29,12 +42,15 @@
         <item name="android:background">@drawable/fb_login_button_background</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textAllCaps">false</item>
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
     </style>
 
     <style name="onboard_button">
-        <item name="android:background">@color/onboardButton</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
     </style>
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -58,8 +74,28 @@
     </style>
 
     <style name="login_heading_style">
-        <item name="android:textSize">@dimen/login_inner_app_text_size</item>
-        <item name="fontPath">fonts/Proxima-Nova-Bold.otf</item>
+        <item name="android:textSize">@dimen/font_larger</item>
+        <item name="fontPath">fonts/Avenir-Roman.ttf</item>
+    </style>
+
+    <style name="SplashTextStyle">
+        <item name="fontPath">fonts/ProximaNova-Black.otf</item>
+    </style>
+
+    <style name="FontAvenirheavy">
+        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
+    </style>
+
+    <style name="FontAvenirLight">
+        <item name="fontPath">fonts/Avenir-Light.ttf</item>
+    </style>
+
+    <style name="FontAvenirMedium">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+    </style>
+
+    <style name="FontAvenirBook">
+        <item name="fontPath">fonts/Avenir-Book.ttf</item>
     </style>
 
     <style name="clear_button">
@@ -72,5 +108,42 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="BoldTextStyle">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:textColor">@color/darker_grey</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="LightTextStyle">
+        <item name="fontPath">fonts/Avenir-Book.ttf</item>
+        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TagStyle">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:alpha">13</item>
+        <item name="android:textColor">@color/tag_text_color</item>
+        <item name="android:background">@drawable/tag_background</item>
+
+    </style>
+
+    <style name="TagStyleFood">
+        <item name="fontPath">fonts/Avenir-Book.ttf</item>
+        <item name="android:alpha">39</item>
+        <item name="android:background">@drawable/tag_background</item>
+
+    </style>
+    <style name="TabStyle">
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:alpha">14</item>
+        <item name="android:textColor">@color/event_map</item>
+
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <!--<item name="android:windowExitAnimation">@anim/slide_bottom</item>-->
+   </style>
 
 </resources>

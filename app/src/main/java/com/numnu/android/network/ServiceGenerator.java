@@ -17,8 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 */
 public class ServiceGenerator {
 
-    private static final String BASE_URL = "http://";
-//    private static final OkHttpClient httpClient = new OkHttpClient();
+    private static final String BASE_URL = "https://numnu-server-dev.appspot.com/";
+
     private static final OkHttpClient httpClient = new OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)

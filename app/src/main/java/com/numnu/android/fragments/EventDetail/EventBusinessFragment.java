@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.EventBusinessAdapter;
-import com.numnu.android.adapter.NotificationsAdapter;
 
 import java.util.ArrayList;
 
@@ -38,13 +37,14 @@ public class EventBusinessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View  view= inflater.inflate(R.layout.fragment_event_businesses, container, false);
+        View  view= inflater.inflate(R.layout.fragment_event_business, container, false);
 
         businessRecyclerView = view.findViewById(R.id.business_recyclerview);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
         businessRecyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(businessRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
-        businessRecyclerView.addItemDecoration(dividerItemDecoration);
+        businessRecyclerView.setNestedScrollingEnabled(false);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(businessRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
+//        businessRecyclerView.addItemDecoration(dividerItemDecoration);
 
         setupRecyclerView();
         return view;

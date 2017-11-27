@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.HomeFragment;
-import com.numnu.android.fragments.NotificationFragment;
-import com.numnu.android.fragments.SettingsFragment;
+import com.numnu.android.fragments.detail.BusinessDetailFragment;
+import com.numnu.android.fragments.detail.EventDetailFragment;
+import com.numnu.android.fragments.home.HomeFragment;
+import com.numnu.android.fragments.home.NotificationFragment;
+import com.numnu.android.fragments.home.UserPostsFragment;
+import com.numnu.android.fragments.search.SliceFragment;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -43,21 +46,42 @@ public class HomeActivity extends MyActivity {
                                 selectedFragment = NotificationFragment.newInstance();
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = SettingsFragment.newInstance();
+                                selectedFragment = UserPostsFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
+                        transaction.addToBackStack(null).commit();
                         return true;
                     }
                 });
 
-        //Manually displaying the first fragment - one time only
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
-        transaction.commit();
-
+        String bookmarkBundle = getIntent().getStringExtra("BookmarkIntent");
+        String profileBundle = getIntent().getStringExtra("ProfileIntent");
+        String eventBookmarkBundle = getIntent().getStringExtra("EventBookmarkIntent");
+        String businessBookmarkBundle = getIntent().getStringExtra("BusinessBookmarkIntent");
+        if (bookmarkBundle==null && profileBundle == null && eventBookmarkBundle ==null && businessBookmarkBundle == null) {
+            //Manually displaying the first fragment - one time only
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
+            transaction.commit();
+        }else if (bookmarkBundle != null && bookmarkBundle.equals("bookmark")) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            } else if (profileBundle != null && profileBundle.equals("profile")){
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                    transaction.addToBackStack(null).commit();
+        }else if (eventBookmarkBundle != null && eventBookmarkBundle.equals("eventbookmark")) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+            transaction.addToBackStack(null).commit();
+        }else if (businessBookmarkBundle != null && businessBookmarkBundle.equals("businessbookmark")) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, BusinessDetailFragment.newInstance());
+            transaction.addToBackStack(null).commit();
+        }
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
         // Add code to print out the key hash

@@ -9,11 +9,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.numnu.android.R;
 import com.numnu.android.utils.Utils;
 
@@ -29,12 +33,15 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
     private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final int RC_LOCATION_PERM = 1;
     private static final String TAG = "Onboarding";
+    TextView textView;
+    Animation slideUpAnimation,slidedownAnimation;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
+        textView=(TextView)findViewById(R.id.textView_info);
 
     }
 
@@ -96,7 +103,6 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setView(deleteDialogView);
         Button ok = deleteDialogView.findViewById(R.id.ok_button);
-        Button cancel = deleteDialogView.findViewById(R.id.cancel_button);
 
         final AlertDialog alertDialog1 = alertDialog.create();
         ok.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +119,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
                     // Ask for one permission
                     EasyPermissions.requestPermissions(
                             OnboardingActivity.this,
-                            getString(R.string.rationale_location),
+                             getString(R.string.rationale_location),
                             RC_LOCATION_PERM,
                             LOCATION);
                 }
@@ -121,15 +127,6 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
             }
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                findViewById(R.id.textView_info).setVisibility(View.VISIBLE);
-                findViewById(R.id.button_letme).setVisibility(View.VISIBLE);
-                alertDialog1.dismiss();
-            }
-        });
 
         alertDialog1.setCanceledOnTouchOutside(false);
         try {
@@ -138,6 +135,11 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
             e.printStackTrace();
         }
         alertDialog1.show();
-        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(300,this),(int)Utils.convertDpToPixel(300,this));
+        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(220,this),(int)Utils.convertDpToPixel(250,this));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alertDialog1.getWindow().getAttributes());
+        lp.gravity = Gravity.CENTER;
+        lp.windowAnimations = R.style.DialogAnimation;
+        alertDialog1.getWindow().setAttributes(lp);
     }
 }

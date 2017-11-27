@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White_clr"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/slice_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background_color"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/toolbar_back"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_back" />
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:text="Marc Chiriqui"
+                    fontpath="fonts/Avenir-Light.ttf"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text16"
+                    tools:ignore="MissingPrefix" />
+
+                <ImageView
+                    android:id="@+id/slice_toolbar_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_settings" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+   <android.support.v4.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@+id/appbar">
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <include
+               android:id="@+id/user_profile_header"
+               layout="@layout/user_profile_header"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+           <!--<View-->
+               <!--android:id="@+id/view_divider"-->
+               <!--android:layout_below="@+id/event_description"-->
+               <!--android:layout_width="match_parent"-->
+               <!--android:visibility="visible"-->
+               <!--android:layout_height="1dp"-->
+               <!--android:background="@color/light_grey"-->
+               <!--android:layout_marginBottom="8dp"-->
+               <!--android:layout_marginTop="4dp"-->
+               <!--android:layout_marginLeft="@dimen/spacing_small"-->
+               <!--android:layout_marginRight="@dimen/spacing_small"-->
+               <!--/>-->
+
+           <android.support.v7.widget.RecyclerView
+               android:id="@+id/user_posts_recycler"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:layout_marginRight="10dp" />
+       </LinearLayout>
+
+   </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

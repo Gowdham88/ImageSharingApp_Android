@@ -1,6 +1,7 @@
 package com.numnu.android.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,7 +43,11 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.textViewName.setText(stringArrayList.get(position));
+        Utils.setTextColors(holder.textViewName,"Jack Dorsey commented on your review","Jack Dorsey", ContextCompat.getColor(context,R.color.blue));
+//        holder.textViewName.setText(stringArrayList.get(position));
+        Picasso.with(context).load("null")
+                .placeholder(R.drawable.dup_men_image)
+                .into(holder.imageViewIcon);
     }
 
     @Override
