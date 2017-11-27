@@ -122,29 +122,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         super.onCreate(savedInstanceState);
 
     }
-//    @Override
-//    public void onResume() {
-//
-//        super.onResume();
-//
-//        getView().setFocusableInTouchMode(true);
-//        getView().requestFocus();
-//        getView().setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//
-//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-//                    getActivity().finish();
-//                    // handle back button
-//
-//                    return true;
-//
-//                }
-//
-//                return false;
-//            }
-//        });
-//    }
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -341,6 +318,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
                         UserPostsFragment loginFragment1= new UserPostsFragment();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                         transaction.replace(R.id.frame_layout,loginFragment1);
                         transaction.addToBackStack(null);
                         transaction.commit();

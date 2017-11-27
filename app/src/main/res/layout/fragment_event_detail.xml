@@ -237,7 +237,7 @@
                 android:layout_below="@+id/event_description"
                 android:background="@android:color/white"
                 app:tabSelectedTextColor="@color/event_map"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabTextAppearance="@style/TabWidget"
                 app:tabTextColor="@color/tab_unselected_color" />
 
             <com.numnu.android.utils.ContentWrappingViewPager

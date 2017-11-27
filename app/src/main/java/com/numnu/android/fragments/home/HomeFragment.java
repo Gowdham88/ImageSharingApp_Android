@@ -70,7 +70,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by thulir on 9/10/17.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnKeyListener {
 
 
     EditText searchViewFood,searchViewLocation;
@@ -132,38 +132,11 @@ public class HomeFragment extends Fragment {
         if(viewPager.getVisibility()==View.VISIBLE) {
             toolbarBackIcon.setVisibility(View.VISIBLE);
         }
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(this);
 
-        Finish();
     }
-
-    private void Finish() {
-
-            getView().setFocusableInTouchMode(true);
-            getView().requestFocus();
-            getView().setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                    if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-
-                        if(viewPager.getVisibility()==View.VISIBLE){
-
-                            nestedScrollView.setVisibility(View.VISIBLE);
-                            tabLayout.setVisibility(View.GONE);
-                            viewPager.setVisibility(View.GONE);
-
-                        }else {
-                            getActivity().finish();
-                            // handle back button
-                        }
-                        return true;
-
-                    }
-
-                    return false;
-                }
-            });
-        }
 
 
 
@@ -285,6 +258,14 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(this);
+    }
+
     private void checkKeyBoardUp(final View view) {
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -330,7 +311,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                foodSearch(charSequence);
 
             }
 
@@ -404,6 +384,7 @@ public class HomeFragment extends Fragment {
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //do here your stuff f
+                    foodSearch(textView.getText().toString());
                     Utils.hideKeyboard(getActivity());
                     return true;
                 }
@@ -451,7 +432,9 @@ public class HomeFragment extends Fragment {
 //                   FragmentTransaction transaction =  getFragmentManager().beginTransaction();
 //                   transaction.replace(R.id.frame_layout,searchFragment);
 //                   transaction.addToBackStack(null).commit();
-                   showSearchResults();
+                   googleLogo.setVisibility(View.GONE);
+                   searchListView.setVisibility(View.GONE);
+                   toolbarBackIcon.setVisibility(View.VISIBLE);
                }
            });
            searchListView.setAdapter(mAdapter);
@@ -474,8 +457,8 @@ public class HomeFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void foodSearch(CharSequence charSequence) {
-        if(!charSequence.toString().equals("")){
+    private void foodSearch(String fooditem) {
+        if(!fooditem.equals("")){
             nestedScrollView.setVisibility(View.GONE);
             searchListView.setVisibility(View.VISIBLE);
 
@@ -557,6 +540,8 @@ public class HomeFragment extends Fragment {
         this.context = context;
     }
 
+
+
     private void setupRecyclerView() {
 //        stringlist = new ArrayList<>();
 //        stringlist1 = new ArrayList<>();
@@ -581,6 +566,27 @@ public class HomeFragment extends Fragment {
 //            pastEventsList.setAdapter(pastEventsAdapter);
 
 
+    }
+
+    @Override
+    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if(viewPager.getVisibility()==View.VISIBLE){
+
+                    nestedScrollView.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.GONE);
+
+                }else {
+                    getActivity().finish();
+                    // handle back button
+                }
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

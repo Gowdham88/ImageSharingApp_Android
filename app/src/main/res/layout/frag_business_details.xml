@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 app:tabSelectedTextColor="@color/name_black"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabTextAppearance="@style/TabWidget"
                 app:tabTextColor="@color/tab_unselected_color" />
 
             <com.numnu.android.utils.ContentWrappingViewPager

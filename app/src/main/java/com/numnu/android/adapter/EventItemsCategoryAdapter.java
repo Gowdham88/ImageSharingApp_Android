@@ -58,6 +58,7 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
                 EventItemsListFragment eventItemsListFragment=EventItemsListFragment.newInstance();
                 eventItemsListFragment.setArguments(bundle);
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout,eventItemsListFragment);
                 transaction.addToBackStack(null).commit();
             }

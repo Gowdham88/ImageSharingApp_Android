@@ -305,6 +305,7 @@ public class SignupFragment extends Fragment {
 
                                 CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                                 transaction.replace(R.id.frame_layout,loginFragment1);
                                 transaction.addToBackStack(null).commit();
                             }
@@ -417,6 +418,7 @@ public class SignupFragment extends Fragment {
 
             LoginFragment loginFragment1=new LoginFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
             transaction.replace(R.id.frame_layout,loginFragment1);
             transaction.addToBackStack(null);
             transaction.commit();
@@ -446,6 +448,7 @@ public class SignupFragment extends Fragment {
         loginFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
         transaction.replace(R.id.frame_layout,loginFragment);
         transaction.addToBackStack(null);
         transaction.commit();
