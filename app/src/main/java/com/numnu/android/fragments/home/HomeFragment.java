@@ -198,11 +198,10 @@ public class HomeFragment extends Fragment {
         });
 
 
-        ImageView viewCurrentEventsList = view.findViewById(R.id.view_current_event_list);
+        ImageView viewCurrentEventsList  = view.findViewById(R.id.view_current_event_list);
         ImageView viewCurrentEventsList1 = view.findViewById(R.id.view_current_event_list1);
         ImageView viewCurrentEventsList2 = view.findViewById(R.id.view_current_event_list2);
-
-        ImageView viewPastEventsList = view.findViewById(R.id.view_past_event_list);
+        ImageView viewPastEventsList     = view.findViewById(R.id.view_past_event_list);
 
         viewCurrentEventsList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -330,7 +329,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                foodSearch(charSequence);
+
 
             }
 
@@ -404,6 +403,7 @@ public class HomeFragment extends Fragment {
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //do here your stuff f
+                    foodSearch(textView.getText().toString());
                     Utils.hideKeyboard(getActivity());
                     return true;
                 }
@@ -460,8 +460,8 @@ public class HomeFragment extends Fragment {
        }
     }
 
-    private void foodSearch(CharSequence charSequence) {
-        if(!charSequence.toString().equals("")){
+    private void foodSearch(String fooditem) {
+        if(!fooditem.equals("")){
             nestedScrollView.setVisibility(View.GONE);
             searchListView.setVisibility(View.VISIBLE);
 

@@ -171,7 +171,6 @@
                     android:layout_below="@+id/current_events_text"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:reverseLayout="false"/>
@@ -214,7 +213,6 @@
                     android:layout_below="@+id/current_events_text1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:reverseLayout="false"/>
@@ -255,7 +253,6 @@
                     android:layout_below="@+id/current_events_text2"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     app:reverseLayout="false"/>

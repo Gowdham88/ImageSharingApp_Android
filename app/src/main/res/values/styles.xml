@@ -146,4 +146,10 @@
         <!--<item name="android:windowExitAnimation">@anim/slide_bottom</item>-->
    </style>
 
+    <style name="TabWidget">
+        <item name="android:textSize">14sp</item>
+        <item name="fontPath">fonts/Avenir-Medium.ttf</item>
+        <item name="android:textColor">@color/tab_unselected_color</item>
+    </style>
+
 </resources>

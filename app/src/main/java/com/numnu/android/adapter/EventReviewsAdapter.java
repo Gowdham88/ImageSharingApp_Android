@@ -52,6 +52,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -61,6 +62,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -70,6 +72,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventBusinessFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -79,6 +82,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventItemsCategoryFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -87,6 +91,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }

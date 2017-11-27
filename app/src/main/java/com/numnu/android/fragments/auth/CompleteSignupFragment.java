@@ -327,6 +327,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
                         UserPostsFragment loginFragment1= new UserPostsFragment();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                         transaction.replace(R.id.frame_layout,loginFragment1);
                         transaction.addToBackStack(null);
                         transaction.commit();

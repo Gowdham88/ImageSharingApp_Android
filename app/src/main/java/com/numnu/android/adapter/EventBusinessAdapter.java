@@ -55,6 +55,7 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, BusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -63,6 +64,7 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, BusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
