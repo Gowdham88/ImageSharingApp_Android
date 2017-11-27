@@ -8,7 +8,7 @@
     <ImageView
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/size80"
         android:src="@drawable/notification"
         android:contentDescription="@string/app_name" />
     <TextView
@@ -26,10 +26,10 @@
             style="@style/ok_button"
             android:gravity="center"
             android:layout_gravity="center"
-            android:layout_width="110dp"
-            android:textSize="13dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/size110"
+            android:textSize="@dimen/text13"
+            android:layout_marginTop="@dimen/size10"
+            android:layout_height="@dimen/size35"
             android:layout_marginBottom="@dimen/size4"
             />
 

@@ -17,13 +17,18 @@
         android:animateLayoutChanges="true">
 
     </FrameLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+       android:layout_alignParentBottom="true"
+        android:layout_marginBottom="72dp"
+        android:background="@color/Edittxt_lineclr"/>
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/size60"
         android:layout_alignParentBottom="true"
-        android:paddingTop="14dp"
+        android:paddingTop="@dimen/size14"
         app:itemTextColor="@android:color/darker_gray"
         app:menu="@menu/bottom_navigation_items"/>
 </RelativeLayout>

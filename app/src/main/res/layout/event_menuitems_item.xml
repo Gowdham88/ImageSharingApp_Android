@@ -9,22 +9,22 @@ android:background="@color/toolbar_background_color">
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="6dp"
-    android:layout_marginLeft="3dp"
-    android:layout_marginBottom="3dp"
+    android:layout_marginTop="@dimen/size6"
+    android:layout_marginLeft="@dimen/size6"
+    android:layout_marginBottom="@dimen/size6"
     android:orientation="horizontal">
 
     <TextView
         style="@style/FontAvenirMedium"
         android:id="@+id/txt_itemname"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/size200"
         android:layout_height="wrap_content"
         android:text="Category"
         android:textColor="@color/time_color"
         android:textSize="@dimen/text13"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginTop="@dimen/size10"
+        android:layout_marginBottom="@dimen/size10"
         />
 
     <TextView
@@ -32,22 +32,22 @@ android:background="@color/toolbar_background_color">
         android:textColor="@color/time_color"
         android:textSize="@dimen/text13"
         android:id="@+id/textView19"
-        android:layout_width="20dp"
+        android:layout_width="@dimen/size20"
         android:layout_height="wrap_content"
         android:text="6"
         android:gravity="center"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/size25"
+        android:layout_marginTop="@dimen/size10"
+        android:layout_marginBottom="@dimen/size10"
         />
 
     <ImageView
         android:id="@+id/imageView_forward"
-        android:layout_width="23dp"
-        android:layout_height="18dp"
+        android:layout_width="@dimen/size20"
+        android:layout_height="@dimen/size10"
         android:layout_gravity="center"
         android:src="@drawable/new_correct_frwd_icon"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="@dimen/size5"/>
 </LinearLayout>
 
 </LinearLayout>

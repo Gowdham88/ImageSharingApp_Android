@@ -16,10 +16,10 @@
             android:id="@+id/food_linlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/size8"
             android:layout_marginLeft="@dimen/size3"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/size8"
+            android:layout_marginTop="@dimen/size8"
             android:orientation="horizontal">
 
             <TextView
@@ -28,17 +28,17 @@
                 android:textSize="@dimen/text12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:padding="@dimen/size4"
                 android:background="@drawable/tag_background"
                 android:id="@+id/food_txt"
                 android:text="food" />
 
             <ImageView
                 android:id="@+id/food_cancel_button"
-                android:layout_width="28dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="2dp"
-                android:padding="4dp"
+                android:layout_width="@dimen/size25"
+                android:layout_height="@dimen/size20"
+                android:layout_marginTop="@dimen/size2"
+                android:padding="@dimen/size4"
                 android:src="@drawable/redcross" />
 
 

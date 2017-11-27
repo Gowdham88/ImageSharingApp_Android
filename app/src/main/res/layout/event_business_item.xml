@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/business_rel_lay"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="@dimen/size10"
     android:background="@color/White_clr"
-    android:padding="10dp">
+    android:padding="@dimen/size10">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="87dp"
-        android:layout_height="80dp"
-        android:elevation="10dp"
-        app:cardCornerRadius="@dimen/image_card_corner_radius">
+        android:layout_width="@dimen/size85"
+        android:layout_height="@dimen/size80"
+        android:elevation="@dimen/size10"
+        app:cardCornerRadius="@dimen/size5">
 
         <ImageView
             android:id="@+id/notification_image"
@@ -28,8 +28,8 @@
         android:id="@+id/business_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="@dimen/size8"
+        android:layout_marginStart="@dimen/size8"
         android:layout_toRightOf="@id/card_view"
         android:text="Flatron loran dummy data"
         />
@@ -47,10 +47,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_small"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/size8"
+            android:layout_marginLeft="@dimen/size8"
+            android:layout_marginRight="@dimen/size8"
+            android:layout_marginTop="@dimen/size8"
             android:orientation="horizontal">
 
             <TextView
@@ -62,49 +62,49 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/size4"
                 style="@style/TagStyle"
                 android:text="Rum" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/size4"
                 style="@style/TagStyle"
                 android:text="Wine" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/size4"
                 style="@style/TagStyle"
                 android:text="Wine" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/size4"
                 style="@style/TagStyle"
                 android:text="Wine" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/size4"
                 style="@style/TagStyle"
                 android:text="Wine" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/size4"
                 style="@style/TagStyle"
                 android:text="Wine" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="@dimen/size4"
                 style="@style/TagStyle"
                 android:text="Wine" />
         </LinearLayout>
@@ -119,6 +119,6 @@
         android:layout_toRightOf="@id/card_view"
         android:layout_toEndOf="@id/card_view"
         android:text="August 30, Montreal"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp" />
+        android:layout_marginLeft="@dimen/size8"
+        android:layout_marginStart="@dimen/size8" />
 </RelativeLayout>

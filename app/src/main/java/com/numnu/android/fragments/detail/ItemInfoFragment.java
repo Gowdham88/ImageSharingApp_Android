@@ -77,8 +77,8 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         mPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mPostsRecycler.setLayoutManager(layoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
-        mPostsRecycler.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
+//        mPostsRecycler.addItemDecoration(dividerItemDecoration);
         mPostsRecycler.setNestedScrollingEnabled(false);
 
         setupRecyclerView();
