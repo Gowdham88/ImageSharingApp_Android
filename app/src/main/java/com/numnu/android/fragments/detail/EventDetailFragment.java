@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
+import com.numnu.android.activity.webFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
@@ -174,12 +175,25 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private void setupWebLinks() {
 
 
-        weblink1.setTextColor(ContextCompat.getColor(context, R.color.blue));
-        weblink2.setTextColor(ContextCompat.getColor(context, R.color.blue));
-        weblink3.setTextColor(ContextCompat.getColor(context, R.color.blue));
-
+//        weblink1.setTextColor(ContextCompat.getColor(context, R.color.blue));
+//        weblink2.setTextColor(ContextCompat.getColor(context, R.color.blue));
+//        weblink3.setTextColor(ContextCompat.getColor(context, R.color.blue));
+//
 
 //        viewEventMap.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        weblink1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_layout,webFragment.class);
+//                transaction.addToBackStack(null).commit();
+                Intent web =new Intent(getActivity(),webFragment.class);
+                startActivity(web);
+
+
+            }
+        });
     }
 
 
@@ -202,30 +216,39 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.txt_weblink_1:
 
-                String url = "https://www.youtube.com/";
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                // set toolbar color
-                builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(context, Uri.parse(url));
+//                String url = "https://www.youtube.com/";
+//                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+//                // set toolbar color
+//                builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
+//                CustomTabsIntent customTabsIntent = builder.build();
+//                customTabsIntent.launchUrl(context, Uri.parse(url));
+
+                Intent web =new Intent(getActivity(),webFragment.class);
+                startActivity(web);
                 break;
 
             case R.id.txt_weblink_2:
-                String url2 = "https://www.google.com/";
-                CustomTabsIntent.Builder builder2 = new CustomTabsIntent.Builder();
-                // set toolbar color
-                builder2.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
-                customTabsIntent = builder2.build();
-                customTabsIntent.launchUrl(context, Uri.parse(url2));
+//                String url2 = "https://www.google.com/";
+//                CustomTabsIntent.Builder builder2 = new CustomTabsIntent.Builder();
+//                // set toolbar color
+//                builder2.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
+//                customTabsIntent = builder2.build();
+//                customTabsIntent.launchUrl(context, Uri.parse(url2));
+
+                Intent web2 =new Intent(getActivity(),webFragment.class);
+                startActivity(web2);
                 break;
 
             case R.id.txt_weblink_3:
-                String url3 = "https://www.facebook.com/";
-                CustomTabsIntent.Builder builder3 = new CustomTabsIntent.Builder();
+//                String url3 = "https://www.facebook.com/";
+//                CustomTabsIntent.Builder builder3 = new CustomTabsIntent.Builder();
                 // set toolbar color
-                builder3.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
-                customTabsIntent = builder3.build();
-                customTabsIntent.launchUrl(context, Uri.parse(url3));
+//                builder3.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
+//                customTabsIntent = builder3.build();
+//                customTabsIntent.launchUrl(context, Uri.parse(url3));
+
+                Intent web3 =new Intent(getActivity(),webFragment.class);
+                startActivity(web3);
                 break;
 
             case R.id.toolbar_back:

@@ -87,7 +87,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         toolbarBackIconBuss.setOnClickListener(this);
         toolbar.setOnClickListener(this);
 
-        toolbarIconBuss.setOnClickListener(new View.OnClickListener() {
+        toolbarIconBuss.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomSheet(inflater);
