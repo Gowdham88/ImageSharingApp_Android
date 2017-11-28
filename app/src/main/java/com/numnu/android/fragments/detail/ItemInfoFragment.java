@@ -193,6 +193,10 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
                 initiatePopupWindow();
                 break;
 
+            case R.id.toolbar:
+                mPostsRecycler.scrollTo(0,0);
+                break;
+
         }
     }
 

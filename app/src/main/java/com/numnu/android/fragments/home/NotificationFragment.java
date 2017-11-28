@@ -87,6 +87,16 @@ public class NotificationFragment extends Fragment {
 
 
         setupRecyclerView();
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                notificationRecyclerView.scrollToPosition(0);
+            }
+        });
         return view;
     }
 

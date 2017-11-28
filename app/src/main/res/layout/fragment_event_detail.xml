@@ -14,7 +14,7 @@
         <include layout="@layout/toolbar_with_options" />
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <com.numnu.android.utils.CustomScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -248,6 +248,6 @@
 
         </RelativeLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </com.numnu.android.utils.CustomScrollView>
 
 </RelativeLayout>
