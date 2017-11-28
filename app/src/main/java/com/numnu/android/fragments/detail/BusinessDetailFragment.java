@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -26,6 +25,7 @@ import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.ContentWrappingViewPager;
+import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -41,7 +41,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     TextView linearLayout;
     TextView Viewimage;
     TextView ViewTxt;
-    private NestedScrollView nestedScrollView;
+    private CustomScrollView nestedScrollView;
 
     public static BusinessDetailFragment newInstance() {
         return new BusinessDetailFragment();

@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +32,7 @@ import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ContentWrappingViewPager;
+import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     private GoogleMap map;
     private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int RC_LOCATION_PERM = 1;
-    private NestedScrollView nestedScrollView;
+    private CustomScrollView nestedScrollView;
 
 
     public static LocationDetailFragment newInstance() {

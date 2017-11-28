@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,6 +29,7 @@ import com.numnu.android.fragments.EventDetail.EventPostsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ContentWrappingViewPager;
+import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -50,7 +50,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
-    private NestedScrollView nestedScrollView;
+    private CustomScrollView nestedScrollView;
 
 
     public static SearchBusinessDetailFragment newInstance() {

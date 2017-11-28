@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.detail.LocationDetailFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,10 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        Picasso.with(context).load(R.drawable.sasitem)
+                .placeholder(R.drawable.food_2616456_1920)
+                .fit()
+                .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

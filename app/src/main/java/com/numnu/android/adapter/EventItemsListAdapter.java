@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.detail.ItemInfoFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,10 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        Picasso.with(context).load(R.drawable.large_berger)
+                .placeholder(R.drawable.food_1631727_1920)
+                .resize(200, 200)
+                .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

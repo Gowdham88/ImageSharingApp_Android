@@ -16,6 +16,7 @@ import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,10 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        Picasso.with(context).load(R.drawable.pasta)
+                .placeholder(R.drawable.food_for_lunch_mom)
+                .fit()
+                .into(holder.imageViewIcon);
 //        holder.textViewName.setText(stringArrayList.get(position));
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override

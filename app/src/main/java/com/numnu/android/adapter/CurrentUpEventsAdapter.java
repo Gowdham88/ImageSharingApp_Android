@@ -47,7 +47,6 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.textViewName.setText(Titlearray[position]);
-        holder.imageViewIcon.setImageResource(imgarray[position]);
         holder.textcity.setText(TitleCityarray[position]);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +58,11 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
             }
         });
 
-//        Picasso.with(context).load("null")
-//                .placeholder(R.drawable.food_1631727_1920)
-//                .into(holder.imageViewIcon);
+        Picasso.with(context).load(imgarray[position])
+                .resize(200, 200)
+                .centerCrop()
+                .into(holder.imageViewIcon);
+
     }
 
     @Override

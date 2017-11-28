@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,6 +27,7 @@ import com.numnu.android.fragments.LocationItemsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ContentWrappingViewPager;
+import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -45,7 +45,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     private ImageView eventImageView;
     private ExpandableTextView eventDescription;
     private PopupWindow pw;
-    private NestedScrollView nestedScrollView;
+    private CustomScrollView nestedScrollView;
 
 
     public static ItemDetailFragment newInstance() {
