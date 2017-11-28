@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:visibility="gone"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextAppearance="@style/TabWidget"
             app:tabGravity="fill"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/black"
