@@ -25,6 +25,7 @@ import com.numnu.android.R;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -170,6 +171,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
+        private int mCurrentPosition = -1;
 
         ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -188,6 +190,19 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            super.setPrimaryItem(container, position, object);
+            if (position != mCurrentPosition) {
+                Fragment fragment = (Fragment) object;
+                ContentWrappingViewPager pager = (ContentWrappingViewPager) container;
+                if (fragment != null && fragment.getView() != null) {
+                    mCurrentPosition = position;
+                    pager.measureCurrentView(fragment.getView());
+                }
+            }
         }
 
         @Override
