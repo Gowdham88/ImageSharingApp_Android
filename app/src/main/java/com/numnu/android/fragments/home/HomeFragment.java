@@ -254,6 +254,17 @@ public class HomeFragment extends Fragment {
 
 
         setupSearchListener();
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nestedScrollView.scrollTo(0,0);
+            }
+        });
+
         return view;
     }
 

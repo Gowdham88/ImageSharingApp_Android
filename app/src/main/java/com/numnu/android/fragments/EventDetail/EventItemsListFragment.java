@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,17 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
         toolbarTitle.setText(title);
 
         setupRecyclerView();
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                menuitemsRecyclerView.scrollToPosition(0);
+            }
+        });
+
         return view;
 
 }
@@ -89,6 +101,8 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
             case R.id.toolbar_back:
                 getActivity().onBackPressed();
                 break;
+
+
 
         }
     }

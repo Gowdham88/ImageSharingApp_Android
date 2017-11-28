@@ -55,6 +55,16 @@ public class LinkEventsFragment extends Fragment {
         toolbarTitle.setText("Events");
         setupRecyclerView();
 
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                searchEventsList.scrollToPosition(0);
+            }
+        });
+
         return view;
     }
 

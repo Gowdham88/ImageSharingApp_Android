@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +95,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     final private int PICK_IMAGE = 1;
     final private int CAPTURE_IMAGE = 2;
     private String imgPath;
+    ScrollView nestedScrollview;
 
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -172,7 +174,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 //        adapter.setClickListener(this);
         autoComplete = (AutoCompleteTextView) v.findViewById(R.id.autoCompleteTextView1);
         AddTxt = (TextView) v.findViewById(R.id.add_txt);
-
+        nestedScrollview = v.findViewById(R.id.nestedScrollView);
 
         final ArrayAdapter<String> vairam = new ArrayAdapter<String>(getActivity(), R.layout.auto_dialog, R.id.lbl_name, arr);
         autoComplete.setThreshold(1);
@@ -264,6 +266,16 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         mCity.setAdapter(mAdapter);
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        final android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                recyclerView.scrollToPosition(0);
+            }
+        });
 
 
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

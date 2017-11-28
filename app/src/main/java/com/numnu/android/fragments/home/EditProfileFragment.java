@@ -15,6 +15,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +96,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
     private String imgPath;
     RelativeLayout EditReLay;
     LinearLayout EditLinearLay;
+    ScrollView nestedScrollView;
 
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -142,6 +145,8 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         });
         EditLinearLay=(LinearLayout)v.findViewById(R.id.linear_lay);
         EditReLay=(RelativeLayout) v.findViewById(R.id.editrel_lay);
+        nestedScrollView = (ScrollView) v.findViewById(R.id.nestedScrollView);
+
         EditLinearLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,6 +250,16 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, null);
         mCity.setAdapter(mAdapter);
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        final Toolbar toolbar = v.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nestedScrollView.scrollTo(0,0);
+            }
+        });
 
 
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

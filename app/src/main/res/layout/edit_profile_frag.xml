@@ -52,6 +52,7 @@
             app:srcCompat="@drawable/edit_profile" />
     </RelativeLayout>
     <ScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
