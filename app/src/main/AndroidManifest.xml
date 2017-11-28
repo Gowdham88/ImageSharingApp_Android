@@ -73,6 +73,8 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.GoogleMapActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.webFragment"
+            android:windowSoftInputMode="adjustPan"/>
 
     </application>
 
