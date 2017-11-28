@@ -36,6 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 import com.numnu.android.fragments.home.HomeFragment;
+import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;
@@ -398,7 +399,7 @@ public class LoginFragment extends Fragment {
     private void goToHomeActivity(String intentName, String intentValue){
         Bundle bundle = new Bundle();
         bundle.putString(intentName,  intentValue);
-        HomeFragment homeFragment=new HomeFragment();
+        UserPostsFragment homeFragment=new UserPostsFragment();
         homeFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
