@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,7 +68,7 @@ public class SignupFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             mBookmarkIntent = bundle.getString("BookmarkIntent");
-            mProfileIntent = bundle.getString("ProfileIntent");
+            mProfileIntent  = bundle.getString("ProfileIntent");
             mEventBookmarkIntent = bundle.getString("EventBookmarkIntent");
         }
 
@@ -102,7 +103,7 @@ public class SignupFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_signup, null);
+        View view = inflater.inflate(R.layout.activity_signup, container, false);
         textViewSignIn=view.findViewById(R.id.textView_signin);
         TxtEmai=view.findViewById(R.id.signup_textView5);
         TxtPass=view.findViewById(R.id.signup_textView6);
@@ -144,7 +145,7 @@ public class SignupFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
-        Button loginButton = view.findViewById(R.id.sinup_btn_facebook);
+        FrameLayout loginButton = view.findViewById(R.id.sinup_btn_facebook);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
