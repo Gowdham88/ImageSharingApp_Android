@@ -59,7 +59,7 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
         });
 
         Picasso.with(context).load(imgarray[position])
-                .resize(200, 200)
+                .fit()
                 .centerCrop()
                 .into(holder.imageViewIcon);
 

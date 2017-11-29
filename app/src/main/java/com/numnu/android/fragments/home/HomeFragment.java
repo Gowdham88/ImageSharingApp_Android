@@ -189,6 +189,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                     nestedScrollView.setVisibility(View.VISIBLE);
                     tabLayout.setVisibility(View.GONE);
                     viewPager.setVisibility(View.GONE);
+                    toolbarBackIcon.setVisibility(View.GONE);
 
                 }else {
                     getActivity().finish();
@@ -350,7 +351,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                googleLogo.setVisibility(View.VISIBLE);
+
                 locationSearch(charSequence);
             }
 
@@ -426,8 +427,12 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
     private void locationSearch(final CharSequence charSequence) {
        if(!charSequence.toString().equals("")){
 
-           nestedScrollView.setVisibility(View.GONE);
+
            searchListView.setVisibility(View.VISIBLE);
+           googleLogo.setVisibility(View.VISIBLE);
+           nestedScrollView.setVisibility(View.GONE);
+           viewPager.setVisibility(View.GONE);
+           tabLayout.setVisibility(View.GONE);
 
            AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
            // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
@@ -447,6 +452,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 //                   FragmentTransaction transaction =  getFragmentManager().beginTransaction();
 //                   transaction.replace(R.id.frame_layout,searchFragment);
 //                   transaction.addToBackStack(null).commit();
+                   searchViewLocation.setText(charSequence.toString());
                    googleLogo.setVisibility(View.GONE);
                    searchListView.setVisibility(View.GONE);
                    nestedScrollView.setVisibility(View.VISIBLE);
@@ -596,6 +602,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                     nestedScrollView.setVisibility(View.VISIBLE);
                     tabLayout.setVisibility(View.GONE);
                     viewPager.setVisibility(View.GONE);
+                    toolbarBackIcon.setVisibility(View.GONE);
+
 
                 }else {
                     getActivity().finish();

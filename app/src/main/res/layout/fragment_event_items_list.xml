@@ -16,6 +16,8 @@
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/appbar"
         android:id="@+id/menu_items_recyclerview"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

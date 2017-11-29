@@ -46,7 +46,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
         Picasso.with(context).load(R.drawable.large_berger)
                 .placeholder(R.drawable.food_1631727_1920)
-                .resize(200, 200)
+                .fit()
                 .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
