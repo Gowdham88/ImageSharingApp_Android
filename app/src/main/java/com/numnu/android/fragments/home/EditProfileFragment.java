@@ -8,19 +8,25 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -42,8 +48,12 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
+import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
+import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
+import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
@@ -69,7 +79,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 public class EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
 
     Context context;
-    EditText mEmail, mName, mGender, mDob, userDescription;
+    EditText musername,mEmail, mName,mDob, userDescription;
     AutoCompleteTextView mCity;
     Button mCompleteSignUp;
     RadioGroup mRadioGroup;
@@ -87,7 +97,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
     String mainAutotxt;
     ArrayList<String> mylist = new ArrayList<>();
     ImageView viewImage, EditBtn;
-    TextView Gallery;
+    TextView Gallery,mGender;
     TextView Camera;
     ImageView GalleryIcon;
     ImageView CameraIcon;
@@ -96,7 +106,8 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
     final private int CAPTURE_IMAGE = 2;
     private String imgPath;
     RelativeLayout EditReLay;
-    LinearLayout EditLinearLay;
+    String GenderStr;
+    LinearLayout EditLinearLay,Linearlay;
     ScrollView nestedScrollView;
 
     private RecyclerView myRecyclerView;
@@ -230,14 +241,16 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
+        musername=v.findViewById(R.id.et_cmpltsignup_username);
         mEmail = v.findViewById(R.id.et_signup_email);
         mName = v.findViewById(R.id.et_signup_name);
         mCity = v.findViewById(R.id.et_signup_city);
+        mGender=v.findViewById(R.id.ed_gender);
         userDescription = v.findViewById(R.id.et_user_description);
 
-        mRadioGroup = v.findViewById(R.id.radio_group);
-        mRadioMale = v.findViewById(R.id.male_radio);
-        mRadioFemale = v.findViewById(R.id.female_radio);
+//        mRadioGroup = v.findViewById(R.id.radio_group);
+//        mRadioMale = v.findViewById(R.id.male_radio);
+//        mRadioFemale = v.findViewById(R.id.female_radio);
         mDob = v.findViewById(R.id.et_signup_dob);
 
         mCompleteSignUp = v.findViewById(R.id.button_complete_signup);
@@ -264,20 +277,26 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
                 nestedScrollView.scrollTo(0,0);
             }
         });
-
-
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mGender.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                if (checkedId == R.id.male_radio) {
-                    mGenderValue = "Male";
-
-                } else if (checkedId == R.id.female_radio) {
-                    mGenderValue = "Female";
-                }
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+                showAlert();
             }
         });
+
+//        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//
+//                if (checkedId == R.id.male_radio) {
+//                    mGenderValue = "Male";
+//
+//                } else if (checkedId == R.id.female_radio) {
+//                    mGenderValue = "Female";
+//                }
+//            }
+//        });
 
         mDob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,22 +319,28 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
             @Override
             public void onClick(View view) {
 
+                String username = musername.getText().toString().trim();
                 String email = mEmail.getText().toString().trim();
                 String name = mName.getText().toString().trim();
                 String city = mCity.getText().toString().trim();
-                String gender = mGenderValue.trim();
+                String gender = mGender.getText().toString().trim();
                 String dob = mDob.getText().toString().trim();
 //                String foodPreferences = mFoodPreferences.getText().toString();
 
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
                 if (email.equals("")) {
-                    Toast.makeText(context, "Email is mandatory", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            getActivity(), "Email is mandatory", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (email.matches(emailPattern) && (!(email.equals("") && name.equals("") && city.equals("") && dob.equals("") && ItemModelList.equals("")))) {
-                        Intent intent = new Intent(getActivity(), HomeActivity.class);
-                        intent.putExtra("completesignup", "showprofilefragment");
-                        startActivity(intent);
+                    if (email.matches(emailPattern) && (!(email.equals("") && username.equals("") && name.equals("") && city.equals("") && gender.equals(null) && dob.equals("") && ItemModelList.equals("")))) {
+//                        Intent intent = new Intent(getActivity(), HomeActivity.class);
+//                        intent.putExtra("completesignup", "showprofilefragment");
+//                        startActivity(intent);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                        transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                        transaction.addToBackStack(null).commit();
 
 //                        context.getApplicationContext().this.finish();
                         PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
@@ -329,7 +354,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
 
                         PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
                     } else {
-                        Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Invalid email address", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -341,21 +366,115 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         return v;
     }
 
+    public void showAlert() {
+
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(R.layout.gender_popup, null);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setView(deleteDialogView);
+        final TextView female=(TextView)deleteDialogView.findViewById(R.id.gender_female);
+        final TextView male=(TextView)deleteDialogView.findViewById(R.id.gender_male);
+        TextView cancel=(TextView)deleteDialogView.findViewById(R.id.gender_cancel);
+        LinearLayout GenderLinLay=(LinearLayout)deleteDialogView.findViewById(R.id.genlin_lay);
+//        Button ok = deleteDialogView.findViewById(R.id.ok_button);
+
+        final AlertDialog alertDialog1 = alertDialog.create();
+        female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenderStr="Female";
+                mGender.setText(GenderStr);
+                alertDialog1.dismiss();
+            }
+        });
+        male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenderStr="Male";
+                mGender.setText(GenderStr);
+                alertDialog1.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            alertDialog1.dismiss();
+            }
+        });
+        GenderLinLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog1.dismiss();
+            }
+        });
+
+//        ok.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//            }
+//        });
+
+
+        alertDialog1.setCanceledOnTouchOutside(false);
+        try {
+            alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        alertDialog1.show();
+//        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(290,
+//                getActivity()),(int)Utils.convertDpToPixel(290,getActivity()));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alertDialog1.getWindow().getAttributes());
+        lp.gravity = Gravity.BOTTOM;
+        alertDialog1.getWindow().setAttributes(lp);
+    }
+
+
+
     private void setupFocusListeners(View v) {
         final TextView usernameLabel = v.findViewById(R.id.text_user_name_label);
+        final TextView nameLabel = v.findViewById(R.id.text_name_label);
         final TextView emailLabel = v.findViewById(R.id.text_email_label);
         final TextView citylLabel = v.findViewById(R.id.text_city_label);
+        final TextView genderLabel = v.findViewById(R.id.text_gender_label);
         final TextView foodlLabel = v.findViewById(R.id.text_food_preferences_label);
         final TextView userdescriptionLabel = v.findViewById(R.id.text_user_description_label);
+        final View usernameview=v.findViewById(R.id.username_view);
+        final View nameview=v.findViewById(R.id.name_view);
+        final View emailview=v.findViewById(R.id.email_view);
+        final View cityview=v.findViewById(R.id.city_view);
+        final View genderview=v.findViewById(R.id.gender_view);
+        final View dobview=v.findViewById(R.id.dob_view);
+        final View foodview=v.findViewById(R.id.food_view);
+        final View descview=v.findViewById(R.id.desc_view);
+
+        musername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    usernameLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                usernameview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    usernameLabel.setTextColor(getResources().getColor(R.color.email_color));
+                    usernameview.setBackgroundColor(getResources().getColor(R.color.Edittxt_lineclr));
+                }
+            }
+        });
 
         mName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    usernameLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                    nameLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                    nameview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                 }
                 else{
-                    usernameLabel.setTextColor(getResources().getColor(R.color.email_color));
+                    nameLabel.setTextColor(getResources().getColor(R.color.email_color));
+                    nameview.setBackgroundColor(getResources().getColor(R.color.Edittxt_lineclr));
                 }
             }
         });
@@ -366,9 +485,11 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     emailLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                    emailview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                 }
                 else{
                     emailLabel.setTextColor(getResources().getColor(R.color.email_color));
+                    emailview.setBackgroundColor(getResources().getColor(R.color.Edittxt_lineclr));
                 }
             }
         });
@@ -379,9 +500,25 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     citylLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                    cityview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                 }
                 else{
                     citylLabel.setTextColor(getResources().getColor(R.color.email_color));
+                    cityview.setBackgroundColor(getResources().getColor(R.color.Edittxt_lineclr));
+                }
+            }
+        });
+
+        mGender.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    genderLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                    genderview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    genderLabel.setTextColor(getResources().getColor(R.color.email_color));
+                    genderview.setBackgroundColor(getResources().getColor(R.color.Edittxt_lineclr));
                 }
             }
         });
@@ -391,9 +528,11 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     foodlLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                    foodview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                 }
                 else{
                     foodlLabel.setTextColor(getResources().getColor(R.color.email_color));
+                    foodview.setBackgroundColor(getResources().getColor(R.color.Edittxt_lineclr));
                 }
             }
         });
@@ -403,9 +542,11 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     userdescriptionLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                    descview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                 }
                 else{
                     userdescriptionLabel.setTextColor(getResources().getColor(R.color.email_color));
+                    descview.setBackgroundColor(getResources().getColor(R.color.Edittxt_lineclr));
                 }
             }
         });
