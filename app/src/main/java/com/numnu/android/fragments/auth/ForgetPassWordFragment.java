@@ -45,6 +45,7 @@ ConstraintLayout Constainlay;
         //Change R.layout.tab1 in you classes
         View v = inflater.inflate(R.layout.activity_forget_password, container, false);
         Resetbutton=(Button)v.findViewById(R.id.button_reset);
+        Constainlay = (ConstraintLayout)v.findViewById(R.id.const_lay);
         Resetbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

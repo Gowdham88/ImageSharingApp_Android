@@ -59,6 +59,20 @@ public class LinkBusinessesFragment extends Fragment {
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Businesses");
         setupRecyclerView();
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                businessRecyclerView.scrollToPosition(0);
+            }
+        });
+
+
+
+
         return view;
 
     }

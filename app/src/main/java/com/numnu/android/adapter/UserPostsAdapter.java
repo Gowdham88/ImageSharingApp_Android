@@ -21,6 +21,7 @@ import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,10 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Picasso.with(context).load(R.drawable.pasta)
+                .placeholder(R.drawable.food_for_lunch_mom)
+                .fit()
+                .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -4,19 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/const_lay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.numnu.android.fragments.auth.LoginFragment"
     tools:layout_editor_absoluteY="@dimen/size25"
     tools:layout_editor_absoluteX="0dp">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/const_lay"
-    >
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
@@ -50,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/facebook_sign_in"
-        android:textSize="@dimen/text8"
+        android:textSize="@dimen/text9"
         android:layout_marginTop="@dimen/size10"
         android:drawableStart="@drawable/fb_logo__blue_29"
         android:drawableLeft="@drawable/fb_logo__blue_29"
@@ -244,7 +238,4 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-</android.support.constraint.ConstraintLayout>
-    </ScrollView>
-
 </android.support.constraint.ConstraintLayout>

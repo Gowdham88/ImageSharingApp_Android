@@ -24,6 +24,7 @@ import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
+import com.squareup.picasso.Picasso;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
@@ -56,11 +57,16 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        Picasso.with(context).load(R.drawable.pasta)
+                .placeholder(R.drawable.food_for_lunch_mom)
+                .fit()
+                .into(holder.imageViewIcon);
 //        holder.textViewName.setText(stringArrayList.get(position));
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -70,6 +76,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, PostsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -79,6 +86,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -88,6 +96,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -96,6 +105,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }

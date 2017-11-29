@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,9 @@ public class UserDetailsFragment extends Fragment {
 
         ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
 
+
+
+
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +91,15 @@ public class UserDetailsFragment extends Fragment {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
+            }
+        });
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mUserPostsRecycler.scrollToPosition(0);
             }
         });
 

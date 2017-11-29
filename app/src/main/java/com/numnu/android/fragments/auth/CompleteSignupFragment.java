@@ -30,9 +30,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
@@ -67,7 +70,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 public class CompleteSignupFragment extends Fragment implements EasyPermissions.PermissionCallbacks,View.OnKeyListener{
 
     Context context;
-    EditText mEmail, mName, mGender, mDob, mFoodPreferences;
+    EditText mEmail, mName, mGender, mDob, userDescription;
     AutoCompleteTextView mCity;
     Button mCompleteSignUp;
     RadioGroup mRadioGroup;
@@ -94,6 +97,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     final private int PICK_IMAGE = 1;
     final private int CAPTURE_IMAGE = 2;
     private String imgPath;
+    ScrollView nestedScrollview;
 
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -120,29 +124,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         super.onCreate(savedInstanceState);
 
     }
-//    @Override
-//    public void onResume() {
-//
-//        super.onResume();
-//
-//        getView().setFocusableInTouchMode(true);
-//        getView().requestFocus();
-//        getView().setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//
-//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-//                    getActivity().finish();
-//                    // handle back button
-//
-//                    return true;
-//
-//                }
-//
-//                return false;
-//            }
-//        });
-//    }
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -150,7 +131,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         //Change R.layout.tab1 in you classes
         View v = inflater.inflate(R.layout.activity_complete_signup, container, false);
         final TextView toolbarTitle = v.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Complete SignUp");
+        toolbarTitle.setText("Complete Sign Up");
         recyclerView = (RecyclerView) v.findViewById(R.id.food_recyclerview);
         FoodLinearLay = (LinearLayout) v.findViewById(R.id.food_layout);
         EditBtn = (ImageView) v.findViewById(R.id.imageView_profile_edit);
@@ -163,7 +144,14 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             }
         });
         CompleteSignupLay=(LinearLayout)v.findViewById(R.id.Complete_Linlay);
+        RelativeLayout EditReLay=(RelativeLayout) v.findViewById(R.id.editrel_lay);
         CompleteSignupLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(getActivity());
+            }
+        });
+        EditReLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hideKeyboard(getActivity());
@@ -172,7 +160,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 //        adapter.setClickListener(this);
         autoComplete = (AutoCompleteTextView) v.findViewById(R.id.autoCompleteTextView1);
         AddTxt = (TextView) v.findViewById(R.id.add_txt);
-
+        nestedScrollview = v.findViewById(R.id.nestedScrollView);
 
         final ArrayAdapter<String> vairam = new ArrayAdapter<String>(getActivity(), R.layout.auto_dialog, R.id.lbl_name, arr);
         autoComplete.setThreshold(1);
@@ -242,6 +230,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         mEmail = v.findViewById(R.id.et_signup_email);
         mName = v.findViewById(R.id.et_signup_name);
         mCity = v.findViewById(R.id.et_signup_city);
+        userDescription = v.findViewById(R.id.et_user_description);
 //        mGender = findViewById(R.id.et_signup_gender);
         mRadioGroup = v.findViewById(R.id.radio_group);
         mRadioMale = v.findViewById(R.id.male_radio);
@@ -255,15 +244,29 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         mDob.requestFocus();
 
 
+        setupFocusListeners(v);
+
+
+
         // Construct a GeoDataClient for the Google Places API for Android.
         mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
         mCity.setOnItemClickListener(mAutocompleteClickListener);
-
+        AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
         // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
-        mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, null);
+        mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, autocompleteFilter);
         mCity.setAdapter(mAdapter);
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        final android.support.v7.widget.Toolbar toolbar = v.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                recyclerView.scrollToPosition(0);
+            }
+        });
 
 
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -327,6 +330,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
                         UserPostsFragment loginFragment1= new UserPostsFragment();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                         transaction.replace(R.id.frame_layout,loginFragment1);
                         transaction.addToBackStack(null);
                         transaction.commit();
@@ -341,6 +345,76 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
 
         return v;
+    }
+
+    private void setupFocusListeners(View v) {
+        final TextView usernameLabel = v.findViewById(R.id.text_user_name_label);
+        final TextView emailLabel = v.findViewById(R.id.text_email_label);
+        final TextView citylLabel = v.findViewById(R.id.text_city_label);
+        final TextView foodlLabel = v.findViewById(R.id.text_food_preferences_label);
+        final TextView userdescriptionLabel = v.findViewById(R.id.text_user_description_label);
+
+        mName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    usernameLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    usernameLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+
+        mEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    emailLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    emailLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+
+        mCity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    citylLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    citylLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+        autoComplete.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    foodlLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    foodlLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
+
+        userDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    userdescriptionLabel.setTextColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
+                    userdescriptionLabel.setTextColor(getResources().getColor(R.color.email_color));
+                }
+            }
+        });
     }
 
 

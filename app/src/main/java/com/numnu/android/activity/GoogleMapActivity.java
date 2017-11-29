@@ -95,7 +95,7 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
         });
 
         TextView toolbarTitle=findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Map View");
+        toolbarTitle.setText("Event Map");
 
 
     }

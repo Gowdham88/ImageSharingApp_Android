@@ -194,6 +194,8 @@ public class SignupFragment extends Fragment {
         view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                    Toast.makeText(getActivity(),"dsdksjd",Toast.LENGTH_LONG).show();
 //
                     createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
 
@@ -303,10 +305,14 @@ public class SignupFragment extends Fragment {
 
                             if (mReceivedIntent == null){
 
+                                Log.e("Dsds","dsds");
+
                                 CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
                                 transaction.replace(R.id.frame_layout,loginFragment1);
                                 transaction.addToBackStack(null).commit();
+
                             }
                             else if(mReceivedIntent.equals(bookmarkBundle)) {
 
@@ -319,6 +325,7 @@ public class SignupFragment extends Fragment {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("ProfileIntent",  bookmarkBundle);
                                 showFragment(bundle);
+
                             }else if (mReceivedIntent.equals(eventBookmarkBundle)){
 
                                 Bundle bundle = new Bundle();
@@ -417,6 +424,7 @@ public class SignupFragment extends Fragment {
 
             LoginFragment loginFragment1=new LoginFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
             transaction.replace(R.id.frame_layout,loginFragment1);
             transaction.addToBackStack(null);
             transaction.commit();
@@ -446,6 +454,7 @@ public class SignupFragment extends Fragment {
         loginFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.replace(R.id.frame_layout,loginFragment);
         transaction.addToBackStack(null);
         transaction.commit();

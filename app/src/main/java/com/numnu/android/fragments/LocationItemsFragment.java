@@ -46,7 +46,21 @@ public class LocationItemsFragment extends Fragment {
 //        menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
 
     setupRecyclerView();
+
+    final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+    toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                menuitemsRecyclerView.scrollToPosition(0);
+            }
+    });
+
+
         return view;
+
+
 
 }
 

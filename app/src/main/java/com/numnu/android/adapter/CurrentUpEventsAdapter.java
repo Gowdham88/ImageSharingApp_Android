@@ -47,20 +47,22 @@ public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEvents
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.textViewName.setText(Titlearray[position]);
-        holder.imageViewIcon.setImageResource(imgarray[position]);
         holder.textcity.setText(TitleCityarray[position]);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
 
-//        Picasso.with(context).load("null")
-//                .placeholder(R.drawable.food_1631727_1920)
-//                .into(holder.imageViewIcon);
+        Picasso.with(context).load(imgarray[position])
+                .resize(200, 200)
+                .centerCrop()
+                .into(holder.imageViewIcon);
+
     }
 
     @Override

@@ -16,44 +16,10 @@
         <include layout="@layout/toolbar" />
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/taginside_color">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/profileimg" />
-
-        <TextView
-            style="@style/FontAvenirMedium"
-            android:textSize="@dimen/text17"
-            android:textColor="@color/name_black"
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_image"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:text="March"
-            android:layout_marginBottom="@dimen/size15"
-           />
-
-        <ImageView
-            android:id="@+id/imageView_profile_edit"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_above="@+id/textView16"
-            android:layout_alignEnd="@+id/profile_image"
-            android:layout_alignRight="@+id/profile_image"
-            app:srcCompat="@drawable/edit_profile" />
-    </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -61,7 +27,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/taginside_color">
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/profileimg" />
+
+                <TextView
+                    style="@style/FontAvenirMedium"
+                    android:textSize="@dimen/text17"
+                    android:textColor="@color/name_black"
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:text="March"
+                    android:layout_marginBottom="@dimen/size15"
+                    />
+
+                <ImageView
+                    android:id="@+id/imageView_profile_edit"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_above="@+id/textView16"
+                    android:layout_alignEnd="@+id/profile_image"
+                    android:layout_alignRight="@+id/profile_image"
+                    app:srcCompat="@drawable/edit_profile" />
+            </RelativeLayout>
             <TextView
                 android:id="@+id/text_share_app"
                 style="@style/FontAvenirMedium"

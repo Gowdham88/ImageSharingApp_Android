@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.NotificationsAdapter;
@@ -72,6 +73,7 @@ public class NotificationFragment extends Fragment {
 //        notificationRecyclerView.addItemDecoration(dividerItemDecoration);
 
         ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        toolbarBackImage.setVisibility(View.GONE);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +87,16 @@ public class NotificationFragment extends Fragment {
 
 
         setupRecyclerView();
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                notificationRecyclerView.scrollToPosition(0);
+            }
+        });
         return view;
     }
 
