@@ -38,8 +38,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private TabLayout tabLayout;
     private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
-    TextView linearLayout;
-    TextView Viewimage;
+    TextView entityTitle;
+    TextView Viewimage,eventName;
     TextView ViewTxt;
     private CustomScrollView nestedScrollView;
 
@@ -62,6 +62,10 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         viewPagerBusiness = view.findViewById(R.id.business_viewpager);
         tabLayout = view.findViewById(R.id.tabs);
         eventDescription = view.findViewById(R.id.business_detail_description);
+        eventName = view.findViewById(R.id.event_name);
+        entityTitle = view.findViewById(R.id.text_business_entity);
+
+
         setupExpandableText();
         setupViewPager(viewPagerBusiness);
         tabLayout.setupWithViewPager(viewPagerBusiness);
@@ -84,6 +88,26 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             }
         });
 
+        eventName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        entityTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
         toolbarBackIconBuss.setOnClickListener(this);
         toolbar.setOnClickListener(this);
 
@@ -100,7 +124,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
-        View bottomSheetView = inflater.inflate(R.layout.dialog_event_bottomsheet,null);
+        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
 

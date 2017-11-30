@@ -24,9 +24,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
-            app:layout_collapseMode="pin"
-            app:layout_collapseParallaxMultiplier="0.7">
+            android:visibility="visible">
 
             <View
                 android:layout_width="match_parent"
@@ -41,7 +39,6 @@
                 android:layout_height="@dimen/image_height_large"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:elevation="10dp"
                 app:cardCornerRadius="@dimen/image_card_corner_radius">
 
                 <ImageView
@@ -62,10 +59,10 @@
                 android:layout_below="@+id/card_view"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/spacing_small"
                 android:text="Barbadous and rum food Festival"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_normal"
                 tools:ignore="MissingPrefix" />
 
             <HorizontalScrollView
@@ -95,8 +92,8 @@
                         style="@style/TagStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="@dimen/spacing_tiny"
+                        android:layout_marginStart="@dimen/spacing_tiny"
                         android:text="Rum" />
 
                 </LinearLayout>
@@ -110,7 +107,7 @@
                 android:layout_below="@+id/chips_layout"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/spacing_tiny"
                 android:text="@string/event_description" />
 
             <android.support.design.widget.TabLayout

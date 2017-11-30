@@ -22,6 +22,9 @@ import com.numnu.android.R;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
+import com.numnu.android.fragments.detail.EventDetailFragment;
+import com.numnu.android.fragments.detail.ItemDetailFragment;
+import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -118,7 +121,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventBusinessFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -127,7 +130,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventItemsCategoryFragment.newInstance());
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -136,7 +139,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

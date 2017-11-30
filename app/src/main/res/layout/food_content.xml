@@ -23,7 +23,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TagStyleFood"
+                style="@style/TagStyle"
                 android:textColor="@color/tag_inside_text_color"
                 android:textSize="@dimen/text12"
                 android:layout_width="wrap_content"
