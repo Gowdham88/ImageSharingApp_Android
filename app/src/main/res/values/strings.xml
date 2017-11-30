@@ -2,7 +2,7 @@
     <string name="app_name">Numnu</string>
     <string name="businesses">Businesses</string>
     <string name="numnu">Numnu</string>
-    <string name="facebook_sign_in">Login with Facebook</string>
+    <string name="facebook_sign_in">Log in with Facebook</string>
     <string name="facebook_sign_up">Sign Up with Facebook</string>
     <string name="create_an_account">Create an Account</string>
     <string name="sign_in">Login</string>
@@ -67,6 +67,7 @@
 
     <string name="google_maps_api_key">AIzaSyAuKzAZP8SLYJf_jfVUsxdcjChIU00FmDQ</string>
     <string name="title_activity_maps">Map</string>
+    <string name="profile_header_str">I have loved pizza since I\n was born!</string>
     <string name="event_description">This much-talked-about festival brings all your favorite Food Network personalities and celebrity chefs to Miami for five days of events, from intimate dinners cooked by Sean Brock to a late-night Tacos After Dark session with Aarón Sanchez. If you\'ve always dreamed of drinking tiki cocktails with Guy Fieri or having a rosé brunch with Martha Stewart, the South Beach Wine &amp; Food Festival can make your wishes come true.
 </string>
 

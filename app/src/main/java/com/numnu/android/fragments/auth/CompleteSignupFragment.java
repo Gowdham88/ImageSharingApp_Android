@@ -52,6 +52,7 @@ import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
 import com.numnu.android.fragments.search.PostsFragment;
@@ -100,7 +101,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     ImageView viewImage, EditBtn;
     TextView Gallery,mGender;
     TextView Camera;
-    ImageView GalleryIcon;
+    ImageView GalleryIcon,GenderDropimg;
     ImageView CameraIcon;
     private String selectedImagePath = "";
     final private int PICK_IMAGE = 1;
@@ -146,6 +147,13 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                 activity_complete_signup, container, false);
         TextView toolbarTitle = v.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Complete SignUp");
+        ImageView Toolbarbackicon=v.findViewById(R.id.toolbar_back);
+        Toolbarbackicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         recyclerView = (RecyclerView) v.findViewById(R.id.food_recyclerview);
         FoodLinearLay = (LinearLayout) v.findViewById(R.id.food_layout);
         EditBtn = (ImageView) v.findViewById(R.id.imageView_profile_edit);
@@ -159,6 +167,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         });
         EditLinearLay=(LinearLayout)v.findViewById(R.id.linear_lay);
         EditReLay=(RelativeLayout) v.findViewById(R.id.editrel_lay);
+        GenderDropimg=(ImageView) v.findViewById(R.id.gender_img);
         nestedScrollView = (ScrollView) v.findViewById(R.id.nestedScrollView);
 
         EditLinearLay.setOnClickListener(new View.OnClickListener() {
@@ -286,6 +295,13 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                 showAlert();
             }
         });
+        GenderDropimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+                showAlert();
+            }
+        });
 
 //        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //            @Override
@@ -386,6 +402,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             public void onClick(View v) {
                 GenderStr="Female";
                 mGender.setText(GenderStr);
+                alertDialog1.dismiss();
             }
         });
         male.setOnClickListener(new View.OnClickListener() {
@@ -393,6 +410,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             public void onClick(View v) {
                 GenderStr="Male";
                 mGender.setText(GenderStr);
+                alertDialog1.dismiss();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {

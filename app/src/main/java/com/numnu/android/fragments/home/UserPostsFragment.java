@@ -63,6 +63,7 @@ public class UserPostsFragment extends Fragment {
             }
         });
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,13 +79,14 @@ public class UserPostsFragment extends Fragment {
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
 
         ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        toolbarBackImage.setVisibility(View.GONE);
 
-        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
+//        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getActivity().onBackPressed();
+//            }
+//        });
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("@Marc chiriqui");

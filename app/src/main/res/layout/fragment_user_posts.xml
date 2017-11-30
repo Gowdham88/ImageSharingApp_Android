@@ -44,7 +44,7 @@
                     android:text="Marc Chiriqui"
                     fontpath="fonts/Avenir-Light.ttf"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text16"
+                    android:textSize="16dp"
                     tools:ignore="MissingPrefix" />
 
                 <ImageView
@@ -74,7 +74,7 @@
                android:id="@+id/user_profile_header"
                layout="@layout/user_profile_header"
                android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
+               android:layout_height="171dp" />
 
            <!--<View-->
                <!--android:id="@+id/view_divider"-->
