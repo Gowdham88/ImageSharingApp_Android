@@ -8,18 +8,19 @@
 
     <ImageView
         android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size80"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
         android:src="@drawable/notification"
         android:contentDescription="@string/app_name" />
     <TextView
         style="@style/FontAvenirMedium"
-        android:textSize="@dimen/text10"
+        android:textSize="14dp"
         android:textColor="@color/autotxt_in_color"
         android:text="@string/enabling_notifications"
-        android:layout_width="match_parent"
+        android:layout_width="212dp"
         android:gravity="center"
-        android:layout_height="wrap_content" />
+        android:layout_gravity="center"
+        android:layout_height="70dp" />
 
         <Button
             android:text="@string/ok"
@@ -27,11 +28,10 @@
             style="@style/ok_button"
             android:gravity="center"
             android:layout_gravity="center"
-            android:layout_width="@dimen/size110"
-            android:textSize="@dimen/text13"
-            android:layout_marginTop="@dimen/size10"
-            android:layout_height="@dimen/size35"
-            android:layout_marginBottom="@dimen/size4"
+            android:layout_width="86dp"
+            android:textSize="15dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="4dp"
             />
 
 </LinearLayout>

@@ -61,7 +61,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
         viewPagerBusiness = view.findViewById(R.id.business_viewpager);
         tabLayout = view.findViewById(R.id.tabs);
-        eventDescription = view.findViewById(R.id.business_detail_description);
+        eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         entityTitle = view.findViewById(R.id.text_business_entity);
 
