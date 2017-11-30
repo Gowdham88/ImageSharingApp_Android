@@ -10,11 +10,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/business_recyclerview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_below="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_normal"
-        android:layout_marginRight="@dimen/spacing_normal"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
         android:orientation="vertical"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:reverseLayout="false">

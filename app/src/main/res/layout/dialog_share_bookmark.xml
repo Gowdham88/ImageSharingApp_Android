@@ -10,12 +10,12 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="@dimen/size60"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/size20"
         android:id="@+id/dialog_image"
         android:background="#FAFAFA"
-        android:layout_marginLeft="@dimen/size16"
-        android:layout_marginStart="@dimen/size16"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:src="@drawable/ic_share"
@@ -28,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Share"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:gravity="center_vertical"
         android:textColor="@color/darker_grey"
         android:textSize="@dimen/text16"
@@ -36,10 +38,12 @@
         android:layout_toRightOf="@+id/bookmark_icon"
         android:layout_toEndOf="@+id/bookmark_icon" />
     <ImageView
-        android:layout_width="@dimen/size60"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/size20"
         android:id="@+id/bookmark_icon"
         android:background="#FAFAFA"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_alignTop="@+id/bookmark_title"
         android:layout_alignLeft="@+id/dialog_image"
         android:src="@drawable/ic_bookmark"

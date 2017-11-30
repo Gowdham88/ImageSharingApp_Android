@@ -282,28 +282,28 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         view.setOnKeyListener(this);
     }
 
-    private void checkKeyBoardUp(final View view) {
-
-        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                View bottomNavigationView = getActivity().findViewById(R.id.navigation);
-                Rect r = new Rect();
-                view.getWindowVisibleDisplayFrame(r);
-                int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
-
-                if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
-                    //ok now we know the keyboard is up...
-                    bottomNavigationView.setVisibility(View.GONE);
-
-
-                }else{
-                    //ok now we know the keyboard is down...
-                    bottomNavigationView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-    }
+//    private void checkKeyBoardUp(final View view) {
+//
+//        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                View bottomNavigationView = getActivity().findViewById(R.id.navigation);
+//                Rect r = new Rect();
+//                view.getWindowVisibleDisplayFrame(r);
+//                int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
+//
+//                if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
+//                    //ok now we know the keyboard is up...
+//                    bottomNavigationView.setVisibility(View.GONE);
+//
+//
+//                }else{
+//                    //ok now we know the keyboard is down...
+//                    bottomNavigationView.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+//    }
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -380,7 +380,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                         }
                     }
                 }
-                checkKeyBoardUp(view);
+//                checkKeyBoardUp(view);
                 return false;
             }
         });
@@ -396,7 +396,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                         }
                     }
                 }
-                checkKeyBoardUp(view);
+//                checkKeyBoardUp(view);
                 return false;
             }
         });
@@ -493,15 +493,15 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             nestedScrollView.setVisibility(View.GONE);
             searchListView.setVisibility(View.VISIBLE);
 
-            final String[] arr = {"burger", "chicken", "pizza", "mutton", "curry", "chicken burger", "mutton burger", "sandwich",};
-
-            ArrayList<String> stringArrayList=new ArrayList<>();
-            stringArrayList.addAll(Arrays.asList(arr));
-            SearchResultsAdapter searchResultsAdapter = new SearchResultsAdapter(context, stringArrayList);
-
-            searchResultsAdapter.setOnItemClickListener( new SearchResultsAdapter.OnItemClickListener() {
-                @Override
-                public void onRecyclerItemClick(View view, int position) {
+//            final String[] arr = {"burger", "chicken", "pizza", "mutton", "curry", "chicken burger", "mutton burger", "sandwich",};
+//
+//            ArrayList<String> stringArrayList=new ArrayList<>();
+//            stringArrayList.addAll(Arrays.asList(arr));
+//            SearchResultsAdapter searchResultsAdapter = new SearchResultsAdapter(context, stringArrayList);
+//
+//            searchResultsAdapter.setOnItemClickListener( new SearchResultsAdapter.OnItemClickListener() {
+//                @Override
+//                public void onRecyclerItemClick(View view, int position) {
 //                    searchViewFood.setText(arr[position]);
 //                    Bundle bundle = new Bundle();
 //                    bundle.putString("keyword", arr[position]);
@@ -511,12 +511,12 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 //                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
 //                    transaction.replace(R.id.frame_layout,searchFragment);
 //                    transaction.addToBackStack(null).commit();
-                    Utils.hideKeyboard(getActivity());
+//                    Utils.hideKeyboard(getActivity());
                     showSearchResults();
-                }
-            });
+//                }
+//            });
 
-            searchListView.setAdapter(searchResultsAdapter);
+//            searchListView.setAdapter(searchResultsAdapter);
 
         }else {
             nestedScrollView.setVisibility(View.VISIBLE);googleLogo.setVisibility(View.GONE);

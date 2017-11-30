@@ -87,8 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="food"
-                        android:textColor="@color/tag_inside_text_color"
-                        android:textSize="@dimen/size12" />
+                        android:textColor="@color/tag_inside_text_color" />
 
                 </LinearLayout>
 
@@ -112,7 +111,7 @@
                     android:drawableLeft="@drawable/ic_time"
                     android:drawablePadding="@dimen/spacing_tiny"
                     android:gravity="center"
-                    android:padding="@dimen/size2"
+                    android:padding="1dp"
                     android:text="August 9, 07:00 am"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/font_smaller" />
@@ -122,7 +121,7 @@
                     style="@style/FontAvenirMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text=" - "
                     android:textColor="@color/time_color"
@@ -132,12 +131,12 @@
                     android:id="@+id/txt_event_time"
                     style="@style/FontAvenirMedium"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/event_name"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/spacing_tiny"
                     android:gravity="center"
-                    android:padding="@dimen/size2"
+                    android:padding="1dp"
                     android:text="August 14, 11:00 pm"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/font_smaller" />
@@ -193,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_marginStart="@dimen/spacing_small"
-                    android:padding="@dimen/spacing_tiny"
+                    android:layout_marginTop="@dimen/spacing_tiny"
                     android:text="Weblink 1"
                     android:textColor="@color/weblink_color"
                     android:textSize="@dimen/text11" />
@@ -205,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_marginStart="@dimen/spacing_small"
-                    android:padding="@dimen/spacing_tiny"
+                    android:layout_marginTop="@dimen/spacing_tiny"
                     android:text="Weblink 2"
                     android:textColor="@color/weblink_color"
                     android:textSize="@dimen/text11" />
@@ -217,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_marginStart="@dimen/spacing_small"
-                    android:padding="@dimen/spacing_tiny"
+                    android:layout_marginTop="@dimen/spacing_tiny"
                     android:text="Weblink 3"
                     android:textColor="@color/weblink_color"
                     android:textSize="@dimen/text11" />
