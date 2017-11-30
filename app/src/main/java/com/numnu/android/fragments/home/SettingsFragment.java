@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -26,6 +27,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 
 public class SettingsFragment extends Fragment {
+
+    ScrollView nestedScrollView;
 
     private Context context;
     String name;
@@ -58,6 +61,7 @@ public class SettingsFragment extends Fragment {
 //        }
 
             View view = inflater.inflate(R.layout.fragment_settings, container, false);
+            nestedScrollView = view.findViewById(R.id.nestedScrollView);
 
             TextView shareApp = view.findViewById(R.id.text_share_app);
             shareApp.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +118,16 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getActivity().onBackPressed();
+            }
+        });
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nestedScrollView.scrollTo(0,0);
             }
         });
 

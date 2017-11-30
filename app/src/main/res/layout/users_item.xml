@@ -27,7 +27,9 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/slice_profile_image"
         android:text="Marc Chiriqui"
-        fontPath="fonts/Avenir_next.ttf"
+       android:textSize="@dimen/text14"
+        android:textColor="@color/event_map"
+        style="@style/FontAvenirMedium"
         tools:ignore="MissingPrefix"
         />
 </RelativeLayout>

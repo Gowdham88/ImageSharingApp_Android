@@ -48,13 +48,15 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
 
         holder.textViewName.setText(stringArrayList.get(position));
 
-        Picasso.with(context).load("null")
-                .placeholder(R.drawable.burger)
+        Picasso.with(context).load(R.drawable.burger)
+                .placeholder(R.drawable.food_715539_1920)
+                .resize(200,200)
                 .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, BusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -63,6 +65,7 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, BusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }

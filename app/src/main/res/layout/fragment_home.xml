@@ -1,12 +1,11 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:background="@color/White_clr"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     android:id="@+id/home_linlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White_clr"
+    android:orientation="vertical"
     tools:context="com.numnu.android.activity.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -21,9 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/colorAccent"
-            android:gravity="center"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:gravity="center"
             android:paddingLeft="20dp">
 
             <ImageView
@@ -38,6 +37,7 @@
 
             <EditText
                 android:id="@+id/et_search_food"
+                fontPath="fonts/Avenir-Book.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginBottom="8dp"
@@ -47,32 +47,23 @@
                 android:layout_toRightOf="@+id/search_icon"
                 android:background="@drawable/edittext_corner_radius"
                 android:hint="Search"
-                fontPath="fonts/Avenir-Book.ttf"
-                tools:ignore="MissingPrefix"
-                android:textSize="14sp"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
+                android:paddingBottom="0dp"
                 android:paddingRight="8dp"
                 android:paddingTop="0dp"
-                android:paddingBottom="0dp"
-                />
+                android:textSize="14sp"
+                tools:ignore="MissingPrefix" />
         </RelativeLayout>
-        <ImageView
-            android:id="@+id/img_google"
-            android:visibility="gone"
-            android:layout_marginRight="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:src="@drawable/powered_by_google_dark" />
+
         <RelativeLayout
             android:id="@+id/search_location_layout"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/colorAccent"
-            android:gravity="center"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:gravity="center"
             android:paddingLeft="20dp">
 
             <ImageView
@@ -87,6 +78,7 @@
 
             <EditText
                 android:id="@+id/et_search_location"
+                fontPath="fonts/Avenir-Book.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginBottom="9dp"
@@ -96,14 +88,13 @@
                 android:layout_toRightOf="@+id/location_icon"
                 android:background="@drawable/edittext_corner_radius"
                 android:hint="Location"
-                fontPath="fonts/Avenir-Book.ttf"
-                tools:ignore="MissingPrefix"
-                android:textSize="14sp"
-                android:inputType="text"
                 android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:paddingBottom="0dp"
                 android:paddingRight="8dp"
                 android:paddingTop="0dp"
-                android:paddingBottom="0dp"/>
+                android:textSize="14sp"
+                tools:ignore="MissingPrefix" />
 
         </RelativeLayout>
 
@@ -114,7 +105,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:visibility="gone"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextAppearance="@style/TabWidget"
             app:tabGravity="fill"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/black"
@@ -125,189 +116,191 @@
         android:id="@+id/events_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/appbar_layout"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:id="@+id/search_linlay1">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="2">
 
-                <TextView
-                    android:id="@+id/current_events_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/current_upcoming_events"
-                    android:textColor="@color/dark_grey"
-                    fontPath="fonts/Avenir-Medium.ttf"
-                    android:textSize="@dimen/font_normal"
-                    tools:ignore="MissingPrefix" />
-
-                <ImageView
-                    android:id="@+id/view_current_event_list"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_width"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
-                    app:srcCompat="@drawable/ic_arrow" />
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/current_up_recyclerview"
+                <RelativeLayout
+                    android:id="@+id/search_linlay1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/current_events_text"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    app:reverseLayout="false"/>
-            </RelativeLayout>
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/current_events_text"
+                        fontPath="fonts/Avenir-Medium.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/current_upcoming_events"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="@dimen/font_normal"
+                        tools:ignore="MissingPrefix" />
+
+                    <ImageView
+                        android:id="@+id/view_current_event_list"
+                        android:layout_width="@dimen/toolbar_icon_width"
+                        android:layout_height="@dimen/toolbar_icon_width"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="10dp"
+                        app:srcCompat="@drawable/ic_arrow" />
 
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:id="@+id/search_linlay2">
-
-                <TextView
-                    android:id="@+id/current_events_text1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/current_upcoming_events"
-                    android:textColor="@color/dark_grey"
-                    fontPath="fonts/Avenir-Medium.ttf"
-                    android:textSize="@dimen/font_normal"
-                    tools:ignore="MissingPrefix" />
-
-                <ImageView
-                    android:id="@+id/view_current_event_list1"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_width"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
-                    app:srcCompat="@drawable/ic_arrow" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/current_up_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/current_events_text"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        app:reverseLayout="false" />
+                </RelativeLayout>
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/current_up_recyclerview1"
+                <RelativeLayout
+                    android:id="@+id/search_linlay2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/current_events_text1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    app:reverseLayout="false"/>
-            </RelativeLayout>
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:id="@+id/search_linlay3">
+                    <TextView
+                        android:id="@+id/current_events_text1"
+                        fontPath="fonts/Avenir-Medium.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/current_upcoming_events"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="@dimen/font_normal"
+                        tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/current_events_text2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/current_upcoming_events"
-                    android:textColor="@color/dark_grey"
-                    fontPath="fonts/Avenir-Medium.ttf"
-                    android:textSize="@dimen/font_normal"
-                    tools:ignore="MissingPrefix" />
-
-                <ImageView
-                    android:id="@+id/view_current_event_list2"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_width"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
-                    app:srcCompat="@drawable/ic_arrow" />
+                    <ImageView
+                        android:id="@+id/view_current_event_list1"
+                        android:layout_width="@dimen/toolbar_icon_width"
+                        android:layout_height="@dimen/toolbar_icon_width"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="10dp"
+                        app:srcCompat="@drawable/ic_arrow" />
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/current_up_recyclerview2"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/current_up_recyclerview1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/current_events_text1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        app:reverseLayout="false" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/search_linlay3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/current_events_text2"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    app:reverseLayout="false"/>
-            </RelativeLayout>
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/current_events_text2"
+                        fontPath="fonts/Avenir-Medium.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/current_upcoming_events"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="@dimen/font_normal"
+                        tools:ignore="MissingPrefix" />
 
-                <TextView
-                    android:id="@+id/past_events_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/past_events"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/font_normal" />
-
-                <ImageView
-                    android:id="@+id/view_past_event_list"
-                    android:layout_width="@dimen/toolbar_icon_width"
-                    android:layout_height="@dimen/toolbar_icon_width"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="10dp"
-                    app:srcCompat="@drawable/ic_arrow" />
+                    <ImageView
+                        android:id="@+id/view_current_event_list2"
+                        android:layout_width="@dimen/toolbar_icon_width"
+                        android:layout_height="@dimen/toolbar_icon_width"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="10dp"
+                        app:srcCompat="@drawable/ic_arrow" />
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/past_recyclerview"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/current_up_recyclerview2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/current_events_text2"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        app:reverseLayout="false" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/past_events_text"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    app:reverseLayout="false">
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
 
-                </android.support.v7.widget.RecyclerView>
+                    <TextView
+                        android:id="@+id/past_events_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/past_events"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="@dimen/font_normal" />
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/view_past_event_list"
+                        android:layout_width="@dimen/toolbar_icon_width"
+                        android:layout_height="@dimen/toolbar_icon_width"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="10dp"
+                        app:srcCompat="@drawable/ic_arrow" />
 
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/past_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/past_events_text"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        app:reverseLayout="false">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </RelativeLayout>
+
+            </LinearLayout>
         </LinearLayout>
-</LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.v4.view.ViewPager
@@ -317,16 +310,28 @@
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <ImageView
+        android:id="@+id/img_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/powered_by_google_light"
+        android:visibility="gone" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_results_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/img_google"
+        android:layout_below="@+id/appbar_layout"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-</LinearLayout>
+
+</RelativeLayout>

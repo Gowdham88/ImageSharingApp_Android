@@ -14,7 +14,7 @@
         <include layout="@layout/toolbar_with_options" />
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <com.numnu.android.utils.CustomScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,9 +31,9 @@
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="179dp"
-                android:layout_marginLeft="@dimen/spacing_small"
-                android:layout_marginRight="@dimen/spacing_small"
-                app:cardCornerRadius="@dimen/image_card_corner_radius">
+                android:layout_marginLeft="@dimen/size8"
+                android:layout_marginRight="@dimen/size8"
+                app:cardCornerRadius="@dimen/size5">
 
                 <ImageView
                     android:id="@+id/current_event_image"
@@ -46,8 +46,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="184dp"
-                android:layout_marginLeft="@dimen/spacing_small"
-                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginLeft="@dimen/size8"
+                android:layout_marginRight="@dimen/size8"
                 android:background="@android:drawable/dialog_holo_light_frame" />
 
 
@@ -58,11 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card_view"
                 android:layout_marginLeft="@dimen/size8"
-                android:layout_marginRight="@dimen/spacing_small"
-                android:layout_marginTop="8dp"
+                android:layout_marginRight="@dimen/size8"
+                android:layout_marginTop="@dimen/size8"
                 android:text="Barbadous and food Rum Festival"
                 android:textColor="@color/name_black"
-                android:textSize="16sp"
+                android:textSize="@dimen/text16"
                 tools:ignore="MissingPrefix" />
 
             <HorizontalScrollView
@@ -75,10 +75,10 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/size8"
                     android:layout_marginLeft="@dimen/size8"
-                    android:layout_marginRight="@dimen/spacing_small"
-                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginRight="@dimen/size8"
+                    android:layout_marginTop="@dimen/size8"
                     android:orientation="horizontal">
 
                     <TextView
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/chips_layout"
                 android:layout_marginLeft="@dimen/size6"
-                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/size8"
                 android:orientation="horizontal">
 
                 <TextView
@@ -109,9 +109,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_time"
-                    android:drawablePadding="4dp"
+                    android:drawablePadding="@dimen/size4"
                     android:gravity="center"
-                    android:padding="2dp"
+                    android:padding="@dimen/size2"
                     android:text="August 9, 07:00 am"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/text12" />
@@ -134,9 +134,9 @@
                     android:layout_height="match_parent"
                     android:layout_below="@+id/event_name"
                     android:layout_weight="1"
-                    android:drawablePadding="4dp"
+                    android:drawablePadding="@dimen/size4"
                     android:gravity="center"
-                    android:padding="2dp"
+                    android:padding="@dimen/size2"
                     android:text="August 14, 11:00pm"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/text12" />
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/date_time_layout"
                 android:layout_marginLeft="@dimen/size6"
-                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/size8"
                 android:orientation="horizontal">
 
                 <TextView
@@ -157,8 +157,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_city"
-                    android:drawablePadding="4dp"
-                    android:padding="4dp"
+                    android:drawablePadding="@dimen/size4"
+                    android:padding="@dimen/size4"
                     android:text="Montreal"
                     android:textSize="@dimen/text12" />
 
@@ -169,8 +169,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/event_name"
                     android:drawableLeft="@drawable/ic_maplocation"
-                    android:drawablePadding="4dp"
-                    android:padding="4dp"
+                    android:drawablePadding="@dimen/size4"
+                    android:padding="@dimen/size4"
                     android:text="Event Map"
                     android:textColor="@color/event_map"
                     android:textSize="@dimen/text11" />
@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/location_layout"
                 android:layout_marginLeft="@dimen/size8"
-                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/size8"
                 android:orientation="vertical">
 
                 <TextView
@@ -224,8 +224,8 @@
                 android:layout_below="@+id/weblinks_layout"
                 android:layout_marginBottom="@dimen/size15"
                 android:layout_marginLeft="@dimen/size8"
-                android:layout_marginRight="@dimen/spacing_small"
-                android:layout_marginTop="14dp"
+                android:layout_marginRight="@dimen/size8"
+                android:layout_marginTop="@dimen/size14"
                 android:text="@string/event_description"
                 android:textColor="@color/descri_color"
                 android:textSize="@dimen/text12" />
@@ -237,7 +237,7 @@
                 android:layout_below="@+id/event_description"
                 android:background="@android:color/white"
                 app:tabSelectedTextColor="@color/event_map"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabTextAppearance="@style/TabWidget"
                 app:tabTextColor="@color/tab_unselected_color" />
 
             <com.numnu.android.utils.ContentWrappingViewPager
@@ -248,6 +248,6 @@
 
         </RelativeLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </com.numnu.android.utils.CustomScrollView>
 
 </RelativeLayout>

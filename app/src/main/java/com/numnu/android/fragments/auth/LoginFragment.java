@@ -36,6 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 import com.numnu.android.fragments.home.HomeFragment;
+import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;
@@ -142,6 +143,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
                 transaction.replace(R.id.frame_layout, ForgetPassWordFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -389,6 +391,7 @@ public class LoginFragment extends Fragment {
         signupFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.replace(R.id.frame_layout,signupFragment);
         transaction.commit();
     }
@@ -396,10 +399,11 @@ public class LoginFragment extends Fragment {
     private void goToHomeActivity(String intentName, String intentValue){
         Bundle bundle = new Bundle();
         bundle.putString(intentName,  intentValue);
-        HomeFragment homeFragment=new HomeFragment();
+        UserPostsFragment homeFragment=new UserPostsFragment();
         homeFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
         transaction.replace(R.id.frame_layout,homeFragment);
         transaction.commit();
 

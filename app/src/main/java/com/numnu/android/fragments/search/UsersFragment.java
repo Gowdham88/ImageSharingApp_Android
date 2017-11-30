@@ -15,9 +15,6 @@ import com.numnu.android.adapter.UsersAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by thulir on 9/10/17.
- */
 
 public class UsersFragment extends Fragment {
     private RecyclerView usersRecyclerView;

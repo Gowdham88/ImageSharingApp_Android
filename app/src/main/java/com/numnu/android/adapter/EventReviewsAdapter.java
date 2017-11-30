@@ -1,6 +1,8 @@
 package com.numnu.android.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -9,13 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
+import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.detail.EventDetailFragment;
+import com.numnu.android.fragments.detail.ItemDetailFragment;
+import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
+import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
+import com.squareup.picasso.Picasso;
+import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
 
@@ -47,11 +57,16 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        Picasso.with(context).load(R.drawable.pasta)
+                .placeholder(R.drawable.food_for_lunch_mom)
+                .fit()
+                .into(holder.imageViewIcon);
 //        holder.textViewName.setText(stringArrayList.get(position));
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -61,7 +76,8 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, PostsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -70,7 +86,8 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventBusinessFragment.newInstance());
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -79,7 +96,8 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventItemsCategoryFragment.newInstance());
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -87,8 +105,15 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventsFragment.newInstance());
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.dotsimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheet(LayoutInflater.from(context));
             }
         });
 
@@ -106,6 +131,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
         private TextView eventName;
         private TextView cottageHouseText;
         private TextView barbequeText;
+        ImageView dotsimg;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -117,7 +143,45 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             this.cottageHouseText = itemView.findViewById(R.id.cottage_house_txt);
             this.barbequeText = itemView.findViewById(R.id.barbq_txt);
             this.eventName = itemView.findViewById(R.id.barbados_txt);
+            dotsimg=(ImageView)itemView.findViewById(R.id.event_dots);
 
         }
     }
+    private void showBottomSheet(LayoutInflater inflater) {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        View bottomSheetView = inflater.inflate(R.layout.dialog_event_bottomsheet,null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+
+        TextView share = bottomSheetView.findViewById(R.id.share_title);
+        TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
+                sendIntent.setType("text/plain");
+                context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
+                if (!loginStatus) {
+                    Intent intent = new Intent(context, LoginFragment.class);
+                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+                    context.startActivity(intent);
+                    bottomSheetDialog.dismiss();
+                }else if (loginStatus){
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
 }

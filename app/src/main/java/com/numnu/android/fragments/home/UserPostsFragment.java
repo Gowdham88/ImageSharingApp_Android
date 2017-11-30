@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 
 public class UserPostsFragment extends Fragment {
     private RecyclerView mUserPostsRecycler;
+    private NestedScrollView nestedScrollView ;
     Context context;
 
     public static UserPostsFragment newInstance() {
@@ -72,6 +75,7 @@ public class UserPostsFragment extends Fragment {
         }
 
         View view = inflater.inflate(R.layout.fragment_user_posts, container, false);
+        nestedScrollView = view.findViewById(R.id.nestedScrollView);
 
         ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
 
@@ -102,6 +106,16 @@ public class UserPostsFragment extends Fragment {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
+            }
+        });
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.slice_toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nestedScrollView.scrollTo(0,0);
             }
         });
 
