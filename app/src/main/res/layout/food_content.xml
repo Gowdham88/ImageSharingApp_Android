@@ -25,20 +25,20 @@
             <TextView
                 style="@style/TagStyleFood"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/text12"
+                android:textSize="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/size4"
+                android:padding="4dp"
                 android:background="@drawable/tag_background"
                 android:id="@+id/food_txt"
                 android:text="food" />
 
             <ImageView
                 android:id="@+id/food_cancel_button"
-                android:layout_width="@dimen/size25"
-                android:layout_height="@dimen/size20"
-                android:layout_marginTop="@dimen/size2"
-                android:padding="@dimen/size4"
+                android:layout_width="25dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:padding="4dp"
                 android:src="@drawable/redcross" />
 
 

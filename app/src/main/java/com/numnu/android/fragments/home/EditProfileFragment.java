@@ -106,7 +106,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
     TextView Gallery,mGender;
     TextView Camera;
     ImageView GalleryIcon;
-    ImageView CameraIcon;
+    ImageView CameraIcon,GenderDropimg;
     private String selectedImagePath = "";
     final private int PICK_IMAGE = 1;
     final private int CAPTURE_IMAGE = 2;
@@ -164,8 +164,15 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         });
         EditLinearLay=(LinearLayout)v.findViewById(R.id.linear_lay);
         EditReLay=(RelativeLayout) v.findViewById(R.id.editrel_lay);
+        GenderDropimg=(ImageView) v.findViewById(R.id.gender_img);
         nestedScrollView = (ScrollView) v.findViewById(R.id.nestedScrollView);
-
+        ImageView Toolbarbackicon=v.findViewById(R.id.toolbar_back);
+        Toolbarbackicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         EditLinearLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -291,7 +298,13 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
                 showAlert();
             }
         });
-
+        GenderDropimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(getActivity());
+                showAlert();
+            }
+        });
 //        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //            @Override
 //            public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -346,7 +359,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
 //                        startActivity(intent);
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                        transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                        transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
                         transaction.addToBackStack(null).commit();
 
 //                        context.getApplicationContext().this.finish();
