@@ -47,8 +47,9 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
 
         holder.textViewName.setText(stringArrayList.get(position));
 
-        Picasso.with(context).load("null")
-                .placeholder(R.drawable.sasitem)
+        Picasso.with(context).load(R.drawable.sasitem)
+                .placeholder(R.drawable.food_715539_1920)
+                .fit()
                 .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override

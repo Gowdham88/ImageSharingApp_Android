@@ -30,6 +30,7 @@ import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
     private Context context;
     private TextView viewEventMap, eventName, city, eventDate, eventTime;
-    private ImageView eventImageView;
+    private ImageView eventImageView,entityImageView;
     private ExpandableTextView eventDescription;
     private PopupWindow pw;
     private CustomScrollView nestedScrollView;
@@ -76,7 +77,13 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
 
         eventImageView = view.findViewById(R.id.current_event_image);
+        entityImageView = view.findViewById(R.id.entity_image);
         eventImageView.setOnClickListener(this);
+
+        Picasso.with(context).load(R.drawable.burger)
+                .placeholder(R.drawable.food_715539_1920)
+                .fit()
+                .into(entityImageView);
 
         setupExpandableText();
 
