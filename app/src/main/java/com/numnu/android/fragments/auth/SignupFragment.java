@@ -10,12 +10,16 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -57,6 +61,7 @@ public class SignupFragment extends Fragment {
     ConstraintLayout SignupConsLay;
     // [END declare_auth]
     String mBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
+    TextView txt_error;
     private Context context;
     public static SignupFragment newInstance() {
         SignupFragment fragment = new SignupFragment();
@@ -104,25 +109,31 @@ public class SignupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_signup, container, false);
-        textViewSignIn=view.findViewById(R.id.textView_signin);
-        TxtEmai=view.findViewById(R.id.signup_textView5);
-        TxtPass=view.findViewById(R.id.signup_textView6);
-        mEmailField =view.findViewById(R.id.et_email);
-        mPasswordField =view.findViewById(R.id.et_password);
+        textViewSignIn = view.findViewById(R.id.textView_signin);
+        TxtEmai        = view.findViewById(R.id.signup_textView5);
+        TxtPass        = view.findViewById(R.id.signup_textView6);
+        mEmailField    = view.findViewById(R.id.et_email);
+        mPasswordField = view.findViewById(R.id.et_password);
+        txt_error      = (TextView) view.findViewById(R.id.txt_error);
 
         textViewSignIn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        SignupConsLay=view.findViewById(R.id.signup_const_lay);
+
+        SignupConsLay = view.findViewById(R.id.signup_const_lay);
         SignupConsLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hideKeyboard(getActivity());
             }
         });
+
+        hideerror();
+
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     TxtEmai.setTextColor(getResources().getColor(R.color.weblink_color));
+                    hideerror();
                 }
                 else{
                     TxtEmai.setTextColor(getResources().getColor(R.color.email_color));
@@ -135,14 +146,58 @@ public class SignupFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     TxtPass.setTextColor(getResources().getColor(R.color.weblink_color));
+                    hideerror();
                 }
                 else{
                     TxtPass.setTextColor(getResources().getColor(R.color.email_color));
                 }
             }
         });
+
+        mEmailField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                hideerror();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mPasswordField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                hideerror();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
         // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
+        mAuth            = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
         FrameLayout loginButton = view.findViewById(R.id.sinup_btn_facebook);
@@ -196,8 +251,6 @@ public class SignupFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                    Toast.makeText(getActivity(),"dsdksjd",Toast.LENGTH_LONG).show();
-//
                     createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
 
             }
@@ -252,8 +305,7 @@ public class SignupFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signUpWithCredential:failure", task.getException());
-                            Toast.makeText(context, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            showerror("Authentication failed.");
 
                         }
 
@@ -297,6 +349,9 @@ public class SignupFragment extends Fragment {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
+                            mEmailField.setText("");
+                            mPasswordField.setText("");
+
                             String bookmarkBundle = "bookmark";
                             String profileBundle = "profile";
                             String eventBookmarkBundle = "eventbookmark";
@@ -337,8 +392,7 @@ public class SignupFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(context, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            showerror("Authentication failed.");
                         }
 
                         // [START_EXCLUDE]
@@ -389,20 +443,26 @@ public class SignupFragment extends Fragment {
     private boolean validateForm() {
         boolean valid = true;
 
-        String email = mEmailField.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
-            valid = false;
-        } else {
-            mEmailField.setError(null);
-        }
-
+        String email    = mEmailField.getText().toString();
         String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password) || password.length()<2) {
-            mPasswordField.setError("Required.");
-            valid = false;
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+
+            valid = true;
+
         } else {
-            mPasswordField.setError(null);
+
+            if(TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
+                showerror("Enter email address and password.");
+                valid = false;
+            } else if (TextUtils.isEmpty(password) || password.length()<4) {
+                showerror("Enter password");
+                valid = false;
+            } else {
+                showerror("Enter email address.");
+                valid = false;
+            }
+
+
         }
 
         return valid;
@@ -476,6 +536,21 @@ public class SignupFragment extends Fragment {
             mProgressDialog.dismiss();
         }
     }
+
+    public void showerror(String error) {
+
+        txt_error.setText(error);
+        final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_shake);
+        txt_error.startAnimation(animShake);
+        txt_error.setVisibility(View.VISIBLE);
+
+    }
+
+    public void hideerror() {
+
+        txt_error.setVisibility(View.GONE);
+    }
+
 
 
 }

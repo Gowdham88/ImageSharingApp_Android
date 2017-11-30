@@ -10,12 +10,16 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -48,12 +52,14 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 
 
 public class LoginFragment extends Fragment {
+
     private static final String TAG ="LoginFragment";
     TextView textViewSignup;
     EditText mEmailField, mPasswordField;
     public ProgressDialog mProgressDialog;
     TextView ForgetPassTxt,EmailTxt,PassTxt;
     ImageView backButton;
+    TextView txt_error;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -61,6 +67,7 @@ public class LoginFragment extends Fragment {
     private CallbackManager mCallbackManager;
     ConstraintLayout ConsLay;
     // [END declare_auth]
+
     String mPostBookmarkIntent,mBusinessBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     private Context context;
     public static LoginFragment newInstance() {
@@ -112,18 +119,20 @@ public class LoginFragment extends Fragment {
         final View view=inflater.inflate(R.layout.activity_login, container, false);
 
         textViewSignup = view.findViewById(R.id.textView_signup);
-        mEmailField = view.findViewById(R.id.et_email);
+        mEmailField    = view.findViewById(R.id.et_email);
         mPasswordField = view.findViewById(R.id.et_password);
-        ForgetPassTxt=(TextView)view.findViewById(R.id.txt_forget_pwd);
-        EmailTxt=(TextView) view.findViewById(R.id.textView5);
-        PassTxt=(TextView) view.findViewById(R.id.textView6);
-        backButton  = (ImageView)view.findViewById(R.id.toolbar_back);
+        ForgetPassTxt  = (TextView)view.findViewById(R.id.txt_forget_pwd);
+        EmailTxt       = (TextView) view.findViewById(R.id.textView5);
+        PassTxt        = (TextView) view.findViewById(R.id.textView6);
+        backButton     = (ImageView)view.findViewById(R.id.toolbar_back);
+        txt_error      = (TextView) view.findViewById(R.id.txt_error);
 
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     EmailTxt.setTextColor(getResources().getColor(R.color.weblink_color));
+                    hideerror();
                 }
                 else{
                     EmailTxt.setTextColor(getResources().getColor(R.color.email_color));
@@ -136,12 +145,55 @@ public class LoginFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     PassTxt.setTextColor(getResources().getColor(R.color.weblink_color));
+                    hideerror();
                 }
                 else{
                     PassTxt.setTextColor(getResources().getColor(R.color.email_color));
                 }
             }
         });
+
+        mEmailField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                hideerror();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mPasswordField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                hideerror();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         ForgetPassTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,8 +204,10 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        hideerror();
+
         textViewSignup.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        ConsLay=view.findViewById(R.id.const_lay);
+        ConsLay   =view.findViewById(R.id.const_lay);
         ConsLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,12 +239,14 @@ public class LoginFragment extends Fragment {
                             public void onCancel()
                             {
                                 Log.d(TAG, "facebook:onCancel");
+                                showerror("Facebook login cancelled.");
                             }
 
                             @Override
                             public void onError(FacebookException exception)
                             {
                                 Log.d(TAG, "facebook:onError", exception);
+                                showerror("Facebook login failed.");
                             }
                         });
 
@@ -208,11 +264,7 @@ public class LoginFragment extends Fragment {
         });
 
         if (mProfileIntent!=null){
-            mReceivedIntent = mProfileIntent;    //    private void hidekeyboard() {
-//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.hideSoftInputFromWindow(ConsLay.getWindowToken(), 0);
-//    }
-
+            mReceivedIntent = mProfileIntent;
         }else if (mPostBookmarkIntent !=null){
             mReceivedIntent = mPostBookmarkIntent;
         }else if (mEventBookmarkIntent!=null){
@@ -249,10 +301,7 @@ public class LoginFragment extends Fragment {
     }
 
 
-//    public void forgetPassword(View view) {
-//        Intent mainIntent = new Intent(context,ForgetPasswordActivity.class);
-//        LoginFragment.this.startActivity(mainIntent);
-//    }
+
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
@@ -272,8 +321,7 @@ public class LoginFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signUpWithCredential:failure", task.getException());
-                            Toast.makeText(context, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            showerror("Authentication failed.");
 
                         }
 
@@ -332,13 +380,13 @@ public class LoginFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(context, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            showerror("Authentication failed.");
                         }
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
                             Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show();
+                            showerror("Authentication failed.");
                         }
                         hideProgressDialog();
 
@@ -353,20 +401,28 @@ public class LoginFragment extends Fragment {
         boolean valid = true;
 
         String email = mEmailField.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
-            valid = false;
+        String password = mPasswordField.getText().toString();
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+
+              valid = true;
+
         } else {
-            mEmailField.setError(null);
+
+            if(TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
+                showerror("Enter email address and password.");
+                valid = false;
+            } else if (TextUtils.isEmpty(password) || password.length()<4) {
+                showerror("Enter password");
+                valid = false;
+            } else {
+                showerror("Enter email address.");
+                valid = false;
+            }
+
+
         }
 
-        String password = mPasswordField.getText().toString();
-        if (TextUtils.isEmpty(password) || password.length()<4) {
-            mPasswordField.setError("Required.");
-            valid = false;
-        } else {
-            mPasswordField.setError(null);
-        }
+
 
         return valid;
     }
@@ -409,6 +465,10 @@ public class LoginFragment extends Fragment {
     }
 
     private void goToHomeActivity(String intentName, String intentValue){
+
+        mEmailField.setText("");
+        mPasswordField.setText("");
+
         Bundle bundle = new Bundle();
         bundle.putString(intentName,  intentValue);
         UserPostsFragment homeFragment=new UserPostsFragment();
@@ -435,6 +495,20 @@ public class LoginFragment extends Fragment {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    public void showerror(String error) {
+
+        txt_error.setText(error);
+        final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_shake);
+        txt_error.startAnimation(animShake);
+        txt_error.setVisibility(View.VISIBLE);
+
+    }
+
+    public void hideerror(){
+
+        txt_error.setVisibility(View.GONE);
     }
 
 }
