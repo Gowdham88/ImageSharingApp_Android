@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/genlin_lay"
+    android:layout_marginRight="@dimen/size5"
+    android:layout_marginLeft="@dimen/size5"
+    android:layout_marginBottom="@dimen/size15"
+    android:background="@drawable/genderpopup">
+<TextView
+    style="@style/FontAvenirLight"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="Select Gender"
+    android:textSize="12dp"
+    android:gravity="center"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Edittxt_lineclr" />
+    <TextView
+        style="@style/FontAvenirMedium"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Female"
+        android:id="@+id/gender_female"
+        android:textSize="16dp"
+        android:textColor="@color/weblink_color"
+        android:gravity="center"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Edittxt_lineclr"/>
+    <TextView
+        style="@style/FontAvenirMedium"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Male"
+        android:id="@+id/gender_male"
+        android:textSize="16dp"
+        android:textColor="@color/weblink_color"
+        android:gravity="center"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Edittxt_lineclr"/>
+
+    <TextView
+        style="@style/FontAvenirMedium"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Cancel"
+        android:id="@+id/gender_cancel"
+        android:textSize="16dp"
+        android:textColor="@color/loginbutton_color"
+        android:gravity="center"/>
+
+
+</LinearLayout>

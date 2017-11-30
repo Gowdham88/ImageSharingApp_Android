@@ -42,7 +42,7 @@
 
                 <TextView
                     style="@style/FontAvenirMedium"
-                    android:textSize="@dimen/text17"
+                    android:textSize="@dimen/text15"
                     android:textColor="@color/name_black"
                     android:id="@+id/textView16"
                     android:layout_width="wrap_content"
@@ -71,7 +71,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -88,7 +87,6 @@
                 android:textSize="@dimen/text12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -103,7 +101,6 @@
                 android:textSize="@dimen/text12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -118,7 +115,6 @@
                 android:textSize="@dimen/text12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -143,7 +139,6 @@
                 android:id="@+id/text_events"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -158,7 +153,6 @@
                 android:id="@+id/text_rate_business"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -173,7 +167,6 @@
                 android:id="@+id/text_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -188,7 +181,6 @@
                 android:id="@+id/text_posts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -203,7 +195,6 @@
                 android:id="@+id/text_users"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -214,16 +205,28 @@
                 android:text="@string/users"
                 android:focusable="true" />
 
+            <!--<TextView-->
+                <!--android:id="@+id/text_logout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/taginside_color"-->
+                <!--android:textColor="@color/tag_text_color"-->
+                <!--android:clickable="true"-->
+                <!--android:padding="@dimen/spacing_small"-->
+                <!--android:text="Logout"-->
+                android:focusable="true" />
             <TextView
                 android:id="@+id/text_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/taginside_color"
-                android:textColor="@color/tag_text_color"
                 android:clickable="true"
-                android:gravity="center_vertical|center"
-                android:padding="@dimen/spacing_small"
-                android:text="Logout"
+                android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:gravity="center_vertical"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="@dimen/text12"
+                android:text="@string/logout"
                 android:focusable="true" />
 
 
