@@ -66,7 +66,7 @@ ConstraintLayout Constainlay;
                     String emailAddress = emailField.getText().toString();
                     if (emailAddress.isEmpty()||!emailAddress.contains("@")) {
 
-                        showerror("Enter a email Address");
+                        showerror("Enter email Address");
 
                     } else {
 

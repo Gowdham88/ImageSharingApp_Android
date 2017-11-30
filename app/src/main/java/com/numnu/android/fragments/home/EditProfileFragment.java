@@ -3,6 +3,7 @@ package com.numnu.android.fragments.home;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,10 +13,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +49,7 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
+import com.numnu.android.BuildConfig;
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.OnboardingActivity;
@@ -58,10 +62,12 @@ import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -117,6 +123,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
     private static final int RC_LOCATION_PER = 1;
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
+    Uri fileUri;
     /**
      * GeoDataClient wraps our service connection to Google Play services and provides access
      * to the Google Places API for Android.
@@ -607,6 +614,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
     }
 
     private void showBottomSheet(LayoutInflater inflater) {
+
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
         View bottomSheetView = inflater.inflate(R.layout.dialo_camera_bottomsheet, null);
         bottomSheetDialog.setContentView(bottomSheetView);
@@ -616,14 +624,16 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         Gallery = bottomSheetView.findViewById(R.id.gallery_title);
         GalleryIcon= bottomSheetView.findViewById(R.id.gallery_icon);
         CameraIcon= bottomSheetView.findViewById(R.id.camera_image);
-        Camera.setOnClickListener(new View.OnClickListener() {
+        CameraIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (hasLocationPermission()) {
-                    // Have permissions, do the thing!
+
                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                     bottomSheetDialog.dismiss();
+
                 } else {
 //
                     EasyPermissions.requestPermissions(
@@ -631,9 +641,8 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
                             getString(R.string.rationale_location),
                             RC_LOCATION_PER,
                             CAMERA);
+
                 }
-
-
 
             }
         });
@@ -641,6 +650,8 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         Gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -691,6 +702,16 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
             }
         }
 
+    public File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "Img_" + timeStamp;
+        File storageDir = new File(Environment.getExternalStorageDirectory(), "Images");
+        File file=new File(storageDir,imageFileName+".png");
+        // Save a file: path for use with ACTION_VIEW intents
+//        mCurrentPhotoPath = file.getAbsolutePath();//"file:" + image.getAbsolutePath();
+        return file;
+    }
 
 
     public Bitmap decodeFile(String path) {

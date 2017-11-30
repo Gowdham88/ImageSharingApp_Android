@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -20,6 +22,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
      >
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
 
         <!-- Facebook Configuration -->
@@ -34,7 +46,7 @@
 
 
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -60,12 +72,12 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
-        <!--<activity-->
-            <!--android:name=".activity.HomeActivity"-->
-            <!--android:configChanges="orientation"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="adjustPan"-->
-            <!--/>-->
+        <activity
+            android:name=".activity.HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity
             android:name=".activity.OnboardingActivity"
             android:configChanges="orientation"

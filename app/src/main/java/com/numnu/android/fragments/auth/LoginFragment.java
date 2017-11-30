@@ -385,7 +385,7 @@ public class LoginFragment extends Fragment {
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            Toast.makeText(context, "Auth Failed!", Toast.LENGTH_SHORT).show();
+
                             showerror("Authentication failed.");
                         }
                         hideProgressDialog();

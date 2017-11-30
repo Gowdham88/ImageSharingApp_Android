@@ -621,7 +621,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             public void onClick(View view) {
                 if (hasLocationPermission()) {
                     // Have permissions, do the thing!
-                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    Intent cameraIntent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                     bottomSheetDialog.dismiss();
                 } else {

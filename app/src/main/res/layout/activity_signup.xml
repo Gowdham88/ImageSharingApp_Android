@@ -31,13 +31,13 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="58dp"
                     android:layout_height="58dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="15dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/loginicon"
+                    android:src="@drawable/loginicon2x"
                     app:layout_constraintLeft_toLeftOf="@+id/signup_const_lay"
                     app:layout_constraintRight_toRightOf="@+id/signup_const_lay"
                     app:layout_constraintTop_toTopOf="@+id/signup_const_lay" />

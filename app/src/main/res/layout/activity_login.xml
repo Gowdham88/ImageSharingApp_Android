@@ -32,7 +32,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="15dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/loginicon"
+        android:src="@drawable/loginicon2x"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
