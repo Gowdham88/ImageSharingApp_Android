@@ -19,7 +19,8 @@
         android:layout_below="@+id/appbar"
         android:id="@+id/current_up_recyclerview"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/size10"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

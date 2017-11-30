@@ -49,19 +49,10 @@ public class UserDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
-//        {
-//            SignupFragment signupFragment=new SignupFragment();
-//            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//            transaction.replace(R.id.frame_layout,signupFragment);
-//            transaction.addToBackStack(null).commit();
-//        }
 
         View view = inflater.inflate(R.layout.fragment_user_details, container, false);
 
         ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
-
-
 
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
@@ -83,16 +74,6 @@ public class UserDetailsFragment extends Fragment {
 
         setupRecyclerView();
 
-        ImageView toolbarIcon = view.findViewById(R.id.slice_toolbar_icon);
-
-        toolbarIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbar.setOnClickListener(new View.OnClickListener() {

@@ -1,53 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:background="@color/toolbar_background_color">
-
-<LinearLayout
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size6"
-    android:layout_marginLeft="@dimen/size6"
     android:layout_marginBottom="@dimen/size6"
+    android:layout_marginLeft="@dimen/size6"
+    android:layout_marginTop="@dimen/size6"
+    android:background="@color/toolbar_background_color"
     android:orientation="horizontal">
 
-    <TextView
-        style="@style/FontAvenirMedium"
-        android:id="@+id/txt_itemname"
-        android:layout_width="@dimen/size200"
-        android:layout_height="wrap_content"
-        android:text="Category"
-        android:textColor="@color/time_color"
-        android:textSize="@dimen/text13"
-        android:layout_marginLeft="@dimen/size10"
-        android:layout_marginTop="@dimen/size10"
-        android:layout_marginBottom="@dimen/size10"
-        />
 
     <TextView
+        android:id="@+id/txt_itemname"
         style="@style/FontAvenirMedium"
+        android:layout_width="@dimen/size200"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size10"
+        android:layout_marginLeft="@dimen/size10"
+        android:layout_marginTop="@dimen/size10"
+        android:text="Category"
         android:textColor="@color/time_color"
-        android:textSize="@dimen/text13"
+        android:textSize="@dimen/text13" />
+
+    <TextView
         android:id="@+id/textView19"
+        style="@style/FontAvenirMedium"
         android:layout_width="@dimen/size20"
         android:layout_height="wrap_content"
-        android:text="6"
-        android:gravity="center"
+        android:layout_marginBottom="@dimen/size10"
         android:layout_marginLeft="@dimen/size25"
         android:layout_marginTop="@dimen/size10"
-        android:layout_marginBottom="@dimen/size10"
-        />
+        android:gravity="center"
+        android:text="6"
+        android:textColor="@color/time_color"
+        android:textSize="@dimen/text13" />
 
     <ImageView
         android:id="@+id/imageView_forward"
         android:layout_width="@dimen/size20"
         android:layout_height="@dimen/size10"
         android:layout_gravity="center"
-        android:src="@drawable/new_correct_frwd_icon"
-        android:layout_marginLeft="@dimen/size5"/>
-</LinearLayout>
-
+        android:layout_marginLeft="@dimen/size5"
+        android:src="@drawable/new_correct_frwd_icon" />
 </LinearLayout>

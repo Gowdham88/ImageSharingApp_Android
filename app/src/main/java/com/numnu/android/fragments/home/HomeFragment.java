@@ -189,6 +189,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                     nestedScrollView.setVisibility(View.VISIBLE);
                     tabLayout.setVisibility(View.GONE);
                     viewPager.setVisibility(View.GONE);
+                    toolbarBackIcon.setVisibility(View.GONE);
 
                 }else {
                     getActivity().finish();
@@ -316,11 +317,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                 }else{
                     searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
-                if (!searchViewLocation.getText().toString().trim().equals("")){
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                }else {
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-                }
+
             }
 
             @Override
@@ -346,17 +343,27 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                if (!searchViewLocation.getText().toString().trim().equals("")){
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                }else {
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                googleLogo.setVisibility(View.VISIBLE);
+
                 locationSearch(charSequence);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if (!searchViewLocation.getText().toString().trim().equals("")){
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
 
+                }else{
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
             }
         });
 
@@ -426,8 +433,12 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
     private void locationSearch(final CharSequence charSequence) {
        if(!charSequence.toString().equals("")){
 
-           nestedScrollView.setVisibility(View.GONE);
+
            searchListView.setVisibility(View.VISIBLE);
+           googleLogo.setVisibility(View.VISIBLE);
+           nestedScrollView.setVisibility(View.GONE);
+           viewPager.setVisibility(View.GONE);
+           tabLayout.setVisibility(View.GONE);
 
            AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
            // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
@@ -436,9 +447,9 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
            mAdapter.setOnItemClickListener(new SearchResultsAdapter.OnItemClickListener() {
                @Override
                public void onRecyclerItemClick(View view, int position) {
-//                   final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
-//                   String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
-//                   searchViewLocation.setText(s);
+                   final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
+                   String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
+                   searchViewLocation.setText(s);
 //                   Bundle bundle = new Bundle();
 //                   bundle.putString("keyword",s);
 //                   bundle.putString("type","location");
@@ -447,6 +458,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 //                   FragmentTransaction transaction =  getFragmentManager().beginTransaction();
 //                   transaction.replace(R.id.frame_layout,searchFragment);
 //                   transaction.addToBackStack(null).commit();
+                   Utils.hideKeyboard(getActivity());
                    googleLogo.setVisibility(View.GONE);
                    searchListView.setVisibility(View.GONE);
                    nestedScrollView.setVisibility(View.VISIBLE);
@@ -499,6 +511,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 //                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
 //                    transaction.replace(R.id.frame_layout,searchFragment);
 //                    transaction.addToBackStack(null).commit();
+                    Utils.hideKeyboard(getActivity());
                     showSearchResults();
                 }
             });
@@ -596,6 +609,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                     nestedScrollView.setVisibility(View.VISIBLE);
                     tabLayout.setVisibility(View.GONE);
                     viewPager.setVisibility(View.GONE);
+                    toolbarBackIcon.setVisibility(View.GONE);
+
 
                 }else {
                     getActivity().finish();

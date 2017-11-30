@@ -152,4 +152,9 @@
         <item name="android:textColor">@color/tab_unselected_color</item>
     </style>
 
+    <style name="ThumnailStyle">
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_width">80dp</item>
+    </style>
+
 </resources>
