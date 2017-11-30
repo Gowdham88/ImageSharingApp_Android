@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White_clr"
-    >
+    android:background="@color/White_clr">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -85,18 +84,27 @@
                 android:text="It was a Great night !! Amazing food very long one Header ..."
                 android:textSize="13sp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_shadow_height"
+                android:layout_below="@+id/title"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:background="@android:drawable/dialog_holo_light_frame" />
+
             <android.support.v7.widget.CardView
                 android:id="@+id/content_image_card"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/image_height_large"
                 android:layout_below="@+id/title"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/spacing_tiny"
                 app:cardCornerRadius="5dp">
 
                 <ImageView
                     android:id="@+id/content_image"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="match_parent"
                     android:background="@drawable/image_corner_radius"
                     android:scaleType="centerCrop"
                     android:src="@drawable/pasta" />
@@ -129,10 +137,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/post_interests_layout"
+                        android:layout_marginLeft="@dimen/size1"
                         android:layout_toEndOf="@id/cottage_house_icon"
                         android:layout_toRightOf="@id/cottage_house_icon"
                         android:layout_weight="4"
-                        android:layout_marginLeft="@dimen/size1"
                         android:gravity="center_vertical"
                         android:text="Barbeque side platter"
                         android:textSize="13sp" />
@@ -219,27 +227,27 @@
             <!--android:layout_below="@id/post_interests_layout">-->
             <!--</LinearLayout>-->
             <ImageView
+                android:id="@+id/barbados_icon"
                 android:layout_width="15dp"
                 android:layout_height="16dp"
-                android:id="@+id/barbados_icon"
                 android:layout_below="@+id/post_interests_layout"
-                android:src="@drawable/ic_calendar"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="6dp"
-                />
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_calendar" />
+
             <TextView
+                android:id="@+id/barbados_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:id="@+id/barbados_txt"
-                android:text="Barbados food and rum festival"
-                android:layout_toRightOf="@id/barbados_icon"
-                android:layout_toEndOf="@id/barbados_icon"
                 android:layout_below="@+id/post_interests_layout"
-                android:gravity="center_vertical"
-                android:textSize="13sp"
-                android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/barbados_icon"
+                android:layout_toRightOf="@id/barbados_icon"
+                android:gravity="center_vertical"
+                android:text="Barbados food and rum festival"
+                android:textSize="13sp"
 
                 />
 

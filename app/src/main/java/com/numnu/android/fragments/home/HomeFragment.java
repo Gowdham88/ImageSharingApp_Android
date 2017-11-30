@@ -317,11 +317,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                 }else{
                     searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
-                if (!searchViewLocation.getText().toString().trim().equals("")){
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                }else {
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-                }
+
             }
 
             @Override
@@ -347,6 +343,11 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                if (!searchViewLocation.getText().toString().trim().equals("")){
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                }else {
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
             }
 
             @Override
@@ -357,7 +358,12 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if (!searchViewLocation.getText().toString().trim().equals("")){
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
 
+                }else{
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
             }
         });
 
@@ -441,9 +447,9 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
            mAdapter.setOnItemClickListener(new SearchResultsAdapter.OnItemClickListener() {
                @Override
                public void onRecyclerItemClick(View view, int position) {
-//                   final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
-//                   String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
-//                   searchViewLocation.setText(s);
+                   final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
+                   String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
+                   searchViewLocation.setText(s);
 //                   Bundle bundle = new Bundle();
 //                   bundle.putString("keyword",s);
 //                   bundle.putString("type","location");
@@ -452,7 +458,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 //                   FragmentTransaction transaction =  getFragmentManager().beginTransaction();
 //                   transaction.replace(R.id.frame_layout,searchFragment);
 //                   transaction.addToBackStack(null).commit();
-                   searchViewLocation.setText(charSequence.toString());
+                   Utils.hideKeyboard(getActivity());
                    googleLogo.setVisibility(View.GONE);
                    searchListView.setVisibility(View.GONE);
                    nestedScrollView.setVisibility(View.VISIBLE);
@@ -505,6 +511,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 //                    FragmentTransaction transaction =  getFragmentManager().beginTransaction();
 //                    transaction.replace(R.id.frame_layout,searchFragment);
 //                    transaction.addToBackStack(null).commit();
+                    Utils.hideKeyboard(getActivity());
                     showSearchResults();
                 }
             });

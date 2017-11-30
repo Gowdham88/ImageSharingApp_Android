@@ -39,7 +39,6 @@
                 android:layout_height="@dimen/image_height_large"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:elevation="10dp"
                 app:cardCornerRadius="@dimen/image_card_corner_radius">
 
                 <ImageView

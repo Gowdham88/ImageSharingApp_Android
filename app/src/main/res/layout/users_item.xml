@@ -27,7 +27,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/slice_profile_image"
         android:text="Marc Chiriqui"
-       android:textSize="@dimen/text17"
+       android:textSize="@dimen/font_small"
         android:textColor="@color/event_map"
         style="@style/FontAvenirMedium"
         tools:ignore="MissingPrefix"
