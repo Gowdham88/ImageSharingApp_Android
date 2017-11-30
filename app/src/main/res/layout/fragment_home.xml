@@ -140,9 +140,11 @@
                         android:id="@+id/view_current_event_list"
                         android:layout_width="@dimen/toolbar_icon_width"
                         android:layout_height="@dimen/toolbar_icon_width"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="10dp"
+                        android:layout_alignEnd="@+id/current_up_recyclerview"
+                        android:layout_alignRight="@+id/current_up_recyclerview"
+                        android:layout_alignTop="@+id/current_events_text"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:layout_marginRight="@dimen/spacing_small"
                         app:srcCompat="@drawable/ic_arrow" />
 
 
@@ -181,9 +183,11 @@
                         android:id="@+id/view_current_event_list1"
                         android:layout_width="@dimen/toolbar_icon_width"
                         android:layout_height="@dimen/toolbar_icon_width"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="10dp"
+                        android:layout_alignEnd="@+id/current_up_recyclerview1"
+                        android:layout_alignRight="@+id/current_up_recyclerview1"
+                        android:layout_alignTop="@+id/current_events_text1"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:layout_marginRight="@dimen/spacing_small"
                         app:srcCompat="@drawable/ic_arrow" />
 
 
@@ -221,9 +225,11 @@
                         android:id="@+id/view_current_event_list2"
                         android:layout_width="@dimen/toolbar_icon_width"
                         android:layout_height="@dimen/toolbar_icon_width"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="10dp"
+                        android:layout_alignEnd="@+id/current_up_recyclerview2"
+                        android:layout_alignRight="@+id/current_up_recyclerview2"
+                        android:layout_alignTop="@+id/current_events_text2"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:layout_marginRight="@dimen/spacing_small"
                         app:srcCompat="@drawable/ic_arrow" />
 
 
@@ -321,9 +327,9 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/img_google"
         android:layout_below="@+id/appbar_layout"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
         android:orientation="vertical"
         android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"

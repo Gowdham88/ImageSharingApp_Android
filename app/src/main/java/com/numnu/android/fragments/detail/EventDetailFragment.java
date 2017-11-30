@@ -124,7 +124,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
-        View bottomSheetView = inflater.inflate(R.layout.dialog_event_bottomsheet,null);
+        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
 

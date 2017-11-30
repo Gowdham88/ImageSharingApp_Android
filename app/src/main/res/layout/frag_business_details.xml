@@ -53,7 +53,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/text_business_detail_image"
+                        android:id="@+id/text_business_entity"
                         style="@style/FontAvenirMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                         android:id="@+id/business_chips_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/text_business_detail_image">
+                        android:layout_below="@+id/text_business_entity">
 
 
                         <LinearLayout
@@ -106,6 +106,7 @@
                         android:src="@drawable/ic_calendar" />
 
                     <TextView
+                        android:id="@+id/event_name"
                         style="@style/FontAvenirMedium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

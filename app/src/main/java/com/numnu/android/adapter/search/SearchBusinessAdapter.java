@@ -34,7 +34,7 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.event_business_item, parent, false);
+                .inflate(R.layout.search_business_item, parent, false);
 
         //view.setOnClickListener(MainActivity.myOnClickListener);
 
