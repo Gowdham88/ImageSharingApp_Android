@@ -21,12 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="56dp"
         android:background="@color/Edittxt_lineclr"/>
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size60"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:paddingTop="@dimen/size14"
         app:itemTextColor="@android:color/darker_gray"

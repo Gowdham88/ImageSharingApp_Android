@@ -2,10 +2,11 @@
     <string name="app_name">Numnu</string>
     <string name="businesses">Businesses</string>
     <string name="numnu">Numnu</string>
-    <string name="facebook_sign_in">Sign In with Facebook</string>
+    <string name="facebook_sign_in">Login with Facebook</string>
     <string name="facebook_sign_up">Sign Up with Facebook</string>
     <string name="create_an_account">Create an Account</string>
-    <string name="sign_in">Sign In</string>
+    <string name="sign_in">Login</string>
+    <string name="login">Login</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="numnu_logo">Numnu logo</string>
     <string name="by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"><![CDATA[By signing up you agree to our Terms of\nService & Privacy Policy]]></string>
@@ -19,7 +20,7 @@
     <string name="current_upcoming_events"><![CDATA[Current & Upcoming Events]]></string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="past_events">Past events</string>
-    <string name="login_with_email">Sign In</string>
+    <string name="login_with_email">Login</string>
     <string name="password">Password</string>
     <string name="email_address">Email Address</string>
     <string name="forgot_password">Forgot Password?</string>

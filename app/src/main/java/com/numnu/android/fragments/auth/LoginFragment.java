@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,7 @@ public class LoginFragment extends Fragment {
     EditText mEmailField, mPasswordField;
     public ProgressDialog mProgressDialog;
     TextView ForgetPassTxt,EmailTxt,PassTxt;
+    ImageView backButton;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -114,7 +117,7 @@ public class LoginFragment extends Fragment {
         ForgetPassTxt=(TextView)view.findViewById(R.id.txt_forget_pwd);
         EmailTxt=(TextView) view.findViewById(R.id.textView5);
         PassTxt=(TextView) view.findViewById(R.id.textView6);
-
+        backButton  = (ImageView)view.findViewById(R.id.toolbar_back);
 
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -162,7 +165,7 @@ public class LoginFragment extends Fragment {
 
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
-        Button loginButton = view.findViewById(R.id.login_btn_facebook);
+        FrameLayout loginButton = view.findViewById(R.id.login_btn_facebook);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,6 +195,15 @@ public class LoginFragment extends Fragment {
                         });
 
                 // [END initialize_fblogin]
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getActivity().onBackPressed();
+
             }
         });
 

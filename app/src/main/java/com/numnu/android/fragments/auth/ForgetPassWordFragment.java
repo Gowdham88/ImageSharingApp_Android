@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +28,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 
 public class ForgetPassWordFragment extends Fragment {
     Button Resetbutton;
+    ImageView backButton;
 ConstraintLayout Constainlay;
     public static ForgetPassWordFragment newInstance() {
         ForgetPassWordFragment fragment = new ForgetPassWordFragment();
@@ -46,6 +48,7 @@ ConstraintLayout Constainlay;
         View v = inflater.inflate(R.layout.activity_forget_password, container, false);
         Resetbutton=(Button)v.findViewById(R.id.button_reset);
         Constainlay = (ConstraintLayout)v.findViewById(R.id.const_lay);
+        backButton  = (ImageView)v.findViewById(R.id.toolbar_back);
         Resetbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +81,16 @@ ConstraintLayout Constainlay;
                 hideKeyboard(getActivity());
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getActivity().onBackPressed();
+
+            }
+        });
+
         return v;
     }
 }
