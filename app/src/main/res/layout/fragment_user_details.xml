@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:id="@+id/lin_lay">
-        <include layout="@layout/toolbar_with_options" />
+        <include layout="@layout/toolbar" />
 
     </LinearLayout>
     <View
