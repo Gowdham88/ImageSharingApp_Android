@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.fragments.home.SettingsFragment;
 
@@ -29,6 +30,9 @@ public class UserDetailsFragment extends Fragment {
     private RecyclerView mUserPostsRecycler;
     Context context;
     private String id,username;
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
+
 
     public static UserDetailsFragment newInstance() {
         UserDetailsFragment fragment = new UserDetailsFragment();
@@ -64,7 +68,10 @@ public class UserDetailsFragment extends Fragment {
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("@Marc chiriqui");
-
+        recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview) ;
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         mUserPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mUserPostsRecycler.setLayoutManager(layoutManager);

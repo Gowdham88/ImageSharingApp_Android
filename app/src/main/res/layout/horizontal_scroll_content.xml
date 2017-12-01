@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/spacing_small"
+    android:background="@drawable/tag_background">
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="@dimen/spacing_small"-->
+        <!--android:layout_marginLeft="@dimen/spacing_small"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:layout_marginTop="@dimen/spacing_small"-->
+        <!--android:orientation="horizontal">-->
+
+        <TextView
+            android:id="@+id/scr_txt"
+            style="@style/TagStyle"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="food"
+            android:textColor="@color/tag_inside_text_color" />
+
+    <!--</LinearLayout>-->
+</LinearLayout>

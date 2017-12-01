@@ -1,7 +1,7 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="171dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/business_rel_lay"
     android:layout_marginTop="20dp"
     android:layout_marginLeft="10dp"
@@ -32,21 +32,6 @@
         android:textSize="15dp"
         />
 
-    <TextView
-        android:id="@+id/txt_city"
-        style="@style/FontAvenirMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/chips_layout"
-        android:layout_alignStart="@+id/chips_layout"
-        android:layout_below="@+id/chips_layout"
-        android:layout_marginTop="15dp"
-
-        android:drawableLeft="@drawable/ic_city"
-        android:drawablePadding="4dp"
-        android:text="Montreal"
-        android:textColor="@color/event_map"
-        android:textSize="15dp" />
 
 
     <TextView
@@ -63,81 +48,41 @@
         android:text="@string/profile_header_str"
         android:textColor="@color/event_map" />
 
-
-    <HorizontalScrollView
-        android:id="@+id/chips_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/hrz_lin_lay"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@+id/notification_image"
         android:layout_marginLeft="25dp"
-        android:layout_below="@+id/business_name"
-        android:layout_toRightOf="@id/notification_image"
-        android:layout_marginTop="15dp"
-        android:scrollbars="none">
+        android:layout_below="@+id/business_name">
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/business_recyclerview"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:orientation="horizontal">
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:reverseLayout="false"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TagStyle"
-                android:text="food" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/txt_city"
+        style="@style/FontAvenirMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hrz_lin_lay"
+        android:layout_alignStart="@+id/hrz_lin_lay"
+        android:layout_below="@+id/hrz_lin_lay"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/ic_city"
+        android:drawablePadding="4dp"
+        android:text="Montreal"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Rum" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-        </LinearLayout>
-
-    </HorizontalScrollView>
+        android:textColor="@color/event_map"
+        android:textSize="15dp" />
 
 
 </RelativeLayout>
