@@ -79,7 +79,7 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -89,7 +89,7 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout,
-                        SearchBusinessDetailFragment.newInstance());
+                        ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

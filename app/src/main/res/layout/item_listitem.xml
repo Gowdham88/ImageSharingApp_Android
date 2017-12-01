@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_small"
             android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="@dimen/spacing_small"
             android:orientation="horizontal">
 
@@ -58,69 +58,69 @@
                 android:layout_height="wrap_content"
                 android:text="food"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/size12" />
+                android:textSize="12dp" />
             <TextView
                 style="@style/TagStyle"
-                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="food"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/size12" />
+                android:textSize="12dp"/>
 
             <TextView
                 style="@style/TagStyle"
-                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="food"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/size12" />
+                android:textSize="12dp" />
 
             <TextView
                 style="@style/TagStyle"
-                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="food"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/size12" />
+                android:textSize="12dp" />
 
             <TextView
                 style="@style/TagStyle"
-                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="food"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/size12" />
+                android:textSize="12dp"/>
 
             <TextView
                 style="@style/TagStyle"
-                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="food"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/size12" />
+                android:textSize="12dp" />
 
             <TextView
                 style="@style/TagStyle"
-                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="food"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/size12" />
+                android:textSize="12dp" />
 
             <TextView
                 style="@style/TagStyle"
-                android:layout_marginLeft="@dimen/size5"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="food"
                 android:textColor="@color/tag_inside_text_color"
-                android:textSize="@dimen/size12" />
+                android:textSize="12dp" />
         </LinearLayout>
 
     </HorizontalScrollView>
