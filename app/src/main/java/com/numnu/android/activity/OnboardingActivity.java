@@ -57,6 +57,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
     private void gotoHome() {
         Intent mainIntent = new Intent(OnboardingActivity.this, HomeActivity.class);
         OnboardingActivity.this.startActivity(mainIntent);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
         OnboardingActivity.this.finish();
     }
 
