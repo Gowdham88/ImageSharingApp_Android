@@ -400,7 +400,7 @@
             <EditText
                 style="@style/FontAvenirMedium"
                 android:textColor="@color/name_black"
-                android:textSize="14dp"
+                android:textSize="13dp"
                 android:background="@null"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"

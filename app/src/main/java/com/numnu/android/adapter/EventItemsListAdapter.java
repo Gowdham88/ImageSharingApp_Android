@@ -3,6 +3,7 @@ package com.numnu.android.adapter;
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
 
     public EventItemsListAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
@@ -68,6 +71,9 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
                 transaction.addToBackStack(null).commit();
             }
         });
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
@@ -82,6 +88,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
         public ViewHolder(View itemView) {
             super(itemView);
             this.textViewName =  itemView.findViewById(R.id.item_name);
+            recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.item_image);
         }

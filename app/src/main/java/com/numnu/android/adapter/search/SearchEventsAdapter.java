@@ -3,6 +3,7 @@ package com.numnu.android.adapter.search;
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.detail.EventDetailFragment;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
 
     private Context context;
     private ArrayList<String> stringArrayList = new ArrayList<>();
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
 
     public SearchEventsAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
@@ -61,6 +65,9 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
                 transaction.addToBackStack(null).commit();
             }
         });
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
@@ -75,6 +82,7 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
         ViewHolder(View itemView) {
             super(itemView);
             this.textViewName =  itemView.findViewById(R.id.text_event);
+            recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.current_event_image);
         }

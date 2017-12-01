@@ -27,87 +27,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_small"
-        android:layout_marginStart="@dimen/spacing_small"
+      android:layout_marginRight="@dimen/spacing_small"
         android:layout_toRightOf="@id/card_view"
         android:text="Flatron loran dummy data"
         />
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/hrz_lin_lay"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="8dp"
+    android:layout_toRightOf="@+id/card_view"
+    android:layout_below="@+id/business_name">
 
-    <HorizontalScrollView
-        android:id="@+id/chips_layout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/business_recyclerview"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/business_name"
-        android:layout_toRightOf="@id/card_view"
-        android:scrollbars="none">
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:reverseLayout="false"/>
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_small"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TagStyle"
-                android:text="Food" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_tiny"
-                style="@style/TagStyle"
-                android:text="Rum" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_tiny"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_tiny"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_tiny"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_tiny"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_tiny"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_tiny"
-                style="@style/TagStyle"
-                android:text="Wine" />
-        </LinearLayout>
-
-    </HorizontalScrollView>
+</LinearLayout>
 
     <TextView
         android:visibility="gone"

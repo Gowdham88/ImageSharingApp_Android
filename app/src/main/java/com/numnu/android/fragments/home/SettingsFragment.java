@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.auth.SignupFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -67,7 +68,7 @@ public class SettingsFragment extends Fragment {
             shareApp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    shareApp();
+//                    shareApp();
                 }
             });
 
@@ -75,7 +76,7 @@ public class SettingsFragment extends Fragment {
             rateApp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    rateApp();
+//                    rateApp();
                 }
             });
 
@@ -83,7 +84,7 @@ public class SettingsFragment extends Fragment {
             terms.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showTerms();
+//                    showTerms();
                 }
             });
 
@@ -91,7 +92,7 @@ public class SettingsFragment extends Fragment {
             privacy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPrivacyPolicy();
+//                    showPrivacyPolicy();
                 }
             });
 
@@ -139,7 +140,7 @@ public class SettingsFragment extends Fragment {
 
         PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,false);
         FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, LoginFragment.newInstance());
+        transaction.replace(R.id.frame_layout, SignupFragment.newInstance());
         transaction.addToBackStack(null).commit();
     }
 
@@ -149,38 +150,38 @@ public class SettingsFragment extends Fragment {
         transaction.addToBackStack(null).commit();
     }
 
-    private void showPrivacyPolicy() {
-
-        String url = "https://www.youtube.com/";
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        // set toolbar color
-        builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(context, Uri.parse(url));
-    }
-
-    private void showTerms() {
-
-        String url = "https://www.youtube.com/";
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        // set toolbar color
-        builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
-        CustomTabsIntent customTabsIntent = builder.build();
-        customTabsIntent.launchUrl(context, Uri.parse(url));
-    }
-
-    private void rateApp() {
-        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context.getPackageName())));
-    }
-
-    private void shareApp() {
-
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT,getString(R.string.share_content)+context.getPackageName());
-        sendIntent.setType("text/plain");
-        context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
-    }
+//    private void showPrivacyPolicy() {
+//
+//        String url = "https://www.youtube.com/";
+//        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+//        // set toolbar color
+//        builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
+//        CustomTabsIntent customTabsIntent = builder.build();
+//        customTabsIntent.launchUrl(context, Uri.parse(url));
+//    }
+//
+//    private void showTerms() {
+//
+//        String url = "https://www.youtube.com/";
+//        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+//        // set toolbar color
+//        builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent));
+//        CustomTabsIntent customTabsIntent = builder.build();
+//        customTabsIntent.launchUrl(context, Uri.parse(url));
+//    }
+//
+//    private void rateApp() {
+//        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context.getPackageName())));
+//    }
+//
+//    private void shareApp() {
+//
+//        Intent sendIntent = new Intent();
+//        sendIntent.setAction(Intent.ACTION_SEND);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT,getString(R.string.share_content)+context.getPackageName());
+//        sendIntent.setType("text/plain");
+//        context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
+//    }
 
 
 }

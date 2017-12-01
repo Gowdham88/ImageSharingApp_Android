@@ -101,6 +101,7 @@
                 android:layout_height="19dp"
                 android:layout_below="@+id/post_interests_layout"
                 android:layout_weight="0.5"
+                android:layout_marginTop="3dp"
                 android:src="@drawable/dish_ico" />
 
             <TextView
@@ -123,6 +124,7 @@
                 android:layout_below="@id/cottage_house_txt"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
                 android:layout_weight="0.5"
                 android:src="@drawable/restaurant_ico" />
 
@@ -197,7 +199,7 @@
         android:id="@+id/barbados_icon"
         android:layout_below="@+id/post_interests_layout"
         android:src="@drawable/ic_calendar"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="13dp"
         android:layout_marginLeft="6dp"
         />
     <TextView

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size10"
+    android:layout_marginTop="10dp"
     android:background="@color/White_clr"
     android:padding="10dp">
 
@@ -25,87 +25,34 @@
         android:id="@+id/business_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/size10"
-        android:layout_marginStart="@dimen/size10"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_toRightOf="@id/card_view"
         android:text="Flatron" />
 
 
-    <HorizontalScrollView
-        android:id="@+id/chips_layout"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/business_name"
-        android:layout_toRightOf="@id/card_view"
-        android:scrollbars="none">
+        android:id="@+id/hrz_lin_lay"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_toRightOf="@+id/card_view"
+        android:layout_below="@+id/business_name">
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/flatron_recyclerview"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size8"
-            android:layout_marginLeft="@dimen/size8"
-            android:layout_marginRight="@dimen/size8"
-            android:layout_marginTop="@dimen/size8"
-            android:orientation="horizontal">
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:reverseLayout="false"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TagStyle"
-                android:text="food" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size4"
-                style="@style/TagStyle"
-                android:text="Rum" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size4"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size4"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size4"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size4"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size4"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size4"
-                style="@style/TagStyle"
-                android:text="Wine" />
-        </LinearLayout>
-
-    </HorizontalScrollView>
+    </LinearLayout>
 
 
 </RelativeLayout>
