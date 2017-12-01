@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:lines="2"
         android:layout_marginStart="10dp"
         android:layout_toRightOf="@id/card_view"
         android:text="Bouillon Bilk,595 St Lautent Blvd,Montreal,QC H2X 2S9,Canada" />

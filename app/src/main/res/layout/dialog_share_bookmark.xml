@@ -32,7 +32,7 @@
         android:layout_marginStart="@dimen/spacing_small"
         android:gravity="center_vertical"
         android:textColor="@color/darker_grey"
-        android:textSize="@dimen/text16"
+        android:textSize="16dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/bookmark_icon"
@@ -59,9 +59,9 @@
         android:text="Bookmark"
         android:gravity="center_vertical"
         android:textColor="@color/darker_grey"
-        android:textSize="@dimen/text16"
+        android:textSize="16dp"
         android:layout_below="@+id/share_title"
         android:layout_alignLeft="@+id/share_title"
         android:layout_alignStart="@+id/share_title"
-        android:layout_marginTop="@dimen/size20" />
+        android:layout_marginTop="20dp" />
     </RelativeLayout>

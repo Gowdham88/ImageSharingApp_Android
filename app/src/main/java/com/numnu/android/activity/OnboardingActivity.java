@@ -57,6 +57,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
     private void gotoHome() {
         Intent mainIntent = new Intent(OnboardingActivity.this, HomeActivity.class);
         OnboardingActivity.this.startActivity(mainIntent);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
         OnboardingActivity.this.finish();
     }
 
@@ -135,9 +136,11 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
             e.printStackTrace();
         }
         alertDialog1.show();
-        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(220,this),(int)Utils.convertDpToPixel(250,this));
+        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(228,this),(int)Utils.convertDpToPixel(220,this));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alertDialog1.getWindow().getAttributes());
+//        lp.height=200dp;
+//        lp.width=228;
         lp.gravity = Gravity.CENTER;
         lp.windowAnimations = R.style.DialogAnimation;
         alertDialog1.getWindow().setAttributes(lp);

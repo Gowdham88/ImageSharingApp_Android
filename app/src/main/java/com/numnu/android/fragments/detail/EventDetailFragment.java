@@ -13,6 +13,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,6 +30,8 @@ import android.widget.Toast;
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
 import com.numnu.android.activity.webFragment;
+import com.numnu.android.adapter.FoodAdapter;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
@@ -54,6 +58,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private ExpandableTextView eventDescription;
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
     private ViewPager viewPager;
     private CustomScrollView nestedScrollView;
 
@@ -75,7 +81,10 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         final View view = inflater.inflate(R.layout.fragment_event_detail, container, false);
         viewPager = view.findViewById(R.id.event_viewpager);
 
-
+        recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         weblink1 = view.findViewById(R.id.txt_weblink_1);
         weblink2 = view.findViewById(R.id.txt_weblink_2);
         weblink3 = view.findViewById(R.id.txt_weblink_3);

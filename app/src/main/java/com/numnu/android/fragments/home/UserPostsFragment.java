@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.fragments.auth.SignupFragment;
 import com.numnu.android.utils.PreferencesHelper;
@@ -31,6 +32,8 @@ public class UserPostsFragment extends Fragment {
     private RecyclerView mUserPostsRecycler;
     private NestedScrollView nestedScrollView ;
     Context context;
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
 
     public static UserPostsFragment newInstance() {
         UserPostsFragment fragment = new UserPostsFragment();
@@ -90,7 +93,10 @@ public class UserPostsFragment extends Fragment {
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("@Marc chiriqui");
-
+        recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         mUserPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mUserPostsRecycler.setLayoutManager(layoutManager);

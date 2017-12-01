@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.search.PostsFragment;
@@ -40,6 +43,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private AppBarLayout appBarLayout;
     TextView entityTitle;
     TextView Viewimage,eventName;
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
     TextView ViewTxt;
     private CustomScrollView nestedScrollView;
 
@@ -61,11 +66,14 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
         viewPagerBusiness = view.findViewById(R.id.business_viewpager);
         tabLayout = view.findViewById(R.id.tabs);
-        eventDescription = view.findViewById(R.id.business_detail_description);
+        eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         entityTitle = view.findViewById(R.id.text_business_entity);
 
-
+        recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         setupExpandableText();
         setupViewPager(viewPagerBusiness);
         tabLayout.setupWithViewPager(viewPagerBusiness);
