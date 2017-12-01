@@ -7,8 +7,11 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
+import android.text.format.Formatter;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,6 +21,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+
+import static android.content.Context.WIFI_SERVICE;
 
 
 public class Utils {
@@ -88,6 +100,57 @@ public class Utils {
 		int i = fulltext.indexOf(subtext);
 		str.setSpan(new ForegroundColorSpan(color), i, i + subtext.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 	}
+
+
+
+	public static String getMobileIPAddress() {
+		try {
+			List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+			for (NetworkInterface intf : interfaces) {
+				List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+				for (InetAddress addr : addrs) {
+					if (!addr.isLoopbackAddress()) {
+						return  addr.getHostAddress();
+					}
+				}
+			}
+		} catch (Exception ex) { } // for now eat exceptions
+		return "";
+	}
+
+	public static String getLocalIpAddress(Context context) {
+		WifiManager wifiMgr = (WifiManager) context.getApplicationContext().getSystemService(context.WIFI_SERVICE);
+		if(wifiMgr.isWifiEnabled()) {
+			WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+			int ip = wifiInfo.getIpAddress();
+			String wifiIpAddress = String.format("%d.%d.%d.%d",
+					(ip & 0xff),
+					(ip >> 8 & 0xff),
+					(ip >> 16 & 0xff),
+					(ip >> 24 & 0xff));
+
+			return wifiIpAddress;
+		}
+
+		try {
+		for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+			NetworkInterface intf = en.nextElement();
+			for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+				InetAddress inetAddress = enumIpAddr.nextElement();
+				Log.i("","111 inetAddress.getHostAddress(): "+inetAddress.getHostAddress());
+//the condition after && is missing in your snippet, checking instance of inetAddress
+				if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+					Log.i("","111 return inetAddress.getHostAddress(): "+inetAddress.getHostAddress());
+					return inetAddress.getHostAddress();
+				}
+
+			}
+		}
+		} catch (Exception ex) { } // for now eat exceptions
+
+		return null;
+	}
+
 
 
 }

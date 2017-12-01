@@ -23,6 +23,7 @@ public class PreferencesHelper {
     public static final String PREFERENCE_DOB ="dob";
     public static final String PREFERENCE_GENDER ="gender";
     public static final String PREFERENCE_LOGGED_IN ="logged in";
+    public static final String PREFERENCE_FIREBASE_TOKEN ="logged in";
 
 
 

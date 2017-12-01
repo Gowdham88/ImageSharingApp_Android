@@ -204,7 +204,8 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
                             Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
                         } else {
                             mylist.add(ItemModelList);
-                            adapter = new FoodAdapter(context, mylist);
+                            // TODO: 1/12/17  change to auto complete 
+//                            adapter = new FoodAdapter(context, mylist);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                             autoComplete.setText(null);
@@ -233,7 +234,8 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
                             Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
                         } else {
                             mylist.add(autoTxt);
-                            adapter = new FoodAdapter(context, mylist);
+                            // TODO: 1/12/17  
+//                            adapter = new FoodAdapter(context, mylist);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                            autoComplete.setText(null);
@@ -251,7 +253,8 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
             }
         });
 
-        adapter = new FoodAdapter(context, mylist);
+        // TODO: 1/12/17
+//        adapter = new FoodAdapter(context, mylist);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 

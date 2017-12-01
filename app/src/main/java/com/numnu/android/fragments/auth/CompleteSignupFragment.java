@@ -20,9 +20,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,15 +54,22 @@ import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
+import com.numnu.android.adapter.TagsAutocompleteAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
 import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.TagsResponse;
+import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,8 +77,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -97,7 +113,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     AutoCompleteTextView autoComplete;
     String ItemModelList;
     String mainAutotxt;
-    ArrayList<String> mylist = new ArrayList<>();
+    ArrayList<Tagsuggestion> mylist = new ArrayList<>();
     ImageView viewImage, EditBtn;
     TextView Gallery,mGender;
     TextView Camera;
@@ -126,6 +142,9 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     protected GeoDataClient mGeoDataClient;
 
     private PlaceAutocompleteAdapter mAdapter;
+
+    ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+    private TagsAutocompleteAdapter tagsAutocompleteAdapter;
 
     public static CompleteSignupFragment newInstance() {
         CompleteSignupFragment fragment = new CompleteSignupFragment();
@@ -187,70 +206,9 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         AddTxt = (TextView) v.findViewById(R.id.add_txt);
 
 
-        final ArrayAdapter<String> vairam = new ArrayAdapter<String>(getActivity(), R.layout.auto_dialog, R.id.lbl_name, arr);
-        autoComplete.setThreshold(1);
-        autoComplete.setAdapter(vairam);
-        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                ItemModelList = vairam.getItem(position).toString();
-                if ( !autoComplete.getText().toString().isEmpty()&& ItemModelList != null && !autoComplete.getText().toString().equals(null)) {
-                    if (!ItemModelList.isEmpty()) {
+        setupTagAutocomplete();
 
-                        if (mylist.contains(ItemModelList)) {
-                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
-                        } else {
-                            mylist.add(ItemModelList);
-                            adapter = new FoodAdapter(context, mylist);
-                            recyclerView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                            autoComplete.setText(null);
-                        }
-
-                    } else {
-                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } else {
-                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        });
-        AddTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String autoTxt=autoComplete.getText().toString();
-                if ( !autoComplete.getText().toString().isEmpty() && !autoComplete.getText().toString().equals(null)) {
-                    if (!autoTxt.isEmpty()) {
-
-                        if (mylist.contains(autoTxt)) {
-                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
-                        } else {
-                            mylist.add(autoTxt);
-                            adapter = new FoodAdapter(context, mylist);
-                            recyclerView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                            autoComplete.setText(null);
-                        }
-
-                    } else {
-                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } else {
-                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        adapter = new FoodAdapter(context, mylist);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        
 
         musername=v.findViewById(R.id.et_cmpltsignup_username);
         mEmail = v.findViewById(R.id.et_signup_email);
@@ -345,6 +303,10 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                 String dob = mDob.getText().toString().trim();
 //                String foodPreferences = mFoodPreferences.getText().toString();
 
+//                gender: 0 -> male, 1 -> female
+
+
+
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
                 if (email.equals("")) {
@@ -382,6 +344,165 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
 
         return v;
+    }
+
+    private void setupTagAutocomplete() {
+
+        //setting horizontal orientation for tag layout
+        adapter = new FoodAdapter(context, mylist);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        
+        autoComplete.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tagsAutocompleteAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                Toast.makeText(context, "after text changed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+         tagsAutocompleteAdapter = new TagsAutocompleteAdapter(context, apiServices);
+        autoComplete.setThreshold(1);
+        autoComplete.setAdapter(tagsAutocompleteAdapter);
+        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                ItemModelList = tagsAutocompleteAdapter.getItem(position).getText();
+                if ( !autoComplete.getText().toString().isEmpty()&& ItemModelList != null && !autoComplete.getText().toString().equals(null)) {
+                    if (!ItemModelList.isEmpty()) {
+
+                        if (mylist.contains(ItemModelList)) {
+                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mylist.add(tagsAutocompleteAdapter.getItem(position));
+                            adapter = new FoodAdapter(context, mylist);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            autoComplete.setText(null);
+                        }
+
+                    } else {
+                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+        // TODO: 1/12/17  create tags and and add to the list,clarify with CZ team.
+//        AddTxt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String autoTxt=autoComplete.getText().toString();
+//                if ( !autoComplete.getText().toString().isEmpty() && !autoComplete.getText().toString().equals(null)) {
+//                    if (!autoTxt.isEmpty()) {
+//
+//                        if (mylist.contains(autoTxt)) {
+//                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            mylist.add(autoTxt);
+//                            adapter = new FoodAdapter(context, mylist);
+//                            recyclerView.setAdapter(adapter);
+//                            adapter.notifyDataSetChanged();
+//                            autoComplete.setText(null);
+//                        }
+//
+//                    } else {
+//                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//
+//                } else {
+//                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        });
+    }
+
+    private void getSuggestions(String s) {
+
+        Call<TagsResponse> call = apiServices.getTags(s);
+        call.enqueue(new Callback<TagsResponse>() {
+
+            @Override
+            public void onResponse(Call<TagsResponse> call, Response<TagsResponse> response) {
+                int responsecode = response.code();
+                TagsResponse tagsResponse = response.body();
+                if (responsecode == 200) {
+
+                    Toast.makeText(context, "Tags loaded!", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TagsResponse> call, Throwable t) {
+                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    public void uploadImage()
+    {
+        String userId = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_ID);
+        File file=null;
+        try{
+             file = new File(imgPath);
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"You didn't selected any image",Toast.LENGTH_SHORT).show();
+        }
+
+        if (file != null && file.exists()) {
+
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
+
+
+            Call<CommonResponse> call = apiServices.uploadImage(userId, body);
+            call.enqueue(new Callback<CommonResponse>() {
+
+                @Override
+                public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                    int responsecode = response.code();
+                    CommonResponse commonResponse = response.body();
+                    if (responsecode == 200) {
+
+                        PreferencesHelper.setPreference(getApplicationContext(),PreferencesHelper.PREFERENCE_PROFILE_PIC,commonResponse.getImageurl());
+                        Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
+
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<CommonResponse> call, Throwable t) {
+                    Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }else {
+            Toast.makeText(context, "file not exists!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void showAlert() {
@@ -753,4 +874,9 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     }
 
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 }

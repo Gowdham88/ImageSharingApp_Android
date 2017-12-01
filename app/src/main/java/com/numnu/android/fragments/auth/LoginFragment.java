@@ -40,6 +40,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.numnu.android.R;
 import com.numnu.android.fragments.home.HomeFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
@@ -360,6 +361,16 @@ public class LoginFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            user.getIdToken(true)
+                                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                            if (task.isSuccessful()) {
+                                                String idToken = task.getResult().getToken();
+                                                Log.d("Token:", idToken);
+                                                // Send token to your backend via HTTPS
+                                            }
+                                        }
+                                    });
                             PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
                             PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL, email);
                             String bookmarkBundle = "bookmark";
