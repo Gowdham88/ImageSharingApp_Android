@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -47,7 +48,11 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     ImageView Viewimage;
     TextView ViewTxt;
     TextView ItemInfoTxt;
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
     private RecyclerView mPostsRecycler;
+    TextView barbTxt,CatgTxt;
+    ImageView BarbImg,CatgImg;
 
     public static ItemInfoFragment newInstance() {
         return new ItemInfoFragment();
@@ -72,11 +77,55 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         city = view.findViewById(R.id.txt_city);
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
-
+        recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         setupExpandableText();
         mPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mPostsRecycler.setLayoutManager(layoutManager);
+        barbTxt=(TextView)view.findViewById(R.id.barbq_txt);
+        CatgTxt=(TextView)view.findViewById(R.id.cottage_house_txt);
+        BarbImg=(ImageView) view.findViewById(R.id.barbq_icon);
+        CatgImg=(ImageView)view.findViewById(R.id.cottage_house_icon);
+
+        barbTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        BarbImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        CatgTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        CatgImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
 //        mPostsRecycler.addItemDecoration(dividerItemDecoration);
         mPostsRecycler.setNestedScrollingEnabled(false);

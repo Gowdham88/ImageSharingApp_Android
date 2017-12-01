@@ -1,11 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/business_rel_lay"
     android:background="@color/White_clr"
-    android:layout_marginTop="5dp"
-    android:padding="5dp">
+    android:layout_marginTop="8dp"
+>
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
@@ -34,96 +35,29 @@
         />
 
 
-    <HorizontalScrollView
-        android:id="@+id/chips_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/item_name"
-        android:layout_toRightOf="@id/card_view"
-        android:scrollbars="none">
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_small"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:orientation="horizontal">
+            android:id="@+id/hrz_lin_lay"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/card_view"
+            android:layout_below="@+id/item_name">
 
-            <TextView
-                style="@style/TagStyle"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/business_recyclerview"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="food"
-                android:textColor="@color/tag_inside_text_color"
-                android:textSize="12dp" />
-            <TextView
-                style="@style/TagStyle"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="food"
-                android:textColor="@color/tag_inside_text_color"
-                android:textSize="12dp"/>
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:reverseLayout="false"/>
 
-            <TextView
-                style="@style/TagStyle"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="food"
-                android:textColor="@color/tag_inside_text_color"
-                android:textSize="12dp" />
-
-            <TextView
-                style="@style/TagStyle"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="food"
-                android:textColor="@color/tag_inside_text_color"
-                android:textSize="12dp" />
-
-            <TextView
-                style="@style/TagStyle"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="food"
-                android:textColor="@color/tag_inside_text_color"
-                android:textSize="12dp"/>
-
-            <TextView
-                style="@style/TagStyle"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="food"
-                android:textColor="@color/tag_inside_text_color"
-                android:textSize="12dp" />
-
-            <TextView
-                style="@style/TagStyle"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="food"
-                android:textColor="@color/tag_inside_text_color"
-                android:textSize="12dp" />
-
-            <TextView
-                style="@style/TagStyle"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="food"
-                android:textColor="@color/tag_inside_text_color"
-                android:textSize="12dp" />
         </LinearLayout>
 
-    </HorizontalScrollView>
     <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->

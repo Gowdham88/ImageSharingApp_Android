@@ -9,7 +9,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,12 +21,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.MainActivity;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.LocationItemsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.AppBarStateChangeListener;
@@ -46,7 +53,10 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     private ImageView eventImageView,entityImageView;
     private ExpandableTextView eventDescription;
     private PopupWindow pw;
+    LinearLayout busCntnRelLay;
     private CustomScrollView nestedScrollView;
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView1,recyclerView2;
 
 
     public static ItemDetailFragment newInstance() {
@@ -75,11 +85,27 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
-
+        recyclerView1=(RecyclerView)view.findViewById(R.id.business_recyclerview);
+        recyclerView2=(RecyclerView)view.findViewById(R.id.flatron_recyclerview);
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView1.setAdapter(adapter);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView2.setAdapter(adapter);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         eventImageView = view.findViewById(R.id.current_event_image);
         entityImageView = view.findViewById(R.id.entity_image);
         eventImageView.setOnClickListener(this);
-
+        busCntnRelLay=(LinearLayout) view.findViewById(R.id.buss_content);
+        busCntnRelLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
         Picasso.with(context).load(R.drawable.burger)
                 .placeholder(R.drawable.food_715539_1920)
                 .fit()

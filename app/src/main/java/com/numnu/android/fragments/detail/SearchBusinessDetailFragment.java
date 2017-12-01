@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
@@ -53,6 +56,8 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
     private CustomScrollView nestedScrollView;
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
 
 
     public static SearchBusinessDetailFragment newInstance() {
@@ -80,7 +85,10 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
-
+        recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
+        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         eventImageView = view.findViewById(R.id.current_event_image);
         eventImageView.setOnClickListener(this);
 

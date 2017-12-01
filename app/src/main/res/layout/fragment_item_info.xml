@@ -6,21 +6,34 @@
     android:background="@color/White_clr"
     android:layout_height="wrap_content">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:id="@+id/appbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<include layout="@layout/toolbar_with_options" />-->
+    <!--</android.support.design.widget.AppBarLayout>-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/lin_lay">
         <include layout="@layout/toolbar_with_options" />
-    </android.support.design.widget.AppBarLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/lin_lay"
+        android:background="@color/Edittxt_lineclr"/>
     <ScrollView
-        android:layout_below="@+id/appbar"
+        android:layout_below="@+id/lin_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_below="@+id/appbar">
+    android:layout_below="@+id/lin_lay">
     <RelativeLayout
         android:id="@+id/data_rel_lay"
         android:layout_width="match_parent"
@@ -38,8 +51,8 @@
 
             <ImageView
                 android:id="@+id/item_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:background="@drawable/image_corner_radius"
                 android:scaleType="centerCrop"
                 android:src="@drawable/burger" />
@@ -50,12 +63,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/content_image_card"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginTop="12dp"
             android:text="$3.63"
             style="@style/FontAvenirMedium"
             android:textStyle="bold"
             android:layout_marginLeft="32dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginBottom="1dp"
             android:gravity="center"
             android:textColor="@color/green"
             android:textSize="@dimen/font_small" />
@@ -70,67 +83,34 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/content_image_card"
             android:text="Barbadous food and rum festival" />
-
-        <HorizontalScrollView
-            android:id="@+id/chips_layout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_header_event_name"
-            android:layout_marginLeft="10dp"
+            android:id="@+id/hrz_lin_lay"
             android:layout_toRightOf="@id/content_image_card"
-            android:scrollbars="none">
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_below="@+id/item_header_event_name">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/business_recyclerview"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_tiny"
-                android:layout_marginRight="@dimen/size10"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                android:orientation="horizontal">
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:reverseLayout="false"/>
 
-                <TextView
-                    style="@style/TagStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="food" />
+        </LinearLayout>
 
-                <TextView
-                    style="@style/TagStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="Rum" />
-
-                <TextView
-                    style="@style/TagStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="Wine" />
-
-                <TextView
-                    style="@style/TagStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="Wine" />
-
-                <TextView
-                    style="@style/TagStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:text="Wine" />
-            </LinearLayout>
-        </HorizontalScrollView>
 
         <ImageView
             android:id="@+id/cottage_house_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@+id/chips_layout"
+            android:layout_below="@+id/hrz_lin_lay"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginTop="7dp"
             android:layout_toRightOf="@id/content_image_card"
             android:src="@drawable/restaurant_ico" />
 
@@ -138,10 +118,10 @@
             android:id="@+id/cottage_house_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/chips_layout"
+            android:layout_below="@+id/hrz_lin_lay"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginTop="7dp"
             android:layout_toEndOf="@id/cottage_house_icon"
             android:layout_toRightOf="@id/cottage_house_icon"
             android:gravity="center_vertical"
@@ -149,23 +129,23 @@
             android:textSize="@dimen/font_small" />
 
         <ImageView
-            android:id="@+id/event_icon"
+            android:id="@+id/barbq_icon"
             android:layout_width="15dp"
             android:layout_height="16dp"
             android:layout_below="@+id/cottage_house_icon"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/content_image_card"
             android:src="@drawable/ic_calendar" />
 
         <TextView
-            android:id="@+id/event_txt"
+            android:id="@+id/barbq_txt"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_below="@+id/cottage_house_txt"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/cottage_house_icon"
             android:layout_toRightOf="@id/cottage_house_icon"
             android:gravity="center_vertical"
@@ -178,9 +158,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_amount"
+            android:textSize="13dp"
             android:layout_marginLeft="@dimen/spacing_small"
             android:layout_marginRight="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginTop="5dp"
             android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat" />
 
         <TextView
@@ -191,8 +172,8 @@
             android:layout_marginTop="10dp"
             android:background="@color/lighter_grey"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
-            android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+            android:drawableEnd="@drawable/ic_chevron_right_black_24dpbus"
+            android:drawableRight="@drawable/ic_chevron_right_black_24dpbus"
             android:focusable="true"
             android:gravity="center_vertical"
             android:padding="@dimen/spacing_small"

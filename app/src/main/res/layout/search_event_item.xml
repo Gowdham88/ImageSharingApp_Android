@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/spacing_small"
-    android:layout_marginBottom="@dimen/spacing_small"
     android:background="@color/White_clr"
     tools:context="com.numnu.android.activity.HomeActivity">
 
@@ -17,8 +16,8 @@
 
         <ImageView
             android:id="@+id/current_event_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"
             android:src="@drawable/pasta"/>
@@ -26,49 +25,44 @@
     </android.support.v7.widget.CardView>
 
     <TextView
-        style="@style/BoldTextStyle"
+     style="@style/FontAvenirMedium"
+        android:textColor="@color/darker_grey"
         android:id="@+id/text_event"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/card_view"
-        android:layout_toEndOf="@id/card_view"
-        android:layout_below="@id/tx_date_view"
-        android:layout_centerHorizontal="true"
-        android:text="Flatron South Beach Wine &amp; \nFood Festival"
+        android:text="Flatron South Beach Wine&amp;\nFood Festival"
         android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:textSize="14sp"/>
-    <TextView
-        android:layout_width="wrap_content"
+        android:textSize="13sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/category1"
-        style="@style/TagStyle"
-        android:layout_below="@id/text_event"
-        android:layout_toRightOf="@id/card_view"
-        android:layout_toEndOf="@id/card_view"
-        android:text="Food"
+        android:id="@+id/hrz_lin_lay"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"/>
-    <TextView
-        style="@style/TagStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/category2"
-        android:layout_below="@id/text_event"
-        android:layout_toRightOf="@id/category1"
-        android:layout_toEndOf="@id/category1"
-        android:text="Rum"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="5dp" />
+        android:layout_toRightOf="@+id/card_view"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_below="@+id/text_event">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/business_recyclerview"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:reverseLayout="false"/>
+
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/event_date"
-        android:layout_below="@id/category1"
+        android:layout_below="@id/hrz_lin_lay"
         android:layout_toRightOf="@id/card_view"
         android:layout_toEndOf="@id/card_view"
         android:text="August 30,Montreal"
+        android:textSize="13sp"
         android:layout_marginTop="4dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"/>
