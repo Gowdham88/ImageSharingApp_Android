@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -119,6 +121,9 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     private static final int RC_LOCATION_PER = 1;
     String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
+    private static final int REQUEST_CAMERA = 1888;
+    private static final int MY_REQUEST_CODE = 1;
+    private static final int MY_REQUEST_CODE_STORAGE = 2;
     /**
      * GeoDataClient wraps our service connection to Google Play services and provides access
      * to the Google Places API for Android.
@@ -591,17 +596,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
 
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        // Forward results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-
-
     private boolean hasLocationPermission() {
         return EasyPermissions.hasPermissions(getActivity(), CAMERA);
     }
@@ -637,20 +631,10 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         Camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (hasLocationPermission()) {
-                    // Have permissions, do the thing!
-                    Intent cameraIntent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                    bottomSheetDialog.dismiss();
-                } else {
-//
-                    EasyPermissions.requestPermissions(
-                            getActivity(),
-                            getString(R.string.rationale_location),
-                            RC_LOCATION_PER,
-                            CAMERA);
-                }
 
+
+                bottomSheetDialog.dismiss();
+                clickCamera();
 
 
             }
@@ -675,39 +659,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         return imgPath;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_CANCELED) {
-            if (requestCode == PICK_IMAGE) {
-                if (data != null) {
-                    Uri contentURI = data.getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), contentURI);
-                        viewImage.setImageBitmap(bitmap);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            } else if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
-
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-//                bottomSheetDialog.dismiss();
-                Toast.makeText(getActivity(), "Camera:"+(hasLocationPermission()?"yes":"no"), Toast.LENGTH_SHORT).show();
-            }else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK){
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                viewImage.setImageBitmap(photo);
-            }
-
-        } else {
-            super.onActivityResult(requestCode, resultCode,
-                    data);
-        }
-    }
 
 
 
@@ -750,6 +702,90 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         String picturePath = cursor.getString(columnIndex);
         cursor.close();
         return picturePath;
+    }
+
+    private void clickCamera() { // 1 for icon and 2 for attachment
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA},MY_REQUEST_CODE);
+        }else {
+            if (ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_REQUEST_CODE_STORAGE);
+            }else{
+
+                Intent intentPicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intentPicture, REQUEST_CAMERA);  // 1 for REQUEST_CAMERA and 2 for REQUEST_CAMERA_ATT
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    if (ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_REQUEST_CODE_STORAGE);
+                    }else{
+
+                        Intent intentPicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        // start the image capture Intent
+                        startActivityForResult(intentPicture, REQUEST_CAMERA);
+                    }
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(getActivity(),"Doesn't have permission... ", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+            case MY_REQUEST_CODE_STORAGE : {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent intentPicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    // start the image capture Intent
+                    startActivityForResult(intentPicture, REQUEST_CAMERA);
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(getActivity(),"Doesn't have permission...", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_CANCELED) {
+            if (requestCode == PICK_IMAGE) {
+                if (data != null) {
+                    Uri contentURI = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), contentURI);
+                        viewImage.setImageBitmap(bitmap);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else if (requestCode == REQUEST_CAMERA) {
+                if (data != null) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    viewImage.setImageBitmap(photo);
+
+                }
+            }
+
+        } else {
+            super.onActivityResult(requestCode, resultCode,
+                    data);
+        }
     }
 
 
