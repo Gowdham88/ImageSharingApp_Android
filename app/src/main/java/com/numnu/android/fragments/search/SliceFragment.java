@@ -60,7 +60,7 @@ public class SliceFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_slice, container, false);
 
@@ -76,7 +76,7 @@ public class SliceFragment extends Fragment {
         TextView cottageHouseText = view.findViewById(R.id.cottage_house_txt);
         TextView barbequeText = view.findViewById(R.id.barbq_txt);
         TextView eventText = view.findViewById(R.id.barbados_txt);
-
+        ImageView toolimg = view.findViewById(R.id.toolbar_image);
         contentImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,6 +145,23 @@ public class SliceFragment extends Fragment {
                 transaction.addToBackStack(null).commit();
             }
         });
+        toolimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheet(inflater);
+            }
+        });
+
+
+        return view;
+    }
+
+    private void showBottomSheet(LayoutInflater inflater) {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
 
         TextView share = bottomSheetView.findViewById(R.id.share_title);
         TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
@@ -164,21 +181,18 @@ public class SliceFragment extends Fragment {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
-                if (loginStatus) {
-                    Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
+                if (!loginStatus) {
+                    Intent intent = new Intent(context, LoginFragment.class);
+                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
-                }else if (!loginStatus){
-                    Intent intent = new Intent(getActivity(),LoginFragment.class);
-                    intent.putExtra("BookmarkIntent","bookmark");
-                    startActivity(intent);
-
+                }else if (loginStatus){
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        return view;
     }
-
 
 
     private void initiatePopupWindow() {

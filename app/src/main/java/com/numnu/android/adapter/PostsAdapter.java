@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * Created by thulir on 10/10/17.
  */
 
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
+public class        PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();

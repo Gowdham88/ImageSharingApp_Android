@@ -48,7 +48,8 @@
         android:layout_alignBaseline="@+id/user_name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="2hrs"
+        android:text="2 hrs"
+        android:layout_marginRight="4dp"
         android:textSize="13sp"
         android:gravity="center"
         />

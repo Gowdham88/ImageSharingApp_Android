@@ -74,7 +74,7 @@
                 android:layout_below="@+id/card_view"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:text="Barbadous and rum food festival"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_normal"
@@ -95,7 +95,8 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_city"
                     android:drawablePadding="@dimen/spacing_tiny"
-                    android:padding="@dimen/spacing_tiny"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:layout_marginBottom="@dimen/spacing_small"
                     android:text="Montreal,Address line1,Address line2" />
 
             </LinearLayout>
@@ -123,8 +124,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/card_view_location"
-                android:layout_marginRight="@dimen/spacing_small"
-                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="15dp"
                 android:drawableLeft="@drawable/ic_maplocation"
                 android:text="Open Map"
                 android:textColor="@color/blue"
@@ -133,6 +134,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buss_content"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/txt_open_map">
             <include
                 android:id="@+id/entity_item"
@@ -144,6 +146,7 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 app:tabIndicatorHeight="3dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buss_content"
