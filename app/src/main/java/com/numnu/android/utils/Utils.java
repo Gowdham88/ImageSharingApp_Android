@@ -103,20 +103,6 @@ public class Utils {
 
 
 
-	public static String getMobileIPAddress() {
-		try {
-			List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
-			for (NetworkInterface intf : interfaces) {
-				List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
-				for (InetAddress addr : addrs) {
-					if (!addr.isLoopbackAddress()) {
-						return  addr.getHostAddress();
-					}
-				}
-			}
-		} catch (Exception ex) { } // for now eat exceptions
-		return "";
-	}
 
 	public static String getLocalIpAddress(Context context) {
 		WifiManager wifiMgr = (WifiManager) context.getApplicationContext().getSystemService(context.WIFI_SERVICE);
