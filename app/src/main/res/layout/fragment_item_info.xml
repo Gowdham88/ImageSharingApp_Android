@@ -133,10 +133,10 @@
 
         <ImageView
             android:id="@+id/evntbarbq_icon"
-            android:layout_width="15dp"
+            android:layout_width="17dp"
             android:layout_height="16dp"
             android:layout_below="@+id/evntcottage_house_icon"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/content_image_card"
             android:src="@drawable/ic_calendar" />
