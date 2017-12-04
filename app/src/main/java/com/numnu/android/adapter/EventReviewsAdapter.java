@@ -21,6 +21,7 @@ import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.home.SettingsFragment;
+import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
@@ -77,7 +78,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, PostsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

@@ -70,6 +70,13 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
         final View view = inflater.inflate(R.layout.fragment_item_info, container, false);
 
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
@@ -85,10 +92,10 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         mPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mPostsRecycler.setLayoutManager(layoutManager);
-        barbTxt=(TextView)view.findViewById(R.id.barbq_txt);
-        CatgTxt=(TextView)view.findViewById(R.id.cottage_house_txt);
-        BarbImg=(ImageView) view.findViewById(R.id.barbq_icon);
-        CatgImg=(ImageView)view.findViewById(R.id.cottage_house_icon);
+        barbTxt=(TextView)view.findViewById(R.id.evntbarbq_txt);
+        CatgTxt=(TextView)view.findViewById(R.id.evntcottage_house_txt);
+        BarbImg=(ImageView) view.findViewById(R.id.evntbarbq_icon);
+        CatgImg=(ImageView)view.findViewById(R.id.evntcottage_house_icon);
 
         barbTxt.setOnClickListener(new View.OnClickListener() {
             @Override

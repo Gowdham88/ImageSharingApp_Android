@@ -25,10 +25,13 @@
         android:layout_height="1dp"
         android:layout_below="@+id/lin_lay"
         android:background="@color/Edittxt_lineclr"/>
-    <ScrollView
-        android:layout_below="@+id/lin_lay"
+    <com.numnu.android.utils.CustomScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lin_lay"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -105,7 +108,7 @@
 
 
         <ImageView
-            android:id="@+id/cottage_house_icon"
+            android:id="@+id/evntcottage_house_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_below="@+id/hrz_lin_lay"
@@ -115,39 +118,39 @@
             android:src="@drawable/restaurant_ico" />
 
         <TextView
-            android:id="@+id/cottage_house_txt"
+            android:id="@+id/evntcottage_house_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/hrz_lin_lay"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
             android:layout_marginTop="7dp"
-            android:layout_toEndOf="@id/cottage_house_icon"
-            android:layout_toRightOf="@id/cottage_house_icon"
+            android:layout_toEndOf="@id/evntcottage_house_icon"
+            android:layout_toRightOf="@id/evntcottage_house_icon"
             android:gravity="center_vertical"
             android:text="Cottage House"
             android:textSize="@dimen/font_small" />
 
         <ImageView
-            android:id="@+id/barbq_icon"
+            android:id="@+id/evntbarbq_icon"
             android:layout_width="15dp"
             android:layout_height="16dp"
-            android:layout_below="@+id/cottage_house_icon"
+            android:layout_below="@+id/evntcottage_house_icon"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/content_image_card"
             android:src="@drawable/ic_calendar" />
 
         <TextView
-            android:id="@+id/barbq_txt"
+            android:id="@+id/evntbarbq_txt"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_below="@+id/cottage_house_txt"
+            android:layout_below="@+id/evntcottage_house_txt"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
             android:layout_marginTop="7dp"
-            android:layout_toEndOf="@id/cottage_house_icon"
-            android:layout_toRightOf="@id/cottage_house_icon"
+            android:layout_toEndOf="@id/evntcottage_house_icon"
+            android:layout_toRightOf="@id/evntcottage_house_icon"
             android:gravity="center_vertical"
             android:text="Barbadous food and rum festival"
             android:textSize="@dimen/font_small" />
@@ -170,7 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/event_description"
             android:layout_marginTop="15dp"
-            android:background="@color/lighter_grey"
+            android:background="@color/new_tag_inside_color"
             android:clickable="true"
             android:drawableEnd="@drawable/ic_chevron_right_black_24dpbus"
             android:drawableRight="@drawable/ic_chevron_right_black_24dpbus"
@@ -192,5 +195,5 @@
         android:layout_marginRight="10dp" />
 
 </LinearLayout>
-    </ScrollView>
+    </com.numnu.android.utils.CustomScrollView>
 </RelativeLayout>

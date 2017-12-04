@@ -25,6 +25,6 @@
         android:layout_marginLeft="@dimen/spacing_normal"
         android:layout_marginTop="@dimen/spacing_normal"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_popup_close" />
+        android:src="@drawable/closebtnone" />
 
 </RelativeLayout>

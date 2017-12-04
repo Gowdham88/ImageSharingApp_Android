@@ -87,7 +87,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/slice_toolbar_profile_name"
                 android:gravity="center"
-                android:text="2hrs"
+                android:text="2 hrs"
+                android:layout_marginRight="4dp"
                 android:textSize="13sp"
                 tools:ignore="MissingPrefix" />
 
@@ -144,7 +145,7 @@
                         android:id="@+id/barbq_icon"
                         android:layout_width="18dp"
                         android:layout_height="19dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="3dp"
                         android:layout_below="@+id/post_interests_layout"
                         android:layout_weight="0.5"
                         android:src="@drawable/dish_ico" />
@@ -181,7 +182,7 @@
                         android:layout_toEndOf="@id/barbq_icon"
                         android:layout_toRightOf="@id/barbq_icon"
                         android:layout_weight="4"
-
+                        android:layout_marginTop="2dp"
                         android:gravity="center_vertical"
                         android:text="Cottage House"
                         android:textSize="13sp" />
@@ -260,7 +261,7 @@
                 android:layout_below="@+id/post_interests_layout"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="11dp"
                 android:layout_toEndOf="@id/barbados_icon"
                 android:layout_toRightOf="@id/barbados_icon"
                 android:gravity="center_vertical"

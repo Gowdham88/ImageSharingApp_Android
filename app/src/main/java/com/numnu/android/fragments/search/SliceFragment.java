@@ -38,6 +38,7 @@ public class SliceFragment extends Fragment {
 
     Context context;
     private PopupWindow pw;
+    private ImageView barbqicon,cattgicon,eventicon;
 
     public static SliceFragment newInstance() {
         SliceFragment fragment = new SliceFragment();
@@ -68,6 +69,9 @@ public class SliceFragment extends Fragment {
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
 
+       barbqicon = view.findViewById(R.id.barbq_icon);
+      cattgicon = view.findViewById(R.id.cottage_house_icon);
+        eventicon = view.findViewById(R.id.barbados_icon);
         ImageView moreIcon = view.findViewById(R.id.event_dots);
         ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         ImageView userImageIcon = view.findViewById(R.id.slice_profile_image);
@@ -119,28 +123,59 @@ public class SliceFragment extends Fragment {
             }
         });
 
-        cottageHouseText.setOnClickListener(new View.OnClickListener() {
+  cottageHouseText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
 
-        barbequeText.setOnClickListener(new View.OnClickListener() {
+      cattgicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
-
+        barbequeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        barbqicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
         eventText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+       eventicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
