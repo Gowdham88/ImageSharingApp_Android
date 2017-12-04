@@ -4,9 +4,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/spacing_small"
-    android:background="@color/White_clr"
-    tools:context="com.numnu.android.activity.HomeActivity">
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="12dp"
+    android:background="@color/White_clr">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"

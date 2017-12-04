@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.fragments.home.SettingsFragment;
+import com.numnu.android.fragments.search.SliceFragment;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,7 @@ public class UserDetailsFragment extends Fragment {
     private String id,username;
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
+    ImageView SettingImg;
 
 
     public static UserDetailsFragment newInstance() {
@@ -57,6 +60,17 @@ public class UserDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_details, container, false);
 
         ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        toolbarBackImage.setVisibility(View.GONE);
+        SettingImg=(ImageView) view.findViewById(R.id.setting_img);
+        SettingImg.setVisibility(View.VISIBLE);
+        SettingImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {

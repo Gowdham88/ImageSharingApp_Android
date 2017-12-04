@@ -12,24 +12,28 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:theme="@style/AppTheme.AppBarOverlay">-->
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/header_lay">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/lin_lay">
         <include layout="@layout/toolbar" />
-</LinearLayout>
+
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/header_lay"
+        android:layout_below="@+id/lin_lay"
         android:background="@color/Edittxt_lineclr"/>
-    <!--</android.support.design.widget.AppBarLayout>-->
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:layout_below="@+id/header_lay"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/lin_lay"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -140,6 +144,7 @@
                         android:id="@+id/barbq_icon"
                         android:layout_width="18dp"
                         android:layout_height="19dp"
+                        android:layout_marginTop="4dp"
                         android:layout_below="@+id/post_interests_layout"
                         android:layout_weight="0.5"
                         android:src="@drawable/dish_ico" />
@@ -164,6 +169,7 @@
                         android:layout_below="@id/cottage_house_txt"
                         android:layout_marginLeft="5dp"
                         android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
                         android:layout_weight="0.5"
                         android:src="@drawable/restaurant_ico" />
 
@@ -244,7 +250,7 @@
                 android:layout_height="16dp"
                 android:layout_below="@+id/post_interests_layout"
                 android:layout_marginLeft="6dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="13dp"
                 android:src="@drawable/ic_calendar" />
 
             <TextView

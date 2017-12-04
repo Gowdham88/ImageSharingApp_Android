@@ -20,7 +20,7 @@ import com.numnu.android.R;
 
 public class webFragment  extends MyActivity {
     private WebView webView;
-    ImageView toolbarBackicon,BrowseIcon;
+    ImageView toolbarBackicon,BrowseIcon,backButton,forwardButton;
     CustomTabsIntent customTabsIntent;
 //    public static webFragment newInstance() {
 //        return new webFragment();
@@ -46,10 +46,11 @@ public class webFragment  extends MyActivity {
             }
         });
         TextView toolbar_title=(TextView)findViewById(R.id.toolbar_title);
-        toolbar_title.setText("www.google.com");
+        toolbar_title.setText("http://www.totc.ca");
 
 
-        BrowseIcon=(ImageView)findViewById(R.id.browse_icon);
+        BrowseIcon=(ImageView)findViewById(R.id.google_img);
+        BrowseIcon.setVisibility(View.VISIBLE);
         BrowseIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +65,10 @@ public class webFragment  extends MyActivity {
         webView.getSettings().setJavaScriptEnabled(true);
 
 //Button Initialization
-        final ImageView backButton =(ImageView)findViewById(R.id.back_arrow);
-        final ImageView forwardButton =(ImageView) findViewById(R.id.forward_arrow);
+     backButton =(ImageView)findViewById(R.id.back_word);
+        backButton.setVisibility(View.VISIBLE);
+    forwardButton =(ImageView) findViewById(R.id.forward);
+        forwardButton.setVisibility(View.VISIBLE);
 
 //Back Button Action
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +123,7 @@ public class webFragment  extends MyActivity {
                 Toast.makeText( webFragment.this, description, Toast.LENGTH_LONG );
             }
         } );
-        webView.loadUrl("https://www.google.com/");
+        webView.loadUrl("http://www.totc.ca");
 
 
     }

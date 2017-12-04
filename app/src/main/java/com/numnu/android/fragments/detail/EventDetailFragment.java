@@ -21,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.SearchView;
@@ -338,8 +340,9 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         lp.width = WindowManager.LayoutParams.FILL_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-
+        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+        layout.startAnimation(hide);
 
         ImageView btncancel = layout.findViewById(R.id.btncancelcat);
 
