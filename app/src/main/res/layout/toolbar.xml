@@ -1,6 +1,7 @@
 <android.support.v7.widget.Toolbar
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
@@ -35,21 +36,23 @@
         <ImageView
             android:visibility="gone"
             android:id="@+id/back_word"
-            android:layout_width="15dp"
-            android:layout_height="20dp"
-            android:src="@drawable/web_backimg"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/backicon"
             android:layout_centerVertical="true"
-            android:layout_marginRight="80dp"
-            android:layout_alignParentRight="true" />
+            android:layout_marginRight="90dp"
+            android:layout_alignParentRight="true"
+            tools:ignore="VectorDrawableCompat" />
         <ImageView
             android:visibility="gone"
             android:id="@+id/forward"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/forwardarrow"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/foricon"
             android:layout_centerVertical="true"
             android:layout_marginRight="60dp"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            tools:ignore="VectorDrawableCompat"/>
         <ImageView
             android:visibility="gone"
             android:id="@+id/setting_img"

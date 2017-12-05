@@ -318,30 +318,30 @@ public class LoginFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signUpWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
-                            String bookmarkBundle = "bookmark";
-                            String profileBundle = "profile";
-                            String eventBookmarkBundle = "eventbookmark";
-                            String businessBookmarkBundle = "businessbookmark";
-                            if (mReceivedIntent == null){
-                                goToHomeActivity(null,null);
-                            } else if (mReceivedIntent.equals(bookmarkBundle)) {
-                                goToHomeActivity("BookmarkIntent",bookmarkBundle);
-                            }else if (mReceivedIntent.equals(profileBundle)){
-                                goToHomeActivity("ProfileIntent",profileBundle);
-                            }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
-                                goToHomeActivity("EventBookmarkIntent",eventBookmarkBundle);
-                            }else if (mReceivedIntent.equals(businessBookmarkBundle)) {
-                                goToHomeActivity("BusinessBookmarkIntent",businessBookmarkBundle);
-                            }
+//                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+//                            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
+//                            String bookmarkBundle = "bookmark";
+//                            String profileBundle = "profile";
+//                            String eventBookmarkBundle = "eventbookmark";
+//                            String businessBookmarkBundle = "businessbookmark";
+//                            if (mReceivedIntent == null){
+//                                goToHomeActivity(null,null);
+//                            } else if (mReceivedIntent.equals(bookmarkBundle)) {
+//                                goToHomeActivity("BookmarkIntent",bookmarkBundle);
+//                            }else if (mReceivedIntent.equals(profileBundle)){
+//                                goToHomeActivity("ProfileIntent",profileBundle);
+//                            }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
+//                                goToHomeActivity("EventBookmarkIntent",eventBookmarkBundle);
+//                            }else if (mReceivedIntent.equals(businessBookmarkBundle)) {
+//                                goToHomeActivity("BusinessBookmarkIntent",businessBookmarkBundle);
+//                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signUpWithCredential:failure", task.getException());
                             showerror("Authentication failed.");
-
+//
                         }
-
+//
 
 
                         // [START_EXCLUDE]
