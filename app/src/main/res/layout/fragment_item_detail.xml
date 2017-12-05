@@ -101,21 +101,35 @@
 
             </LinearLayout>
 
-            <com.numnu.android.utils.ExpandableTextView
+            <TextView
                 android:id="@+id/event_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/hrz_lin_lay"
+                android:maxLines="4"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/spacing_tiny"
                 android:layout_marginTop="10dp"
                 android:textSize="13dp"
                 android:text="@string/event_description" />
+
+            <TextView
+                android:id="@+id/more_button"
+                style="@style/FontAvenirMedium"
+                android:layout_width="38dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/event_description"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="0dp"
+                android:text="more"
+                android:textColor="#4A90E2"
+                android:textSize="13sp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/event_description"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:id="@+id/buss_content">
             <include
                 android:id="@+id/entity_item"

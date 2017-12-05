@@ -202,7 +202,7 @@
                     android:layout_marginTop="@dimen/spacing_tiny"
                     android:text="Weblink 1"
                     android:textColor="@color/weblink_color"
-                    android:textSize="@dimen/text11" />
+                    android:textSize="13dp" />
 
                 <TextView
                     android:id="@+id/txt_weblink_2"
@@ -213,7 +213,7 @@
                     android:layout_marginStart="@dimen/spacing_small"
                     android:text="Weblink 2"
                     android:textColor="@color/weblink_color"
-                    android:textSize="@dimen/text11" />
+                    android:textSize="13dp" />
 
                 <TextView
                     android:id="@+id/txt_weblink_3"
@@ -225,17 +225,18 @@
                     android:layout_marginBottom="4dp"
                     android:text="Weblink 3"
                     android:textColor="@color/weblink_color"
-                    android:textSize="@dimen/text11" />
+                    android:textSize="13dp" />
 
             </LinearLayout>
 
-            <com.numnu.android.utils.ExpandableTextView
+            <TextView
                 android:id="@+id/event_description"
                 style="@style/FontAvenirMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/weblinks_layout"
                 android:layout_marginBottom="@dimen/spacing_tiny"
+                android:maxLines="4"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_marginTop="@dimen/spacing_tiny"
@@ -243,10 +244,22 @@
                 android:textColor="@color/descri_color"
                 android:textSize="13dp" />
 
+            <TextView
+                android:id="@+id/more_button"
+                style="@style/FontAvenirMedium"
+                android:layout_width="38dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/event_description"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="0dp"
+                android:text="more"
+                android:textColor="#4A90E2"
+                android:textSize="13sp" />
+
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 app:tabIndicatorHeight="3dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="29dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_description"

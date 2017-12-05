@@ -325,6 +325,8 @@ public class LoginFragment extends Fragment {
 
                         }
 
+
+
                         // [START_EXCLUDE]
                         hideProgressDialog();
                         // [END_EXCLUDE]
