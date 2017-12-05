@@ -44,9 +44,18 @@ import com.google.firebase.auth.GetTokenResult;
 import com.numnu.android.R;
 import com.numnu.android.fragments.home.HomeFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.LoginResponse;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.numnu.android.utils.Utils.hideKeyboard;
@@ -71,6 +80,8 @@ public class LoginFragment extends Fragment {
 
     String mPostBookmarkIntent,mBusinessBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     private Context context;
+
+
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
         return fragment;
@@ -128,6 +139,388 @@ public class LoginFragment extends Fragment {
         backButton     = (ImageView)view.findViewById(R.id.toolbar_back);
         txt_error      = (TextView) view.findViewById(R.id.txt_error);
 
+
+        textViewSignup.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        ConsLay   =view.findViewById(R.id.const_lay);
+        ConsLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+         hideKeyboard(getActivity());
+            }
+        });
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+
+        mCallbackManager = CallbackManager.Factory.create();
+        // [END initialize_auth]
+        FrameLayout loginButton = view.findViewById(R.id.login_btn_facebook);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
+                LoginManager.getInstance().registerCallback(mCallbackManager,
+                        new FacebookCallback<LoginResult>()
+                        {
+                            @Override
+                            public void onSuccess(LoginResult loginResult)
+                            {
+                                // App code
+                                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                                handleFacebookAccessToken(loginResult.getAccessToken());
+                            }
+
+                            @Override
+                            public void onCancel()
+                            {
+                                Log.d(TAG, "facebook:onCancel");
+                                showerror("Facebook login cancelled.");
+                            }
+
+                            @Override
+                            public void onError(FacebookException exception)
+                            {
+                                Log.d(TAG, "facebook:onError", exception);
+                                showerror("Facebook login failed.");
+                            }
+                        });
+
+                // [END initialize_fblogin]
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getActivity().onBackPressed();
+
+            }
+        });
+
+
+        setupFocusListeners();
+
+
+        ForgetPassTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
+                transaction.replace(R.id.frame_layout, ForgetPassWordFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        hideerror();
+
+        if (mProfileIntent!=null){
+            mReceivedIntent = mProfileIntent;
+        }else if (mPostBookmarkIntent !=null){
+            mReceivedIntent = mPostBookmarkIntent;
+        }else if (mEventBookmarkIntent!=null){
+            mReceivedIntent = mEventBookmarkIntent;
+        }else if (mBusinessBookmarkIntent!=null){
+            mReceivedIntent = mBusinessBookmarkIntent;
+        }else {
+            mReceivedIntent = null;
+        }
+
+        login = view.findViewById(R.id.button_login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+
+            }
+        });
+
+        textViewSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signUp();
+            }
+        });
+
+        return view;
+    }
+
+
+
+    private void  loginWithServer() {
+
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<LoginResponse> call = apiServices.login();
+        call.enqueue(new Callback<LoginResponse>() {
+
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                int responsecode = response.code();
+                LoginResponse body = response.body();
+
+
+                    PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL,body.getEmail());
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_NAME,body.getUsername());
+                // TODO: 5/12/17
+//                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_NAME,body.get);
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_DOB,body.getDateofbirth());
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION,body.getDescription());
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER,(body.getGender()==0)?"Male":"Female");
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY,body.getCitylocation().getName());
+//                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC,body.getUserimages().get(0).getImageurl());
+
+                    goToHomeActivity();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+
+
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+        // [START_EXCLUDE silent]
+        showProgressDialog();
+        // [END_EXCLUDE]
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signUpWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signUpWithCredential:failure", task.getException());
+                            showerror("Authentication failed.");
+
+                        }
+
+                        // [START_EXCLUDE]
+                        hideProgressDialog();
+                        // [END_EXCLUDE]
+                    }
+                });
+    }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        // [START on_start_check_user]
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        // [END on_start_check_user]
+    }
+
+
+
+    private void signIn(final String email, String password) {
+        Log.d(TAG, "signIn:" + email);
+        if (!validateForm()) {
+            return;
+        }
+
+        showProgressDialog();
+
+        // [START sign_in_with_email]
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            user.getIdToken(true)
+                                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                            if (task.isSuccessful()) {
+                                                String idToken = task.getResult().getToken();
+                                                Log.d("Token:", idToken);
+                                                Constants.FIREBASE_TOKEN = idToken;
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                                                // Send token to your backend via HTTPS
+                                                loginWithServer();
+
+                                            }
+                                        }
+                                    });
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            showerror("Authentication failed.");
+                        }
+
+                        // [START_EXCLUDE]
+                        if (!task.isSuccessful()) {
+
+                            showerror("Authentication failed.");
+                        }
+                        hideProgressDialog();
+
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END sign_in_with_email]
+    }
+
+
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String email = mEmailField.getText().toString();
+        String password = mPasswordField.getText().toString();
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+
+              valid = true;
+
+        } else {
+
+            if(TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
+                showerror("Enter email address and password.");
+                valid = false;
+            } else if (TextUtils.isEmpty(password) || password.length()<4) {
+                showerror("Enter password");
+                valid = false;
+            } else {
+                showerror("Enter email address.");
+                valid = false;
+            }
+
+
+        }
+
+        return valid;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideProgressDialog();
+    }
+
+    public void signUp() {
+
+        String bookmarkBundle = "bookmark";
+        String profileBundle = "profile";
+        String eventBookmarkBundle = "eventbookmark";
+        String businessBookmarkBundle = "businessbookmark";
+        if (mReceivedIntent == null){
+            signUpCall(null,null);
+        } else if (mReceivedIntent.equals(bookmarkBundle)) {
+            signUpCall("BookmarkIntent",bookmarkBundle);
+        }else if (mReceivedIntent.equals(profileBundle)){
+            signUpCall("ProfileIntent",profileBundle);
+        }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+            signUpCall("EventBookmarkIntent",bookmarkBundle);
+        }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+            signUpCall("BusinessBookmarkIntent",businessBookmarkBundle);
+        }
+    }
+
+    private void signUpCall(String intentName, String intentValue){
+        Bundle bundle = new Bundle();
+        bundle.putString(intentName,  intentValue);
+        SignupFragment signupFragment=new SignupFragment();
+        signupFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
+        transaction.replace(R.id.frame_layout,signupFragment);
+        transaction.commit();
+    }
+
+    private void goToHomeActivity(){
+
+        mEmailField.setText("");
+        mPasswordField.setText("");
+
+        String bookmarkBundle = "bookmark";
+        String profileBundle = "profile";
+        String eventBookmarkBundle = "eventbookmark";
+        String businessBookmarkBundle = "businessbookmark";
+
+        Fragment fragment=new UserPostsFragment();
+        if (mReceivedIntent == null){
+            fragment = new UserPostsFragment();
+        } else if (mReceivedIntent.equals(bookmarkBundle)) {
+            fragment = new UserPostsFragment();
+
+        }else if (mReceivedIntent.equals(profileBundle)){
+            fragment = new UserPostsFragment();
+
+        }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
+            fragment = new UserPostsFragment();
+
+        }else if (mReceivedIntent.equals(businessBookmarkBundle)) {
+            fragment = new UserPostsFragment();
+
+        }
+
+//        Bundle bundle = new Bundle();
+//        bundle.putString(intentName,  intentValue);
+//        UserPostsFragment homeFragment=new UserPostsFragment();
+//        homeFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
+        transaction.replace(R.id.frame_layout,fragment);
+        transaction.commit();
+
+    }
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    public void showerror(String error) {
+
+        txt_error.setText(error);
+        final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_shake);
+        txt_error.startAnimation(animShake);
+        txt_error.setVisibility(View.VISIBLE);
+
+    }
+
+    public void hideerror(){
+
+        txt_error.setVisibility(View.GONE);
+    }
+
+    private void setupFocusListeners() {
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -193,333 +586,6 @@ public class LoginFragment extends Fragment {
 
             }
         });
-
-
-        ForgetPassTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-                transaction.replace(R.id.frame_layout, ForgetPassWordFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-
-        hideerror();
-
-        textViewSignup.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-        ConsLay   =view.findViewById(R.id.const_lay);
-        ConsLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-         hideKeyboard(getActivity());
-            }
-        });
-        // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
-
-        mCallbackManager = CallbackManager.Factory.create();
-        // [END initialize_auth]
-        FrameLayout loginButton = view.findViewById(R.id.login_btn_facebook);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
-                LoginManager.getInstance().registerCallback(mCallbackManager,
-                        new FacebookCallback<LoginResult>()
-                        {
-                            @Override
-                            public void onSuccess(LoginResult loginResult)
-                            {
-                                // App code
-                                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                                handleFacebookAccessToken(loginResult.getAccessToken());
-                            }
-
-                            @Override
-                            public void onCancel()
-                            {
-                                Log.d(TAG, "facebook:onCancel");
-                                showerror("Facebook login cancelled.");
-                            }
-
-                            @Override
-                            public void onError(FacebookException exception)
-                            {
-                                Log.d(TAG, "facebook:onError", exception);
-                                showerror("Facebook login failed.");
-                            }
-                        });
-
-                // [END initialize_fblogin]
-            }
-        });
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                getActivity().onBackPressed();
-
-            }
-        });
-
-        if (mProfileIntent!=null){
-            mReceivedIntent = mProfileIntent;
-        }else if (mPostBookmarkIntent !=null){
-            mReceivedIntent = mPostBookmarkIntent;
-        }else if (mEventBookmarkIntent!=null){
-            mReceivedIntent = mEventBookmarkIntent;
-        }else if (mBusinessBookmarkIntent!=null){
-            mReceivedIntent = mBusinessBookmarkIntent;
-        }else {
-            mReceivedIntent = null;
-        }
-
-        login = view.findViewById(R.id.button_login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-
-            }
-        });
-
-        textViewSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signUp();
-            }
-        });
-
-        return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
-
-
-
-
-    private void handleFacebookAccessToken(AccessToken token) {
-        Log.d(TAG, "handleFacebookAccessToken:" + token);
-        // [START_EXCLUDE silent]
-        showProgressDialog();
-        // [END_EXCLUDE]
-
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signUpWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signUpWithCredential:failure", task.getException());
-                            showerror("Authentication failed.");
-
-                        }
-
-                        // [START_EXCLUDE]
-                        hideProgressDialog();
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
-
-
-    // [START on_start_check_user]
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
-    // [END on_start_check_user]
-
-
-    private void signIn(final String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
-
-        showProgressDialog();
-
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            user.getIdToken(true)
-                                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                            if (task.isSuccessful()) {
-                                                String idToken = task.getResult().getToken();
-                                                Log.d("Token:", idToken);
-                                                // Send token to your backend via HTTPS
-                                            }
-                                        }
-                                    });
-                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL, email);
-                            String bookmarkBundle = "bookmark";
-                            String profileBundle = "profile";
-                            String eventBookmarkBundle = "eventbookmark";
-                            String businessBookmarkBundle = "businessbookmark";
-                            if (mReceivedIntent == null){
-                                goToHomeActivity(null,null);
-                            } else if (mReceivedIntent.equals(bookmarkBundle)) {
-                                goToHomeActivity("BookmarkIntent",bookmarkBundle);
-                            }else if (mReceivedIntent.equals(profileBundle)){
-                                goToHomeActivity("ProfileIntent",profileBundle);
-                            }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
-                                goToHomeActivity("EventBookmarkIntent",eventBookmarkBundle);
-                            }else if (mReceivedIntent.equals(businessBookmarkBundle)) {
-                                goToHomeActivity("BusinessBookmarkIntent",businessBookmarkBundle);
-                            }
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            showerror("Authentication failed.");
-                        }
-
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-
-                            showerror("Authentication failed.");
-                        }
-                        hideProgressDialog();
-
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END sign_in_with_email]
-    }
-
-
-    private boolean validateForm() {
-        boolean valid = true;
-
-        String email = mEmailField.getText().toString();
-        String password = mPasswordField.getText().toString();
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-
-              valid = true;
-
-        } else {
-
-            if(TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
-                showerror("Enter email address and password.");
-                valid = false;
-            } else if (TextUtils.isEmpty(password) || password.length()<4) {
-                showerror("Enter password");
-                valid = false;
-            } else {
-                showerror("Enter email address.");
-                valid = false;
-            }
-
-
-        }
-
-
-
-        return valid;
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        hideProgressDialog();
-    }
-
-    public void signUp() {
-
-        String bookmarkBundle = "bookmark";
-        String profileBundle = "profile";
-        String eventBookmarkBundle = "eventbookmark";
-        String businessBookmarkBundle = "businessbookmark";
-        if (mReceivedIntent == null){
-            signUpCall(null,null);
-        } else if (mReceivedIntent.equals(bookmarkBundle)) {
-            signUpCall("BookmarkIntent",bookmarkBundle);
-        }else if (mReceivedIntent.equals(profileBundle)){
-            signUpCall("ProfileIntent",profileBundle);
-        }else if (mReceivedIntent.equals(eventBookmarkBundle)){
-            signUpCall("EventBookmarkIntent",bookmarkBundle);
-        }else if (mReceivedIntent.equals(eventBookmarkBundle)){
-            signUpCall("BusinessBookmarkIntent",businessBookmarkBundle);
-        }
-    }
-
-    private void signUpCall(String intentName, String intentValue){
-        Bundle bundle = new Bundle();
-        bundle.putString(intentName,  intentValue);
-        SignupFragment signupFragment=new SignupFragment();
-        signupFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.replace(R.id.frame_layout,signupFragment);
-        transaction.commit();
-    }
-
-    private void goToHomeActivity(String intentName, String intentValue){
-
-        mEmailField.setText("");
-        mPasswordField.setText("");
-
-        Bundle bundle = new Bundle();
-        bundle.putString(intentName,  intentValue);
-        UserPostsFragment homeFragment=new UserPostsFragment();
-        homeFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.replace(R.id.frame_layout,homeFragment);
-        transaction.commit();
-
-    }
-
-    public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();
-    }
-
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
-    }
-
-    public void showerror(String error) {
-
-        txt_error.setText(error);
-        final Animation animShake = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_shake);
-        txt_error.startAnimation(animShake);
-        txt_error.setVisibility(View.VISIBLE);
-
-    }
-
-    public void hideerror(){
-
-        txt_error.setVisibility(View.GONE);
     }
 
 }

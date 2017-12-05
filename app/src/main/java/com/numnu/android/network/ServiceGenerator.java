@@ -21,16 +21,14 @@ public class ServiceGenerator {
 
     private static final String BASE_URL = "https://numnu-server-dev.appspot.com/";
 
-    private static String FIREBASE_TOKEN = "Bearer "+Constants.FIREBASE_TOKEN;
-
     private static final OkHttpClient httpClient = new OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .build();
 
-    static GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
-    static  Gson gson = gsonBuilder.create();
+//    static GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
+    static  Gson gson = new GsonBuilder().create();
     private static final Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -56,7 +54,7 @@ public class ServiceGenerator {
 
                                 // Request customization: add request headers
                                 Request.Builder requestBuilder = original.newBuilder()
-                                        .header("Authorization",Constants.TEMP_TOKEN )
+                                        .header("Authorization","Bearer "+Constants.FIREBASE_TOKEN )
                                         .header("Accept-Language", "en-US")
                                         .method(original.method(), original.body());
 

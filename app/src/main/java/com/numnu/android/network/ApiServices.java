@@ -3,6 +3,7 @@ package com.numnu.android.network;
 
 import com.numnu.android.network.request.CompleteSignUpData;
 import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.LoginResponse;
 import com.numnu.android.network.response.SignupResponse;
 import com.numnu.android.network.response.TagsResponse;
 
@@ -29,6 +30,9 @@ public interface ApiServices {
 
     @GET("/users")
     Call<CommonResponse> checkUserName(@Query("checkusername") String s);
+
+    @GET("/users/signin")
+    Call<LoginResponse> login();
 
 
     @Multipart

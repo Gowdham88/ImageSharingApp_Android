@@ -23,8 +23,9 @@ public class PreferencesHelper {
     public static final String PREFERENCE_DOB ="dob";
     public static final String PREFERENCE_GENDER ="gender";
     public static final String PREFERENCE_LOGGED_IN ="logged in";
-    public static final String PREFERENCE_FIREBASE_TOKEN ="logged in";
+    public static final String PREFERENCE_FIREBASE_TOKEN ="firebase_token";
     public static final String PREFERENCE_FIREBASE_UUID ="firebase_uuid";
+    public static final String PREFERENCE_USER_DESCRIPTION ="user_desc";
 
 
 
