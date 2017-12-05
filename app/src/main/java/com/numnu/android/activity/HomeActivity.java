@@ -1,5 +1,6 @@
 package com.numnu.android.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -14,6 +15,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.facebook.CallbackManager;
 import com.numnu.android.R;
 import com.numnu.android.fragments.detail.BusinessDetailFragment;
 import com.numnu.android.fragments.detail.EventDetailFragment;
@@ -27,10 +29,14 @@ import java.security.NoSuchAlgorithmException;
 
 public class HomeActivity extends MyActivity {
 
+    private CallbackManager mCallbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mCallbackManager = CallbackManager.Factory.create();
 
         final BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -102,4 +108,19 @@ public class HomeActivity extends MyActivity {
 
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            //System.out.println("@#@");
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+
 }
+
+

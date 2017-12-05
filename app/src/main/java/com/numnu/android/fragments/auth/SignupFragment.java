@@ -212,7 +212,8 @@ public class SignupFragment extends Fragment {
                             public void onSuccess(LoginResult loginResult)
                             {
                                 // App code
-                                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                                Log.e(TAG, "facebook:onSuccess:" + loginResult);
+
                                 handleFacebookAccessToken(loginResult.getAccessToken());
                             }
 
@@ -220,12 +221,14 @@ public class SignupFragment extends Fragment {
                             public void onCancel()
                             {
                                 Log.d(TAG, "facebook:onCancel");
+
                             }
 
                             @Override
                             public void onError(FacebookException exception)
                             {
                                 Log.d(TAG, "facebook:onError", exception);
+
                             }
                         });
 
