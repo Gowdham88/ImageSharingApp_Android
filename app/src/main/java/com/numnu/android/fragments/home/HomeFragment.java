@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             toolbarBackIcon.setVisibility(View.GONE);
         }
         else {
-            toolbarBackIcon.setVisibility(View.VISIBLE);
+            toolbarBackIcon.setVisibility(View.GONE);
         }
 
         googleLogo.setVisibility(View.GONE);

@@ -35,10 +35,12 @@
 
             <ImageView
                 android:id="@+id/food_cancel_button"
-                android:layout_width="25dp"
+                android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:padding="4dp"
+               android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:paddingRight="2dp"
                 android:src="@drawable/redcross" />
 
 
