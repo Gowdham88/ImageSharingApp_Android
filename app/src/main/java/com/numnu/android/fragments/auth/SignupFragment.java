@@ -392,7 +392,7 @@ public class SignupFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            showerror("Invalid Values.");
+                            showerror("Authentication failed.");
                         }
 
                         // [START_EXCLUDE]

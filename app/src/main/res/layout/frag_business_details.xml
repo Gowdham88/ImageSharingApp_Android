@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/size10"
-                android:background="@color/lighter_grey"
+                android:background="@color/new_tag_inside_color"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dpbus"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dpbus"
                 android:gravity="center_vertical"
@@ -157,6 +157,7 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 app:tabIndicatorHeight="3dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"

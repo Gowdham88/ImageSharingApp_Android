@@ -84,7 +84,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by lenovo on 11/18/2017.
  */
 
-public class EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
+public class  EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
 
     Context context;
     EditText musername,mEmail, mName,mDob, userDescription;

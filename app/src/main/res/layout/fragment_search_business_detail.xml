@@ -120,7 +120,7 @@
                 android:background="@android:color/white"
                 app:tabSelectedTextColor="@color/black"
                 app:tabTextAppearance="@style/TabWidget"
-                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginTop="15dp"
                 app:tabTextColor="@color/dark_grey" />
 
             <com.numnu.android.utils.ContentWrappingViewPager

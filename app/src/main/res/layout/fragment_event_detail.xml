@@ -119,7 +119,7 @@
                     android:drawablePadding="@dimen/spacing_tiny"
                     android:gravity="center"
                     android:padding="1dp"
-                    android:text="August 9, 07:00 am"
+                    android:text="August 20, 07:30 am"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/font_smaller" />
 
@@ -144,7 +144,7 @@
                     android:drawablePadding="@dimen/spacing_tiny"
                     android:gravity="center"
                     android:padding="1dp"
-                    android:text="August 14, 11:00 pm"
+                    android:text="August 30, 9:30 pm"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/font_smaller" />
             </LinearLayout>
@@ -246,6 +246,7 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 app:tabIndicatorHeight="3dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_description"
