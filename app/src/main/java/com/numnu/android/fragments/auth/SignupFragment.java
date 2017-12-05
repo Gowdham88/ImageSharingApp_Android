@@ -302,6 +302,43 @@ public class SignupFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signUpWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String bookmarkBundle = "bookmark";
+                            String profileBundle = "profile";
+                            String eventBookmarkBundle = "eventbookmark";
+
+                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
+                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+
+                            if (mReceivedIntent == null){
+
+                                Log.e("Dsds","dsds");
+
+                                CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
+                                transaction.replace(R.id.frame_layout,loginFragment1);
+                                transaction.addToBackStack(null).commit();
+
+                            }
+                            else if(mReceivedIntent.equals(bookmarkBundle)) {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("BookmarkIntent",  bookmarkBundle);
+                                showFragment(bundle);
+
+                            }else if (mReceivedIntent.equals(profileBundle)){
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("ProfileIntent",  bookmarkBundle);
+                                showFragment(bundle);
+
+                            }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("EventBookmarkIntent",  bookmarkBundle);
+                                showFragment(bundle);
+                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signUpWithCredential:failure", task.getException());
