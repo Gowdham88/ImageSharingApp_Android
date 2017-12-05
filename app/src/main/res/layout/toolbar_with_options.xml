@@ -15,14 +15,15 @@
 
         <ImageView
             android:id="@+id/toolbar_back"
-            android:layout_width="@dimen/size25"
-            android:layout_height="@dimen/size25"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            app:srcCompat="@drawable/back_arrow"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/size8"
-            android:layout_marginStart="@dimen/size8"
-            app:srcCompat="@drawable/back_arrow" />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
         <TextView
             style="@style/FontAvenirMedium"
@@ -33,17 +34,17 @@
             android:text="@string/app_name"
             android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="@dimen/text16" />
+            android:textSize="16dp" />
 
         <ImageView
             android:id="@+id/toolbar_image"
-            android:layout_width="@dimen/size25"
-            android:layout_height="@dimen/size25"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/size8"
-            android:layout_marginRight="@dimen/size8"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             app:srcCompat="@drawable/event_dots" />
     </RelativeLayout>
 

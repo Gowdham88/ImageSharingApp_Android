@@ -28,8 +28,8 @@
 
                 <ImageView
                     android:id="@+id/toolbar_back"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"

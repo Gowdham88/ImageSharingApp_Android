@@ -52,14 +52,15 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     SearchView searchViewFood, searchViewLocation;
     private Context context;
     TextView weblink1, weblink2, weblink3;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
     private ImageView eventImageView;
-    private ExpandableTextView eventDescription;
+    private TextView eventDescription;
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
     private CustomScrollView nestedScrollView;
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
+    private Boolean isExpanded = false;
 
 
     public static SearchBusinessDetailFragment newInstance() {
@@ -104,8 +105,27 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             }
         });
 
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        setupExpandableText();
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -166,21 +186,6 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             }
         });
     }
-
-    private void setupExpandableText() {
-        eventDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (eventDescription.isExpanded()) {
-                    eventDescription.truncateText();
-                } else {
-                    eventDescription.expandText();
-                }
-            }
-        });
-    }
-
-
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());

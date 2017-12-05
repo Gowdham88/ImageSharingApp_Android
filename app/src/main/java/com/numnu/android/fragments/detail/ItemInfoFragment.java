@@ -39,9 +39,9 @@ import java.util.ArrayList;
 public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
     private ImageView eventImageView;
-    private ExpandableTextView eventDescription;
+    private TextView eventDescription;
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
     LinearLayout linearLayout;
@@ -53,6 +53,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     private RecyclerView mPostsRecycler;
     TextView barbTxt,CatgTxt;
     ImageView BarbImg,CatgImg;
+   private Boolean isExpanded = false;
 
     public static ItemInfoFragment newInstance() {
         return new ItemInfoFragment();
@@ -88,7 +89,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         adapter = new HorizontalContentAdapter(context);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        setupExpandableText();
+
         mPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mPostsRecycler.setLayoutManager(layoutManager);
@@ -96,6 +97,27 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         CatgTxt=(TextView)view.findViewById(R.id.evntcottage_house_txt);
         BarbImg=(ImageView) view.findViewById(R.id.evntbarbq_icon);
         CatgImg=(ImageView)view.findViewById(R.id.evntcottage_house_icon);
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
 
         barbTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,18 +244,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void setupExpandableText() {
-        eventDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (eventDescription.isExpanded()) {
-                    eventDescription.truncateText();
-                } else {
-                    eventDescription.expandText();
-                }
-            }
-        });
-    }
+
 
 
 
