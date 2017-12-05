@@ -4,10 +4,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,6 +26,8 @@ import com.numnu.android.R;
 import com.numnu.android.utils.Utils;
 
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -42,6 +48,19 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
         textView=(TextView)findViewById(R.id.textView_info);
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.numnu.android",         PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String sign= Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.e("MY KEY HASH:", sign);
+                Toast.makeText(getApplicationContext(),sign,         Toast.LENGTH_LONG).show();
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+        } catch (NoSuchAlgorithmException e) {
+        }
 
     }
 
