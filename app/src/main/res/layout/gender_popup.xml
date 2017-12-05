@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/genlin_lay"
-    android:layout_marginRight="@dimen/size5"
-    android:layout_marginLeft="@dimen/size5"
-    android:layout_marginBottom="@dimen/size15"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginBottom="15dp"
     android:background="@drawable/genderpopup">
 <TextView
     style="@style/FontAvenirLight"

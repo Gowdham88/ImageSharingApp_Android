@@ -24,7 +24,7 @@
 
     <TextView
         style="@style/FontAvenirMedium"
-        android:textSize="@dimen/text12"
+        android:textSize="13dp"
         android:id="@+id/item_name"
         android:textColor="@color/event_map"
         android:layout_width="wrap_content"

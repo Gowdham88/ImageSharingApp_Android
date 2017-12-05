@@ -11,6 +11,7 @@
 
         <ImageView
             android:id="@+id/toolbar_back"
+
             app:srcCompat="@drawable/back_arrow"
             android:layout_marginTop="5dp"
             android:layout_centerVertical="true"

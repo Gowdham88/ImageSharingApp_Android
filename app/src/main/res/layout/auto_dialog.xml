@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:paddingLeft="@dimen/size8"
-        android:paddingRight="@dimen/size8"
-        android:paddingTop="@dimen/size16"
-        android:paddingBottom="@dimen/size16"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:id="@+id/lbl_name" />
 </RelativeLayout>
