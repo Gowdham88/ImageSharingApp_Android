@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/toolbar_back"
-            android:layout_width="@dimen/size25"
-            android:layout_height="@dimen/size25"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"

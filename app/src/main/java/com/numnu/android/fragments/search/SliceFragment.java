@@ -30,9 +30,7 @@ import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
-/**
- * Created by Thulirsoft on 20/10/2017.
- */
+
 
 public class SliceFragment extends Fragment {
 
@@ -81,6 +79,7 @@ public class SliceFragment extends Fragment {
         TextView barbequeText = view.findViewById(R.id.barbq_txt);
         TextView eventText = view.findViewById(R.id.barbados_txt);
         ImageView toolimg = view.findViewById(R.id.toolbar_image);
+        toolimg.setVisibility(View.GONE);
         contentImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +108,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -118,6 +118,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -180,12 +181,12 @@ public class SliceFragment extends Fragment {
                 transaction.addToBackStack(null).commit();
             }
         });
-        toolimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showBottomSheet(inflater);
-            }
-        });
+//        toolimg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showBottomSheet(inflater);
+//            }
+//        });
 
 
         return view;

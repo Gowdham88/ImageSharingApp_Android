@@ -16,10 +16,10 @@
             android:id="@+id/food_linlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size8"
-            android:layout_marginLeft="@dimen/size3"
-            android:layout_marginRight="@dimen/size8"
-            android:layout_marginTop="@dimen/size8"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <TextView

@@ -202,7 +202,7 @@
                     android:layout_marginTop="@dimen/spacing_tiny"
                     android:text="Weblink 1"
                     android:textColor="@color/weblink_color"
-                    android:textSize="@dimen/text11" />
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/txt_weblink_2"
@@ -213,7 +213,7 @@
                     android:layout_marginStart="@dimen/spacing_small"
                     android:text="Weblink 2"
                     android:textColor="@color/weblink_color"
-                    android:textSize="@dimen/text11" />
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/txt_weblink_3"
@@ -225,7 +225,7 @@
                     android:layout_marginBottom="4dp"
                     android:text="Weblink 3"
                     android:textColor="@color/weblink_color"
-                    android:textSize="@dimen/text11" />
+                    android:textSize="12dp" />
 
             </LinearLayout>
 
