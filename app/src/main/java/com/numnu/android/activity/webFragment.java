@@ -37,6 +37,12 @@ public class webFragment  extends MyActivity {
         setContentView(R.layout.web_fragment);
 
         Toolbar toolbar=findViewById(R.id.toolbar);
+        backButton =(ImageView) findViewById(R.id.back_word);
+        backButton.setVisibility(View.VISIBLE);
+        forwardButton =(ImageView) findViewById(R.id.forward);
+        forwardButton.setVisibility(View.VISIBLE);
+        backButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
+        forwardButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
 
         toolbarBackicon=(ImageView)findViewById(R.id.toolbar_back);
         toolbarBackicon.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +71,6 @@ public class webFragment  extends MyActivity {
         webView.getSettings().setJavaScriptEnabled(true);
 
 //Button Initialization
-     backButton =(ImageView)findViewById(R.id.back_word);
-        backButton.setVisibility(View.VISIBLE);
-    forwardButton =(ImageView) findViewById(R.id.forward);
-        forwardButton.setVisibility(View.VISIBLE);
 
 //Back Button Action
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +81,7 @@ public class webFragment  extends MyActivity {
                 // Going back if canGoBack true
                 if(webView.canGoBack()){
                     webView.goBack();
+
                 }
             }
         });
@@ -108,14 +111,26 @@ public class webFragment  extends MyActivity {
             @Override
             public void onPageFinished( WebView view, String url ) {
 
-                super.onPageFinished(webView, url );
+                super.onPageFinished(webView, url);
 
                 //Make Enable or Disable buttons
-                backButton.setEnabled(view.canGoBack());
-                forwardButton.setEnabled(view.canGoForward());
+                if (view.canGoBack()) {
+                    backButton.setEnabled(true);
+                    backButton.setColorFilter(getResources().getColor(R.color.event_map));
+                } else {
+                    backButton.setEnabled(false);
+                    backButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
+                }
+                if (view.canGoForward()) {
+                    forwardButton.setEnabled(true);
+                    forwardButton.setColorFilter(getResources().getColor(R.color.event_map));
+                } else {
 
+                    forwardButton.setEnabled(false);
+                    forwardButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
+
+                }
             }
-
             @Override
             public void onReceivedError( WebView view, int errorCode, String description, String failingUrl ) {
 
