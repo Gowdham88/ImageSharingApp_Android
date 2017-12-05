@@ -106,6 +106,7 @@ public class UserDetailsFragment extends Fragment {
         });
 
 
+
         return view;
     }
 

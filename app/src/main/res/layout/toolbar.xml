@@ -11,12 +11,16 @@
 
         <ImageView
             android:id="@+id/toolbar_back"
-            android:layout_width="27dp"
-            android:layout_height="27dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+
+            app:srcCompat="@drawable/back_arrow"
+            android:layout_marginTop="5dp"
             android:layout_centerVertical="true"
-            app:srcCompat="@drawable/back_arrow" />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+
         <TextView
             style="@style/FontAvenirMedium"
             android:id="@+id/toolbar_title"
