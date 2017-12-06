@@ -99,28 +99,43 @@
 
             </LinearLayout>
 
-            <com.numnu.android.utils.ExpandableTextView
+            <TextView
                 style="@style/FontAvenirMedium"
                 android:textSize="13dp"
                 android:id="@+id/event_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/hrz_lin_lay"
+                android:layout_marginBottom="@dimen/spacing_tiny"
                 android:layout_marginLeft="@dimen/spacing_small"
+                android:maxLines="4"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_marginTop="8dp"
                 android:text="@string/event_description" />
 
+            <TextView
+                android:id="@+id/more_button"
+                style="@style/FontAvenirMedium"
+                android:layout_width="38dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/event_description"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="0dp"
+                android:text="more"
+                android:textColor="#4A90E2"
+                android:textSize="13sp"/>
+
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
+                app:tabIndicatorHeight="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_description"
                 android:background="@android:color/white"
                 app:tabSelectedTextColor="@color/black"
                 app:tabTextAppearance="@style/TabWidget"
-                android:layout_marginTop="@dimen/spacing_small"
-                app:tabTextColor="@color/dark_grey" />
+                android:layout_marginTop="38dp"
+                app:tabTextColor="@color/dark_grey"/>
 
             <com.numnu.android.utils.ContentWrappingViewPager
                 android:id="@+id/event_viewpager"

@@ -49,14 +49,15 @@ import java.util.List;
 public class ItemDetailFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
     private ImageView eventImageView,entityImageView;
-    private ExpandableTextView eventDescription;
+    private TextView eventDescription;
     private PopupWindow pw;
     LinearLayout busCntnRelLay;
     private CustomScrollView nestedScrollView;
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView1,recyclerView2;
+    private Boolean isExpanded = false;
 
 
     public static ItemDetailFragment newInstance() {
@@ -111,7 +112,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 .fit()
                 .into(entityImageView);
 
-        setupExpandableText();
+
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -119,11 +120,32 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.item);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbarBackIcon.setOnClickListener(this);
         toolbar.setOnClickListener(this);
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,18 +192,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         });
     }
 
-    private void setupExpandableText() {
-        eventDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (eventDescription.isExpanded()) {
-                    eventDescription.truncateText();
-                } else {
-                    eventDescription.expandText();
-                }
-            }
-        });
-    }
+
 
 
 
@@ -273,7 +284,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
 
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

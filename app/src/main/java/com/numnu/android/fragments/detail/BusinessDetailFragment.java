@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private Context context;
     private ViewPager viewPagerBusiness;
     private TabLayout tabLayout;
-    private ExpandableTextView eventDescription;
+    private TextView eventDescription,morebutton;
     private AppBarLayout appBarLayout;
     TextView entityTitle;
     TextView Viewimage,eventName;
@@ -47,6 +48,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     RecyclerView recyclerView;
     TextView ViewTxt;
     private CustomScrollView nestedScrollView;
+    private Boolean isExpanded = false;
 
     public static BusinessDetailFragment newInstance() {
         return new BusinessDetailFragment();
@@ -74,16 +76,37 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         adapter = new HorizontalContentAdapter(context);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        setupExpandableText();
+        
         setupViewPager(viewPagerBusiness);
         tabLayout.setupWithViewPager(viewPagerBusiness);
         TextView toolbarTitleBuss = view.findViewById(R.id.toolbar_title);
         toolbarTitleBuss.setText(getString(R.string.businesses));
         ImageView toolbarIconBuss = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
         Viewimage= view.findViewById(R.id.business_viewtxt);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
 
 
         Viewimage.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +142,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         toolbarBackIconBuss.setOnClickListener(this);
         toolbar.setOnClickListener(this);
 
-        toolbarIconBuss.setOnClickListener( new View.OnClickListener() {
+        toolbarIconBuss.setOnClickListener(  new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomSheet(inflater);
@@ -166,18 +189,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             }
         });
     }
-    private void setupExpandableText() {
-        eventDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (eventDescription.isExpanded()) {
-                    eventDescription.truncateText();
-                } else {
-                    eventDescription.expandText();
-                }
-            }
-        });
-    }
+
 
 
     private void setupViewPager(ViewPager viewPager) {

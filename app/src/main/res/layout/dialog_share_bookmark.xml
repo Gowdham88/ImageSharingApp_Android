@@ -5,13 +5,13 @@
     android:layout_width="wrap_content"
     android:id="@+id/custom_dialog_layout_design_user_input"
     android:background="#FAFAFA"
-    android:paddingTop="@dimen/size20"
-    android:paddingBottom="@dimen/size20"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
     android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/size20"
+        android:layout_height="20dp"
         android:id="@+id/dialog_image"
         android:background="#FAFAFA"
         android:layout_marginLeft="@dimen/spacing_small"
@@ -39,7 +39,7 @@
         android:layout_toEndOf="@+id/bookmark_icon" />
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/size20"
+        android:layout_height="20dp"
         android:id="@+id/bookmark_icon"
         android:background="#FAFAFA"
         android:layout_marginLeft="@dimen/spacing_small"

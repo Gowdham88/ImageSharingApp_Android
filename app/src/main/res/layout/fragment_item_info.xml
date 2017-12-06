@@ -25,10 +25,13 @@
         android:layout_height="1dp"
         android:layout_below="@+id/lin_lay"
         android:background="@color/Edittxt_lineclr"/>
-    <ScrollView
-        android:layout_below="@+id/lin_lay"
+    <com.numnu.android.utils.CustomScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lin_lay"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -81,6 +84,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp"
             android:layout_toRightOf="@id/content_image_card"
             android:text="Barbadous food and rum festival" />
         <LinearLayout
@@ -96,7 +100,7 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:orientation="horizontal"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 app:reverseLayout="false"/>
@@ -105,7 +109,7 @@
 
 
         <ImageView
-            android:id="@+id/cottage_house_icon"
+            android:id="@+id/evntcottage_house_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_below="@+id/hrz_lin_lay"
@@ -115,62 +119,77 @@
             android:src="@drawable/restaurant_ico" />
 
         <TextView
-            android:id="@+id/cottage_house_txt"
+            android:id="@+id/evntcottage_house_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/hrz_lin_lay"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
             android:layout_marginTop="7dp"
-            android:layout_toEndOf="@id/cottage_house_icon"
-            android:layout_toRightOf="@id/cottage_house_icon"
+            android:layout_marginRight="8dp"
+            android:layout_toEndOf="@id/evntcottage_house_icon"
+            android:layout_toRightOf="@id/evntcottage_house_icon"
             android:gravity="center_vertical"
             android:text="Cottage House"
             android:textSize="@dimen/font_small" />
 
         <ImageView
-            android:id="@+id/barbq_icon"
-            android:layout_width="15dp"
+            android:id="@+id/evntbarbq_icon"
+            android:layout_width="17dp"
             android:layout_height="16dp"
-            android:layout_below="@+id/cottage_house_icon"
-            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/evntcottage_house_icon"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/content_image_card"
             android:src="@drawable/ic_calendar" />
 
         <TextView
-            android:id="@+id/barbq_txt"
+            android:id="@+id/evntbarbq_txt"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_below="@+id/cottage_house_txt"
+            android:layout_below="@+id/evntcottage_house_txt"
             android:layout_marginLeft="3dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/cottage_house_icon"
-            android:layout_toRightOf="@id/cottage_house_icon"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@id/evntcottage_house_icon"
+            android:layout_toRightOf="@id/evntcottage_house_icon"
             android:gravity="center_vertical"
+            android:layout_marginRight="8dp"
             android:text="Barbadous food and rum festival"
             android:textSize="@dimen/font_small" />
 
-        <com.numnu.android.utils.ExpandableTextView
+        <TextView
             android:id="@+id/event_description"
             style="@style/FontAvenirMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_tiny"
             android:layout_below="@+id/txt_amount"
             android:textSize="13dp"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
+            android:maxLines="4"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat" />
 
+        <TextView
+            android:id="@+id/more_button"
+            style="@style/FontAvenirMedium"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/event_description"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:text="more"
+            android:textColor="#4A90E2"
+            android:textSize="13sp"/>
         <TextView
             android:id="@+id/text_terms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/event_description"
-            android:layout_marginTop="10dp"
-            android:background="@color/lighter_grey"
+            android:layout_marginTop="35dp"
+            android:background="@color/view_grey_color"
             android:clickable="true"
             android:drawableEnd="@drawable/ic_chevron_right_black_24dpbus"
             android:drawableRight="@drawable/ic_chevron_right_black_24dpbus"
@@ -178,7 +197,7 @@
             android:gravity="center_vertical"
             android:padding="@dimen/spacing_small"
             android:text="View item"
-            android:textSize="@dimen/text13"
+            android:textSize="13sp"
             android:textColor="@color/blue" />
 
     </RelativeLayout>
@@ -187,10 +206,10 @@
         android:layout_below="@+id/data_rel_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size5"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
 </LinearLayout>
-    </ScrollView>
+    </com.numnu.android.utils.CustomScrollView>
 </RelativeLayout>

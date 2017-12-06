@@ -66,7 +66,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, SliceFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -76,7 +76,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, UserDetailsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -86,18 +86,37 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
 
+        holder.cattgicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
         holder.barbequeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, ItemDetailFragment.newInstance());
-                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.barbqicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -106,9 +125,35 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
-
+            }
+        });
+        holder.eventicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
             }
         });
         holder.dotsimg.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +162,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 showBottomSheet(LayoutInflater.from(context));
             }
         });
+
     }
 
     @Override
@@ -125,9 +171,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private  ImageView imageViewIcon;
+        private ImageView imageViewIcon,barbqicon,cattgicon,eventicon;
         private  ImageView profileImage;
-        private TextView eventName;
+        private TextView eventName,username,email;
         private TextView cottageHouseText;
         private TextView barbequeText;
         ImageView dotsimg;
@@ -141,6 +187,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             this.cottageHouseText = itemView.findViewById(R.id.cottage_house_txt);
             this.barbequeText = itemView.findViewById(R.id.barbq_txt);
             this.eventName = itemView.findViewById(R.id.barbados_txt);
+            this.username = itemView.findViewById(R.id.slice_toolbar_profile_name);
+            this.email = itemView.findViewById(R.id.user_name);
+            this.barbqicon = itemView.findViewById(R.id.barbq_icon);
+            this.cattgicon = itemView.findViewById(R.id.cottage_house_icon);
+            this.eventicon = itemView.findViewById(R.id.barbados_icon);
             dotsimg=(ImageView)itemView.findViewById(R.id.event_dots);
         }
     }

@@ -20,8 +20,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,14 +54,15 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     SearchView searchViewFood, searchViewLocation;
     private Context context;
     TextView weblink1, weblink2, weblink3;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
     private ImageView eventImageView;
-    private ExpandableTextView eventDescription;
+    private TextView eventDescription;
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
     private CustomScrollView nestedScrollView;
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
+    private Boolean isExpanded = false;
 
 
     public static SearchBusinessDetailFragment newInstance() {
@@ -102,8 +107,27 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             }
         });
 
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        setupExpandableText();
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -112,7 +136,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         toolbarTitle.setText(R.string.business);
 
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbarBackIcon.setOnClickListener(this);
@@ -164,21 +188,6 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             }
         });
     }
-
-    private void setupExpandableText() {
-        eventDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (eventDescription.isExpanded()) {
-                    eventDescription.truncateText();
-                } else {
-                    eventDescription.expandText();
-                }
-            }
-        });
-    }
-
-
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
@@ -264,12 +273,13 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         View layout = inflater.inflate(R.layout.image_popup,null);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         pw = new PopupWindow(layout, lp.width, lp.height, true);
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
-
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+        layout.startAnimation(hide);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

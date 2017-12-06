@@ -9,6 +9,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,8 @@ import com.numnu.android.R;
 
 public class webFragment  extends MyActivity {
     private WebView webView;
-    ImageView toolbarBackicon,BrowseIcon;
+    ImageView BrowseIcon,backButton,forwardButton;
+    RelativeLayout toolbarBackicon;
     CustomTabsIntent customTabsIntent;
 //    public static webFragment newInstance() {
 //        return new webFragment();
@@ -37,8 +39,14 @@ public class webFragment  extends MyActivity {
         setContentView(R.layout.web_fragment);
 
         Toolbar toolbar=findViewById(R.id.toolbar);
+        backButton =(ImageView) findViewById(R.id.back_word);
+        backButton.setVisibility(View.VISIBLE);
+        forwardButton =(ImageView) findViewById(R.id.forward);
+        forwardButton.setVisibility(View.VISIBLE);
+        backButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
+        forwardButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
 
-        toolbarBackicon=(ImageView)findViewById(R.id.toolbar_back);
+        toolbarBackicon=(RelativeLayout)findViewById(R.id.toolbar_back);
         toolbarBackicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,10 +54,11 @@ public class webFragment  extends MyActivity {
             }
         });
         TextView toolbar_title=(TextView)findViewById(R.id.toolbar_title);
-        toolbar_title.setText("www.google.com");
+        toolbar_title.setText("http://www.totc.ca");
 
 
-        BrowseIcon=(ImageView)findViewById(R.id.browse_icon);
+        BrowseIcon=(ImageView)findViewById(R.id.google_img);
+        BrowseIcon.setVisibility(View.VISIBLE);
         BrowseIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +73,6 @@ public class webFragment  extends MyActivity {
         webView.getSettings().setJavaScriptEnabled(true);
 
 //Button Initialization
-        final ImageView backButton =(ImageView)findViewById(R.id.back_arrow);
-        final ImageView forwardButton =(ImageView) findViewById(R.id.forward_arrow);
 
 //Back Button Action
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +83,7 @@ public class webFragment  extends MyActivity {
                 // Going back if canGoBack true
                 if(webView.canGoBack()){
                     webView.goBack();
+
                 }
             }
         });
@@ -105,14 +113,26 @@ public class webFragment  extends MyActivity {
             @Override
             public void onPageFinished( WebView view, String url ) {
 
-                super.onPageFinished(webView, url );
+                super.onPageFinished(webView, url);
 
                 //Make Enable or Disable buttons
-                backButton.setEnabled(view.canGoBack());
-                forwardButton.setEnabled(view.canGoForward());
+                if (view.canGoBack()) {
+                    backButton.setEnabled(true);
+                    backButton.setColorFilter(getResources().getColor(R.color.event_map));
+                } else {
+                    backButton.setEnabled(false);
+                    backButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
+                }
+                if (view.canGoForward()) {
+                    forwardButton.setEnabled(true);
+                    forwardButton.setColorFilter(getResources().getColor(R.color.event_map));
+                } else {
 
+                    forwardButton.setEnabled(false);
+                    forwardButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
+
+                }
             }
-
             @Override
             public void onReceivedError( WebView view, int errorCode, String description, String failingUrl ) {
 
@@ -120,7 +140,7 @@ public class webFragment  extends MyActivity {
                 Toast.makeText( webFragment.this, description, Toast.LENGTH_LONG );
             }
         } );
-        webView.loadUrl("https://www.google.com/");
+        webView.loadUrl("http://www.totc.ca");
 
 
     }

@@ -21,14 +21,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
+import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.activity.webFragment;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.HorizontalContentAdapter;
@@ -53,15 +58,16 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     SearchView searchViewFood, searchViewLocation;
     private Context context;
     TextView weblink1, weblink2, weblink3;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
     private ImageView eventImageView;
-    private ExpandableTextView eventDescription;
+    private TextView eventDescription;
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     private ViewPager viewPager;
     private CustomScrollView nestedScrollView;
+    private Boolean isExpanded = false;
 
 
     public static EventDetailFragment newInstance() {
@@ -89,9 +95,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         weblink2 = view.findViewById(R.id.txt_weblink_2);
         weblink3 = view.findViewById(R.id.txt_weblink_3);
 
+
         weblink1.setOnClickListener(this);
         weblink2.setOnClickListener(this);
         weblink3.setOnClickListener(this);
+
 
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
@@ -105,7 +113,29 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         eventImageView.setOnClickListener(this);
         viewEventMap.setOnClickListener(this);
 
-        setupExpandableText();
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
+
+
 
         setupWebLinks();
 
@@ -115,7 +145,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.event);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbarBackIcon.setOnClickListener(this);
@@ -168,18 +198,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         });
     }
 
-    private void setupExpandableText() {
-        eventDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (eventDescription.isExpanded()) {
-                    eventDescription.truncateText();
-                } else {
-                    eventDescription.expandText();
-                }
-            }
-        });
-    }
+
 
     private void setupWebLinks() {
 
@@ -273,7 +292,10 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.txt_view_event_map:
-                startActivity(new Intent(context, GoogleMapActivity.class));
+             Intent newintent=new Intent(context, GoogleMapActivity.class);
+                EventDetailFragment.this.startActivity(newintent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+
                 break;
 
 
@@ -338,10 +360,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         lp.width = WindowManager.LayoutParams.FILL_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+        layout.startAnimation(hide);
 
-
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

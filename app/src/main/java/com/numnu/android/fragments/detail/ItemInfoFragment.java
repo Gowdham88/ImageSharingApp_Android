@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,9 +40,9 @@ import java.util.ArrayList;
 public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
     private ImageView eventImageView;
-    private ExpandableTextView eventDescription;
+    private TextView eventDescription;
     private AppBarLayout appBarLayout;
     private PopupWindow pw;
     LinearLayout linearLayout;
@@ -53,6 +54,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     private RecyclerView mPostsRecycler;
     TextView barbTxt,CatgTxt;
     ImageView BarbImg,CatgImg;
+   private Boolean isExpanded = false;
 
     public static ItemInfoFragment newInstance() {
         return new ItemInfoFragment();
@@ -70,6 +72,13 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
         final View view = inflater.inflate(R.layout.fragment_item_info, container, false);
 
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
@@ -81,14 +90,35 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         adapter = new HorizontalContentAdapter(context);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        setupExpandableText();
+
         mPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mPostsRecycler.setLayoutManager(layoutManager);
-        barbTxt=(TextView)view.findViewById(R.id.barbq_txt);
-        CatgTxt=(TextView)view.findViewById(R.id.cottage_house_txt);
-        BarbImg=(ImageView) view.findViewById(R.id.barbq_icon);
-        CatgImg=(ImageView)view.findViewById(R.id.cottage_house_icon);
+        barbTxt=(TextView)view.findViewById(R.id.evntbarbq_txt);
+        CatgTxt=(TextView)view.findViewById(R.id.evntcottage_house_txt);
+        BarbImg=(ImageView) view.findViewById(R.id.evntbarbq_icon);
+        CatgImg=(ImageView)view.findViewById(R.id.evntcottage_house_icon);
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
 
         barbTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +166,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         toolbarTitle.setText(R.string.item);
 
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         ItemInfoTxt=(TextView) view.findViewById(R.id.text_terms) ;
 //        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -215,18 +245,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void setupExpandableText() {
-        eventDescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (eventDescription.isExpanded()) {
-                    eventDescription.truncateText();
-                } else {
-                    eventDescription.expandText();
-                }
-            }
-        });
-    }
+
 
 
 
@@ -269,7 +288,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
 
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

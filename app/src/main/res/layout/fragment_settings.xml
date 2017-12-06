@@ -42,7 +42,7 @@
 
                 <TextView
                     style="@style/FontAvenirMedium"
-                    android:textSize="@dimen/text15"
+                    android:textSize="15dp"
                     android:textColor="@color/name_black"
                     android:id="@+id/textView16"
                     android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:text="March"
-                    android:layout_marginBottom="@dimen/size15"
+                    android:layout_marginBottom="15dp"
                     />
 
                 <ImageView
@@ -67,7 +67,7 @@
                 android:id="@+id/text_share_app"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
@@ -84,7 +84,7 @@
                 android:id="@+id/text_rate_app"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -98,7 +98,7 @@
                 android:id="@+id/text_terms"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -112,7 +112,7 @@
                 android:id="@+id/text_privacy"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -125,7 +125,7 @@
             <TextView
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -145,7 +145,7 @@
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/events"
                 android:focusable="true" />
 
@@ -159,7 +159,7 @@
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/business"
                 android:focusable="true" />
 
@@ -173,7 +173,7 @@
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/items"
                 android:focusable="true" />
 
@@ -187,7 +187,7 @@
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/posts"
                 android:focusable="true" />
 
@@ -201,7 +201,7 @@
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/users"
                 android:focusable="true" />
 
@@ -214,7 +214,7 @@
                 <!--android:clickable="true"-->
                 <!--android:padding="@dimen/spacing_small"-->
                 <!--android:text="Logout"-->
-                android:focusable="true" />
+                <!--android:focusable="true" />-->
             <TextView
                 android:id="@+id/text_logout"
                 android:layout_width="match_parent"
@@ -225,7 +225,7 @@
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/logout"
                 android:focusable="true" />
 

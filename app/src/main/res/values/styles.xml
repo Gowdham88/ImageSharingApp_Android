@@ -50,7 +50,7 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">18sp</item>
-        <item name="fontPath">fonts/Avenir-Heavy.ttf</item>
+        <item name="fontPath">fonts/Avenir-Black.ttf</item>
     </style>
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -80,6 +80,10 @@
 
     <style name="SplashTextStyle">
         <item name="fontPath">fonts/ProximaNova-Bold.ttf</item>
+    </style>
+
+    <style name="FontAvenirBlack">
+        <item name="fontPath">fonts/Avenir-Black.ttf</item>
     </style>
 
     <style name="FontAvenirheavy">
@@ -145,6 +149,7 @@
         <item name="android:textSize">14sp</item>
         <item name="fontPath">fonts/Avenir-Medium.ttf</item>
         <item name="android:textColor">@color/tab_unselected_color</item>
+        <item name="tabIndicatorHeight">50dp</item>
     </style>
 
     <style name="ThumnailStyle">

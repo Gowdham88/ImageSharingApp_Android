@@ -14,18 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.LinkBusinessesFragment;
-import com.numnu.android.fragments.LinkEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
-import com.numnu.android.fragments.detail.BusinessDetailFragment;
 import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
-import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
-import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
@@ -33,23 +27,23 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by dhivy on 06/11/2017.
+ * Created by czsm4 on 05/12/17.
  */
 
-public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.ViewHolder> {
+public class Userdetailadapter extends RecyclerView.Adapter<Userdetailadapter.ViewHolder> {
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
 
-    public UserPostsAdapter(Context context, ArrayList<String> stringArrayList) {
+    public Userdetailadapter(Context context, ArrayList<String> stringArrayList) {
         this.context = context;
         this.stringArrayList = stringArrayList;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Userdetailadapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.post_item, parent, false);
-        ViewHolder myViewHolder = new ViewHolder(view);
+        Userdetailadapter.ViewHolder myViewHolder = new Userdetailadapter.ViewHolder(view);
         return myViewHolder;
     }
 
@@ -68,16 +62,16 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
                 transaction.addToBackStack(null).commit();
             }
         });
-
-        holder.profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+//
+//        holder.profileImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
 
         holder.cottageHouseText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,24 +130,24 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
                 transaction.addToBackStack(null).commit();
             }
         });
-        holder.username.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-        holder.email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+//        holder.username.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
+//        holder.email.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
         holder.dotsimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

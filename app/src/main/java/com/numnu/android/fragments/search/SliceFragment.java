@@ -13,8 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +32,13 @@ import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.utils.PreferencesHelper;
 
-/**
- * Created by Thulirsoft on 20/10/2017.
- */
+
 
 public class SliceFragment extends Fragment {
 
     Context context;
     private PopupWindow pw;
+    private ImageView barbqicon,cattgicon,eventicon;
 
     public static SliceFragment newInstance() {
         SliceFragment fragment = new SliceFragment();
@@ -58,7 +61,7 @@ public class SliceFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_slice, container, false);
 
@@ -66,15 +69,19 @@ public class SliceFragment extends Fragment {
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
 
+       barbqicon = view.findViewById(R.id.barbq_icon);
+      cattgicon = view.findViewById(R.id.cottage_house_icon);
+        eventicon = view.findViewById(R.id.barbados_icon);
         ImageView moreIcon = view.findViewById(R.id.event_dots);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         ImageView userImageIcon = view.findViewById(R.id.slice_profile_image);
         ImageView contentImage = view.findViewById(R.id.content_image);
         TextView userNameText = view.findViewById(R.id.slice_toolbar_profile_name);
         TextView cottageHouseText = view.findViewById(R.id.cottage_house_txt);
         TextView barbequeText = view.findViewById(R.id.barbq_txt);
         TextView eventText = view.findViewById(R.id.barbados_txt);
-
+        ImageView toolimg = view.findViewById(R.id.toolbar_image);
+        toolimg.setVisibility(View.GONE);
         contentImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +110,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -112,37 +120,86 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
 
-        cottageHouseText.setOnClickListener(new View.OnClickListener() {
+  cottageHouseText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
 
-        barbequeText.setOnClickListener(new View.OnClickListener() {
+      cattgicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
-
+        barbequeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        barbqicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
         eventText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
+       eventicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+//        toolimg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showBottomSheet(inflater);
+//            }
+//        });
+
+
+        return view;
+    }
+
+    private void showBottomSheet(LayoutInflater inflater) {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
 
         TextView share = bottomSheetView.findViewById(R.id.share_title);
         TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
@@ -162,21 +219,18 @@ public class SliceFragment extends Fragment {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
-                if (loginStatus) {
-                    Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
+                if (!loginStatus) {
+                    Intent intent = new Intent(context, LoginFragment.class);
+                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
-                }else if (!loginStatus){
-                    Intent intent = new Intent(getActivity(),LoginFragment.class);
-                    intent.putExtra("BookmarkIntent","bookmark");
-                    startActivity(intent);
-
+                }else if (loginStatus){
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        return view;
     }
-
 
 
     private void initiatePopupWindow() {
@@ -189,9 +243,10 @@ public class SliceFragment extends Fragment {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         pw = new PopupWindow(layout, lp.width, lp.height, true);
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+        layout.startAnimation(hide);
 
-
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

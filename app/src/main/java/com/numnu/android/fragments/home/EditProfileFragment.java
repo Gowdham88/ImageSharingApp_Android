@@ -84,7 +84,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by lenovo on 11/18/2017.
  */
 
-public class EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
+public class  EditProfileFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
 
     Context context;
     EditText musername,mEmail, mName,mDob, userDescription;
@@ -171,7 +171,7 @@ public class EditProfileFragment extends Fragment implements EasyPermissions.Per
         EditReLay=(RelativeLayout) v.findViewById(R.id.editrel_lay);
         GenderDropimg=(ImageView) v.findViewById(R.id.gender_img);
         nestedScrollView = (ScrollView) v.findViewById(R.id.nestedScrollView);
-        ImageView Toolbarbackicon=v.findViewById(R.id.toolbar_back);
+        RelativeLayout Toolbarbackicon=v.findViewById(R.id.toolbar_back);
         Toolbarbackicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

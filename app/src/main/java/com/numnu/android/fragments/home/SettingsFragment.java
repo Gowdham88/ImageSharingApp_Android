@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -113,7 +114,7 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
-        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override

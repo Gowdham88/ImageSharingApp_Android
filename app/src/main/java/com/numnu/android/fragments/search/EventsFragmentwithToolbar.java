@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -26,7 +27,7 @@ public class EventsFragmentwithToolbar extends Fragment {
     private ArrayList<String> stringlist;
     Context context;
     Toolbar toolbar;
-    ImageView toolbackimg;
+    RelativeLayout toolbackimg;
 
     public static EventsFragmentwithToolbar newInstance() {
         EventsFragmentwithToolbar fragment = new EventsFragmentwithToolbar();
@@ -46,7 +47,7 @@ public class EventsFragmentwithToolbar extends Fragment {
         searchEventsList = view.findViewById(R.id.search_recyclerview);
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.events);
-        toolbackimg=(ImageView)view.findViewById(R.id.toolbar_back);
+        toolbackimg=(RelativeLayout)view.findViewById(R.id.toolbar_back);
         toolbackimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
