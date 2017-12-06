@@ -302,45 +302,64 @@ public class SignupFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signUpWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String bookmarkBundle = "bookmark";
-                            String profileBundle = "profile";
-                            String eventBookmarkBundle = "eventbookmark";
+                            final FirebaseUser user = mAuth.getCurrentUser();
 
-                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
-                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                            user.getIdToken(true)
+                                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                            if (task.isSuccessful()) {
+                                                String idToken = task.getResult().getToken();
+                                                Log.d("Token:", idToken);
+                                                Constants.FIREBASE_TOKEN = idToken;
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                                                // Send token to your backend via HTTPS
 
-                            if (mReceivedIntent == null){
+                                                String bookmarkBundle = "bookmark";
+                                                String profileBundle = "profile";
+                                                String eventBookmarkBundle = "eventbookmark";
 
-                                Log.e("Dsds","dsds");
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
+                                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
 
-                                CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-                                transaction.replace(R.id.frame_layout,loginFragment1);
-                                transaction.addToBackStack(null).commit();
+                                                if (mReceivedIntent == null){
 
-                            }
-                            else if(mReceivedIntent.equals(bookmarkBundle)) {
+                                                    Log.e("Dsds","dsds");
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("BookmarkIntent",  bookmarkBundle);
-                                showFragment(bundle);
+                                                    CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
+                                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
+                                                    transaction.replace(R.id.frame_layout,loginFragment1);
+                                                    transaction.addToBackStack(null).commit();
 
-                            }else if (mReceivedIntent.equals(profileBundle)){
+                                                }
+                                                else if(mReceivedIntent.equals(bookmarkBundle)) {
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("ProfileIntent",  bookmarkBundle);
-                                showFragment(bundle);
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("BookmarkIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
 
-                            }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+                                                }else if (mReceivedIntent.equals(profileBundle)){
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("EventBookmarkIntent",  bookmarkBundle);
-                                showFragment(bundle);
-                            }
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("ProfileIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
+
+                                                }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("EventBookmarkIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
+                                                }
+
+
+                                            }
+                                        }
+                                    });
+
 
                         } else {
                             // If sign in fails, display a message to the user.

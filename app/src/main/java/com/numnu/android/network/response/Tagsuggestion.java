@@ -16,10 +16,10 @@ private String text;
 private String imageurl;
 @SerializedName("isingredient")
 @Expose
-private Integer isingredient;
+private Boolean isingredient;
 @SerializedName("isverified")
 @Expose
-private Integer isverified;
+private Boolean isverified;
 @SerializedName("createdat")
 @Expose
 private String createdat;
@@ -57,19 +57,19 @@ public void setImageurl(String imageurl) {
 this.imageurl = imageurl;
 }
 
-public Integer getIsingredient() {
+public Boolean getIsingredient() {
 return isingredient;
 }
 
-public void setIsingredient(Integer isingredient) {
+public void setIsingredient(Boolean isingredient) {
 this.isingredient = isingredient;
 }
 
-public Integer getIsverified() {
+public Boolean getIsverified() {
 return isverified;
 }
 
-public void setIsverified(Integer isverified) {
+public void setIsverified(Boolean isverified) {
 this.isverified = isverified;
 }
 
