@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -45,7 +46,7 @@ public class CurrentEventsFragment extends Fragment {
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.current_upcoming);
 
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

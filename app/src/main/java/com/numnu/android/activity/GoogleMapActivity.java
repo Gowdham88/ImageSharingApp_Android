@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +86,7 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
-        ImageView toolbarBackImage = findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackImage = findViewById(R.id.toolbar_back);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override

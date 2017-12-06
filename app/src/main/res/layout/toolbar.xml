@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
+    app:contentInsetStart="0dp"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/toolbar_background_color">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+<RelativeLayout
+    android:layout_width="60dp"
+    android:id="@+id/toolbar_back"
+    android:layout_height="match_parent">
         <ImageView
-            android:id="@+id/toolbar_back"
-
+            android:id="@+id/toolb_back"
             app:srcCompat="@drawable/back_arrow"
             android:layout_marginTop="5dp"
-            android:layout_centerVertical="true"
+           android:layout_centerInParent="true"
             android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_height="25dp" />
 
-
+</RelativeLayout>
         <TextView
             style="@style/FontAvenirMedium"
             android:id="@+id/toolbar_title"

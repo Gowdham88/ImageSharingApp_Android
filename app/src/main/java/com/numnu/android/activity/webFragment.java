@@ -9,6 +9,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,8 @@ import com.numnu.android.R;
 
 public class webFragment  extends MyActivity {
     private WebView webView;
-    ImageView toolbarBackicon,BrowseIcon,backButton,forwardButton;
+    ImageView BrowseIcon,backButton,forwardButton;
+    RelativeLayout toolbarBackicon;
     CustomTabsIntent customTabsIntent;
 //    public static webFragment newInstance() {
 //        return new webFragment();
@@ -44,7 +46,7 @@ public class webFragment  extends MyActivity {
         backButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
         forwardButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
 
-        toolbarBackicon=(ImageView)findViewById(R.id.toolbar_back);
+        toolbarBackicon=(RelativeLayout)findViewById(R.id.toolbar_back);
         toolbarBackicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

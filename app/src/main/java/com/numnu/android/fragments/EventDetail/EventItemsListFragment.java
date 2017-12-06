@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -54,7 +55,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
 //    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(menuitemsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
 
         toolbarBackImage.setOnClickListener(this);
 

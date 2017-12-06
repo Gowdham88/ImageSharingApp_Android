@@ -171,7 +171,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         EditReLay=(RelativeLayout) v.findViewById(R.id.editrel_lay);
         GenderDropimg=(ImageView) v.findViewById(R.id.gender_img);
         nestedScrollView = (ScrollView) v.findViewById(R.id.nestedScrollView);
-        ImageView Toolbarbackicon=v.findViewById(R.id.toolbar_back);
+        RelativeLayout Toolbarbackicon=v.findViewById(R.id.toolbar_back);
         Toolbarbackicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

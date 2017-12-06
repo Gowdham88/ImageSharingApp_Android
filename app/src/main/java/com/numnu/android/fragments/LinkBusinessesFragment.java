@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
@@ -47,7 +48,7 @@ public class LinkBusinessesFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(businessRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
         businessRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override

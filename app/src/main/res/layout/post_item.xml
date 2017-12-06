@@ -15,6 +15,7 @@
         android:src="@drawable/loginicon2x"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="3dp"
         android:layout_marginBottom="5dp"
         />
     <TextView
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginLeft="3dp"
+
         android:layout_toRightOf="@id/slice_profile_image"
         android:layout_toEndOf="@id/slice_profile_image"
         android:text="Marc Chiriqui,"
@@ -35,8 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/slice_toolbar_profile_name"
-        android:layout_toRightOf="@id/slice_profile_image"
-        android:layout_toEndOf="@id/slice_profile_image"
+       android:layout_marginLeft="42dp"
         android:textSize="13sp"
         android:text=" @username" />
 
@@ -101,7 +101,7 @@
                 android:layout_height="19dp"
                 android:layout_below="@+id/post_interests_layout"
                 android:layout_weight="0.5"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="3dp"
                 android:src="@drawable/dish_ico" />
 
             <TextView
@@ -136,7 +136,6 @@
                 android:layout_toEndOf="@id/barbq_icon"
                 android:layout_toRightOf="@id/barbq_icon"
                 android:layout_weight="4"
-
                 android:gravity="center_vertical"
                 android:text="Cottage House"
                 android:textSize="13sp" />
@@ -179,8 +178,8 @@
         <!--/>-->
         <ImageView
             android:id="@+id/inlove_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_toLeftOf="@+id/event_dots"
             android:layout_toStartOf="@+id/event_dots"
             android:src="@drawable/ic_in_love" />
@@ -199,7 +198,7 @@
         android:id="@+id/barbados_icon"
         android:layout_below="@+id/post_interests_layout"
         android:src="@drawable/ic_calendar"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="6dp"
         />
     <TextView

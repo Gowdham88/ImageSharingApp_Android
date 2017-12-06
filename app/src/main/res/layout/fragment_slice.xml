@@ -71,7 +71,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_below="@id/slice_toolbar_profile_name"
-                android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/slice_profile_image"
                 android:gravity="center"
                 android:text="@string/username"
@@ -170,7 +169,7 @@
                         android:layout_below="@id/cottage_house_txt"
                         android:layout_marginLeft="5dp"
                         android:layout_marginStart="5dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="5dp"
                         android:layout_weight="0.5"
                         android:src="@drawable/restaurant_ico" />
 
@@ -225,8 +224,8 @@
                 <!--/>-->
                 <ImageView
                     android:id="@+id/inlove_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_toLeftOf="@+id/event_dots"
                     android:layout_toStartOf="@+id/event_dots"
                     android:src="@drawable/ic_in_love" />
@@ -251,7 +250,7 @@
                 android:layout_height="16dp"
                 android:layout_below="@+id/post_interests_layout"
                 android:layout_marginLeft="6dp"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="12dp"
                 android:src="@drawable/ic_calendar" />
 
             <TextView
@@ -261,7 +260,7 @@
                 android:layout_below="@+id/post_interests_layout"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="9dp"
                 android:layout_toEndOf="@id/barbados_icon"
                 android:layout_toRightOf="@id/barbados_icon"
                 android:gravity="center_vertical"

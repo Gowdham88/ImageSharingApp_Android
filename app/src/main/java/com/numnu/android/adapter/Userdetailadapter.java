@@ -1,201 +1,193 @@
-package com.numnu.android.fragments.search;
+package com.numnu.android.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.auth.LoginFragment;
-import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
+import com.numnu.android.fragments.home.UserPostsFragment;
+import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 
+/**
+ * Created by czsm4 on 05/12/17.
+ */
 
-public class SliceFragment extends Fragment {
-
+public class Userdetailadapter extends RecyclerView.Adapter<Userdetailadapter.ViewHolder> {
     Context context;
-    private PopupWindow pw;
-    private ImageView barbqicon,cattgicon,eventicon;
+    ArrayList<String> stringArrayList = new ArrayList<>();
 
-    public static SliceFragment newInstance() {
-        SliceFragment fragment = new SliceFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public Userdetailadapter(Context context, ArrayList<String> stringArrayList) {
         this.context = context;
+        this.stringArrayList = stringArrayList;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-
+    public Userdetailadapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.post_item, parent, false);
+        Userdetailadapter.ViewHolder myViewHolder = new Userdetailadapter.ViewHolder(view);
+        return myViewHolder;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_slice, container, false);
-
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
-        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
-        bottomSheetDialog.setContentView(bottomSheetView);
-
-       barbqicon = view.findViewById(R.id.barbq_icon);
-      cattgicon = view.findViewById(R.id.cottage_house_icon);
-        eventicon = view.findViewById(R.id.barbados_icon);
-        ImageView moreIcon = view.findViewById(R.id.event_dots);
-        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-        ImageView userImageIcon = view.findViewById(R.id.slice_profile_image);
-        ImageView contentImage = view.findViewById(R.id.content_image);
-        TextView userNameText = view.findViewById(R.id.slice_toolbar_profile_name);
-        TextView cottageHouseText = view.findViewById(R.id.cottage_house_txt);
-        TextView barbequeText = view.findViewById(R.id.barbq_txt);
-        TextView eventText = view.findViewById(R.id.barbados_txt);
-        ImageView toolimg = view.findViewById(R.id.toolbar_image);
-        toolimg.setVisibility(View.GONE);
-        contentImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initiatePopupWindow();
-            }
-        });
-
-        toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
-
-        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Post");
-
-        moreIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.show();
-            }
-        });
-
-        userImageIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-
-        userNameText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-
-  cottageHouseText.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Picasso.with(context).load(R.drawable.pasta)
+                .placeholder(R.drawable.food_for_lunch_mom)
+                .fit()
+                .into(holder.imageViewIcon);
+        holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
-
-      cattgicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-        barbequeText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout,
-                        ItemDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-        barbqicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout,
-                        ItemDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-        eventText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-       eventicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-//        toolimg.setOnClickListener(new View.OnClickListener() {
+//
+//        holder.profileImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
-//                showBottomSheet(inflater);
+//            public void onClick(View view) {
+//                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
 //            }
 //        });
 
+        holder.cottageHouseText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
-        return view;
+        holder.cattgicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.barbequeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.barbqicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.eventName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.eventicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+//        holder.username.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
+//        holder.email.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
+        holder.dotsimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheet(LayoutInflater.from(context));
+            }
+        });
+
     }
 
-    private void showBottomSheet(LayoutInflater inflater) {
+    @Override
+    public int getItemCount() {
+        return stringArrayList.size();
+    }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imageViewIcon,barbqicon,cattgicon,eventicon;
+        private  ImageView profileImage;
+        private TextView eventName,username,email;
+        private TextView cottageHouseText;
+        private TextView barbequeText;
+        ImageView dotsimg;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            this.imageViewIcon = itemView.findViewById(R.id.content_image);
+            this.profileImage = itemView.findViewById(R.id.slice_profile_image);
+            this.cottageHouseText = itemView.findViewById(R.id.cottage_house_txt);
+            this.barbequeText = itemView.findViewById(R.id.barbq_txt);
+            this.eventName = itemView.findViewById(R.id.barbados_txt);
+            this.username = itemView.findViewById(R.id.slice_toolbar_profile_name);
+            this.email = itemView.findViewById(R.id.user_name);
+            this.barbqicon = itemView.findViewById(R.id.barbq_icon);
+            this.cattgicon = itemView.findViewById(R.id.cottage_house_icon);
+            this.eventicon = itemView.findViewById(R.id.barbados_icon);
+            dotsimg=(ImageView)itemView.findViewById(R.id.event_dots);
+        }
+    }
+
+
+
+    private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
@@ -230,30 +222,5 @@ public class SliceFragment extends Fragment {
                 }
             }
         });
-    }
-
-
-    private void initiatePopupWindow() {
-
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.image_popup,null);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
-        layout.startAnimation(hide);
-
-        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pw.dismiss();
-            }
-        });
-
     }
 }

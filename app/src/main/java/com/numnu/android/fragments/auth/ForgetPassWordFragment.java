@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 
 public class ForgetPassWordFragment extends Fragment {
     Button Resetbutton;
-    ImageView backButton;
+    RelativeLayout backButton;
     TextView txt_error,txt_email;
     EditText emailField;
 ConstraintLayout Constainlay;
@@ -55,7 +56,7 @@ ConstraintLayout Constainlay;
         View v = inflater.inflate(R.layout.activity_forget_password, container, false);
         Resetbutton=(Button)v.findViewById(R.id.button_reset);
         Constainlay = (ConstraintLayout)v.findViewById(R.id.const_lay);
-        backButton  = (ImageView)v.findViewById(R.id.toolbar_back);
+        backButton  = (RelativeLayout)v.findViewById(R.id.toolbar_back);
         txt_error   = (TextView) v.findViewById(R.id.txt_error);
         txt_email   = (TextView) v.findViewById(R.id.textView5);
         emailField  = v.findViewById(R.id.et_email);
