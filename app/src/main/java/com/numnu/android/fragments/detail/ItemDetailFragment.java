@@ -120,7 +120,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.item);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbarBackIcon.setOnClickListener(this);
@@ -284,7 +284,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
 
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

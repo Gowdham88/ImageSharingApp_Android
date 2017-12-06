@@ -23,7 +23,9 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -134,7 +136,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         toolbarTitle.setText(R.string.business);
 
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbarBackIcon.setOnClickListener(this);
@@ -277,7 +279,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
         Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
         layout.startAnimation(hide);
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -54,7 +54,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class LocationDetailFragment extends Fragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks  {
 
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime,openMap;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    LinearLayout openMap;
     private ImageView eventImageView;
     private AppBarLayout appBarLayout;
     private SupportMapFragment mapFragment;
@@ -114,7 +115,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.location);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
 
@@ -227,7 +228,9 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
                 nestedScrollView.scrollTo(0,0);
                 break;
             case R.id.txt_open_map:
-                startActivity(new Intent(context,GoogleMapActivity.class));
+                Intent newintent=new Intent(context, GoogleMapActivity.class);
+                LocationDetailFragment.this.startActivity(newintent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
                 break;
         }
     }

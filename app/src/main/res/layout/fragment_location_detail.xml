@@ -116,20 +116,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </android.support.v7.widget.CardView>
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="30dp"
+    android:layout_marginTop="10dp"
+    android:id="@+id/txt_open_map"
+    android:layout_centerInParent="true"
+    android:layout_alignParentRight="true"
+    android:layout_marginRight="30dp"
+    android:layout_below="@+id/card_view_location">
             <TextView
-                android:id="@+id/txt_open_map"
+
                 style="@style/BoldTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/card_view_location"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="15dp"
+                android:drawablePadding="7dp"
+               android:gravity="center"
                 android:drawableLeft="@drawable/ic_maplocation"
-                android:text="Open Map"
+                android:text="Open map"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/font_smaller" />
+</LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

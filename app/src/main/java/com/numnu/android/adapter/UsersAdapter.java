@@ -1,6 +1,7 @@
 package com.numnu.android.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -41,18 +42,30 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("Showarrow",  true);
+                UserDetailsFragment userFragment = new UserDetailsFragment();
+                userFragment.setArguments(bundle);
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, userFragment);
                 transaction.addToBackStack(null).commit();
+//                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("Showarrow",  true);
+                UserDetailsFragment userFragment = new UserDetailsFragment();
+                userFragment.setArguments(bundle);
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, userFragment);
                 transaction.addToBackStack(null).commit();
             }
         });

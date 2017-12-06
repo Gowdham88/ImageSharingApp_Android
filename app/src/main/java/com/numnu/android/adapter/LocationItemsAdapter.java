@@ -58,6 +58,26 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
                 transaction.addToBackStack(null).commit();
             }
         });
+        holder.textViewName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, LocationDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, LocationDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
 
     }
 
@@ -68,11 +88,12 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
-        private TextView textViewName;
+        private TextView textViewName,date;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.business_name);
+            this.textViewName =  itemView.findViewById(R.id.menu_item_name);
+            this.date =  itemView.findViewById(R.id.event_date);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.notification_image);
         }

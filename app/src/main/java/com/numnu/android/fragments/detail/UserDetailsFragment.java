@@ -14,11 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.UserPostsAdapter;
+import com.numnu.android.adapter.Userdetailadapter;
 import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 
@@ -35,6 +37,7 @@ public class UserDetailsFragment extends Fragment {
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     ImageView SettingImg;
+    Boolean showarrow = false;
 
 
     public static UserDetailsFragment newInstance() {
@@ -49,6 +52,10 @@ public class UserDetailsFragment extends Fragment {
         if (bundle != null) {
             id=bundle.getString("type","location");
             username = bundle.getString("uname", "Festival");
+            showarrow = bundle.getBoolean("Showarrow");
+
+
+
 
         }
     }
@@ -59,7 +66,7 @@ public class UserDetailsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_user_details, container, false);
 
-        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
         toolbarBackImage.setVisibility(View.GONE);
         SettingImg=(ImageView) view.findViewById(R.id.setting_img);
         SettingImg.setVisibility(View.VISIBLE);
@@ -105,7 +112,15 @@ public class UserDetailsFragment extends Fragment {
             }
         });
 
-
+            if(showarrow){
+                toolbarBackImage.setVisibility(View.VISIBLE);
+                toolbarBackImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getActivity().onBackPressed();
+                    }
+                });
+            }
 
         return view;
     }
@@ -121,7 +136,7 @@ public class UserDetailsFragment extends Fragment {
 
         for (int i = 1; i <= 10; i++) {
             stringlist.add("Post item " + i);
-            UserPostsAdapter userPostAdapter = new UserPostsAdapter(context, stringlist);
+            Userdetailadapter userPostAdapter = new Userdetailadapter(context, stringlist);
             mUserPostsRecycler.setAdapter(userPostAdapter);
         }
     }

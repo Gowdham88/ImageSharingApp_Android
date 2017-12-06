@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
@@ -82,8 +84,6 @@ public class UserPostsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_posts, container, false);
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
 
-        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
-        toolbarBackImage.setVisibility(View.GONE);
 
 //        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -91,6 +91,17 @@ public class UserPostsFragment extends Fragment {
 //                getActivity().onBackPressed();
 //            }
 //        });
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.slice_toolbar);
+        ImageView toolBackImage = view.findViewById(R.id.toolbar_back);
+        toolBackImage.setVisibility(View.GONE);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nestedScrollView.scrollTo(0,0);
+            }
+        });
+
 
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("@Marc chiriqui");
@@ -118,15 +129,6 @@ public class UserPostsFragment extends Fragment {
             }
         });
 
-        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.slice_toolbar);
-
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                nestedScrollView.scrollTo(0,0);
-            }
-        });
 
 
         return view;

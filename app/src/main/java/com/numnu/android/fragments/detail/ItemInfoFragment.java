@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -165,7 +166,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         toolbarTitle.setText(R.string.item);
 
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         ItemInfoTxt=(TextView) view.findViewById(R.id.text_terms) ;
 //        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -287,7 +288,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
 
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

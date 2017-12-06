@@ -135,19 +135,20 @@
                         android:textColor="@color/dark_grey"
                         android:textSize="@dimen/font_normal"
                         tools:ignore="MissingPrefix" />
-
+                <RelativeLayout
+                    android:id="@+id/view_current_event_list"
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:layout_alignBottom="@+id/current_events_text"
+                    android:layout_alignEnd="@+id/current_events_text"
+                    android:layout_alignRight="@+id/current_events_text">
                     <ImageView
-                        android:id="@+id/view_current_event_list"
                         android:layout_width="@dimen/toolbar_icon_width"
                         android:layout_height="@dimen/toolbar_icon_width"
-                        android:layout_alignEnd="@+id/current_events_text"
-                        android:layout_alignRight="@+id/current_events_text"
-                        android:layout_marginEnd="@dimen/spacing_small"
-                        android:layout_marginRight="@dimen/spacing_small"
-                        android:layout_marginBottom="12dp"
-                        android:layout_above="@+id/current_up_recyclerview"
-                        app:srcCompat="@drawable/ic_arrow" />
-
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_arrow"
+                        android:layout_alignParentRight="true" />
+                    </RelativeLayout>
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/current_up_recyclerview"
@@ -179,20 +180,24 @@
                         android:textColor="@color/dark_grey"
                         android:textSize="@dimen/font_normal"
                         tools:ignore="MissingPrefix" />
-
-                    <ImageView
+                    <RelativeLayout
                         android:id="@+id/view_current_event_list1"
-                        android:layout_width="@dimen/toolbar_icon_width"
-                        android:layout_height="@dimen/toolbar_icon_width"
+                        android:layout_width="75dp"
+                        android:layout_height="25dp"
                         android:layout_alignEnd="@+id/current_events_text1"
                         android:layout_alignRight="@+id/current_events_text1"
                         android:layout_alignTop="@+id/current_events_text1"
-                        android:layout_marginEnd="@dimen/spacing_small"
                         android:layout_above="@+id/current_up_recyclerview1"
-                        android:layout_marginRight="@dimen/spacing_small"
                         android:layout_marginBottom="12dp"
-                        app:srcCompat="@drawable/ic_arrow" />
-
+                        app:srcCompat="@drawable/ic_arrow">
+                        <ImageView
+                            android:layout_width="@dimen/toolbar_icon_width"
+                            android:layout_height="@dimen/toolbar_icon_width"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_arrow"
+                            />
+                    </RelativeLayout>
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/current_up_recyclerview1"
@@ -224,18 +229,22 @@
                         android:textSize="@dimen/font_normal"
                         tools:ignore="MissingPrefix" />
 
-                    <ImageView
+                    <RelativeLayout
                         android:id="@+id/view_current_event_list2"
-                        android:layout_width="@dimen/toolbar_icon_width"
-                        android:layout_height="@dimen/toolbar_icon_width"
+                        android:layout_width="75dp"
+                        android:layout_height="25dp"
                         android:layout_alignEnd="@+id/current_events_text2"
                         android:layout_alignRight="@+id/current_events_text2"
                         android:layout_above="@+id/current_up_recyclerview2"
-                        android:layout_marginEnd="@dimen/spacing_small"
-                        android:layout_marginBottom="12dp"
-                        android:layout_marginRight="@dimen/spacing_small"
-                        app:srcCompat="@drawable/ic_arrow" />
-
+                        android:layout_marginBottom="12dp">
+                        <ImageView
+                            android:layout_width="@dimen/toolbar_icon_width"
+                            android:layout_height="@dimen/toolbar_icon_width"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_arrow"
+                            />
+                    </RelativeLayout>
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/current_up_recyclerview2"

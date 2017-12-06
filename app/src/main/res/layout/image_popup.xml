@@ -17,14 +17,17 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-
+<LinearLayout
+    android:id="@+id/btncancelcat"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_marginLeft="@dimen/spacing_normal"
+    android:layout_marginTop="@dimen/spacing_normal">
     <ImageView
-        android:id="@+id/btncancelcat"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="@dimen/spacing_normal"
-        android:layout_marginTop="@dimen/spacing_normal"
         android:layout_alignParentTop="true"
         android:src="@drawable/closebtnone" />
+</LinearLayout>
 
 </RelativeLayout>

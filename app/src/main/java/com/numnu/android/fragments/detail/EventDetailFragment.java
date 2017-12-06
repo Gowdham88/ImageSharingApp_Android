@@ -24,13 +24,16 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
+import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.activity.webFragment;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.HorizontalContentAdapter;
@@ -142,7 +145,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.event);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbarBackIcon.setOnClickListener(this);
@@ -289,7 +292,10 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.txt_view_event_map:
-                startActivity(new Intent(context, GoogleMapActivity.class));
+             Intent newintent=new Intent(context, GoogleMapActivity.class);
+                EventDetailFragment.this.startActivity(newintent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+
                 break;
 
 
@@ -358,7 +364,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
         layout.startAnimation(hide);
 
-        ImageView btncancel = layout.findViewById(R.id.btncancelcat);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override

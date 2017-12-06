@@ -40,7 +40,8 @@ public class HomeSearchFragment extends Fragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private NestedScrollView nestedScrollView;
-    private ImageView toolbarBackIcon;
+//    private ImageView toolbarBackIcon;
+    RelativeLayout toolbarBackIcon;
     private String searchKeyword,type;
     RelativeLayout SearchLinlay1,SearchLinlay2,SearchLinlay3;
 

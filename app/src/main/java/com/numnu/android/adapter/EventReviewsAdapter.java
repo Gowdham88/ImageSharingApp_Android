@@ -20,6 +20,7 @@ import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
+import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.EventsFragment;
@@ -78,7 +79,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -93,12 +94,32 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             }
         });
 
+        holder.cattgicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
         holder.barbequeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.barbqicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout,
+                        ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -108,6 +129,33 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.eventicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -126,14 +174,12 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private  ImageView imageViewIcon;
+        private ImageView imageViewIcon,barbqicon,cattgicon,eventicon;
         private  ImageView profileImage;
-        private TextView textViewName;
-        private TextView eventName;
+        private TextView eventName,username,email;
         private TextView cottageHouseText;
         private TextView barbequeText;
         ImageView dotsimg;
-
         public ViewHolder(View itemView) {
             super(itemView);
 //            this.textViewName =  itemView.findViewById(R.id.text_event_name);
@@ -144,6 +190,11 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
             this.cottageHouseText = itemView.findViewById(R.id.cottage_house_txt);
             this.barbequeText = itemView.findViewById(R.id.barbq_txt);
             this.eventName = itemView.findViewById(R.id.barbados_txt);
+            this.username = itemView.findViewById(R.id.slice_toolbar_profile_name);
+            this.email = itemView.findViewById(R.id.user_name);
+            this.barbqicon = itemView.findViewById(R.id.barbq_icon);
+            this.cattgicon = itemView.findViewById(R.id.cottage_house_icon);
+            this.eventicon = itemView.findViewById(R.id.barbados_icon);
             dotsimg=(ImageView)itemView.findViewById(R.id.event_dots);
 
         }

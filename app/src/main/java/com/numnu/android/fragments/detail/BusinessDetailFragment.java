@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,7 +82,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         TextView toolbarTitleBuss = view.findViewById(R.id.toolbar_title);
         toolbarTitleBuss.setText(getString(R.string.businesses));
         ImageView toolbarIconBuss = view.findViewById(R.id.toolbar_image);
-        ImageView toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
         Viewimage= view.findViewById(R.id.business_viewtxt);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
