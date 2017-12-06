@@ -16,10 +16,10 @@ private String imageurl;
 private Boolean isingredient;
 @SerializedName("createdby")
 @Expose
-private Integer createdby;
+private String createdby;
 @SerializedName("updatedby")
 @Expose
-private Integer updatedby;
+private String updatedby;
 @SerializedName("clientip")
 @Expose
 private String clientip;
@@ -51,19 +51,19 @@ public void setIsingredient(Boolean isingredient) {
 this.isingredient = isingredient;
 }
 
-public Integer getCreatedby() {
+public String getCreatedby() {
 return createdby;
 }
 
-public void setCreatedby(Integer createdby) {
+public void setCreatedby(String createdby) {
 this.createdby = createdby;
 }
 
-public Integer getUpdatedby() {
+public String getUpdatedby() {
 return updatedby;
 }
 
-public void setUpdatedby(Integer updatedby) {
+public void setUpdatedby(String updatedby) {
 this.updatedby = updatedby;
 }
 

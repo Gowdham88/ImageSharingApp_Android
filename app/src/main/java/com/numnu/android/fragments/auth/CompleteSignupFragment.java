@@ -3,6 +3,7 @@ package com.numnu.android.fragments.auth;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -148,6 +149,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     private FirebaseAuth mAuth;
     private Uri fileUri;
     private String mCurrentPhotoPath;
+    private ProgressDialog mProgressDialog;
 
     public static CompleteSignupFragment newInstance() {
         CompleteSignupFragment fragment = new CompleteSignupFragment();
@@ -328,13 +330,13 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         } else {
             mEmail.setError(null);
         }
-//
-//        if (username.isEmpty()) {
-//            musername.setError("User name cannot be empty");
-//            valid = false;
-//        } else {
-//            musername.setError(null);
-//        }
+
+        if (username.isEmpty()) {
+            musername.setError("User name cannot be empty");
+            valid = false;
+        } else {
+            musername.setError(null);
+        }
 //
 //        if (name.isEmpty()) {
 //            mName.setError("Name cannot be empty");
@@ -374,6 +376,237 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         return valid;
     }
 
+
+
+
+    private void checKUsernameExists(String s) {
+        showProgressDialog();
+        Call<CommonResponse> call = apiServices.checkUserName(s);
+        call.enqueue(new Callback<CommonResponse>() {
+
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                int responsecode = response.code();
+                CommonResponse body = response.body();
+                if (responsecode == 200) {
+                    if (body.getUsernameexists()) {
+                        musername.setError("User name already exists");
+                        hideProgressDialog();
+                    } else {
+                        completeSignUp();
+                    }
+
+                }else if (responsecode == 400) {
+                    hideProgressDialog();
+                }else if(responsecode==401){
+                    hideProgressDialog();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+
+            }
+        });
+    }
+
+    /*
+      sends data to server
+     */
+    private void completeSignUp() {
+
+        final String username = musername.getText().toString().trim();
+        final String name = mName.getText().toString().trim();
+        final String email = mEmail.getText().toString().trim();
+        final String city = mCity.getText().toString().trim();
+        final String gender = mGender.getText().toString().trim();
+        final String dob = mDob.getText().toString().trim();
+        final String userdescription = userDescription.getText().toString().trim();
+
+        Citylocation citylocation = new Citylocation();
+        citylocation.setIsgoogleplace(true);
+        citylocation.setName(city);
+        citylocation.setGoogleplaceid(placeId);
+        citylocation.setAddress(placeAddress);
+        citylocation.setGoogleplacetype(placeType);
+
+        //converting gender to numbers
+        // gender: 0 -> male, 1 -> female
+        int genderNumber = 0;
+
+        if (gender.equals("Male")) {
+            genderNumber = 0;
+        } else if (gender.equals("Female")) {
+            genderNumber = 1;
+        }
+
+        //Tags preparation
+
+        List<Tag> tags = new ArrayList<>();
+
+        for (int i = 0; i < mylist.size(); i++) {
+            Tagsuggestion tag = mylist.get(i);
+
+            Tag tag1 = new Tag();
+
+            if (tag.getId() != null) {
+                tag1.setId(tag.getId());
+            }
+            tag1.setText(tag.getText());
+            tag1.setDisplayorder(i + 1);
+
+            tags.add(tag1);
+        }
+
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        String uid = "";
+        if (firebaseUser != null) {
+            uid = mAuth.getCurrentUser().getUid();
+        }
+
+        final CompleteSignUpData completeSignUpData = new CompleteSignUpData();
+        completeSignUpData.setUsername(username);
+        completeSignUpData.setName(name);
+        completeSignUpData.setEmail(email);
+        completeSignUpData.setCitylocation(citylocation);
+        completeSignUpData.setGender(genderNumber);
+        completeSignUpData.setDateofbirth(dob);
+        completeSignUpData.setDescription(userdescription);
+        completeSignUpData.setIsbusinessuser(false);
+        completeSignUpData.setFirebaseuid(uid);
+        completeSignUpData.setTags(tags);
+
+        completeSignUpData.setClientapp("android");
+        completeSignUpData.setClientip(Utils.getLocalIpAddress(context));
+
+        Call<SignupResponse> call = apiServices.completeSignUp(completeSignUpData);
+        call.enqueue(new Callback<SignupResponse>() {
+
+            @Override
+            public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
+                int responsecode = response.code();
+                SignupResponse body = response.body();
+                if (responsecode == 201) {
+//id=102
+
+//                        context.getApplicationContext().this.finish();
+                    PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, name);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, username);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL, email);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+
+                    uploadImage(selectedImagePath,String.valueOf(body.getId()));
+
+                } else if (responsecode == 400) {
+                    try {
+                        String s = response.errorBody().string();
+                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    hideProgressDialog();
+                }else if(responsecode==401){
+                    hideProgressDialog();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SignupResponse> call, Throwable t) {
+                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+
+            }
+        });
+    }
+
+    /*
+    * This method is fetching the absolute path of the image file
+    * if you want to upload other kind of files like .pdf, .docx
+    * you need to make changes on this method only
+    * Rest part will be the same
+    * */
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+
+    /**
+     * This function will upload the image to server
+     * @param contentURI ->absolute file path
+     */
+    public void uploadImage(String contentURI,String userId) {
+
+        Constants.FIREBASE_TOKEN = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN);
+
+        File file = null;
+        try {
+            file = new File(contentURI);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "You didn't selected any image", Toast.LENGTH_SHORT).show();
+            hideProgressDialog();
+            gotoUserProfile();
+        }
+
+        if (file != null && file.exists()) {
+
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
+
+
+            Call<CommonResponse> call = apiServices.uploadImage(userId, body);
+            call.enqueue(new Callback<CommonResponse>() {
+
+                @Override
+                public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                    int responsecode = response.code();
+                    CommonResponse commonResponse = response.body();
+                    if (responsecode == 201) {
+
+                        hideProgressDialog();
+                        gotoUserProfile();
+
+                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, commonResponse.getImageurl());
+                        Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CommonResponse> call, Throwable t) {
+                    Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }
+            });
+        } else {
+            Toast.makeText(context, "file not exists!", Toast.LENGTH_SHORT).show();
+            hideProgressDialog();
+            gotoUserProfile();
+        }
+
+    }
+
+    private void gotoUserProfile() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
+        transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+        transaction.addToBackStack(null).commit();
+    }
 
     private void setupTagAutocomplete() {
 
@@ -464,222 +697,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         });
     }
 
-
-    private void checKUsernameExists(String s) {
-
-        Call<CommonResponse> call = apiServices.checkUserName(s);
-        call.enqueue(new Callback<CommonResponse>() {
-
-            @Override
-            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
-                int responsecode = response.code();
-                CommonResponse body = response.body();
-                if (responsecode == 200) {
-                    if (body.getUsernameexists()) {
-                        musername.setError("User name already exists");
-                    } else {
-                        CompleteSignUp();
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<CommonResponse> call, Throwable t) {
-                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-
-    /*
-      sends data to server
-     */
-    private void CompleteSignUp() {
-
-        final String username = musername.getText().toString().trim();
-        final String name = mName.getText().toString().trim();
-        final String email = mEmail.getText().toString().trim();
-        final String city = mCity.getText().toString().trim();
-        final String gender = mGender.getText().toString().trim();
-        final String dob = mDob.getText().toString().trim();
-        final String userdescription = userDescription.getText().toString().trim();
-
-        Citylocation citylocation = new Citylocation();
-        citylocation.setIsgoogleplace(true);
-        citylocation.setName(city);
-        citylocation.setGoogleplaceid(placeId);
-        citylocation.setAddress(placeAddress);
-        citylocation.setGoogleplacetype(placeType);
-
-        //converting gender to numbers
-        // gender: 0 -> male, 1 -> female
-        int genderNumber = 0;
-
-        if (gender.equals("Male")) {
-            genderNumber = 0;
-        } else if (gender.equals("Female")) {
-            genderNumber = 1;
-        }
-
-        //Tags preparation
-
-        List<Tag> tags = new ArrayList<>();
-
-        for (int i = 0; i < mylist.size(); i++) {
-            Tagsuggestion tag = mylist.get(i);
-
-            Tag tag1 = new Tag();
-
-            if (tag.getId() != null) {
-                tag1.setId(tag.getId());
-            }
-            tag1.setText(tag.getText());
-            tag1.setDisplayorder(i + 1);
-
-            tags.add(tag1);
-        }
-
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        String uid = "";
-        if (firebaseUser != null) {
-            uid = mAuth.getCurrentUser().getUid();
-        }
-
-        final CompleteSignUpData completeSignUpData = new CompleteSignUpData();
-        completeSignUpData.setUsername(username);
-        completeSignUpData.setName(name);
-        completeSignUpData.setEmail(email);
-        completeSignUpData.setCitylocation(citylocation);
-        completeSignUpData.setGender(genderNumber);
-        completeSignUpData.setDateofbirth(dob);
-        completeSignUpData.setDescription(userdescription);
-        completeSignUpData.setIsbusinessuser(false);
-        completeSignUpData.setFirebaseuid(uid);
-        completeSignUpData.setTags(tags);
-
-        completeSignUpData.setClientapp("android");
-        completeSignUpData.setClientip(Utils.getLocalIpAddress(context));
-
-        Call<SignupResponse> call = apiServices.completeSignUp(completeSignUpData);
-        call.enqueue(new Callback<SignupResponse>() {
-
-            @Override
-            public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
-                int responsecode = response.code();
-                SignupResponse body = response.body();
-                if (responsecode == 201) {
-//id=102
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
-                    transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
-                    transaction.addToBackStack(null).commit();
-//                        context.getApplicationContext().this.finish();
-                    PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, name);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, username);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL, email);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
-
-                } else if (responsecode == 400) {
-                    try {
-                        String s = response.errorBody().string();
-                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SignupResponse> call, Throwable t) {
-                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-
-    /*
-    * This method is fetching the absolute path of the image file
-    * if you want to upload other kind of files like .pdf, .docx
-    * you need to make changes on this method only
-    * Rest part will be the same
-    * */
-    private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
-        Cursor cursor = loader.loadInBackground();
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String result = cursor.getString(column_index);
-        cursor.close();
-        return result;
-    }
-
-
-    /**
-     * This function will upload the image to server
-     * @param contentURI ->absolute file path
-     */
-    public void uploadImage(String contentURI) {
-
-        Constants.FIREBASE_TOKEN = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN);
-
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        String uid = null;
-        if (firebaseUser != null) {
-            uid = mAuth.getCurrentUser().getUid();
-        }
-
-        if (uid == null) {
-            return;
-        }
-
-        String userId = "102";
-        File file = null;
-        try {
-            file = new File(contentURI);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "You didn't selected any image", Toast.LENGTH_SHORT).show();
-        }
-
-        if (file != null && file.exists()) {
-
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
-
-
-            Call<CommonResponse> call = apiServices.uploadImage(userId, body);
-            call.enqueue(new Callback<CommonResponse>() {
-
-                @Override
-                public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
-                    int responsecode = response.code();
-                    CommonResponse commonResponse = response.body();
-                    if (responsecode == 200) {
-
-                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, commonResponse.getImageurl());
-                        Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<CommonResponse> call, Throwable t) {
-                    Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(context, "file not exists!", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
 
     private void showBottomSheet(LayoutInflater inflater) {
@@ -788,7 +805,8 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), contentURI);
                         viewImage.setImageBitmap(bitmap);
-                        uploadImage(getRealPathFromURI(contentURI));
+                        selectedImagePath=getRealPathFromURI(contentURI);
+//                        uploadImage(getRealPathFromURI(contentURI));
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -813,7 +831,8 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                             public void onScanCompleted(String path, Uri uri) {
                             }
                         });
-                uploadImage(imageUri.getPath());
+                selectedImagePath = imageUri.getPath();
+//                uploadImage(imageUri.getPath());
 
             }
 
@@ -1070,4 +1089,21 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         super.onAttach(context);
         this.context = context;
     }
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
 }

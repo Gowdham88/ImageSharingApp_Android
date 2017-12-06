@@ -25,7 +25,7 @@ private Integer isverified;
 private String createdat;
 @SerializedName("updatedat")
 @Expose
-private Object updatedat;
+private String updatedat;
 @SerializedName("istranslatedvalue")
 @Expose
 private Boolean istranslatedvalue;
@@ -81,11 +81,11 @@ public void setCreatedat(String createdat) {
 this.createdat = createdat;
 }
 
-public Object getUpdatedat() {
+public String getUpdatedat() {
 return updatedat;
 }
 
-public void setUpdatedat(Object updatedat) {
+public void setUpdatedat(String updatedat) {
 this.updatedat = updatedat;
 }
 

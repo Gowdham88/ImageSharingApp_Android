@@ -13,13 +13,13 @@ private Integer id;
 private String text;
 @SerializedName("imageurl")
 @Expose
-private Object imageurl;
+private String imageurl;
 @SerializedName("isingredient")
 @Expose
-private Object isingredient;
+private Boolean isingredient;
 @SerializedName("isverified")
 @Expose
-private Integer isverified;
+private String isverified;
 @SerializedName("createdat")
 @Expose
 private String createdat;
@@ -28,10 +28,10 @@ private String createdat;
 private String updatedat;
 @SerializedName("createdby")
 @Expose
-private Integer createdby;
+private String createdby;
 @SerializedName("updatedby")
 @Expose
-private Integer updatedby;
+private String updatedby;
 @SerializedName("displayorder")
 @Expose
 private Integer displayorder;
@@ -52,27 +52,27 @@ public void setText(String text) {
 this.text = text;
 }
 
-public Object getImageurl() {
+public String getImageurl() {
 return imageurl;
 }
 
-public void setImageurl(Object imageurl) {
+public void setImageurl(String imageurl) {
 this.imageurl = imageurl;
 }
 
-public Object getIsingredient() {
+public Boolean getIsingredient() {
 return isingredient;
 }
 
-public void setIsingredient(Object isingredient) {
+public void setIsingredient(Boolean isingredient) {
 this.isingredient = isingredient;
 }
 
-public Integer getIsverified() {
+public String getIsverified() {
 return isverified;
 }
 
-public void setIsverified(Integer isverified) {
+public void setIsverified(String isverified) {
 this.isverified = isverified;
 }
 
@@ -92,19 +92,19 @@ public void setUpdatedat(String updatedat) {
 this.updatedat = updatedat;
 }
 
-public Integer getCreatedby() {
+public String getCreatedby() {
 return createdby;
 }
 
-public void setCreatedby(Integer createdby) {
+public void setCreatedby(String createdby) {
 this.createdby = createdby;
 }
 
-public Integer getUpdatedby() {
+public String getUpdatedby() {
 return updatedby;
 }
 
-public void setUpdatedby(Integer updatedby) {
+public void setUpdatedby(String updatedby) {
 this.updatedby = updatedby;
 }
 
