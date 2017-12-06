@@ -72,7 +72,7 @@ public class HomeActivity extends MyActivity {
         if (bookmarkBundle==null && profileBundle == null && eventBookmarkBundle ==null && businessBookmarkBundle == null) {
             //Manually displaying the first fragment - one time only
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, CompleteSignupFragment.newInstance());
+            transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
             transaction.commit();
         }else if (bookmarkBundle != null && bookmarkBundle.equals("bookmark")) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
