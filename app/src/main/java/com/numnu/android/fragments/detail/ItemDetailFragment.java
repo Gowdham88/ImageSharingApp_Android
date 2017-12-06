@@ -32,6 +32,9 @@ import com.numnu.android.activity.MainActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.LocationItemsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.utils.AppBarStateChangeListener;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
@@ -40,7 +43,12 @@ import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by thulir on 9/10/17.
@@ -58,6 +66,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView1,recyclerView2;
     private Boolean isExpanded = false;
+    private String itemId;
 
 
     public static ItemDetailFragment newInstance() {
@@ -67,7 +76,10 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            itemId = bundle.getString("itemId");
+        }
     }
 
     @Override
@@ -155,6 +167,37 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         });
 
         return view;
+    }
+
+
+    private void getItemsDetails(String id)
+    {
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<ItemDetailsResponse> call=apiServices.getItem(id);
+        call.enqueue(new Callback<ItemDetailsResponse>() {
+            @Override
+            public void onResponse(Call<ItemDetailsResponse> call, Response<ItemDetailsResponse> response) {
+                int responsecode = response.code();
+                ItemDetailsResponse itemDetailsResponse = response.body();
+                updateUI(itemDetailsResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ItemDetailsResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void updateUI(ItemDetailsResponse itemDetailsResponse) {
+
+        Picasso.with(context).load(R.drawable.burger)
+                .placeholder(R.drawable.food_715539_1920)
+                .fit()
+                .into(eventImageView);
+
+
     }
 
     private void showBottomSheet(LayoutInflater inflater) {

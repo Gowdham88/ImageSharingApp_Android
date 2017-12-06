@@ -3,6 +3,7 @@ package com.numnu.android.network;
 
 import com.numnu.android.network.request.CompleteSignUpData;
 import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.network.response.LoginResponse;
 import com.numnu.android.network.response.SignupResponse;
 import com.numnu.android.network.response.TagsResponse;
@@ -40,7 +41,12 @@ public interface ApiServices {
     Call<CommonResponse> uploadImage(@Path("id") String id, @Part MultipartBody.Part image);
 
     @GET("/tags")
-    Call<TagsResponse>  getTags(@Query("beginWith") String s);
+    Call<TagsResponse> getTags(@Query("beginWith") String s);
+
+
+   //get item details
+    @GET("/items/{id}")
+    Call<ItemDetailsResponse> getItem(@Path("id") String id);
 
 
 
