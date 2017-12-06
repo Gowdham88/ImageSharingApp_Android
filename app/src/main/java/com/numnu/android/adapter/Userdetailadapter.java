@@ -2,6 +2,7 @@ package com.numnu.android.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -192,7 +193,8 @@ public class Userdetailadapter extends RecyclerView.Adapter<Userdetailadapter.Vi
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
-
+        ImageView shareimg = bottomSheetView.findViewById(R.id.dialog_image);
+        ImageView bookmarkimg = bottomSheetView.findViewById(R.id.bookmark_icon);
         TextView share = bottomSheetView.findViewById(R.id.share_title);
         TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
         share.setOnClickListener(new View.OnClickListener() {
@@ -207,15 +209,56 @@ public class Userdetailadapter extends RecyclerView.Adapter<Userdetailadapter.Vi
                 bottomSheetDialog.dismiss();
             }
         });
+        shareimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
+                sendIntent.setType("text/plain");
+                context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
+                bottomSheetDialog.dismiss();
+            }
+        });
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    Intent intent = new Intent(context, LoginFragment.class);
-                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
-                    context.startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
+                    LoginFragment logFragment = new LoginFragment();
+                    logFragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.addToBackStack(null).commit();
+//                    Intent intent = new Intent(context, LoginFragment.class);
+//                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+//                    context.startActivity(intent);
+                    bottomSheetDialog.dismiss();
+                }else if (loginStatus){
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        bookmarkimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
+                if (!loginStatus) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
+                    LoginFragment logFragment = new LoginFragment();
+                    logFragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.addToBackStack(null).commit();
+//                    Intent intent = new Intent(context, LoginFragment.class);
+//                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+//                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
                     Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();

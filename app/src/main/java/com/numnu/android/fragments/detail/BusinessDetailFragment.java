@@ -49,6 +49,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     TextView ViewTxt;
     private CustomScrollView nestedScrollView;
     private Boolean isExpanded = false;
+    ImageView busimg;
 
     public static BusinessDetailFragment newInstance() {
         return new BusinessDetailFragment();
@@ -71,6 +72,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         entityTitle = view.findViewById(R.id.text_business_entity);
+        busimg = view.findViewById(R.id.img_calender);
 
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
         adapter = new HorizontalContentAdapter(context);
@@ -129,7 +131,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             }
         });
 
-        entityTitle.setOnClickListener(new View.OnClickListener() {
+        busimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
@@ -154,11 +156,12 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
 
     private void showBottomSheet(LayoutInflater inflater) {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
-
+        ImageView shareimg = bottomSheetView.findViewById(R.id.dialog_image);
+        ImageView bookmarkimg = bottomSheetView.findViewById(R.id.bookmark_icon);
         TextView share = bottomSheetView.findViewById(R.id.share_title);
         TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
         share.setOnClickListener(new View.OnClickListener() {
@@ -173,24 +176,63 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 bottomSheetDialog.dismiss();
             }
         });
+        shareimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
+                sendIntent.setType("text/plain");
+                context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
+                bottomSheetDialog.dismiss();
+            }
+        });
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
+                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    Intent intent = new Intent(getActivity(), LoginFragment.class);
-                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
-                    startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
+                    LoginFragment logFragment = new LoginFragment();
+                    logFragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.addToBackStack(null).commit();
+//                    Intent intent = new Intent(context, LoginFragment.class);
+//                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+//                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
-                    Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        bookmarkimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
+                if (!loginStatus) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
+                    LoginFragment logFragment = new LoginFragment();
+                    logFragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.addToBackStack(null).commit();
+//                    Intent intent = new Intent(context, LoginFragment.class);
+//                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+//                    context.startActivity(intent);
+                    bottomSheetDialog.dismiss();
+                }else if (loginStatus){
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
-
 
     private void setupViewPager(ViewPager viewPager) {
        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());

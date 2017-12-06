@@ -1,6 +1,9 @@
 package com.numnu.android.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.detail.ItemInfoFragment;
+import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -71,10 +77,13 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
                 transaction.addToBackStack(null).commit();
             }
         });
+
         adapter = new HorizontalContentAdapter(context);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+//
     }
+
 
     @Override
     public int getItemCount() {
@@ -85,12 +94,16 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
         private  ImageView imageViewIcon;
         private TextView textViewName;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             this.textViewName =  itemView.findViewById(R.id.item_name);
             recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.item_image);
+
         }
     }
+
+
 }
