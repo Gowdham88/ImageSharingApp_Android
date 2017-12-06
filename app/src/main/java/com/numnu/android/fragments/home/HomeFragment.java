@@ -408,6 +408,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //do here your stuff f
                     foodSearch(textView.getText().toString());
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                     Utils.hideKeyboard(getActivity());
                     return true;
                 }
@@ -421,6 +422,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //do here your stuff f
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                     Utils.hideKeyboard(getActivity());
                     return true;
                 }
@@ -436,6 +438,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
 
            searchListView.setVisibility(View.VISIBLE);
+           searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
            googleLogo.setVisibility(View.VISIBLE);
            nestedScrollView.setVisibility(View.GONE);
            viewPager.setVisibility(View.GONE);
@@ -611,7 +614,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                     tabLayout.setVisibility(View.GONE);
                     viewPager.setVisibility(View.GONE);
                     toolbarBackIcon.setVisibility(View.GONE);
-
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
 
                 }else {
                     getActivity().finish();
