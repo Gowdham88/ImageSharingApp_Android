@@ -171,7 +171,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                 activity_complete_signup, container, false);
         TextView toolbarTitle = v.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Complete Signup");
-        ImageView Toolbarbackicon = v.findViewById(R.id.toolbar_back);
+        RelativeLayout Toolbarbackicon = v.findViewById(R.id.toolbar_back);
         Toolbarbackicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

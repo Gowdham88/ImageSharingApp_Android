@@ -1,9 +1,13 @@
 package com.numnu.android.fragments.auth;
 
 
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,10 +38,11 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
 
 public class ForgetPassWordFragment extends Fragment {
     Button Resetbutton;
-    RelativeLayout backButton;
+    ImageView backButton;
     TextView txt_error,txt_email;
     EditText emailField;
 ConstraintLayout Constainlay;
+    TextInputEditText emailtxtinlay;
     public static ForgetPassWordFragment newInstance() {
         ForgetPassWordFragment fragment = new ForgetPassWordFragment();
         return fragment;
@@ -56,10 +61,11 @@ ConstraintLayout Constainlay;
         View v = inflater.inflate(R.layout.activity_forget_password, container, false);
         Resetbutton=(Button)v.findViewById(R.id.button_reset);
         Constainlay = (ConstraintLayout)v.findViewById(R.id.const_lay);
-        backButton  = (RelativeLayout)v.findViewById(R.id.toolbar_back);
+        backButton  = (ImageView)v.findViewById(R.id.toolbar_back);
         txt_error   = (TextView) v.findViewById(R.id.txt_error);
         txt_email   = (TextView) v.findViewById(R.id.textView5);
         emailField  = v.findViewById(R.id.et_email);
+        emailtxtinlay=v.findViewById(R.id.et_email);
         Resetbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,14 +113,22 @@ ConstraintLayout Constainlay;
         });
 
         emailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     txt_email.setTextColor(getResources().getColor(R.color.weblink_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+                    }
                     hideerror();
                 }
                 else{
                     txt_email.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.email_color)));
+                    }
+
                 }
             }
         });

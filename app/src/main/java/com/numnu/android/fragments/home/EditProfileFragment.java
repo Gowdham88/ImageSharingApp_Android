@@ -242,7 +242,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                             // TODO: 1/12/17  
 //                            adapter = new FoodAdapter(context, mylist);
                             recyclerView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
+//                            adapter.notifyDataSetChanged();
                            autoComplete.setText(null);
                         }
 
