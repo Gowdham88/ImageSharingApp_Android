@@ -1,12 +1,17 @@
 package com.numnu.android.fragments.auth;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -70,6 +75,7 @@ public class LoginFragment extends Fragment {
     TextView ForgetPassTxt,EmailTxt,PassTxt;
     ImageView backButton;
     TextView txt_error;
+    TextInputEditText emailtxtinlay,passTxtinLay;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -138,8 +144,8 @@ public class LoginFragment extends Fragment {
         PassTxt        = (TextView) view.findViewById(R.id.textView6);
         backButton     = (ImageView)view.findViewById(R.id.toolbar_back);
         txt_error      = (TextView) view.findViewById(R.id.txt_error);
-
-
+        emailtxtinlay=(TextInputEditText) view.findViewById(R.id.et_email);
+        passTxtinLay=(TextInputEditText) view.findViewById(R.id.et_password);
         textViewSignup.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         ConsLay   =view.findViewById(R.id.const_lay);
         ConsLay.setOnClickListener(new View.OnClickListener() {
@@ -248,40 +254,40 @@ public class LoginFragment extends Fragment {
 
     private void  loginWithServer() {
 
-        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<LoginResponse> call = apiServices.login();
+    ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+    Call<LoginResponse> call = apiServices.login();
         call.enqueue(new Callback<LoginResponse>() {
 
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                int responsecode = response.code();
-                LoginResponse body = response.body();
+        @Override
+        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            int responsecode = response.code();
+            LoginResponse body = response.body();
 
 
-                    PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL,body.getEmail());
-                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_NAME,body.getUsername());
-                // TODO: 5/12/17
+            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL,body.getEmail());
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_NAME,body.getUsername());
+            // TODO: 5/12/17
 //                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_NAME,body.get);
-                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
-                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_DOB,body.getDateofbirth());
-                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION,body.getDescription());
-                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER,(body.getGender()==0)?"Male":"Female");
-                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY,body.getCitylocation().getName());
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_DOB,body.getDateofbirth());
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION,body.getDescription());
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER,(body.getGender()==0)?"Male":"Female");
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY,body.getCitylocation().getName());
 //                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC,body.getUserimages().get(0).getImageurl());
 
-                    goToHomeActivity();
+            goToHomeActivity();
 
 
-            }
+        }
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+        @Override
+        public void onFailure(Call<LoginResponse> call, Throwable t) {
+            Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
 
-            }
-        });
-    }
+        }
+    });
+}
 
     @Override
     public void onAttach(Context context) {
@@ -522,27 +528,41 @@ public class LoginFragment extends Fragment {
 
     private void setupFocusListeners() {
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @SuppressLint("NewApi")
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     EmailTxt.setTextColor(getResources().getColor(R.color.weblink_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+                    }
                     hideerror();
                 }
                 else{
                     EmailTxt.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                 }
             }
         });
 
         mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     PassTxt.setTextColor(getResources().getColor(R.color.weblink_color));
+                    passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+
                     hideerror();
                 }
                 else{
                     PassTxt.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                 }
             }
         });

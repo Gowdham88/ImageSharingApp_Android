@@ -3,11 +3,16 @@ package com.numnu.android.fragments.auth;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
@@ -53,7 +58,7 @@ public class SignupFragment extends Fragment {
     TextView textViewSignIn,TxtEmai,TxtPass;
     EditText mEmailField, mPasswordField;
     public ProgressDialog mProgressDialog;
-
+TextInputEditText emailtxtinlay,passTxtinLay;
     String Signupname;
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -115,7 +120,8 @@ public class SignupFragment extends Fragment {
         mEmailField    = view.findViewById(R.id.et_email);
         mPasswordField = view.findViewById(R.id.et_password);
         txt_error      = (TextView) view.findViewById(R.id.txt_error);
-
+        emailtxtinlay=(TextInputEditText) view.findViewById(R.id.et_email);
+        passTxtinLay=(TextInputEditText) view.findViewById(R.id.et_password);
         textViewSignIn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         SignupConsLay = view.findViewById(R.id.signup_const_lay);
@@ -129,27 +135,53 @@ public class SignupFragment extends Fragment {
         hideerror();
 
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     TxtEmai.setTextColor(getResources().getColor(R.color.weblink_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+                    }
+                    else {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                     hideerror();
                 }
                 else{
                     TxtEmai.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
+                    else {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                 }
             }
         });
 
         mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     TxtPass.setTextColor(getResources().getColor(R.color.weblink_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+                    }
+                    else {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                     hideerror();
                 }
                 else{
                     TxtPass.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
+                    else {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                 }
             }
         });
