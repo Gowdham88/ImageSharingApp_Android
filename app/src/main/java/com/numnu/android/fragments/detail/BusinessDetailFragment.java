@@ -30,7 +30,6 @@ import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
-import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         busimg = view.findViewById(R.id.img_calender);
 
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
-        adapter = new HorizontalContentAdapter(context);
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         

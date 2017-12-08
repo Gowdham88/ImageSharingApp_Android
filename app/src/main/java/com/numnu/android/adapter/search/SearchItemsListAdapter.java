@@ -73,7 +73,7 @@ public class SearchItemsListAdapter extends RecyclerView.Adapter<SearchItemsList
             }
         });
 
-        adapter = new HorizontalContentAdapter(context);
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }

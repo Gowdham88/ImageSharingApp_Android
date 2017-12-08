@@ -26,7 +26,7 @@ public class LoginResponse{
 	private List<UserimagesItem> userimages;
 
 	@SerializedName("isbusiness")
-	private int isbusiness;
+	private Boolean isbusiness;
 
 	@SerializedName("description")
 	private String description;
@@ -118,11 +118,11 @@ public class LoginResponse{
 		return userimages;
 	}
 
-	public void setIsbusiness(int isbusiness){
+	public void setIsbusiness(Boolean isbusiness){
 		this.isbusiness = isbusiness;
 	}
 
-	public int getIsbusiness(){
+	public Boolean getIsbusiness(){
 		return isbusiness;
 	}
 

@@ -74,7 +74,7 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
             }
         });
 
-        adapter = new HorizontalContentAdapter(context);
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }

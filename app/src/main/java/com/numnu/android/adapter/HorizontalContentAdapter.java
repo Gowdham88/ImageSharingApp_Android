@@ -8,19 +8,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.network.response.TagsItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by czsm4 on 01/12/17.
  */
 
 public class HorizontalContentAdapter extends  RecyclerView.Adapter<HorizontalContentAdapter.ViewHolder> {
-    String[] arr = {"Food","Wine", "Rum", "Food", "Rum","Wine"};
+    private  List<TagsItem> tags=new ArrayList<>();
     Context context;
     LayoutInflater layout;
-    public HorizontalContentAdapter(Context context) {
+    public HorizontalContentAdapter(Context context, List<TagsItem> tags) {
         this.context = context;
+        this.tags = tags;
 //        layout = LayoutInflater.from(context);
 
     }
@@ -33,7 +36,7 @@ public class HorizontalContentAdapter extends  RecyclerView.Adapter<HorizontalCo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.ScrollText.setText(arr[position]);
+            holder.ScrollText.setText(tags.get(position).getText());
     }
 
 
@@ -48,6 +51,6 @@ public class HorizontalContentAdapter extends  RecyclerView.Adapter<HorizontalCo
 
     @Override
     public int getItemCount() {
-        return arr.length;
+        return tags.size();
     }
 }

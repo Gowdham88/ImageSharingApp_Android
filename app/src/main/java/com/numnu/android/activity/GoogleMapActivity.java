@@ -58,6 +58,8 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
 
     private final static String KEY_LOCATION = "location";
 
+    private double latitude, longitude;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,10 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             // is not null.
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
+
+        latitude = Double.parseDouble(getIntent().getStringExtra("latitude"));
+        longitude = Double.parseDouble(getIntent().getStringExtra("longitude"));
+        name =getIntent().getStringExtra("name");
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -108,8 +114,8 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             if (hasLocationPermission()) {
                 getMyLocation();
                 // Add a marker in Montreal and move the camera
-                LatLng sydney = new LatLng(45.5088400, -73.5878100);
-                map.addMarker(new MarkerOptions().position(sydney).title("Marker in Montreal"));
+                LatLng sydney = new LatLng(latitude, longitude);
+                map.addMarker(new MarkerOptions().position(sydney).title(name));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,17));
             }else {
                 // Ask for one permission
