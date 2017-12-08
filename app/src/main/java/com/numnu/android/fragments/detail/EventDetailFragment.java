@@ -39,6 +39,7 @@ import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.activity.webFragment;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.HorizontalContentAdapter;
+import com.numnu.android.fragments.RootFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
@@ -55,7 +56,7 @@ import java.util.List;
  * Created by thulir on 9/10/17.
  */
 
-public class EventDetailFragment extends Fragment implements View.OnClickListener {
+public class EventDetailFragment extends RootFragment implements View.OnClickListener {
 
     SearchView searchViewFood, searchViewLocation;
     private Context context;
@@ -207,7 +208,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     logFragment.setArguments(bundle);
                     FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.replace(R.id.frame_layout1, logFragment);
                     transaction.addToBackStack(null).commit();
 //                    Intent intent = new Intent(context, LoginFragment.class);
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
@@ -229,7 +230,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     logFragment.setArguments(bundle);
                     FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.replace(R.id.frame_layout1, logFragment);
                     transaction.addToBackStack(null).commit();
 //                    Intent intent = new Intent(context, LoginFragment.class);
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
@@ -256,7 +257,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
             @Override
             public void onClick(View v) {
 //                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_layout,webFragment.class);
+//                transaction.replace(R.id.frame_layout1,webFragment.class);
 //                transaction.addToBackStack(null).commit();
                 Intent web =new Intent(getActivity(),webFragment.class);
                 startActivity(web);

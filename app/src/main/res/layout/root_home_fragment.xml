@@ -9,41 +9,38 @@
     android:background="@color/White_clr"
     tools:context="com.numnu.android.activity.HomeActivity">
 
-    <FrameLayout
-        android:id="@+id/activity_frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true">
 
-    </FrameLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:visibility="gone"
        android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
         android:background="@color/Edittxt_lineclr"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
-        app:tabIndicatorHeight="3dp"
-        android:visibility="gone"
-        android:layout_marginTop="29dp"
+        app:tabIndicatorHeight="0dp"
+        android:layout_marginTop="@dimen/spacing_tiny"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         app:tabSelectedTextColor="@color/event_map"
-        app:tabTextAppearance="@style/TabWidget"
         app:tabTextColor="@color/tab_unselected_color" />
 
     <android.support.v4.view.ViewPager
-        android:visibility="gone"
         android:id="@+id/home_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/tabs" />
 
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tabs"
+        android:animateLayoutChanges="true">
 
+    </FrameLayout>
 
 </RelativeLayout>

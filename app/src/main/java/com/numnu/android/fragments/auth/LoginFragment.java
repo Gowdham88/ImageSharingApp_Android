@@ -212,7 +212,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-                transaction.replace(R.id.frame_layout, ForgetPassWordFragment.newInstance());
+                transaction.replace(R.id.frame_layout1, ForgetPassWordFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -453,7 +453,7 @@ public class LoginFragment extends Fragment {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.replace(R.id.frame_layout,signupFragment);
+        transaction.replace(R.id.frame_layout1,signupFragment);
         transaction.commit();
     }
 
@@ -491,7 +491,7 @@ public class LoginFragment extends Fragment {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.replace(R.id.frame_layout,fragment);
+        transaction.replace(R.id.frame_layout1,fragment);
         transaction.commit();
 
     }

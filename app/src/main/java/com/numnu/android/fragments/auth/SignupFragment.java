@@ -294,7 +294,7 @@ TextInputEditText emailtxtinlay,passTxtinLay;
 //            @Override
 //            public void onClick(View view) {
 //                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_layout, CompleteSignupFragment.newInstance());
+//                transaction.replace(R.id.frame_layout1, CompleteSignupFragment.newInstance());
 //                transaction.addToBackStack(null).commit();
 //            }
 //        });
@@ -364,7 +364,7 @@ TextInputEditText emailtxtinlay,passTxtinLay;
                                                     CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
                                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                                     transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-                                                    transaction.replace(R.id.frame_layout,loginFragment1);
+                                                    transaction.replace(R.id.frame_layout1,loginFragment1);
                                                     transaction.addToBackStack(null).commit();
 
                                                 }
@@ -466,7 +466,7 @@ TextInputEditText emailtxtinlay,passTxtinLay;
                                                     CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
                                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                                     transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-                                                    transaction.replace(R.id.frame_layout,loginFragment1);
+                                                    transaction.replace(R.id.frame_layout1,loginFragment1);
                                                     transaction.addToBackStack(null).commit();
 
                                                 }
@@ -594,7 +594,7 @@ TextInputEditText emailtxtinlay,passTxtinLay;
             LoginFragment loginFragment1=new LoginFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-            transaction.replace(R.id.frame_layout,loginFragment1);
+            transaction.replace(R.id.frame_layout1,loginFragment1);
             transaction.addToBackStack(null);
             transaction.commit();
         }
@@ -624,7 +624,7 @@ TextInputEditText emailtxtinlay,passTxtinLay;
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.replace(R.id.frame_layout,loginFragment);
+        transaction.replace(R.id.frame_layout1,loginFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

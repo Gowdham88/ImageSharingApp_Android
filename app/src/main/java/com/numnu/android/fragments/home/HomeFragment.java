@@ -49,6 +49,7 @@ import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.search.PlaceAutocompleteRecyclerViewAdapter;
 import com.numnu.android.adapter.search.SearchResultsAdapter;
+import com.numnu.android.fragments.RootFragment;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
 import com.numnu.android.fragments.search.PostsFragment;
@@ -70,7 +71,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by thulir on 9/10/17.
  */
 
-public class HomeFragment extends Fragment implements View.OnKeyListener {
+public class HomeFragment extends RootFragment implements View.OnKeyListener {
 
 
     EditText searchViewFood,searchViewLocation;
