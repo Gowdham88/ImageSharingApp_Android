@@ -49,6 +49,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     private CustomScrollView nestedScrollView;
     private Boolean isExpanded = false;
     ImageView busimg;
+    private String businessId;
 
     public static BusinessDetailFragment newInstance() {
         return new BusinessDetailFragment();
@@ -57,6 +58,10 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            businessId = bundle.getString("businessId");
+        }
 
     }
 

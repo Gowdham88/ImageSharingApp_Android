@@ -1,5 +1,6 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -82,7 +83,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private ViewPager viewPager;
     private CustomScrollView nestedScrollView;
     private Boolean isExpanded = false;
-    private String itemId;
+    private String eventId="34";
     private EventDetailResponse eventDetailResponse;
     private List<EventlinksItem> eventlinks ;
     // Create a storage reference from our app
@@ -90,6 +91,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private FirebaseStorage storage;
     StorageReference imageref;
     private Uri imgPath;
+    public ProgressDialog mProgressDialog;
 
 
     public static EventDetailFragment newInstance() {
@@ -102,7 +104,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            itemId = bundle.getString("itemId");
+            eventId = bundle.getString("eventId","34");
         }
 
          storage = FirebaseStorage.getInstance();
@@ -172,6 +174,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.event);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
@@ -187,12 +190,13 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                 showBottomSheet(inflater);
             }
         });
-        getEventDetails("34");
+        getEventDetails(eventId);
         return view;
     }
 
     private void getEventDetails(String id)
     {
+        showProgressDialog();
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<EventDetailResponse> call=apiServices.getEvent(id);
         call.enqueue(new Callback<EventDetailResponse>() {
@@ -268,7 +272,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         adapter = new HorizontalContentAdapter(context,eventDetailResponse.getTags());
         recyclerView.setAdapter(adapter);
-
+        hideProgressDialog();
 
     }
 
@@ -365,10 +369,12 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventBusinessFragment(), "Businesses");
+        adapter.addFragment(EventBusinessFragment.newInstance(eventId), "Businesses");
         adapter.addFragment(new EventItemsCategoryFragment(), "Items");
         adapter.addFragment(new EventPostsFragment(), "Posts");
         viewPager.setAdapter(adapter);
+        // to keep all three tabs in memory. Remove below line if app lags and then optimize tab fragments.
+        viewPager.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -511,6 +517,22 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     public void onAttach(Context context) {
         this.context = context;
         super.onAttach(context);
+    }
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
     private void initiatePopupWindow() {
