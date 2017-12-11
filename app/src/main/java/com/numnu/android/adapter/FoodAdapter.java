@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.network.response.Tagsuggestion;
 
 import java.util.ArrayList;
 
@@ -21,13 +22,12 @@ import java.util.ArrayList;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
 
-    String[] arr = {"Biryani", "Biryani", "Biryani", "Biryani", "Biryani", "Biryani",  "Biryani", "Biryani"};
 //
     Context context;
     LayoutInflater layout;
-    ArrayList<String> list;
+    ArrayList<Tagsuggestion> list;
 
-    public FoodAdapter(Context context, ArrayList<String> mylist) {
+    public FoodAdapter(Context context, ArrayList<Tagsuggestion> mylist) {
         this.context = context;
         this.list=mylist;
 //        layout = LayoutInflater.from(context);
@@ -60,7 +60,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder Holder, final int position) {
 
-       Holder.FoodText.setText( list.get(position));
+       Holder.FoodText.setText( list.get(position).getText());
        Holder.cancleimg.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {

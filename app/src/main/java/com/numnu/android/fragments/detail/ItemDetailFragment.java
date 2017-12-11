@@ -3,7 +3,6 @@ package com.numnu.android.fragments.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -28,19 +27,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.MainActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.LocationItemsFragment;
+import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.search.PostsFragment;
-import com.numnu.android.utils.AppBarStateChangeListener;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
-import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by thulir on 9/10/17.
@@ -58,6 +62,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView1,recyclerView2;
     private Boolean isExpanded = false;
+    private String itemId;
 
 
     public static ItemDetailFragment newInstance() {
@@ -67,7 +72,10 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            itemId = bundle.getString("itemId");
+        }
     }
 
     @Override
@@ -83,15 +91,15 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         city = view.findViewById(R.id.txt_city);
-        eventDate = view.findViewById(R.id.txt_event_date);
-        eventTime = view.findViewById(R.id.txt_event_time);
+//        eventDate = view.findViewById(R.id.txt_event_date);
+//        eventTime = view.findViewById(R.id.txt_event_time);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
         recyclerView1=(RecyclerView)view.findViewById(R.id.business_recyclerview);
         recyclerView2=(RecyclerView)view.findViewById(R.id.flatron_recyclerview);
-        adapter = new HorizontalContentAdapter(context);
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
         recyclerView1.setAdapter(adapter);
         recyclerView1.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        adapter = new HorizontalContentAdapter(context);
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
         recyclerView2.setAdapter(adapter);
         recyclerView2.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         eventImageView = view.findViewById(R.id.current_event_image);
@@ -157,12 +165,44 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         return view;
     }
 
+
+    private void getItemsDetails(String id)
+    {
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<ItemDetailsResponse> call=apiServices.getItem(id);
+        call.enqueue(new Callback<ItemDetailsResponse>() {
+            @Override
+            public void onResponse(Call<ItemDetailsResponse> call, Response<ItemDetailsResponse> response) {
+                int responsecode = response.code();
+                ItemDetailsResponse itemDetailsResponse = response.body();
+                updateUI(itemDetailsResponse);
+            }
+
+            @Override
+            public void onFailure(Call<ItemDetailsResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void updateUI(ItemDetailsResponse itemDetailsResponse) {
+
+        Picasso.with(context).load(R.drawable.burger)
+                .placeholder(R.drawable.food_715539_1920)
+                .fit()
+                .into(eventImageView);
+
+
+    }
+
     private void showBottomSheet(LayoutInflater inflater) {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
-
+        ImageView shareimg = bottomSheetView.findViewById(R.id.dialog_image);
+        ImageView bookmarkimg = bottomSheetView.findViewById(R.id.bookmark_icon);
         TextView share = bottomSheetView.findViewById(R.id.share_title);
         TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
         share.setOnClickListener(new View.OnClickListener() {
@@ -177,22 +217,63 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 bottomSheetDialog.dismiss();
             }
         });
+        shareimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
+                sendIntent.setType("text/plain");
+                context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
+                bottomSheetDialog.dismiss();
+            }
+        });
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN);
+                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
-                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    Bundle bundle = new Bundle();
+                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
+                    LoginFragment logFragment = new LoginFragment();
+                    logFragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.addToBackStack(null).commit();
+//                    Intent intent = new Intent(context, LoginFragment.class);
+//                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+//                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
-                    Toast.makeText(getActivity(), "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        bookmarkimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
+                if (!loginStatus) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
+                    LoginFragment logFragment = new LoginFragment();
+                    logFragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.addToBackStack(null).commit();
+//                    Intent intent = new Intent(context, LoginFragment.class);
+//                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
+//                    context.startActivity(intent);
+                    bottomSheetDialog.dismiss();
+                }else if (loginStatus){
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
-
 
 
 

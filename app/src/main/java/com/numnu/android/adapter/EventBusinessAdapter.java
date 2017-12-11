@@ -74,8 +74,8 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
             }
         });
 
-        adapter = new HorizontalContentAdapter(context);
-        recyclerView.setAdapter(adapter);
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
+//        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 

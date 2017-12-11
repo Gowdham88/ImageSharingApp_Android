@@ -1,16 +1,66 @@
 package com.numnu.android.network;
 
 
+import com.numnu.android.fragments.detail.BusinessDetailFragment;
+import com.numnu.android.network.request.CompleteSignUpData;
+import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.EventBusinessesResponse;
+import com.numnu.android.network.response.EventDetailResponse;
+import com.numnu.android.network.response.ItemDetailsResponse;
+import com.numnu.android.network.response.LoginResponse;
+import com.numnu.android.network.response.SignupResponse;
+import com.numnu.android.network.response.TagsResponse;
 
+import java.util.List;
+
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /*
  Created by rajesh on 25/8/16.
 */
 public interface ApiServices {
+
+
+
+    @POST("/users")
+    Call<SignupResponse> completeSignUp(@Body CompleteSignUpData completeSignUpData);
+
+
+    @GET("/users")
+    Call<CommonResponse> checkUserName(@Query("checkusername") String s);
+
+    @GET("/users/signin")
+    Call<LoginResponse> login();
+
+
+    @Multipart
+    @POST("/users/{id}/images")
+    Call<CommonResponse> uploadImage(@Path("id") String id, @Part MultipartBody.Part image);
+
+    @GET("/tags")
+    Call<TagsResponse> getTags(@Query("beginWith") String s);
+
+
+   //get item details
+    @GET("/items/{id}")
+    Call<ItemDetailsResponse> getItem(@Path("id") String id);
+
+
+    //get event details
+    @GET("/events/{id}")
+    Call<EventDetailResponse> getEvent(@Path("id") String id);
+
+    //get event business details
+    @GET("/events/{id}/businesses")
+    Call<List<EventBusinessesResponse>> getEventBusinesses(@Path("id") String id);
 
 
 

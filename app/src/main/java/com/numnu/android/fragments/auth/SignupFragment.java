@@ -3,11 +3,16 @@ package com.numnu.android.fragments.auth;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
@@ -20,11 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -39,7 +42,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.numnu.android.R;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;
@@ -53,7 +58,7 @@ public class SignupFragment extends Fragment {
     TextView textViewSignIn,TxtEmai,TxtPass;
     EditText mEmailField, mPasswordField;
     public ProgressDialog mProgressDialog;
-
+TextInputEditText emailtxtinlay,passTxtinLay;
     String Signupname;
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -115,7 +120,8 @@ public class SignupFragment extends Fragment {
         mEmailField    = view.findViewById(R.id.et_email);
         mPasswordField = view.findViewById(R.id.et_password);
         txt_error      = (TextView) view.findViewById(R.id.txt_error);
-
+        emailtxtinlay=(TextInputEditText) view.findViewById(R.id.et_email);
+        passTxtinLay=(TextInputEditText) view.findViewById(R.id.et_password);
         textViewSignIn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         SignupConsLay = view.findViewById(R.id.signup_const_lay);
@@ -129,27 +135,53 @@ public class SignupFragment extends Fragment {
         hideerror();
 
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     TxtEmai.setTextColor(getResources().getColor(R.color.weblink_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+                    }
+                    else {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                     hideerror();
                 }
                 else{
                     TxtEmai.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
+                    else {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                 }
             }
         });
 
         mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     TxtPass.setTextColor(getResources().getColor(R.color.weblink_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+                    }
+                    else {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                     hideerror();
                 }
                 else{
                     TxtPass.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
+                    else {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
                 }
             }
         });
@@ -197,7 +229,7 @@ public class SignupFragment extends Fragment {
 
 
         // [START initialize_auth]
-        mAuth            = FirebaseAuth.getInstance();
+        mAuth  = FirebaseAuth.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
         FrameLayout loginButton = view.findViewById(R.id.sinup_btn_facebook);
@@ -302,45 +334,64 @@ public class SignupFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signUpWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String bookmarkBundle = "bookmark";
-                            String profileBundle = "profile";
-                            String eventBookmarkBundle = "eventbookmark";
+                            final FirebaseUser user = mAuth.getCurrentUser();
 
-                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
-                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                            user.getIdToken(true)
+                                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                            if (task.isSuccessful()) {
+                                                String idToken = task.getResult().getToken();
+                                                Log.d("Token:", idToken);
+                                                Constants.FIREBASE_TOKEN = idToken;
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                                                // Send token to your backend via HTTPS
 
-                            if (mReceivedIntent == null){
+                                                String bookmarkBundle = "bookmark";
+                                                String profileBundle = "profile";
+                                                String eventBookmarkBundle = "eventbookmark";
 
-                                Log.e("Dsds","dsds");
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
+                                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
 
-                                CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-                                transaction.replace(R.id.frame_layout,loginFragment1);
-                                transaction.addToBackStack(null).commit();
+                                                if (mReceivedIntent == null){
 
-                            }
-                            else if(mReceivedIntent.equals(bookmarkBundle)) {
+                                                    Log.e("Dsds","dsds");
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("BookmarkIntent",  bookmarkBundle);
-                                showFragment(bundle);
+                                                    CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
+                                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
+                                                    transaction.replace(R.id.frame_layout,loginFragment1);
+                                                    transaction.addToBackStack(null).commit();
 
-                            }else if (mReceivedIntent.equals(profileBundle)){
+                                                }
+                                                else if(mReceivedIntent.equals(bookmarkBundle)) {
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("ProfileIntent",  bookmarkBundle);
-                                showFragment(bundle);
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("BookmarkIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
 
-                            }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+                                                }else if (mReceivedIntent.equals(profileBundle)){
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("EventBookmarkIntent",  bookmarkBundle);
-                                showFragment(bundle);
-                            }
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("ProfileIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
+
+                                                }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("EventBookmarkIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
+                                                }
+
+
+                                            }
+                                        }
+                                    });
+
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -387,47 +438,64 @@ public class SignupFragment extends Fragment {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            final FirebaseUser user = mAuth.getCurrentUser();
+                            user.getIdToken(true)
+                                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                            if (task.isSuccessful()) {
+                                                String idToken = task.getResult().getToken();
+                                                Log.d("Token:", idToken);
+                                                // Send token to your backend via HTTPS
+                                                mEmailField.setText("");
+                                                mPasswordField.setText("");
 
-                            mEmailField.setText("");
-                            mPasswordField.setText("");
+                                                String bookmarkBundle = "bookmark";
+                                                String profileBundle = "profile";
+                                                String eventBookmarkBundle = "eventbookmark";
 
-                            String bookmarkBundle = "bookmark";
-                            String profileBundle = "profile";
-                            String eventBookmarkBundle = "eventbookmark";
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
+                                                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                                                Constants.FIREBASE_TOKEN = idToken;
 
-                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
-                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                                                if (mReceivedIntent == null){
 
-                            if (mReceivedIntent == null){
+                                                    Log.e("Dsds","dsds");
 
-                                Log.e("Dsds","dsds");
+                                                    CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
+                                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
+                                                    transaction.replace(R.id.frame_layout,loginFragment1);
+                                                    transaction.addToBackStack(null).commit();
 
-                                CompleteSignupFragment loginFragment1=new CompleteSignupFragment();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-                                transaction.replace(R.id.frame_layout,loginFragment1);
-                                transaction.addToBackStack(null).commit();
+                                                }
+                                                else if(mReceivedIntent.equals(bookmarkBundle)) {
 
-                            }
-                            else if(mReceivedIntent.equals(bookmarkBundle)) {
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("BookmarkIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("BookmarkIntent",  bookmarkBundle);
-                                showFragment(bundle);
+                                                }else if (mReceivedIntent.equals(profileBundle)){
 
-                            }else if (mReceivedIntent.equals(profileBundle)){
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("ProfileIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("ProfileIntent",  bookmarkBundle);
-                                showFragment(bundle);
+                                                }else if (mReceivedIntent.equals(eventBookmarkBundle)){
 
-                            }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("EventBookmarkIntent",  bookmarkBundle);
+                                                    showFragment(bundle);
+                                                }
+                                                // ...
+                                            } else {
+                                                // Handle error -> task.getException();
+                                            }
+                                        }
+                                    });
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("EventBookmarkIntent",  bookmarkBundle);
-                                showFragment(bundle);
-                            }
+
 
                         } else {
                             // If sign in fails, display a message to the user.

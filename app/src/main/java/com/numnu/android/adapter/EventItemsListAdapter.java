@@ -71,10 +71,13 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
                 transaction.addToBackStack(null).commit();
             }
         });
-        adapter = new HorizontalContentAdapter(context);
-        recyclerView.setAdapter(adapter);
+
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
+//        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+//
     }
+
 
     @Override
     public int getItemCount() {
@@ -85,12 +88,16 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
         private  ImageView imageViewIcon;
         private TextView textViewName;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             this.textViewName =  itemView.findViewById(R.id.item_name);
             recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.item_image);
+
         }
     }
+
+
 }

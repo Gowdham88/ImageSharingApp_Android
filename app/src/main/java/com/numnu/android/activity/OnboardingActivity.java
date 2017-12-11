@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Base64;
@@ -22,7 +23,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.numnu.android.R;
+import com.numnu.android.utils.Constants;
+import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 
 
@@ -38,9 +48,10 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
     PackageInfo info;
     private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final int RC_LOCATION_PERM = 1;
-    private static final String TAG = "Onboarding";
     TextView textView;
     Animation slideUpAnimation,slidedownAnimation;
+    private FirebaseAuth mAuth;
+    private String TAG=this.getClass().getSimpleName();
 
 
     @Override
@@ -48,6 +59,9 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
         textView=(TextView)findViewById(R.id.textView_info);
+
+        mAuth = FirebaseAuth.getInstance();
+
 
 //        try {
 //            info = getPackageManager().getPackageInfo("com.numnu.android", PackageManager.GET_SIGNATURES);
@@ -66,6 +80,50 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
 //        } catch (Exception e) {
 //            Log.e("exception", e.toString());
 //        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null) {
+            updateToken(currentUser);
+        }else {
+            mAuth.signInAnonymously()
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInAnonymously:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateToken(user);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInAnonymously:failure", task.getException());
+                                Toast.makeText(OnboardingActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            // ...
+                        }
+                    });
+        }
+    }
+
+    private void updateToken(FirebaseUser user) {
+        user.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            Log.d("Token:", idToken);
+                            Constants.FIREBASE_TOKEN = idToken;
+                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                        }
+                    }
+                });
     }
 
 

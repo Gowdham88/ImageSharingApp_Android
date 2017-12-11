@@ -1,13 +1,17 @@
 package com.numnu.android.fragments.auth;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -41,13 +45,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.numnu.android.R;
-import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.fragments.home.HomeFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.LoginResponse;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.numnu.android.utils.Utils.hideKeyboard;
@@ -62,6 +75,7 @@ public class LoginFragment extends Fragment {
     TextView ForgetPassTxt,EmailTxt,PassTxt;
     ImageView backButton;
     TextView txt_error;
+    TextInputEditText emailtxtinlay,passTxtinLay;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -72,6 +86,8 @@ public class LoginFragment extends Fragment {
 
     String mPostBookmarkIntent,mBusinessBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
     private Context context;
+
+
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
         return fragment;
@@ -128,86 +144,8 @@ public class LoginFragment extends Fragment {
         PassTxt        = (TextView) view.findViewById(R.id.textView6);
         backButton     = (ImageView)view.findViewById(R.id.toolbar_back);
         txt_error      = (TextView) view.findViewById(R.id.txt_error);
-
-        mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    EmailTxt.setTextColor(getResources().getColor(R.color.weblink_color));
-                    hideerror();
-                }
-                else{
-                    EmailTxt.setTextColor(getResources().getColor(R.color.email_color));
-                }
-            }
-        });
-
-        mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    PassTxt.setTextColor(getResources().getColor(R.color.weblink_color));
-                    hideerror();
-                }
-                else{
-                    PassTxt.setTextColor(getResources().getColor(R.color.email_color));
-                }
-            }
-        });
-
-        mEmailField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                hideerror();
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        mPasswordField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                hideerror();
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-        ForgetPassTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-                transaction.replace(R.id.frame_layout, ForgetPassWordFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-
-        hideerror();
-
+        emailtxtinlay=(TextInputEditText) view.findViewById(R.id.et_email);
+        passTxtinLay=(TextInputEditText) view.findViewById(R.id.et_password);
         textViewSignup.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         ConsLay   =view.findViewById(R.id.const_lay);
         ConsLay.setOnClickListener(new View.OnClickListener() {
@@ -265,6 +203,22 @@ public class LoginFragment extends Fragment {
             }
         });
 
+
+        setupFocusListeners();
+
+
+        ForgetPassTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
+                transaction.replace(R.id.frame_layout, ForgetPassWordFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
+        hideerror();
+
         if (mProfileIntent!=null){
             mReceivedIntent = mProfileIntent;
         }else if (mPostBookmarkIntent !=null){
@@ -296,19 +250,51 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
+
+
+    private void  loginWithServer() {
+
+    ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+    Call<LoginResponse> call = apiServices.login();
+        call.enqueue(new Callback<LoginResponse>() {
+
+        @Override
+        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            int responsecode = response.code();
+            LoginResponse body = response.body();
+
+
+            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL,body.getEmail());
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_NAME,body.getUsername());
+            // TODO: 5/12/17
+//                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_NAME,body.get);
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_DOB,body.getDateofbirth());
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION,body.getDescription());
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER,(body.getGender()==0)?"Male":"Female");
+            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY,body.getCitylocation().getName());
+//                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC,body.getUserimages().get(0).getImageurl());
+
+            goToHomeActivity();
+
+
+        }
+
+        @Override
+        public void onFailure(Call<LoginResponse> call, Throwable t) {
+            Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+
+        }
+    });
+}
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Pass the activity result back to the Facebook SDK
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-    }
 
 
 
@@ -327,31 +313,12 @@ public class LoginFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signUpWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
-                            String bookmarkBundle = "bookmark";
-                            String profileBundle = "profile";
-                            String eventBookmarkBundle = "eventbookmark";
-                            String businessBookmarkBundle = "businessbookmark";
-                            if (mReceivedIntent == null){
-                                goToHomeActivity(null,null);
-                            } else if (mReceivedIntent.equals(bookmarkBundle)) {
-                                goToHomeActivity("BookmarkIntent",bookmarkBundle);
-                            }else if (mReceivedIntent.equals(profileBundle)){
-                                goToHomeActivity("ProfileIntent",profileBundle);
-                            }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
-                                goToHomeActivity("EventBookmarkIntent",eventBookmarkBundle);
-                            }else if (mReceivedIntent.equals(businessBookmarkBundle)) {
-                                goToHomeActivity("BusinessBookmarkIntent",businessBookmarkBundle);
-                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signUpWithCredential:failure", task.getException());
                             showerror("Authentication failed.");
-//
-                        }
-//
 
+                        }
 
                         // [START_EXCLUDE]
                         hideProgressDialog();
@@ -361,14 +328,16 @@ public class LoginFragment extends Fragment {
     }
 
 
-    // [START on_start_check_user]
+
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+        // [START on_start_check_user]
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        // [END on_start_check_user]
     }
-    // [END on_start_check_user]
+
 
 
     private void signIn(final String email, String password) {
@@ -388,23 +357,21 @@ public class LoginFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL, email);
-                            String bookmarkBundle = "bookmark";
-                            String profileBundle = "profile";
-                            String eventBookmarkBundle = "eventbookmark";
-                            String businessBookmarkBundle = "businessbookmark";
-                            if (mReceivedIntent == null){
-                                goToHomeActivity(null,null);
-                            } else if (mReceivedIntent.equals(bookmarkBundle)) {
-                                goToHomeActivity("BookmarkIntent",bookmarkBundle);
-                            }else if (mReceivedIntent.equals(profileBundle)){
-                                goToHomeActivity("ProfileIntent",profileBundle);
-                            }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
-                                goToHomeActivity("EventBookmarkIntent",eventBookmarkBundle);
-                            }else if (mReceivedIntent.equals(businessBookmarkBundle)) {
-                                goToHomeActivity("BusinessBookmarkIntent",businessBookmarkBundle);
-                            }
+                            user.getIdToken(true)
+                                    .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                        public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                            if (task.isSuccessful()) {
+                                                String idToken = task.getResult().getToken();
+                                                Log.d("Token:", idToken);
+                                                Constants.FIREBASE_TOKEN = idToken;
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                                                // Send token to your backend via HTTPS
+                                                loginWithServer();
+
+                                            }
+                                        }
+                                    });
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -450,8 +417,6 @@ public class LoginFragment extends Fragment {
 
         }
 
-
-
         return valid;
     }
 
@@ -492,19 +457,41 @@ public class LoginFragment extends Fragment {
         transaction.commit();
     }
 
-    private void goToHomeActivity(String intentName, String intentValue){
+    private void goToHomeActivity(){
 
         mEmailField.setText("");
         mPasswordField.setText("");
 
-        Bundle bundle = new Bundle();
-        bundle.putString(intentName,  intentValue);
-        UserDetailsFragment homeFragment=new UserDetailsFragment();
-        homeFragment.setArguments(bundle);
+        String bookmarkBundle = "bookmark";
+        String profileBundle = "profile";
+        String eventBookmarkBundle = "eventbookmark";
+        String businessBookmarkBundle = "businessbookmark";
+
+        Fragment fragment=new UserPostsFragment();
+        if (mReceivedIntent == null){
+            fragment = new UserPostsFragment();
+        } else if (mReceivedIntent.equals(bookmarkBundle)) {
+            fragment = new UserPostsFragment();
+
+        }else if (mReceivedIntent.equals(profileBundle)){
+            fragment = new UserPostsFragment();
+
+        }else if (mReceivedIntent.equals(eventBookmarkBundle)) {
+            fragment = new UserPostsFragment();
+
+        }else if (mReceivedIntent.equals(businessBookmarkBundle)) {
+            fragment = new UserPostsFragment();
+
+        }
+
+//        Bundle bundle = new Bundle();
+//        bundle.putString(intentName,  intentValue);
+//        UserPostsFragment homeFragment=new UserPostsFragment();
+//        homeFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_right, R.anim.exit_to_left);
-        transaction.replace(R.id.frame_layout,homeFragment);
+        transaction.replace(R.id.frame_layout,fragment);
         transaction.commit();
 
     }
@@ -537,6 +524,88 @@ public class LoginFragment extends Fragment {
     public void hideerror(){
 
         txt_error.setVisibility(View.GONE);
+    }
+
+    private void setupFocusListeners() {
+        mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @SuppressLint("NewApi")
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    EmailTxt.setTextColor(getResources().getColor(R.color.weblink_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+                    }
+                    hideerror();
+                }
+                else{
+                    EmailTxt.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
+                }
+            }
+        });
+
+        mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    PassTxt.setTextColor(getResources().getColor(R.color.weblink_color));
+                    passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
+
+                    hideerror();
+                }
+                else{
+                    PassTxt.setTextColor(getResources().getColor(R.color.email_color));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
+                    }
+                }
+            }
+        });
+
+        mEmailField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                hideerror();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mPasswordField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                hideerror();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 }
