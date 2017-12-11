@@ -51,8 +51,10 @@ import com.numnu.android.fragments.home.HomeFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.request.Tag;
 import com.numnu.android.network.response.CommonResponse;
 import com.numnu.android.network.response.LoginResponse;
+import com.numnu.android.network.response.TagsItem;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -277,6 +279,16 @@ public class LoginFragment extends Fragment {
                 PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER,(body.getGender()==0)?"Male":"Female");
                 PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY,body.getCitylocation().getName());
 //                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC,body.getUserimages().get(0).getImageurl());
+
+                String tagsString = "";
+                String tagsIds = "";
+                for (TagsItem tag:body.getTags()){
+                    tagsString = tag.getText()+",";
+                    tagsIds = tag.getId()+",";
+                }
+
+                PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS, tagsString);
+                PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS, tagsIds);
 
                 goToHomeActivity();
 

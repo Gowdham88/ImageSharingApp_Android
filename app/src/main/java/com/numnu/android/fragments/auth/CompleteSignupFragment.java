@@ -511,6 +511,16 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         completeSignUpData.setClientapp("android");
         completeSignUpData.setClientip(Utils.getLocalIpAddress(context));
 
+        String tagsString = "";
+        String tagsIds = "";
+        for (Tag tag:tags){
+            tagsString = tag.getText()+",";
+            tagsIds = tag.getId()+",";
+        }
+
+        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS, tagsString);
+        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS, tagsIds);
+
         Call<SignupResponse> call = apiServices.completeSignUp(completeSignUpData);
         call.enqueue(new Callback<SignupResponse>() {
 
@@ -530,7 +540,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, userdescription);
 
                     uploadImage(selectedImagePath,String.valueOf(body.getId()));
 

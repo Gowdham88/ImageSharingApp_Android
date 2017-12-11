@@ -26,6 +26,8 @@ public class PreferencesHelper {
     public static final String PREFERENCE_FIREBASE_TOKEN ="firebase_token";
     public static final String PREFERENCE_FIREBASE_UUID ="firebase_uuid";
     public static final String PREFERENCE_USER_DESCRIPTION ="user_desc";
+    public static final String PREFERENCE_TAGS ="tags";
+    public static final String PREFERENCE_TAG_IDS ="tag_ids";
 
 
 
