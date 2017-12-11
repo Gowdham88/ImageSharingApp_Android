@@ -114,8 +114,8 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
             }
         });
 
-//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-//        recyclerView.setAdapter(adapter);
+        adapter = new HorizontalContentAdapter(context, eventBusinessesResponse.getTags());
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
