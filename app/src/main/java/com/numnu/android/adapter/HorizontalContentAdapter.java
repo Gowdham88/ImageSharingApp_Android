@@ -19,8 +19,10 @@ public class HorizontalContentAdapter extends  RecyclerView.Adapter<HorizontalCo
     String[] arr = {"Food","Wine", "Rum", "Food", "Rum","Wine"};
     Context context;
     LayoutInflater layout;
+    ArrayList<String> tagslist = new ArrayList<>();
     public HorizontalContentAdapter(Context context) {
         this.context = context;
+//        this.tagslist = taglist;
 //        layout = LayoutInflater.from(context);
 
     }

@@ -57,6 +57,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     private Context context;
     private TextView viewEventMap, eventName, city, eventDate, eventTime;
     LinearLayout openMap;
+    TextView openmapTxt;
     private ImageView eventImageView;
     private AppBarLayout appBarLayout;
     private SupportMapFragment mapFragment;
@@ -67,6 +68,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     LinearLayout busCntnRelLay;
+    String name="name";
 
     public static LocationDetailFragment newInstance() {
         return new LocationDetailFragment();
@@ -94,6 +96,8 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         eventDate = view.findViewById(R.id.txt_event_date);
         eventTime = view.findViewById(R.id.txt_event_time);
         openMap = view.findViewById(R.id.txt_open_map);
+        openmapTxt=(TextView)view.findViewById(R.id.opne_txt);
+        openmapTxt.setText("Open map");
 
         eventImageView = view.findViewById(R.id.current_event_image);
         recyclerView=(RecyclerView)view.findViewById(R.id.flatron_recyclerview);
@@ -272,6 +276,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.txt_open_map:
                 Intent newintent=new Intent(context, GoogleMapActivity.class);
+                newintent.putExtra("name",name);
                 LocationDetailFragment.this.startActivity(newintent);
                 getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
                 break;

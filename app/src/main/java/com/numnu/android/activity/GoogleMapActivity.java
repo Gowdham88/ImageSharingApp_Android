@@ -3,8 +3,10 @@ package com.numnu.android.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -58,6 +60,8 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
 
     private final static String KEY_LOCATION = "location";
 
+    String name;
+    String value=" ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +100,22 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
         });
 
         TextView toolbarTitle=findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Event Map");
+
+
+        Bundle newintent =getIntent().getExtras();
+        if (newintent != null) {
+            value = newintent.getString("name");
+        }
+
+        if(value.equals("name")){
+            toolbarTitle.setText("Location Map");
+        }
+        else {
+            toolbarTitle.setText("Event Map");
+        }
+
+
+
 
 
     }

@@ -130,7 +130,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     LinearLayout EditLinearLay, Linearlay;
     ScrollView nestedScrollView;
     public String placeId, placeType = "city", placeAddress;
-
+    Integer str;
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private static final int PERMISSIONS_REQUEST_CAMERA = 1888;
@@ -150,6 +150,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     private Uri fileUri;
     private String mCurrentPhotoPath;
     private ProgressDialog mProgressDialog;
+
 
     public static CompleteSignupFragment newInstance() {
         CompleteSignupFragment fragment = new CompleteSignupFragment();
@@ -209,7 +210,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 //        adapter.setClickListener(this);
         autoComplete = (AutoCompleteTextView) v.findViewById(R.id.autoCompleteTextView1);
         AddTxt = (TextView) v.findViewById(R.id.add_txt);
-
 
         setupTagAutocomplete();
 
@@ -325,18 +325,47 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmail.setError("enter a valid email address");
+            Toast.makeText(context, "enter a valid email address", Toast.LENGTH_SHORT).show();
+//            mEmail.setError("enter a valid email address");
             valid = false;
-        } else {
-            mEmail.setError(null);
         }
+// else {
+//            mEmail.setError(null);
+//        }
 
-        if (username.isEmpty()) {
-            musername.setError("User name cannot be empty");
+        else if (username.isEmpty()) {
+            Toast.makeText(context, "enter a valid username", Toast.LENGTH_SHORT).show();
             valid = false;
-        } else {
-            musername.setError(null);
         }
+        else if (name.isEmpty()) {
+            Toast.makeText(context, "enter a valid name", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if (city.isEmpty()) {
+            Toast.makeText(context, "enter a valid city", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if(gender.isEmpty()) {
+            Toast.makeText(context, "enter a valid gender", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if (dob.isEmpty())  {
+            Toast.makeText(context, "enter a valid dob", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if (userdescription.isEmpty()) {
+            Toast.makeText(context, "enter a valid userdescription", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else{
+            Toast.makeText(context, "Complete Signup Successfully", Toast.LENGTH_SHORT).show();
+
+        }
+//            musername.setError("User name cannot be empty");
+//            valid = false;
+//        } else {
+//            musername.setError(null);
+//        }
 //
 //        if (name.isEmpty()) {
 //            mName.setError("Name cannot be empty");

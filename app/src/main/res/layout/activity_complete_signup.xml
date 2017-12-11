@@ -402,7 +402,7 @@
                 android:textColor="@color/name_black"
                 android:textSize="13dp"
                 android:background="@null"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:id="@+id/et_user_description"

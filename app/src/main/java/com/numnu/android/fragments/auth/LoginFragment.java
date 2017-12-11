@@ -254,39 +254,41 @@ public class LoginFragment extends Fragment {
 
     private void  loginWithServer() {
 
-    ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-    Call<LoginResponse> call = apiServices.login();
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<LoginResponse> call = apiServices.login();
         call.enqueue(new Callback<LoginResponse>() {
 
-        @Override
-        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-            int responsecode = response.code();
-            LoginResponse body = response.body();
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                int responsecode = response.code();
+                LoginResponse body = response.body();
 
 
-            PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL,body.getEmail());
-            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_NAME,body.getUsername());
-            // TODO: 5/12/17
+                PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
+                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL,body.getEmail());
+
+
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_NAME,body.getUsername());
+                // TODO: 5/12/17
 //                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_NAME,body.get);
-            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
-            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_DOB,body.getDateofbirth());
-            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION,body.getDescription());
-            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER,(body.getGender()==0)?"Male":"Female");
-            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY,body.getCitylocation().getName());
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_DOB,body.getDateofbirth());
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION,body.getDescription());
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER,(body.getGender()==0)?"Male":"Female");
+                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY,body.getCitylocation().getName());
 //                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC,body.getUserimages().get(0).getImageurl());
 
-            goToHomeActivity();
+                goToHomeActivity();
 
 
-        }
+            }
 
-        @Override
-        public void onFailure(Call<LoginResponse> call, Throwable t) {
-            Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
 
-        }
-    });
+            }
+        });
 }
 
     @Override
