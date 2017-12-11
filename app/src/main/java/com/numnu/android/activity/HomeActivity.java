@@ -16,6 +16,11 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.facebook.CallbackManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.numnu.android.R;
 import com.numnu.android.fragments.auth.CompleteSignupFragment;
 import com.numnu.android.fragments.detail.BusinessDetailFragment;
@@ -24,6 +29,8 @@ import com.numnu.android.fragments.home.HomeFragment;
 import com.numnu.android.fragments.home.NotificationFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
+import com.numnu.android.utils.Constants;
+import com.numnu.android.utils.PreferencesHelper;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -31,6 +38,8 @@ import java.security.NoSuchAlgorithmException;
 public class HomeActivity extends MyActivity {
 
     private CallbackManager mCallbackManager;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +47,8 @@ public class HomeActivity extends MyActivity {
         setContentView(R.layout.activity_home);
 
         mCallbackManager = CallbackManager.Factory.create();
+
+        mAuth = FirebaseAuth.getInstance();
 
         final BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -108,6 +119,31 @@ public class HomeActivity extends MyActivity {
         } catch (NoSuchAlgorithmException e) {
 
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAuth.addIdTokenListener(new FirebaseAuth.IdTokenListener() {
+            @Override
+            public void onIdTokenChanged(@NonNull FirebaseAuth firebaseAuth) {
+                updateToken(firebaseAuth.getCurrentUser());
+            }
+        });
+    }
+
+    private void updateToken(FirebaseUser user) {
+        user.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            Log.d("Token:", idToken);
+                            Constants.FIREBASE_TOKEN = idToken;
+                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                        }
+                    }
+                });
     }
 
     @Override

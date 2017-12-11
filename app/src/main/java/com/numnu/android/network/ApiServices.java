@@ -1,12 +1,17 @@
 package com.numnu.android.network;
 
 
+import com.numnu.android.fragments.detail.BusinessDetailFragment;
 import com.numnu.android.network.request.CompleteSignUpData;
 import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.EventBusinessesResponse;
+import com.numnu.android.network.response.EventDetailResponse;
 import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.network.response.LoginResponse;
 import com.numnu.android.network.response.SignupResponse;
 import com.numnu.android.network.response.TagsResponse;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -47,6 +52,16 @@ public interface ApiServices {
    //get item details
     @GET("/items/{id}")
     Call<ItemDetailsResponse> getItem(@Path("id") String id);
+
+
+    //get event details
+    @GET("/events/{id}")
+    Call<EventDetailResponse> getEvent(@Path("id") String id);
+
+    //get event business details
+    @GET("/events/{id}/businesses")
+    Call<List<EventBusinessesResponse>> getEventBusinesses(@Path("id") String id);
+
 
 
 

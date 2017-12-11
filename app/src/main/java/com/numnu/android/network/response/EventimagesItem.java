@@ -2,10 +2,10 @@ package com.numnu.android.network.response;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TagsItem{
+public class EventimagesItem{
 
-	@SerializedName("isingredient")
-	private Boolean isingredient;
+	@SerializedName("eventid")
+	private int eventid;
 
 	@SerializedName("createdat")
 	private String createdat;
@@ -22,21 +22,15 @@ public class TagsItem{
 	@SerializedName("id")
 	private int id;
 
-	@SerializedName("text")
-	private String text;
-
-	@SerializedName("isverified")
-	private Boolean isverified;
-
 	@SerializedName("updatedat")
 	private String updatedat;
 
-	public void setIsingredient(Boolean isingredient){
-		this.isingredient = isingredient;
+	public void setEventid(int eventid){
+		this.eventid = eventid;
 	}
 
-	public Boolean getIsingredient(){
-		return isingredient;
+	public int getEventid(){
+		return eventid;
 	}
 
 	public void setCreatedat(String createdat){
@@ -79,22 +73,6 @@ public class TagsItem{
 		return id;
 	}
 
-	public void setText(String text){
-		this.text = text;
-	}
-
-	public String getText(){
-		return text;
-	}
-
-	public void setIsverified(Boolean isverified){
-		this.isverified = isverified;
-	}
-
-	public Boolean getIsverified(){
-		return isverified;
-	}
-
 	public void setUpdatedat(String updatedat){
 		this.updatedat = updatedat;
 	}
@@ -106,15 +84,13 @@ public class TagsItem{
 	@Override
  	public String toString(){
 		return 
-			"TagsItem{" + 
-			"isingredient = '" + isingredient + '\'' + 
+			"EventimagesItem{" + 
+			"eventid = '" + eventid + '\'' + 
 			",createdat = '" + createdat + '\'' + 
 			",updatedby = '" + updatedby + '\'' + 
 			",createdby = '" + createdby + '\'' + 
 			",imageurl = '" + imageurl + '\'' + 
 			",id = '" + id + '\'' + 
-			",text = '" + text + '\'' + 
-			",isverified = '" + isverified + '\'' + 
 			",updatedat = '" + updatedat + '\'' + 
 			"}";
 		}

@@ -1,10 +1,11 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.customtabs.CustomTabsIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
@@ -12,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,23 +33,36 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
-import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.activity.webFragment;
-import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.EventDetailResponse;
+import com.numnu.android.network.response.EventlinksItem;
+import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
-import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by thulir on 9/10/17.
@@ -60,7 +73,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     SearchView searchViewFood, searchViewLocation;
     private Context context;
     TextView weblink1, weblink2, weblink3;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
+    private TextView viewEventMap, eventName, city, eventStartDate, eventEndDate,morebutton;
     private ImageView eventImageView;
     private TextView eventDescription;
     private AppBarLayout appBarLayout;
@@ -70,6 +83,15 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private ViewPager viewPager;
     private CustomScrollView nestedScrollView;
     private Boolean isExpanded = false;
+    private String eventId="34";
+    private EventDetailResponse eventDetailResponse;
+    private List<EventlinksItem> eventlinks ;
+    // Create a storage reference from our app
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
+    StorageReference imageref;
+    private Uri imgPath;
+    public ProgressDialog mProgressDialog;
 
 
     public static EventDetailFragment newInstance() {
@@ -79,6 +101,16 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            eventId = bundle.getString("eventId","34");
+        }
+
+         storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+         storageRef = storage.getReference();
+
 
     }
 
@@ -90,8 +122,6 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         viewPager = view.findViewById(R.id.event_viewpager);
 
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
-        adapter = new HorizontalContentAdapter(context);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         weblink1 = view.findViewById(R.id.txt_weblink_1);
         weblink2 = view.findViewById(R.id.txt_weblink_2);
@@ -107,8 +137,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         city = view.findViewById(R.id.txt_city);
-        eventDate = view.findViewById(R.id.txt_event_date);
-        eventTime = view.findViewById(R.id.txt_event_time);
+        eventStartDate = view.findViewById(R.id.txt_event_start_date);
+        eventEndDate = view.findViewById(R.id.txt_event_end_date);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
 
         eventImageView = view.findViewById(R.id.current_event_image);
@@ -144,6 +174,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.event);
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
@@ -159,8 +190,90 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                 showBottomSheet(inflater);
             }
         });
-
+        getEventDetails(eventId);
         return view;
+    }
+
+    private void getEventDetails(String id)
+    {
+        showProgressDialog();
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<EventDetailResponse> call=apiServices.getEvent(id);
+        call.enqueue(new Callback<EventDetailResponse>() {
+            @Override
+            public void onResponse(Call<EventDetailResponse> call, Response<EventDetailResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==200) {
+                    eventDetailResponse = response.body();
+                    eventlinks = eventDetailResponse.getEventlinks();
+                    sortByDisplayOrder(eventlinks);
+                    updateUI();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EventDetailResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    //sort event links by display order
+    private void sortByDisplayOrder(List<EventlinksItem> list) {
+        Collections.sort(list, new Comparator<EventlinksItem>() {
+            @Override public int compare(EventlinksItem p1, EventlinksItem p2) {
+                return p1.getDisplayorder()- p2.getDisplayorder();
+            }
+
+        });
+    }
+
+    private void updateUI( ) {
+
+        storageRef.child(eventDetailResponse.getEventimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                imgPath = uri;
+                Picasso.with(context).load(uri)
+                        .placeholder(R.drawable.food_715539_1920)
+                        .fit()
+                        .into(eventImageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
+        eventName.setText(eventDetailResponse.getName());
+        eventDescription.setText(eventDetailResponse.getDescription());
+
+        eventStartDate.setText(eventDetailResponse.getStartsat());
+        eventEndDate.setText(eventDetailResponse.getEndsat());
+        city.setText(eventDetailResponse.getLocation().getName());
+
+        if(!eventDetailResponse.getEventlinks().isEmpty()) {
+            if(eventDetailResponse.getEventlinks().size()>0){
+                weblink1.setText(eventDetailResponse.getEventlinks().get(0).getLinktext());
+            }
+
+            if(eventDetailResponse.getEventlinks().size()>1){
+                weblink2.setText(eventDetailResponse.getEventlinks().get(1).getLinktext());
+            }
+
+            if(eventDetailResponse.getEventlinks().size()>2){
+                weblink3.setText(eventDetailResponse.getEventlinks().get(2).getLinktext());
+            }
+
+        }
+
+        adapter = new HorizontalContentAdapter(context,eventDetailResponse.getTags());
+        recyclerView.setAdapter(adapter);
+        hideProgressDialog();
+
     }
 
     private void showBottomSheet(LayoutInflater inflater) {
@@ -251,28 +364,17 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 //
 
 //        viewEventMap.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
-        weblink1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_layout,webFragment.class);
-//                transaction.addToBackStack(null).commit();
-                Intent web =new Intent(getActivity(),webFragment.class);
-                startActivity(web);
-
-
-            }
-        });
     }
 
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventBusinessFragment(), "Businesses");
+        adapter.addFragment(EventBusinessFragment.newInstance(eventId), "Businesses");
         adapter.addFragment(new EventItemsCategoryFragment(), "Items");
         adapter.addFragment(new EventPostsFragment(), "Posts");
         viewPager.setAdapter(adapter);
+        // to keep all three tabs in memory. Remove below line if app lags and then optimize tab fragments.
+        viewPager.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -293,8 +395,15 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 //                CustomTabsIntent customTabsIntent = builder.build();
 //                customTabsIntent.launchUrl(context, Uri.parse(url));
 
-                Intent web =new Intent(getActivity(),webFragment.class);
-                startActivity(web);
+                if(!eventDetailResponse.getEventlinks().isEmpty()) {
+
+                        if(eventDetailResponse.getEventlinks().size()>0){
+                        Intent web1 = new Intent(getActivity(), webFragment.class);
+                            web1.putExtra("url", eventDetailResponse.getEventlinks().get(0).getWeblink());
+                        startActivity(web1);
+                    }
+
+                }
                 break;
 
             case R.id.txt_weblink_2:
@@ -305,8 +414,15 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 //                customTabsIntent = builder2.build();
 //                customTabsIntent.launchUrl(context, Uri.parse(url2));
 
-                Intent web2 =new Intent(getActivity(),webFragment.class);
-                startActivity(web2);
+                if(!eventDetailResponse.getEventlinks().isEmpty()) {
+
+                    if(eventDetailResponse.getEventlinks().size()>1){
+                        Intent web2 = new Intent(getActivity(), webFragment.class);
+                        web2.putExtra("url", eventDetailResponse.getEventlinks().get(1).getWeblink());
+                        startActivity(web2);
+                    }
+
+                }
                 break;
 
             case R.id.txt_weblink_3:
@@ -317,8 +433,15 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 //                customTabsIntent = builder3.build();
 //                customTabsIntent.launchUrl(context, Uri.parse(url3));
 
-                Intent web3 =new Intent(getActivity(),webFragment.class);
-                startActivity(web3);
+                if(!eventDetailResponse.getEventlinks().isEmpty()) {
+
+                    if(eventDetailResponse.getEventlinks().size()>2){
+                        Intent web3 = new Intent(getActivity(), webFragment.class);
+                        web3.putExtra("url", eventDetailResponse.getEventlinks().get(2).getWeblink());
+                        startActivity(web3);
+                    }
+
+                }
                 break;
 
             case R.id.toolbar_back:
@@ -335,6 +458,9 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
             case R.id.txt_view_event_map:
              Intent newintent=new Intent(context, GoogleMapActivity.class);
+                newintent.putExtra("latitude", eventDetailResponse.getLocation().getLattitude());
+                newintent.putExtra("longitude", eventDetailResponse.getLocation().getLongitude());
+                newintent.putExtra("name", eventDetailResponse.getLocation().getName());
                 EventDetailFragment.this.startActivity(newintent);
                 getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
 
@@ -393,11 +519,35 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         super.onAttach(context);
     }
 
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
     private void initiatePopupWindow() {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.image_popup,null);
+
+        ImageView imageView = layout.findViewById(R.id.popup_image);
+
+        Picasso.with(context).load(imgPath)
+                .placeholder(R.drawable.food_715539_1920)
+                .fit()
+                .into(imageView);
+
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.width = WindowManager.LayoutParams.FILL_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;

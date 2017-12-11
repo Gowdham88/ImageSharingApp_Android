@@ -3,10 +3,8 @@ package com.numnu.android.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -60,8 +58,8 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
 
     private final static String KEY_LOCATION = "location";
 
-    String name;
-    String value=" ";
+    private double latitude, longitude;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +75,10 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             // is not null.
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
+
+        latitude = Double.parseDouble(getIntent().getStringExtra("latitude"));
+        longitude = Double.parseDouble(getIntent().getStringExtra("longitude"));
+        name =getIntent().getStringExtra("name");
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -100,22 +102,7 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
         });
 
         TextView toolbarTitle=findViewById(R.id.toolbar_title);
-
-
-        Bundle newintent =getIntent().getExtras();
-        if (newintent != null) {
-            value = newintent.getString("name");
-        }
-
-        if(value.equals("name")){
-            toolbarTitle.setText("Location Map");
-        }
-        else {
-            toolbarTitle.setText("Event Map");
-        }
-
-
-
+        toolbarTitle.setText("Event Map");
 
 
     }
@@ -127,8 +114,8 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             if (hasLocationPermission()) {
                 getMyLocation();
                 // Add a marker in Montreal and move the camera
-                LatLng sydney = new LatLng(45.5088400, -73.5878100);
-                map.addMarker(new MarkerOptions().position(sydney).title("Marker in Montreal"));
+                LatLng sydney = new LatLng(latitude, longitude);
+                map.addMarker(new MarkerOptions().position(sydney).title(name));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,17));
             }else {
                 // Ask for one permission

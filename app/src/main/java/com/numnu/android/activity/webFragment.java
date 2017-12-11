@@ -24,6 +24,7 @@ public class webFragment  extends MyActivity {
     ImageView BrowseIcon,backButton,forwardButton;
     RelativeLayout toolbarBackicon;
     CustomTabsIntent customTabsIntent;
+    String url="http://www.totc.ca";
 //    public static webFragment newInstance() {
 //        return new webFragment();
 //    }
@@ -37,7 +38,7 @@ public class webFragment  extends MyActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_fragment);
-
+        url = getIntent().getStringExtra("url");
         Toolbar toolbar=findViewById(R.id.toolbar);
         backButton =(ImageView) findViewById(R.id.back_word);
         backButton.setVisibility(View.VISIBLE);
@@ -54,7 +55,7 @@ public class webFragment  extends MyActivity {
             }
         });
         TextView toolbar_title=(TextView)findViewById(R.id.toolbar_title);
-        toolbar_title.setText("http://www.totc.ca");
+        toolbar_title.setText(url);
 
 
         BrowseIcon=(ImageView)findViewById(R.id.google_img);
@@ -140,7 +141,7 @@ public class webFragment  extends MyActivity {
                 Toast.makeText( webFragment.this, description, Toast.LENGTH_LONG );
             }
         } );
-        webView.loadUrl("http://www.totc.ca");
+        webView.loadUrl(url);
 
 
     }

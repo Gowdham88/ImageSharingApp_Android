@@ -8,7 +8,6 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,11 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.activity.MainActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
-import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
@@ -85,10 +82,10 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         city = view.findViewById(R.id.txt_city);
-        eventDate = view.findViewById(R.id.txt_event_date);
-        eventTime = view.findViewById(R.id.txt_event_time);
+//        eventDate = view.findViewById(R.id.txt_event_date);
+//        eventTime = view.findViewById(R.id.txt_event_time);
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
-        adapter = new HorizontalContentAdapter(context);
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 

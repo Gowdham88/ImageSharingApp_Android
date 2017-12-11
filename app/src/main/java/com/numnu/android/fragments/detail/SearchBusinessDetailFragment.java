@@ -87,11 +87,11 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
         city = view.findViewById(R.id.txt_city);
-        eventDate = view.findViewById(R.id.txt_event_date);
-        eventTime = view.findViewById(R.id.txt_event_time);
+//        eventDate = view.findViewById(R.id.txt_event_date);
+//        eventTime = view.findViewById(R.id.txt_event_time);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
-        adapter = new HorizontalContentAdapter(context);
+//        adapter = new HorizontalContentAdapter(context);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         eventImageView = view.findViewById(R.id.current_event_image);

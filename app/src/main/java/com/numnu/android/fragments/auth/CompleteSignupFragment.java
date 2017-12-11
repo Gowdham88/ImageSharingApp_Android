@@ -241,7 +241,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
         mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, autocompleteFilter);
         mCity.setAdapter(mAdapter);
-        dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         final Toolbar toolbar = v.findViewById(R.id.toolbar);
 

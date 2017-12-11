@@ -2,7 +2,6 @@ package com.numnu.android.fragments.detail;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,43 +10,19 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.adapter.TagsAdapter;
-import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.adapter.Userdetailadapter;
 import com.numnu.android.fragments.home.SettingsFragment;
-import com.numnu.android.fragments.search.SliceFragment;
-import com.numnu.android.network.ApiServices;
-import com.numnu.android.network.ServiceGenerator;
-import com.numnu.android.network.response.LoginCityLocation;
-import com.numnu.android.network.response.LoginResponse;
-import com.numnu.android.network.response.SignupResponse;
-import com.numnu.android.utils.Constants;
-import com.numnu.android.utils.PreferencesHelper;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by dhivy on 06/11/2017.
@@ -57,16 +32,10 @@ public class UserDetailsFragment extends Fragment {
     private RecyclerView mUserPostsRecycler;
     Context context;
     private String id,username;
-    TagsAdapter adapter;
+    HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     ImageView SettingImg;
     Boolean showarrow = false;
-    PreferencesHelper preferencesHelper;
-    private FirebaseAuth mAuth;
-    String strname;
-    TextView Strusername,StrUsercity;
-    String Strplace;
-    ArrayList<String> tagslist;
 
 
     public static UserDetailsFragment newInstance() {
@@ -82,11 +51,12 @@ public class UserDetailsFragment extends Fragment {
             id=bundle.getString("type","location");
             username = bundle.getString("uname", "Festival");
             showarrow = bundle.getBoolean("Showarrow");
+
+
+
+
         }
-
     }
-
-
 
     @Nullable
     @Override
@@ -114,12 +84,13 @@ public class UserDetailsFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-//        String idvalue=PreferencesHelper.getPreference(context,".id");
+
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("@Marc chiriqui");
-        Strusername=(TextView)view.findViewById(R.id.user_name);
-        StrUsercity=(TextView)view.findViewById(R.id.txt_city);
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview) ;
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         mUserPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mUserPostsRecycler.setLayoutManager(layoutManager);
@@ -149,7 +120,6 @@ public class UserDetailsFragment extends Fragment {
                 });
             }
 
-
         return view;
     }
 
@@ -161,12 +131,12 @@ public class UserDetailsFragment extends Fragment {
 
     private void setupRecyclerView() {
         ArrayList<String> stringlist = new ArrayList<>();
+
         for (int i = 1; i <= 10; i++) {
             stringlist.add("Post item " + i);
             Userdetailadapter userPostAdapter = new Userdetailadapter(context, stringlist);
             mUserPostsRecycler.setAdapter(userPostAdapter);
         }
     }
-
 
 }
