@@ -127,6 +127,7 @@ public class HomeActivity extends MyActivity {
         mAuth.addIdTokenListener(new FirebaseAuth.IdTokenListener() {
             @Override
             public void onIdTokenChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser()!=null)
                 updateToken(firebaseAuth.getCurrentUser());
             }
         });
