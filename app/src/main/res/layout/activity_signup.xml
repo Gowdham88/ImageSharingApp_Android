@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="or"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     app:layout_constraintHorizontal_bias="0.504"
                     app:layout_constraintLeft_toLeftOf="@+id/signup_const_lay"
                     app:layout_constraintRight_toRightOf="@+id/signup_const_lay"
