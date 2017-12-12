@@ -3,6 +3,7 @@ package com.numnu.android.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -59,7 +60,7 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
     private final static String KEY_LOCATION = "location";
 
     private double latitude, longitude;
-    private String name;
+    private String name="empty";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +77,9 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
 
-        latitude = Double.parseDouble(getIntent().getStringExtra("latitude"));
-        longitude = Double.parseDouble(getIntent().getStringExtra("longitude"));
-        name =getIntent().getStringExtra("name");
+//        latitude = Double.parseDouble(getIntent().getStringExtra("latitude"));
+//        longitude = Double.parseDouble(getIntent().getStringExtra("longitude"));
+
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
@@ -103,7 +104,11 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
 
         TextView toolbarTitle=findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Event Map");
-
+        name =getIntent().getStringExtra("name");
+       if(name.equals("name"))
+       {
+           toolbarTitle.setText("Location Map");
+       }
 
     }
 
