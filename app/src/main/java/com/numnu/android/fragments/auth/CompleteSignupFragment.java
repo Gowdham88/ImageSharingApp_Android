@@ -70,6 +70,7 @@ import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -232,6 +233,14 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         String username = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME);
         if(!email.isEmpty()){
             musername.setText(username);
+        }
+
+        String profile = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
+        if(!profile.isEmpty()){
+            Picasso.with(context).load(profile)
+                    .placeholder(R.drawable.food_715539_1920)
+                    .fit()
+                    .into(viewImage);
         }
 
 //        mRadioGroup = v.findViewById(R.id.radio_group);

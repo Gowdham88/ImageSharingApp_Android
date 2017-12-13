@@ -270,6 +270,7 @@ public class SignupFragment extends Fragment {
                                                                     String eventBookmarkBundle = "eventbookmark";
                                                                      PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
                                                                     PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME, user.getDisplayName());
+                                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, String.valueOf(user.getPhotoUrl()));
 
                                                                     hideProgressDialog();
                                                                     if(!shown) {
