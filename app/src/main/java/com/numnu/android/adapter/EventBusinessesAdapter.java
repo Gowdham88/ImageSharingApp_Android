@@ -21,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.fragments.detail.BusinessDetailFragment;
+import com.numnu.android.network.response.DataItem;
 import com.numnu.android.network.response.EventBusinessesResponse;
 import com.squareup.picasso.Picasso;
 
@@ -34,18 +35,22 @@ import java.util.List;
 public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinessesAdapter.ViewHolder> {
 
     Context context;
-    List<EventBusinessesResponse> list = new ArrayList<>();
+    List<DataItem> list = new ArrayList<>();
     HorizontalContentAdapter adapter;
     private RecyclerView recyclerView;
     private StorageReference storageRef ;
     private FirebaseStorage storage;
 
-    public EventBusinessesAdapter(Context context, List<EventBusinessesResponse> stringArrayList) {
+    public EventBusinessesAdapter(Context context, List<DataItem> stringArrayList) {
         this.context=context;
         this.list =stringArrayList;
         storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         storageRef = storage.getReference();
+    }
+
+    public  void addData(List<DataItem> stringArrayList){
+        list.addAll(stringArrayList);
     }
 
     @Override
@@ -62,7 +67,7 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final EventBusinessesResponse eventBusinessesResponse = list.get(position);
+        final DataItem eventBusinessesResponse = list.get(position);
 
         holder.textViewName.setText(list.get(position).getBusinessusername());
 

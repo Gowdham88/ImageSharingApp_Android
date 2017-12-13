@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,11 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.EventDetail.EventItemsListFragment;
+import com.numnu.android.network.response.DataItem;
+import com.numnu.android.network.response.EventTagsDataItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by thulir on 10/10/17.
@@ -23,13 +27,17 @@ import java.util.ArrayList;
 public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCategoryAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<String> stringArrayList = new ArrayList<>();
+    String eventId;
+    List<EventTagsDataItem> list = new ArrayList<>();
 
-    String[] arr = {"Festival", "Wine", "Party", "Rum", "Festival", "Wine", "Party", "Rum", "Festival", "Wine", "Party", "Rum",};
-
-    public EventItemsCategoryAdapter(Context context, ArrayList<String> stringArrayList) {
+    public EventItemsCategoryAdapter(Context context,String eventId, List<EventTagsDataItem> stringArrayList) {
         this.context=context;
-        this.stringArrayList=stringArrayList;
+        this.eventId = eventId;
+        this.list=stringArrayList;
+    }
+
+    public  void addData(List<EventTagsDataItem> stringArrayList){
+        list.addAll(stringArrayList);
     }
 
     @Override
@@ -46,17 +54,16 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        holder.textViewName.setText(arr[position]);
+        final EventTagsDataItem eventBusinessesResponse = list.get(position);
+        holder.textViewName.setText(eventBusinessesResponse.getTagtext());
+        holder.itemcount.setText(eventBusinessesResponse.getItemcount()+"");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                EventItemsListFragment eventItemsListFragment=EventItemsListFragment.newInstance(holder.textViewName.getText().toString(),eventId, String.valueOf(eventBusinessesResponse.getTagid()));
 
-                Bundle bundle = new Bundle();
-                bundle.putString("category",  holder.textViewName.getText().toString());
-                EventItemsListFragment eventItemsListFragment=EventItemsListFragment.newInstance();
-                eventItemsListFragment.setArguments(bundle);
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout,eventItemsListFragment);
@@ -68,17 +75,17 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
 
     @Override
     public int getItemCount() {
-        return stringArrayList.size();
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
-        private TextView textViewName;
+        private TextView textViewName,itemcount;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.textViewName =  itemView.findViewById(R.id.txt_itemname);
-            //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
+            this.itemcount = (TextView) itemView.findViewById(R.id.txt_itemcount);
             this.imageViewIcon = itemView.findViewById(R.id.imageView_forward);
         }
     }

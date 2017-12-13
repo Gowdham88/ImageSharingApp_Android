@@ -1,6 +1,8 @@
 package com.numnu.android.adapter;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +13,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.fragments.detail.ItemInfoFragment;
+import com.numnu.android.network.response.DataItem;
+import com.numnu.android.network.response.EventTagBusiness;
+import com.numnu.android.network.response.EventTagsDataItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by thulir on 10/10/17.
@@ -24,13 +34,22 @@ import java.util.ArrayList;
 public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<String> stringArrayList = new ArrayList<>();
+    List<EventTagBusiness> list = new ArrayList<>();
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
+    private StorageReference storageRef ;
+    private FirebaseStorage storage;
 
-    public EventItemsListAdapter(Context context, ArrayList<String> stringArrayList) {
+    public EventItemsListAdapter(Context context, List<EventTagBusiness> stringArrayList) {
         this.context=context;
-        this.stringArrayList=stringArrayList;
+        this.list=stringArrayList;
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
+    }
+
+    public  void addData(List<EventTagBusiness> stringArrayList){
+        list.addAll(stringArrayList);
     }
 
     @Override
@@ -45,12 +64,28 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Picasso.with(context).load(R.drawable.large_berger)
-                .placeholder(R.drawable.food_1631727_1920)
-                .fit()
-                .into(holder.imageViewIcon);
+        final EventTagBusiness dataItem = list.get(position);
+
+        holder.textViewName.setText(list.get(position).getBusinessname());
+
+        storageRef.child(dataItem.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                Picasso.with(context).load(uri)
+                        .placeholder(R.drawable.food_715539_1920)
+                        .fit()
+                        .into(holder.imageViewIcon);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,16 +107,15 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
             }
         });
 
-//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-//        recyclerView.setAdapter(adapter);
+        adapter = new HorizontalContentAdapter(context, dataItem.getTags());
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-//
     }
 
 
     @Override
     public int getItemCount() {
-        return stringArrayList.size();
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
