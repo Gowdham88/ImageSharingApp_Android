@@ -67,7 +67,9 @@ public class SignupFragment extends Fragment {
     // [END declare_auth]
     String mBookmarkIntent, mProfileIntent, mEventBookmarkIntent, mReceivedIntent;
     TextView txt_error;
+    View emailview,passview;
     private Context context;
+    private boolean shown=false;
 
     public static SignupFragment newInstance() {
         SignupFragment fragment = new SignupFragment();
@@ -125,7 +127,8 @@ public class SignupFragment extends Fragment {
         emailtxtinlay = (TextInputEditText) view.findViewById(R.id.et_email);
         passTxtinLay = (TextInputEditText) view.findViewById(R.id.et_password);
         textViewSignIn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
+        emailview=view.findViewById(R.id.username_view);
+        passview=view.findViewById(R.id.pass_view);
         SignupConsLay = view.findViewById(R.id.signup_const_lay);
         SignupConsLay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,7 +245,6 @@ public class SignupFragment extends Fragment {
                     @Override
                     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                         if (firebaseAuth.getCurrentUser() == null) {
-
                             AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
                             mAuth.signInWithCredential(credential)
                                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -267,12 +269,13 @@ public class SignupFragment extends Fragment {
                                                                     String profileBundle = "profile";
                                                                     String eventBookmarkBundle = "eventbookmark";
                                                                      PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
-                                                                    PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
-
-
-                                                                    Log.e("Dsds", "dsds");
+                                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME, user.getDisplayName());
 
                                                                     hideProgressDialog();
+                                                                    if(!shown) {
+                                                                        completeSignup();
+                                                                    }
+                                                                    shown =true;
                                                                                    }
                                                                                }
                                                                            });
@@ -291,11 +294,7 @@ public class SignupFragment extends Fragment {
 
                                                        });
                                            } else {
-                                               CompleteSignupFragment loginFragment1 = new CompleteSignupFragment();
-                                               FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                               transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_right, R.anim.exit_to_left);
-                                               transaction.replace(R.id.frame_layout, loginFragment1);
-                                               transaction.addToBackStack(null).commit();
+
                                            }
                                        }
                                    }
@@ -355,6 +354,8 @@ public class SignupFragment extends Fragment {
                                                             PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
                                                             PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
                                                             Constants.FIREBASE_TOKEN = idToken;
+                                                            hideProgressDialog();
+                                                            completeSignup();
 
                                                         } else {
                                                             // Handle error -> task.getException();
@@ -369,24 +370,27 @@ public class SignupFragment extends Fragment {
                                         showerror("Authentication failed.");
                                     }
 
-                                    hideProgressDialog();
-                                    // [END create_user_with_email]
                                 }
 
                             });
                 } else {
 
-                    CompleteSignupFragment loginFragment1 = new CompleteSignupFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_right, R.anim.exit_to_left);
-                    transaction.replace(R.id.frame_layout, loginFragment1);
-                    transaction.addToBackStack(null).commit();
+
 
                 }
             }
         });
 
 
+    }
+
+   private void  completeSignup(){
+
+       CompleteSignupFragment loginFragment1 = new CompleteSignupFragment();
+       FragmentTransaction transaction = getFragmentManager().beginTransaction();
+       transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_right, R.anim.exit_to_left);
+       transaction.replace(R.id.frame_layout, loginFragment1);
+       transaction.addToBackStack(null).commit();
     }
 
     private void signOut() {
@@ -534,48 +538,31 @@ public class SignupFragment extends Fragment {
 
     private void setupFocusListeners() {
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if(hasFocus){
                     TxtEmai.setTextColor(getResources().getColor(R.color.weblink_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
-                    } else {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
-                    hideerror();
-                } else {
+                    emailview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
                     TxtEmai.setTextColor(getResources().getColor(R.color.email_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    } else {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
+                    emailview.setBackgroundColor(getResources().getColor(R.color.email_color));
                 }
             }
         });
 
         mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if(hasFocus){
                     TxtPass.setTextColor(getResources().getColor(R.color.weblink_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
-                    } else {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
+                    passview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                     hideerror();
-                } else {
-                    TxtPass.setTextColor(getResources().getColor(R.color.email_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    } else {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
                 }
+                else{
+                    TxtPass.setTextColor(getResources().getColor(R.color.email_color));
+                    passview.setBackgroundColor(getResources().getColor(R.color.email_color));
+                }
+
             }
         });
 

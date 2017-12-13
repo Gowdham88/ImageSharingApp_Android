@@ -82,6 +82,7 @@ public class LoginFragment extends Fragment {
     private Button login;
     private CallbackManager mCallbackManager;
     ConstraintLayout ConsLay;
+    View emailview,passview;
     // [END declare_auth]
 
     String mPostBookmarkIntent,mBusinessBookmarkIntent,mProfileIntent,mEventBookmarkIntent,mReceivedIntent;
@@ -148,6 +149,8 @@ public class LoginFragment extends Fragment {
         passTxtinLay=(TextInputEditText) view.findViewById(R.id.et_password);
         textViewSignup.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         ConsLay   =view.findViewById(R.id.const_lay);
+        emailview=view.findViewById(R.id.username_view);
+        passview=view.findViewById(R.id.pass_view);
         ConsLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -591,44 +594,34 @@ public class LoginFragment extends Fragment {
 
     private void setupFocusListeners() {
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @SuppressLint("NewApi")
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     EmailTxt.setTextColor(getResources().getColor(R.color.weblink_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
-                    }
-                    hideerror();
+                    emailview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                 }
                 else{
                     EmailTxt.setTextColor(getResources().getColor(R.color.email_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
+                    emailview.setBackgroundColor(getResources().getColor(R.color.email_color));
                 }
             }
         });
 
         mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @SuppressLint("NewApi")
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     PassTxt.setTextColor(getResources().getColor(R.color.weblink_color));
-                    passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
-
+                    passview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                     hideerror();
                 }
                 else{
                     PassTxt.setTextColor(getResources().getColor(R.color.email_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
+                    passview.setBackgroundColor(getResources().getColor(R.color.email_color));
                 }
+
             }
         });
+
 
         mEmailField.addTextChangedListener(new TextWatcher() {
             @Override

@@ -54,9 +54,9 @@ public class ServiceGenerator {
 
                                 // Request customization: add request headers
                                 Request.Builder requestBuilder = original.newBuilder()
-                                        .header("Content-Type","application/json")
                                         .header("Authorization","Bearer "+Constants.FIREBASE_TOKEN )
                                         .header("Accept-Language", "en-US")
+                                        .header("Content-Type","application/json")
                                         .method(original.method(), original.body());
 
                                 Request request = requestBuilder.build();
