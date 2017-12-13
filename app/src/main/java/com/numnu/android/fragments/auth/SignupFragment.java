@@ -67,6 +67,7 @@ public class SignupFragment extends Fragment {
     // [END declare_auth]
     String mBookmarkIntent, mProfileIntent, mEventBookmarkIntent, mReceivedIntent;
     TextView txt_error;
+    View emailview,passview;
     private Context context;
 
     public static SignupFragment newInstance() {
@@ -125,7 +126,8 @@ public class SignupFragment extends Fragment {
         emailtxtinlay = (TextInputEditText) view.findViewById(R.id.et_email);
         passTxtinLay = (TextInputEditText) view.findViewById(R.id.et_password);
         textViewSignIn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-
+        emailview=view.findViewById(R.id.username_view);
+        passview=view.findViewById(R.id.pass_view);
         SignupConsLay = view.findViewById(R.id.signup_const_lay);
         SignupConsLay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -534,48 +536,31 @@ public class SignupFragment extends Fragment {
 
     private void setupFocusListeners() {
         mEmailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if(hasFocus){
                     TxtEmai.setTextColor(getResources().getColor(R.color.weblink_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
-                    } else {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
-                    hideerror();
-                } else {
+                    emailview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
+                }
+                else{
                     TxtEmai.setTextColor(getResources().getColor(R.color.email_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    } else {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
+                    emailview.setBackgroundColor(getResources().getColor(R.color.email_color));
                 }
             }
         });
 
         mPasswordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if(hasFocus){
                     TxtPass.setTextColor(getResources().getColor(R.color.weblink_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
-                    } else {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
+                    passview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                     hideerror();
-                } else {
-                    TxtPass.setTextColor(getResources().getColor(R.color.email_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    } else {
-                        passTxtinLay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.Edittxt_lineclr)));
-                    }
                 }
+                else{
+                    TxtPass.setTextColor(getResources().getColor(R.color.email_color));
+                    passview.setBackgroundColor(getResources().getColor(R.color.email_color));
+                }
+
             }
         });
 

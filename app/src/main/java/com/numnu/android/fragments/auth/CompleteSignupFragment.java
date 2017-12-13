@@ -52,6 +52,7 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 import com.numnu.android.BuildConfig;
 import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
@@ -358,7 +359,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             valid = false;
         }
         else{
-            Toast.makeText(context, "Complete Signup Successfully", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Complete Signup Successfully", Toast.LENGTH_SHORT).show();
 
         }
 //            musername.setError("User name cannot be empty");
@@ -528,6 +529,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
                 int responsecode = response.code();
                 SignupResponse body = response.body();
+                Log.e("Response",new Gson().toJson(response.body()));
                 if (responsecode == 201) {
 //id=102
 
