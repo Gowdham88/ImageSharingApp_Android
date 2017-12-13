@@ -1,13 +1,16 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -53,6 +56,7 @@ import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -190,7 +194,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                 showBottomSheet(inflater);
             }
         });
-        getEventDetails(eventId);
+        if(Utils.isNetworkAvailable(context)) {
+            getEventDetails(eventId);
+        }else {
+            showAlert();
+        }
         return view;
     }
 
@@ -370,7 +378,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(EventBusinessFragment.newInstance(eventId), "Businesses");
-        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
+        adapter.addFragment(EventItemsCategoryFragment.newInstance(eventId), "Items");
         adapter.addFragment(new EventPostsFragment(), "Posts");
         viewPager.setAdapter(adapter);
         // to keep all three tabs in memory. Remove below line if app lags and then optimize tab fragments.
@@ -533,6 +541,18 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
+    }
+
+    private void showAlert() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+        builder.setMessage("No Internet connection");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     private void initiatePopupWindow() {

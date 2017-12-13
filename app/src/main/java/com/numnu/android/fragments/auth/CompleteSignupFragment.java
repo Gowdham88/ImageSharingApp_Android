@@ -52,6 +52,7 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 import com.numnu.android.BuildConfig;
 import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
@@ -69,6 +70,7 @@ import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -223,6 +225,24 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         mGender = v.findViewById(R.id.ed_gender);
         userDescription = v.findViewById(R.id.et_user_description);
 
+        String email = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL);
+        if(!email.isEmpty()){
+            mEmail.setText(email);
+        }
+
+        String username = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME);
+        if(!email.isEmpty()){
+            musername.setText(username);
+        }
+
+        String profile = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
+        if(!profile.isEmpty()){
+            Picasso.with(context).load(profile)
+                    .placeholder(R.drawable.food_715539_1920)
+                    .fit()
+                    .into(viewImage);
+        }
+
 //        mRadioGroup = v.findViewById(R.id.radio_group);
 //        mRadioMale = v.findViewById(R.id.male_radio);
 //        mRadioFemale = v.findViewById(R.id.female_radio);
@@ -358,7 +378,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             valid = false;
         }
         else{
-            Toast.makeText(context, "Complete Signup Successfully", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Complete Signup Successfully", Toast.LENGTH_SHORT).show();
 
         }
 //            musername.setError("User name cannot be empty");
@@ -511,6 +531,16 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         completeSignUpData.setClientapp("android");
         completeSignUpData.setClientip(Utils.getLocalIpAddress(context));
 
+        String tagsString = "";
+        String tagsIds = "";
+        for (Tag tag:tags){
+            tagsString = tag.getText()+",";
+            tagsIds = tag.getId()+",";
+        }
+
+        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS, tagsString);
+        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS, tagsIds);
+
         Call<SignupResponse> call = apiServices.completeSignUp(completeSignUpData);
         call.enqueue(new Callback<SignupResponse>() {
 
@@ -518,6 +548,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
                 int responsecode = response.code();
                 SignupResponse body = response.body();
+                Log.e("Response",new Gson().toJson(response.body()));
                 if (responsecode == 201) {
 //id=102
 
@@ -530,7 +561,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, userdescription);
 
                     uploadImage(selectedImagePath,String.valueOf(body.getId()));
 

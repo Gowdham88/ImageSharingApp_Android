@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:text="or"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -110,7 +110,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="25dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@+id/txt_forget_pwd"
         app:layout_constraintVertical_bias="0.284" />
 
@@ -172,11 +172,22 @@
             android:textSize="14sp"
             android:textColor="@color/name_black"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:background="@null"
             android:inputType="textEmailAddress"
             android:backgroundTint="@color/Edittxt_lineclr"/>
     </android.support.design.widget.TextInputLayout>
 
+    <View
+        android:id="@+id/username_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/et_email_layout"
+        android:background="@color/Edittxt_lineclr"/>
 
 
 
@@ -201,10 +212,22 @@
             android:textSize="14sp"
             android:textColor="@color/name_black"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:background="@null"
             android:inputType="textPassword"
             android:backgroundTint="@color/Edittxt_lineclr"/>
     </android.support.design.widget.TextInputLayout>
+    <View
+        android:id="@+id/pass_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_layout"
+        android:background="@color/Edittxt_lineclr"/>
+
 
     <TextView
         android:id="@+id/txt_error"
@@ -215,7 +238,7 @@
         android:gravity="center"
         android:text="@string/com_facebook_image_download_unknown_error"
         android:textSize="12sp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textColor="#F13A30"
         app:layout_constraintLeft_toLeftOf="@+id/et_password_layout"
         app:layout_constraintTop_toBottomOf="@+id/et_password_layout"
@@ -231,6 +254,7 @@
         android:text="@string/forgot_password"
         android:textColor="@color/Already_txtcolor"
         android:textSize="12sp"
+        android:layout_marginTop="0dp"
         app:layout_constraintRight_toRightOf="@+id/et_password_layout"
         app:layout_constraintTop_toBottomOf="@+id/et_password_layout"
         tools:ignore="OnClick" />
@@ -258,7 +282,7 @@
         android:text="@string/password"
         android:layout_marginLeft="3dp"
         app:layout_constraintLeft_toLeftOf="@+id/et_password_layout"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@+id/et_email_layout"
         />
 

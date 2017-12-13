@@ -3,6 +3,7 @@ package com.numnu.android.fragments.home;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -12,20 +13,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,21 +57,40 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.BuildConfig;
 import com.numnu.android.R;
 import com.numnu.android.activity.HomeActivity;
 import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
+import com.numnu.android.adapter.TagsAutocompleteAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
 import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.request.Citylocation;
+import com.numnu.android.network.request.CompleteSignUpData;
+import com.numnu.android.network.request.Tag;
+import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.SignupResponse;
+import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -73,10 +98,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
+import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.numnu.android.utils.Utils.hideKeyboard;
 
@@ -99,11 +131,9 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     FoodAdapter adapter;
     LinearLayout FoodLinearLay;
     TextView AddTxt;
-    String AutocomStr;
     AutoCompleteTextView autoComplete;
     String ItemModelList;
-    String mainAutotxt;
-    ArrayList<String> mylist = new ArrayList<>();
+    ArrayList<Tagsuggestion> mylist = new ArrayList<>();
     ImageView viewImage, EditBtn;
     TextView Gallery,mGender;
     TextView Camera;
@@ -118,17 +148,18 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     LinearLayout EditLinearLay,Linearlay;
     ScrollView nestedScrollView;
 
+    public String placeId, placeType = "city", placeAddress;
+
     private RecyclerView myRecyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private static final int CAMERA_REQUEST = 1888;
     private static final String[] CAMERA= {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
-    private static final int RC_LOCATION_PER = 1;
-    String[] arr = {"Biryani", "Mutton Biryani", "Mutton Ticka", "Mutton 65", "Mutton Curry", "Mutton Fry", "Chicken Curry", "Chicken 65", "Chicken Fry"};
     String AutocompleteStr;
-    Uri fileUri;
     private static final int REQUEST_CAMERA = 1888;
-    private static final int MY_REQUEST_CODE = 1;
-    private static final int MY_REQUEST_CODE_STORAGE = 2;
+
+    final private int RC_PICK_IMAGE = 1;
+    final private int RC_CAPTURE_IMAGE = 2;
+    private static final int PERMISSIONS_REQUEST_CAMERA = 1888;
+    private static final int PERMISSIONS_REQUEST_GALLERY = 1889;
     /**
      * GeoDataClient wraps our service connection to Google Play services and provides access
      * to the Google Places API for Android.
@@ -136,6 +167,16 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     protected GeoDataClient mGeoDataClient;
 
     private PlaceAutocompleteAdapter mAdapter;
+    ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+    private TagsAutocompleteAdapter tagsAutocompleteAdapter;
+    private FirebaseAuth mAuth;
+    private Uri fileUri;
+    private String mCurrentPhotoPath;
+    private ProgressDialog mProgressDialog;
+    private String userId;
+    // Create a storage reference from our app
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
 
     public static EditProfileFragment newInstance() {
         EditProfileFragment fragment = new EditProfileFragment();
@@ -194,74 +235,10 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         autoComplete = (AutoCompleteTextView) v.findViewById(R.id.autoCompleteTextView1);
         AddTxt = (TextView) v.findViewById(R.id.add_txt);
 
+        setupTagAutocomplete();
 
-        final ArrayAdapter<String> vairam = new ArrayAdapter<String>(getActivity(), R.layout.auto_dialog, R.id.lbl_name, arr);
-        autoComplete.setThreshold(1);
-        autoComplete.setAdapter(vairam);
-        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                ItemModelList = vairam.getItem(position).toString();
-                if ( !autoComplete.getText().toString().isEmpty()&& ItemModelList != null && !autoComplete.getText().toString().equals(null)) {
-                    if (!ItemModelList.isEmpty()) {
-
-                        if (mylist.contains(ItemModelList)) {
-                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
-                        } else {
-                            mylist.add(ItemModelList);
-                            // TODO: 1/12/17  change to auto complete 
-//                            adapter = new FoodAdapter(context, mylist);
-                            recyclerView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                            autoComplete.setText(null);
-                        }
-
-                    } else {
-                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } else {
-                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        });
-        AddTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            String autoTxt=autoComplete.getText().toString();
-                if ( !autoComplete.getText().toString().isEmpty() && !autoComplete.getText().toString().equals(null)) {
-                    if (!autoTxt.isEmpty()) {
-
-                        if (mylist.contains(autoTxt)) {
-                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
-                        } else {
-                            mylist.add(autoTxt);
-                            // TODO: 1/12/17  
-//                            adapter = new FoodAdapter(context, mylist);
-                            recyclerView.setAdapter(adapter);
-//                            adapter.notifyDataSetChanged();
-                           autoComplete.setText(null);
-                        }
-
-                    } else {
-                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } else {
-                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        // TODO: 1/12/17
-//        adapter = new FoodAdapter(context, mylist);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
 
         musername=v.findViewById(R.id.et_cmpltsignup_username);
         mEmail = v.findViewById(R.id.et_signup_email);
@@ -288,7 +265,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
         mAdapter = new PlaceAutocompleteAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, autocompleteFilter);
         mCity.setAdapter(mAdapter);
-        dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         final Toolbar toolbar = v.findViewById(R.id.toolbar);
 
@@ -343,56 +320,506 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         });
 
 
+        updateUI();
+
         mCompleteSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String username = musername.getText().toString().trim();
-                String email = mEmail.getText().toString().trim();
-                String name = mName.getText().toString().trim();
-                String city = mCity.getText().toString().trim();
-                String gender = mGender.getText().toString().trim();
-                String dob = mDob.getText().toString().trim();
-//                String foodPreferences = mFoodPreferences.getText().toString();
-
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-                if (email.equals("")) {
-                    Toast.makeText(
-                            getActivity(), "Email is mandatory", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (email.matches(emailPattern) && (!(email.equals("") && username.equals("") && name.equals("") && city.equals("") && gender.equals(null) && dob.equals("") && ItemModelList.equals("")))) {
-//                        Intent intent = new Intent(getActivity(), HomeActivity.class);
-//                        intent.putExtra("completesignup", "showprofilefragment");
-//                        startActivity(intent);
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                        transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
-                        transaction.addToBackStack(null).commit();
-
-//                        context.getApplicationContext().this.finish();
-                        PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
-                        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, name);
-                        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, email);
-                        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
-                        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
-                        if (!(gender.equals(""))) {
-                            PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
-                        }
-
-                        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
-                    } else {
-                        Toast.makeText(getActivity(), "Invalid email address", Toast.LENGTH_SHORT).show();
-                    }
-
-
+                if (validate()) {
+                    //check username
+                    checKUsernameExists(musername.getText().toString());
                 }
+
             }
         });
 
 
         return v;
     }
+
+    private void updateUI() {
+
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
+
+        userId=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_ID);
+        String name=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME);
+        String username= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME);
+        String email=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL);
+        String city= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY);
+        String dob=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB);
+        String gender=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER);
+        String userinfo=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION);
+
+        String profilepic=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
+
+        musername.setText(username);
+        mEmail.setText(email);
+        mName.setText(name);
+        mCity.setText(city);
+        mGender.setText(gender);
+        mDob.setText(dob);
+        userDescription.setText(userinfo);
+
+        if(!profilepic.isEmpty()&&profilepic!=null) {
+            storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_715539_1920)
+                            .fit()
+                            .into(viewImage);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+        //prepare Tag List
+        String tags=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS);
+        String tagIds=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS);
+
+        if(!tags.isEmpty() && tags!=null) {
+
+            String[] tag = tags.split(",");
+            String[] tagId = tagIds.split(",");
+
+
+            for (int i = 0; i < tag.length; i++) {
+
+                Tagsuggestion tagsuggestion = new Tagsuggestion();
+                tagsuggestion.setText(tag[i]);
+                tagsuggestion.setId(Integer.valueOf(tagId[i]));
+
+                mylist.add(tagsuggestion);
+            }
+
+            adapter = new FoodAdapter(context, mylist);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+
+    }
+
+    public boolean validate() {
+
+        boolean valid = true;
+
+        String username = musername.getText().toString().trim();
+        String email = mEmail.getText().toString().trim();
+        String name = mName.getText().toString().trim();
+        String city = mCity.getText().toString().trim();
+        String gender = mGender.getText().toString().trim();
+        String dob = mDob.getText().toString().trim();
+        String userdescription = userDescription.getText().toString().trim();
+
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(context, "enter a valid email address", Toast.LENGTH_SHORT).show();
+//            mEmail.setError("enter a valid email address");
+            valid = false;
+        }
+// else {
+//            mEmail.setError(null);
+//        }
+
+        else if (username.isEmpty()) {
+            Toast.makeText(context, "enter a valid username", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if (name.isEmpty()) {
+            Toast.makeText(context, "enter a valid name", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if (city.isEmpty()) {
+            Toast.makeText(context, "enter a valid city", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if(gender.isEmpty()) {
+            Toast.makeText(context, "enter a valid gender", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if (dob.isEmpty())  {
+            Toast.makeText(context, "enter a valid dob", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else if (userdescription.isEmpty()) {
+            Toast.makeText(context, "enter a valid userdescription", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        else{
+            Toast.makeText(context, "Complete Signup Successfully", Toast.LENGTH_SHORT).show();
+
+        }
+//            musername.setError("User name cannot be empty");
+//            valid = false;
+//        } else {
+//            musername.setError(null);
+//        }
+//
+//        if (name.isEmpty()) {
+//            mName.setError("Name cannot be empty");
+//            valid = false;
+//        } else {
+//            mName.setError(null);
+//        }
+//
+//        if (city.isEmpty()) {
+//            mCity.setError("City cannot be empty");
+//            valid = false;
+//        } else {
+//            mCity.setError(null);
+//        }
+//
+//        if (gender.isEmpty()) {
+//            mGender.setError("Please choose gender");
+//            valid = false;
+//        } else {
+//            mGender.setError(null);
+//        }
+//
+//        if (mylist.isEmpty()) {
+//            autoComplete.setError("Please add food preferences");
+//            valid = false;
+//        } else {
+//            autoComplete.setError(null);
+//        }
+//
+//        if (dob.isEmpty()) {
+//            mDob.setError("Please choose date of birth");
+//            valid = false;
+//        } else {
+//            mDob.setError(null);
+//        }
+
+        return valid;
+    }
+
+
+
+
+    private void checKUsernameExists(String s) {
+        showProgressDialog();
+        Call<CommonResponse> call = apiServices.checkUserName(s);
+        call.enqueue(new Callback<CommonResponse>() {
+
+            @Override
+            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                int responsecode = response.code();
+                CommonResponse body = response.body();
+                if (responsecode == 200) {
+                    if (body.getUsernameexists()) {
+                        musername.setError("User name already exists");
+                        hideProgressDialog();
+                    } else {
+                        completeSignUp();
+                    }
+
+                }else if (responsecode == 400) {
+                    hideProgressDialog();
+                }else if(responsecode==401){
+                    hideProgressDialog();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse> call, Throwable t) {
+                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+
+            }
+        });
+    }
+
+    /*
+      sends data to server
+     */
+    private void completeSignUp() {
+
+        final String username = musername.getText().toString().trim();
+        final String name = mName.getText().toString().trim();
+        final String email = mEmail.getText().toString().trim();
+        final String city = mCity.getText().toString().trim();
+        final String gender = mGender.getText().toString().trim();
+        final String dob = mDob.getText().toString().trim();
+        final String userdescription = userDescription.getText().toString().trim();
+
+        Citylocation citylocation = new Citylocation();
+        citylocation.setIsgoogleplace(true);
+        citylocation.setName(city);
+        citylocation.setGoogleplaceid(placeId);
+        citylocation.setAddress(placeAddress);
+        citylocation.setGoogleplacetype(placeType);
+
+        //converting gender to numbers
+        // gender: 0 -> male, 1 -> female
+        int genderNumber = 0;
+
+        if (gender.equals("Male")) {
+            genderNumber = 0;
+        } else if (gender.equals("Female")) {
+            genderNumber = 1;
+        }
+
+        //Tags preparation
+
+        List<Tag> tags = new ArrayList<>();
+
+        for (int i = 0; i < mylist.size(); i++) {
+            Tagsuggestion tag = mylist.get(i);
+
+            Tag tag1 = new Tag();
+
+            if (tag.getId() != null) {
+                tag1.setId(tag.getId());
+            }
+            tag1.setText(tag.getText());
+            tag1.setDisplayorder(i + 1);
+
+            tags.add(tag1);
+        }
+
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        String uid = "";
+        if (firebaseUser != null) {
+            uid = mAuth.getCurrentUser().getUid();
+        }
+
+        final CompleteSignUpData completeSignUpData = new CompleteSignUpData();
+        completeSignUpData.setUsername(username);
+        completeSignUpData.setName(name);
+        completeSignUpData.setEmail(email);
+        completeSignUpData.setCitylocation(citylocation);
+        completeSignUpData.setGender(genderNumber);
+        completeSignUpData.setDateofbirth(dob);
+        completeSignUpData.setDescription(userdescription);
+        completeSignUpData.setIsbusinessuser(false);
+        completeSignUpData.setFirebaseuid(uid);
+        completeSignUpData.setTags(tags);
+
+        completeSignUpData.setClientapp("android");
+        completeSignUpData.setClientip(Utils.getLocalIpAddress(context));
+
+        Call<SignupResponse> call = apiServices.completeSignUp(completeSignUpData);
+        call.enqueue(new Callback<SignupResponse>() {
+
+            @Override
+            public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
+                int responsecode = response.code();
+                SignupResponse body = response.body();
+                if (responsecode == 201) {
+//id=102
+
+//                        context.getApplicationContext().this.finish();
+                    PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, name);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, username);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL, email);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+
+//                    uploadImage(selectedImagePath,String.valueOf(body.getId()));
+
+                } else if (responsecode == 400) {
+                    try {
+                        String s = response.errorBody().string();
+                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    hideProgressDialog();
+                }else if(responsecode==401){
+                    hideProgressDialog();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SignupResponse> call, Throwable t) {
+                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+
+            }
+        });
+    }
+
+    /*
+    * This method is fetching the absolute path of the image file
+    * if you want to upload other kind of files like .pdf, .docx
+    * you need to make changes on this method only
+    * Rest part will be the same
+    * */
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+
+    /**
+     * This function will upload the image to server
+     * @param contentURI ->absolute file path
+     */
+    public void uploadImage(String contentURI,String userId) {
+
+        File file = null;
+        try {
+            file = new File(contentURI);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "You didn't selected any image", Toast.LENGTH_SHORT).show();
+            hideProgressDialog();
+            gotoUserProfile();
+        }
+
+        if (file != null && file.exists()) {
+
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
+
+
+            Call<CommonResponse> call = apiServices.uploadImage(userId, body);
+            call.enqueue(new Callback<CommonResponse>() {
+
+                @Override
+                public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                    int responsecode = response.code();
+                    CommonResponse commonResponse = response.body();
+                    if (responsecode == 201) {
+
+                        hideProgressDialog();
+                        gotoUserProfile();
+
+                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, commonResponse.getImageurl());
+                        Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CommonResponse> call, Throwable t) {
+                    Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }
+            });
+        } else {
+            Toast.makeText(context, "file not exists!", Toast.LENGTH_SHORT).show();
+            hideProgressDialog();
+            gotoUserProfile();
+        }
+
+    }
+
+    private void gotoUserProfile() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
+        transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+        transaction.addToBackStack(null).commit();
+    }
+
+    private void setupTagAutocomplete() {
+
+        //setting horizontal orientation for tag layout
+        adapter = new FoodAdapter(context, mylist);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+        autoComplete.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tagsAutocompleteAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        tagsAutocompleteAdapter = new TagsAutocompleteAdapter(context, apiServices);
+        autoComplete.setThreshold(1);
+        autoComplete.setAdapter(tagsAutocompleteAdapter);
+        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                ItemModelList = tagsAutocompleteAdapter.getItem(position).getText();
+                if (!autoComplete.getText().toString().isEmpty() && ItemModelList != null && !autoComplete.getText().toString().equals(null)) {
+                    if (!ItemModelList.isEmpty()) {
+
+                        if (mylist.contains(ItemModelList)) {
+                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mylist.add(tagsAutocompleteAdapter.getItem(position));
+                            adapter = new FoodAdapter(context, mylist);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            autoComplete.setText(null);
+                        }
+
+                    } else {
+                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+        AddTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String autoTxt = autoComplete.getText().toString();
+                if (!autoComplete.getText().toString().isEmpty() && !autoComplete.getText().toString().equals(null)) {
+                    if (!autoTxt.isEmpty()) {
+
+                        if (mylist.contains(autoTxt)) {
+                            Toast.makeText(getActivity(), "already added", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Tagsuggestion tagsuggestion = new Tagsuggestion();
+                            tagsuggestion.setText(autoTxt);
+                            mylist.add(tagsuggestion);
+                            adapter = new FoodAdapter(context, mylist);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            autoComplete.setText(null);
+                        }
+
+                    } else {
+                        Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "please choose the food Preference", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
 
     public void showAlert() {
 
@@ -462,6 +889,194 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
 
 
+
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            /*
+             Retrieve the place ID of the selected item from the Adapter.
+             The adapter stores each Place suggestion in a AutocompletePrediction from which we
+             read the place ID and title.
+              */
+            final AutocompletePrediction item = mAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+            final CharSequence primaryText = item.getPrimaryText(null);
+
+            Log.i(TAG, "Autocomplete item selected: " + primaryText);
+
+            Utils.hideKeyboard(getActivity());
+        }
+    };
+
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog directing them to enable the permission in app settings.
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+
+    }
+
+    private void showBottomSheet(LayoutInflater inflater) {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+        View bottomSheetView = inflater.inflate(R.layout.dialo_camera_bottomsheet, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+
+        Camera = bottomSheetView.findViewById(R.id.camera_title);
+        Gallery = bottomSheetView.findViewById(R.id.gallery_title);
+        GalleryIcon= bottomSheetView.findViewById(R.id.gallery_icon);
+        CameraIcon= bottomSheetView.findViewById(R.id.camera_image);
+        Camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                bottomSheetDialog.dismiss();
+
+                if (hasPermissions()) {
+                    captureImage();
+                } else {
+                    EasyPermissions.requestPermissions(getActivity(), "Permissions required", PERMISSIONS_REQUEST_CAMERA, CAMERA);
+                }
+
+            }
+        });
+
+        Gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (hasPermissions()) {
+                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, RC_PICK_IMAGE);
+                } else {
+                    EasyPermissions.requestPermissions(getActivity(), "Permissions required", PERMISSIONS_REQUEST_GALLERY, CAMERA);
+                }
+                bottomSheetDialog.dismiss();
+
+            }
+        });
+    }
+
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    private boolean hasPermissions() {
+        return EasyPermissions.hasPermissions(getActivity(), CAMERA);
+    }
+
+    private void captureImage() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = getOutputMediaFileUri(1);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        startActivityForResult(intent, RC_CAPTURE_IMAGE);
+    }
+
+    public Uri getOutputMediaFileUri(int type) {
+        return FileProvider.getUriForFile(getApplicationContext(),
+                BuildConfig.APPLICATION_ID + ".provider",
+                getOutputMediaFile(type));
+    }
+
+    private File getOutputMediaFile(int type) {
+
+        File mediaStorageDir = new File(
+                Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                Constants.IMAGE_DIRECTORY_NAME);
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(TAG, "Oops! Failed create "
+                        + Constants.IMAGE_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+        } else {
+            return null;
+        }
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + mediaFile.getAbsolutePath();
+
+        return mediaFile;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_CANCELED) {
+            if (requestCode == PICK_IMAGE) {
+                if (data != null) {
+                    Uri contentURI = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), contentURI);
+                        viewImage.setImageBitmap(bitmap);
+                        selectedImagePath=getRealPathFromURI(contentURI);
+                        uploadImage(getRealPathFromURI(contentURI),userId);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } else if (requestCode == REQUEST_CAMERA) {
+                // Show the thumbnail on ImageView
+                Uri imageUri = Uri.parse(mCurrentPhotoPath);
+                File file = new File(imageUri.getPath());
+                try {
+                    InputStream ims = new FileInputStream(file);
+                    viewImage.setImageBitmap(BitmapFactory.decodeStream(ims));
+                } catch (FileNotFoundException e) {
+                    return;
+                }
+
+                // ScanFile so it will be appeared on Gallery
+                MediaScannerConnection.scanFile(getApplicationContext(),
+                        new String[]{imageUri.getPath()}, null,
+                        new MediaScannerConnection.OnScanCompletedListener() {
+                            public void onScanCompleted(String path, Uri uri) {
+                            }
+                        });
+                selectedImagePath = imageUri.getPath();
+                uploadImage(imageUri.getPath(),userId);
+
+            }
+
+        } else {
+            super.onActivityResult(requestCode, resultCode,
+                    data);
+        }
+    }
+
+
     private void setupFocusListeners(View v) {
         final TextView usernameLabel = v.findViewById(R.id.text_user_name_label);
         final TextView nameLabel = v.findViewById(R.id.text_name_label);
@@ -484,7 +1099,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     usernameLabel.setTextColor(getResources().getColor(R.color.weblink_color));
-                usernameview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
+                    usernameview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                 }
                 else{
                     usernameLabel.setTextColor(getResources().getColor(R.color.email_color));
@@ -580,228 +1195,26 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         });
     }
 
-    private AdapterView.OnItemClickListener mAutocompleteClickListener
-            = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            /*
-             Retrieve the place ID of the selected item from the Adapter.
-             The adapter stores each Place suggestion in a AutocompletePrediction from which we
-             read the place ID and title.
-              */
-            final AutocompletePrediction item = mAdapter.getItem(position);
-            final String placeId = item.getPlaceId();
-            final CharSequence primaryText = item.getPrimaryText(null);
-
-            Log.i(TAG, "Autocomplete item selected: " + primaryText);
-
-            Utils.hideKeyboard(getActivity());
-        }
-    };
-
-
-    private boolean hasLocationPermission() {
-        return EasyPermissions.hasPermissions(getActivity(), CAMERA);
-    }
-
-
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
-
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display a dialog directing them to enable the permission in app settings.
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
         }
 
+        mProgressDialog.show();
     }
 
-    private void showBottomSheet(LayoutInflater inflater) {
-
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
-        View bottomSheetView = inflater.inflate(R.layout.dialo_camera_bottomsheet, null);
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
-
-        Camera = bottomSheetView.findViewById(R.id.camera_title);
-        Gallery = bottomSheetView.findViewById(R.id.gallery_title);
-        GalleryIcon= bottomSheetView.findViewById(R.id.gallery_icon);
-        CameraIcon= bottomSheetView.findViewById(R.id.camera_image);
-        Camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                clickCamera();
-                bottomSheetDialog.dismiss();
-
-            }
-        });
-
-        Gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(
-                        Intent.createChooser(intent, ""),
-                        PICK_IMAGE);
-                bottomSheetDialog.dismiss();
-
-            }
-        });
-    }
-
-    public String getImagePath() {
-        return imgPath;
-    }
-
-
-
-    public File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "Img_" + timeStamp;
-        File storageDir = new File(Environment.getExternalStorageDirectory(), "Images");
-        File file=new File(storageDir,imageFileName+".png");
-        // Save a file: path for use with ACTION_VIEW intents
-//        mCurrentPhotoPath = file.getAbsolutePath();//"file:" + image.getAbsolutePath();
-        return file;
-    }
-
-
-    public Bitmap decodeFile(String path) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, o);
-            // The new size we want to scale to
-            final int REQUIRED_SIZE = 70;
-
-            // Find the correct scale value. It should be the power of
-            // 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE
-                    && o.outHeight / scale / 2 >= REQUIRED_SIZE)
-                scale *= 2;
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeFile(path, o2);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return null;
-
-    }
-
-    private String getAbsolutePath(Intent data) {
-        Uri selectedImage = data.getData();
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-        Cursor cursor = getApplicationContext().getContentResolver().query(selectedImage,
-                filePathColumn, null, null, null);
-        cursor.moveToFirst();
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        return picturePath;
-    }
-
-    private void clickCamera() { // 1 for icon and 2 for attachment
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA},MY_REQUEST_CODE);
-        }else {
-            if (ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_REQUEST_CODE_STORAGE);
-            }else{
-
-                Intent intentPicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intentPicture, REQUEST_CAMERA);  // 1 for REQUEST_CAMERA and 2 for REQUEST_CAMERA_ATT
-            }
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
         }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_REQUEST_CODE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    if (ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_REQUEST_CODE_STORAGE);
-                    }else{
-
-                        Intent intentPicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        // start the image capture Intent
-                        startActivityForResult(intentPicture, REQUEST_CAMERA);
-                    }
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Toast.makeText(getActivity(),"Doesn't have permission... ", Toast.LENGTH_SHORT).show();
-                }
-                return;
-            }
-            case MY_REQUEST_CODE_STORAGE : {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    Intent intentPicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    // start the image capture Intent
-                    startActivityForResult(intentPicture, REQUEST_CAMERA);
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Toast.makeText(getActivity(),"Doesn't have permission...", Toast.LENGTH_SHORT).show();
-                }
-                return;
-            }
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_CANCELED) {
-            if (requestCode == PICK_IMAGE) {
-                if (data != null) {
-                    Uri contentURI = data.getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), contentURI);
-                        viewImage.setImageBitmap(bitmap);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            } else if (requestCode == REQUEST_CAMERA) {
-                if (data != null) {
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    viewImage.setImageBitmap(photo);
-
-                }
-            }
-
-        } else {
-            super.onActivityResult(requestCode, resultCode,
-                    data);
-        }
-    }
-
 
 }

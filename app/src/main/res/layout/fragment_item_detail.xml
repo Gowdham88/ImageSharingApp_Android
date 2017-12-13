@@ -89,7 +89,7 @@
                 android:layout_below="@+id/event_name">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/business_recyclerview"
+                    android:id="@+id/item_tags_recyclerview"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

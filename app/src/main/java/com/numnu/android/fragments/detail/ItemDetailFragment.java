@@ -1,8 +1,11 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,6 +29,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.LocationItemsFragment;
@@ -62,7 +69,12 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView1,recyclerView2;
     private Boolean isExpanded = false;
-    private String itemId;
+    private String itemId="115";
+    private ProgressDialog mProgressDialog;
+    ItemDetailsResponse itemDetailsResponse;
+    // Create a storage reference from our app
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
 
 
     public static ItemDetailFragment newInstance() {
@@ -76,6 +88,11 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         if (bundle != null) {
             itemId = bundle.getString("itemId");
         }
+
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
     }
 
     @Override
@@ -90,14 +107,12 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
-        city = view.findViewById(R.id.txt_city);
 //        eventDate = view.findViewById(R.id.txt_event_date);
 //        eventTime = view.findViewById(R.id.txt_event_time);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
-        recyclerView1=(RecyclerView)view.findViewById(R.id.business_recyclerview);
+        recyclerView1=(RecyclerView)view.findViewById(R.id.item_tags_recyclerview);
         recyclerView2=(RecyclerView)view.findViewById(R.id.flatron_recyclerview);
-//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-        recyclerView1.setAdapter(adapter);
+
         recyclerView1.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 //        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
         recyclerView2.setAdapter(adapter);
@@ -161,21 +176,24 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 showBottomSheet(inflater);
             }
         });
-
+        getItemsDetails(itemId);
         return view;
     }
 
 
     private void getItemsDetails(String id)
     {
+        showProgressDialog();
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<ItemDetailsResponse> call=apiServices.getItem(id);
         call.enqueue(new Callback<ItemDetailsResponse>() {
             @Override
             public void onResponse(Call<ItemDetailsResponse> call, Response<ItemDetailsResponse> response) {
                 int responsecode = response.code();
-                ItemDetailsResponse itemDetailsResponse = response.body();
-                updateUI(itemDetailsResponse);
+                if(responsecode==200) {
+                    itemDetailsResponse = response.body();
+                    updateUI();
+                }
             }
 
             @Override
@@ -186,14 +204,62 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private void updateUI(ItemDetailsResponse itemDetailsResponse) {
-
-        Picasso.with(context).load(R.drawable.burger)
-                .placeholder(R.drawable.food_715539_1920)
-                .fit()
-                .into(eventImageView);
+    private void updateUI() {
 
 
+        storageRef.child(itemDetailsResponse.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                Picasso.with(context).load(uri)
+                        .placeholder(R.drawable.food_715539_1920)
+                        .fit()
+                        .into(eventImageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
+        eventName.setText(itemDetailsResponse.getName());
+        eventDescription.setText(itemDetailsResponse.getDescription());
+
+        if(!itemDetailsResponse.getItemlinks().isEmpty()) {
+            if(itemDetailsResponse.getItemlinks().size()>0){
+//                weblink1.setText(itemDetailsResponse.getEventlinks().get(0).getLinktext());
+            }
+
+            if(itemDetailsResponse.getItemlinks().size()>1){
+//                weblink2.setText(eventDetailResponse.getEventlinks().get(1).getLinktext());
+            }
+
+            if(itemDetailsResponse.getItemlinks().size()>2){
+//                weblink3.setText(eventDetailResponse.getEventlinks().get(2).getLinktext());
+            }
+
+        }
+
+        adapter = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
+        recyclerView1.setAdapter(adapter);
+
+        hideProgressDialog();
+    }
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
     private void showBottomSheet(LayoutInflater inflater) {

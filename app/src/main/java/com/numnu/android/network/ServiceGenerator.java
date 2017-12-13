@@ -56,6 +56,7 @@ public class ServiceGenerator {
                                 Request.Builder requestBuilder = original.newBuilder()
                                         .header("Authorization","Bearer "+Constants.FIREBASE_TOKEN )
                                         .header("Accept-Language", "en-US")
+                                        .header("Content-Type","application/json")
                                         .method(original.method(), original.body());
 
                                 Request request = requestBuilder.build();

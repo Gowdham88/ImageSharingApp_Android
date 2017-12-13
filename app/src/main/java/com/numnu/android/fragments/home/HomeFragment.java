@@ -125,10 +125,10 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         }
 
         googleLogo.setVisibility(View.GONE);
-//        searchViewFood.setText("");
-//        searchViewLocation.setText("");
-//        nestedScrollView.setVisibility(View.VISIBLE);
-//        searchListView.setVisibility(View.GONE);
+        searchViewFood.setText("");
+        searchViewLocation.setText("");
+        nestedScrollView.setVisibility(View.VISIBLE);
+        searchListView.setVisibility(View.GONE);
 
         if(viewPager.getVisibility()==View.VISIBLE) {
             toolbarBackIcon.setVisibility(View.VISIBLE);
