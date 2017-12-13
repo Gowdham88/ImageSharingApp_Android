@@ -52,6 +52,10 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.numnu.android.BuildConfig;
 import com.numnu.android.R;
@@ -70,6 +74,7 @@ import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -148,10 +153,11 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
     private TagsAutocompleteAdapter tagsAutocompleteAdapter;
     private FirebaseAuth mAuth;
+    private FirebaseUser fuser;
     private Uri fileUri;
     private String mCurrentPhotoPath;
     private ProgressDialog mProgressDialog;
-
+    private DatabaseReference mDatabase;
 
     public static CompleteSignupFragment newInstance() {
         CompleteSignupFragment fragment = new CompleteSignupFragment();
@@ -215,7 +221,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         setupTagAutocomplete();
 
         // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
 
         musername = v.findViewById(R.id.et_cmpltsignup_username);
         mEmail = v.findViewById(R.id.et_signup_email);
@@ -223,10 +228,27 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         mCity = v.findViewById(R.id.et_signup_city);
         mGender = v.findViewById(R.id.ed_gender);
         userDescription = v.findViewById(R.id.et_user_description);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            String Stremail = firebaseUser.getEmail();
+            mEmail.setText(Stremail);
+            String Strname=firebaseUser.getDisplayName();
+            if(Strname!=null){
+                musername.setText(Strname);
+            }
 
-//        mRadioGroup = v.findViewById(R.id.radio_group);
-//        mRadioMale = v.findViewById(R.id.male_radio);
-//        mRadioFemale = v.findViewById(R.id.female_radio);
+            Uri photoUrl = firebaseUser.getPhotoUrl();
+            if(photoUrl!=null){
+
+                Picasso.with(context).load(photoUrl)
+                        .fit()
+                        .into(viewImage);
+            }
+        }
+
+
+
         mDob = v.findViewById(R.id.et_signup_dob);
 
         mCompleteSignUp = v.findViewById(R.id.button_complete_signup);
@@ -268,18 +290,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             }
         });
 
-//        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//
-//                if (checkedId == R.id.male_radio) {
-//                    mGenderValue = "Male";
-//
-//                } else if (checkedId == R.id.female_radio) {
-//                    mGenderValue = "Female";
-//                }
-//            }
-//        });
+
 
         mDob.setOnClickListener(new View.OnClickListener() {
             @Override
