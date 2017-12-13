@@ -125,7 +125,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:text="@string/sign_up"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="@+id/signup_const_lay"
@@ -184,7 +184,7 @@
                         android:layout_width="match_parent"
                         android:textColor="@color/name_black"
                         android:background="@null"
-                        android:layout_height="45dp"
+                        android:layout_height="40dp"
                         android:backgroundTint="@color/Edittxt_lineclr"
                         android:inputType="textEmailAddress"
                         android:textSize="14sp" />
@@ -226,7 +226,7 @@
                         android:paddingTop="0dp"
                         android:textSize="14sp"
                         android:background="@null"
-                        android:layout_height="45dp"
+                        android:layout_height="40dp"
                         app:passwordToggleEnabled="true" />
                 </android.support.design.widget.TextInputLayout>
 

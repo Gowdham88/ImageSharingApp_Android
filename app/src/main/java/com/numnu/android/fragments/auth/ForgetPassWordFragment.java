@@ -41,6 +41,7 @@ public class ForgetPassWordFragment extends Fragment {
     ImageView backButton;
     TextView txt_error,txt_email;
     EditText emailField;
+    View emailview;
 ConstraintLayout Constainlay;
     TextInputEditText emailtxtinlay;
     public static ForgetPassWordFragment newInstance() {
@@ -64,6 +65,7 @@ ConstraintLayout Constainlay;
         backButton  = (ImageView)v.findViewById(R.id.toolbar_back);
         txt_error   = (TextView) v.findViewById(R.id.txt_error);
         txt_email   = (TextView) v.findViewById(R.id.textView5);
+        emailview=v.findViewById(R.id.username_view);
         emailField  = v.findViewById(R.id.et_email);
         emailtxtinlay=v.findViewById(R.id.et_email);
         Resetbutton.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +86,8 @@ ConstraintLayout Constainlay;
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Log.d(TAG, "Email sent.");
+                                            Toast.makeText(getContext(), "Reset Successsfully", Toast.LENGTH_SHORT).show();
+//                                            Log.d(TAG, "Email sent.");
                                         }else {
                                             showerror("Reset password failed.");
                                         }
@@ -113,22 +116,16 @@ ConstraintLayout Constainlay;
         });
 
         emailField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     txt_email.setTextColor(getResources().getColor(R.color.weblink_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.weblink_color)));
-                    }
+                    emailview.setBackgroundColor(getResources().getColor(R.color.weblink_color));
                     hideerror();
                 }
                 else{
-                    txt_email.setTextColor(getResources().getColor(R.color.email_color));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        emailtxtinlay.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.email_color)));
-                    }
 
+                    txt_email.setTextColor(getResources().getColor(R.color.email_color));
+                    emailview.setBackgroundColor(getResources().getColor(R.color.email_color));
                 }
             }
         });
