@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -52,7 +51,6 @@ import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.EventDetailResponse;
 import com.numnu.android.network.response.EventlinksItem;
-import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -114,6 +112,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
          storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
          storageRef = storage.getReference();
+
 
 
     }

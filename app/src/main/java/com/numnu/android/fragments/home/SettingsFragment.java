@@ -17,6 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.auth.SignupFragment;
@@ -139,6 +142,16 @@ public class SettingsFragment extends Fragment {
 
     private void logout() {
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null) {
+
+            currentUser.unlink(currentUser.getProviderId());
+            LoginManager.getInstance().logOut();
+            mAuth.signOut();
+
+        }
+        PreferencesHelper.signOut(getApplicationContext());
         PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,false);
         FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, SignupFragment.newInstance());

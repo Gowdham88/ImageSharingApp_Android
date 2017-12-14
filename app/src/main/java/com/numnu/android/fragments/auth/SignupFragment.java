@@ -28,6 +28,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -85,8 +86,16 @@ public class SignupFragment extends Fragment {
             mProfileIntent = bundle.getString("ProfileIntent");
             mEventBookmarkIntent = bundle.getString("EventBookmarkIntent");
         }
+        Toast.makeText(getApplicationContext(),"sdss",Toast.LENGTH_SHORT).show();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null) {
 
+            currentUser.unlink(currentUser.getProviderId());
+            LoginManager.getInstance().logOut();
+            mAuth.signOut();
 
+        }
     }
 
 
@@ -142,7 +151,7 @@ public class SignupFragment extends Fragment {
         setupFocusListeners();
 
         // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
+
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
         FrameLayout loginButton = view.findViewById(R.id.sinup_btn_facebook);
@@ -239,13 +248,7 @@ public class SignupFragment extends Fragment {
         showProgressDialog();
         // [END_EXCLUDE]
 
-        mAuth.signOut();
-
-        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                    @Override
-                    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                        if (firebaseAuth.getCurrentUser() == null) {
-                            AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+                         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
                             mAuth.signInWithCredential(credential)
                                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                                         @Override
@@ -255,51 +258,33 @@ public class SignupFragment extends Fragment {
                                                  // Sign in success, update UI with the signed-in user's information
                                                 Log.d(TAG, "signUpWithCredential:success");
                                                 final FirebaseUser user = mAuth.getCurrentUser();
-                                                user.getIdToken(true)
-                                                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                                                            public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    String idToken = task.getResult().getToken();
-                                                                    Log.d("Token:", idToken);
-                                                                    Constants.FIREBASE_TOKEN = idToken;
-                                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
-                                                                    // Send token to your backend via HTTPS
+                                                String bookmarkBundle = "bookmark";
+                                                String profileBundle = "profile";
+                                                String eventBookmarkBundle = "eventbookmark";
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME, user.getDisplayName());
+                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, String.valueOf(user.getPhotoUrl()));
 
-                                                                    String bookmarkBundle = "bookmark";
-                                                                    String profileBundle = "profile";
-                                                                    String eventBookmarkBundle = "eventbookmark";
-                                                                     PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
-                                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME, user.getDisplayName());
-                                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, String.valueOf(user.getPhotoUrl()));
-
-                                                                    hideProgressDialog();
-                                                                    if(!shown) {
-                                                                        completeSignup();
-                                                                    }
-                                                                    shown =true;
-                                                                                   }
-                                                                               }
-                                                                           });
+                                                hideProgressDialog();
+                                                if(!shown) {
+                                                    completeSignup();
+                                                }
+                                                shown =true;
 
 
-                                                               } else {
+                                              } else {
                                                                    // If sign in fails, display a message to the user.
-                                                                   Log.w(TAG, "signUpWithCredential:failure", task.getException());
-                                                                   showerror("Authentication failed.");
+                                                Log.w(TAG, "signUpWithCredential:failure", task.getException());
+                                                showerror("Authentication failed.");
 
-                                                               }
-
-
-                                                           }
+                                            }
 
 
-                                                       });
-                                           } else {
+                                        }
 
-                                           }
-                                       }
-                                   }
-        );
+
+                                    });
+
 
     }
 
@@ -321,13 +306,7 @@ public class SignupFragment extends Fragment {
 
         showProgressDialog();
 
-        mAuth.signOut();
 
-        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                if (firebaseAuth.getCurrentUser() == null) {
                     // [START create_user_with_email]
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -337,50 +316,29 @@ public class SignupFragment extends Fragment {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d(TAG, "createUserWithEmail:success");
                                         final FirebaseUser user = mAuth.getCurrentUser();
-                                        user.getIdToken(true)
-                                                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                                                    public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                                        if (task.isSuccessful()) {
-                                                            String idToken = task.getResult().getToken();
-                                                            Log.d("Token:", idToken);
-                                                            // Send token to your backend via HTTPS
-                                                            mEmailField.setText("");
-                                                            mPasswordField.setText("");
+                                        mPasswordField.setText("");
 
-                                                            String bookmarkBundle = "bookmark";
-                                                            String profileBundle = "profile";
-                                                            String eventBookmarkBundle = "eventbookmark";
+                                        String bookmarkBundle = "bookmark";
+                                        String profileBundle = "profile";
+                                        String eventBookmarkBundle = "eventbookmark";
 
-                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
-                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
-                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
-                                                            Constants.FIREBASE_TOKEN = idToken;
-                                                            hideProgressDialog();
-                                                            completeSignup();
-
-                                                        } else {
-                                                            // Handle error -> task.getException();
-                                                        }
-                                                    }
-                                                });
+                                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
+                                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
+                                        hideProgressDialog();
+                                        completeSignup();
 
 
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                         showerror("Authentication failed.");
+                                        hideProgressDialog();
                                     }
 
                                 }
 
                             });
-                } else {
 
-
-
-                }
-            }
-        });
 
 
     }
@@ -465,6 +423,7 @@ public class SignupFragment extends Fragment {
     }
 
     public void signIn() {
+
         String bookmarkBundle = "bookmark";
         String profileBundle = "profile";
         String eventBookmarkBundle = "eventbookmark";
@@ -493,6 +452,7 @@ public class SignupFragment extends Fragment {
             bundle.putString("EventBookmarkIntent", bookmarkBundle);
             showFragment(bundle);
         }
+
     }
 
     private void showFragment(Bundle bundle) {

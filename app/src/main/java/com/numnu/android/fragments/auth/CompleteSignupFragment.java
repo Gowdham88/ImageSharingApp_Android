@@ -163,6 +163,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override

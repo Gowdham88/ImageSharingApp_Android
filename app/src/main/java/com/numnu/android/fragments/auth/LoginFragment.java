@@ -107,6 +107,16 @@ public class LoginFragment extends Fragment {
 
         }
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null) {
+
+            currentUser.unlink(currentUser.getProviderId());
+            mAuth.signOut();
+            LoginManager.getInstance().logOut();
+            Toast.makeText(getApplicationContext(),"ds",Toast.LENGTH_SHORT).show();
+        }
+
     }
     @Override
     public void onResume() {
@@ -158,7 +168,7 @@ public class LoginFragment extends Fragment {
             }
         });
         // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
+
 
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
@@ -257,56 +267,74 @@ public class LoginFragment extends Fragment {
 
     private void  loginWithServer() {
 
-        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<LoginResponse> call = apiServices.login();
-        call.enqueue(new Callback<LoginResponse>() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        user.getIdToken(true)
+                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(),"dddd",Toast.LENGTH_SHORT).show();
+                            String idToken = task.getResult().getToken();
+                            Log.e("Token:", idToken);
+                            Constants.FIREBASE_TOKEN = idToken;
+                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                            // Send token to your backend via HTTPS
+                            ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+                            Call<LoginResponse> call = apiServices.login();
+                            call.enqueue(new Callback<LoginResponse>() {
 
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                int responsecode = response.code();
-                LoginResponse body = response.body();
-                if(responsecode==200) {
-                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL, body.getEmail() != null ? body.getEmail() : "");
+                                @Override
+                                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                                    int responsecode = response.code();
+                                    LoginResponse body = response.body();
+                                    if(responsecode==200) {
+                                        PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_EMAIL, body.getEmail() != null ? body.getEmail() : "");
 
-                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_NAME, body.getUsername() != null ? body.getUsername() : "");
-                    // TODO: 5/12/17
+                                        PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_NAME, body.getUsername() != null ? body.getUsername() : "");
+                                        // TODO: 5/12/17
 //                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_NAME,body.get);
-                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
-                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth());
-                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION, body.getDescription());
-                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER, (body.getGender() == 0) ? "Male" : "Female");
-                    PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY, body.getCitylocation().getName());
+                                        PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
+                                        PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth());
+                                        PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION, body.getDescription());
+                                        PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER, (body.getGender() == 0) ? "Male" : "Female");
+                                        PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY, body.getCitylocation().getName());
 //                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC,body.getUserimages().get(0).getImageurl());
-                    PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
+                                        PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
 
-                    String tagsString = "";
-                    String tagsIds = "";
-                    for (TagsItem tag : body.getTags()) {
-                        tagsString = tag.getText() + ",";
-                        tagsIds = tag.getId() + ",";
+                                        String tagsString = "";
+                                        String tagsIds = "";
+                                        for (TagsItem tag : body.getTags()) {
+                                            tagsString = tag.getText() + ",";
+                                            tagsIds = tag.getId() + ",";
+                                        }
+
+                                        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS, tagsString);
+                                        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS, tagsIds);
+
+                                        goToHomeActivity();
+
+                                        hideProgressDialog();
+
+                                    }else if(responsecode==404){
+                                        hideProgressDialog();
+                                        Toast.makeText(context, "Invalid User!.Please Register!", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                                    Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
+                                    hideProgressDialog();
+
+                                }
+                            });
+
+                        }
                     }
 
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS, tagsString);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS, tagsIds);
+                });
 
-                    goToHomeActivity();
 
-                    hideProgressDialog();
-
-                }else if(responsecode==404){
-                    hideProgressDialog();
-                    Toast.makeText(context, "Invalid User!.Please Register!", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(context, "Server error!", Toast.LENGTH_SHORT).show();
-                hideProgressDialog();
-
-            }
-        });
 }
 
     @Override
@@ -330,52 +358,29 @@ public class LoginFragment extends Fragment {
         showProgressDialog();
         // [END_EXCLUDE]
 
-        mAuth.signOut();
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signUpWithCredential:success");
+                            final FirebaseUser user = mAuth.getCurrentUser();
+                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
 
-        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                                       @Override
-                                       public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                           if (firebaseAuth.getCurrentUser() == null) {
-                                               AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-                                               mAuth.signInWithCredential(credential)
-                                                       .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                                                           @Override
-                                                           public void onComplete(@NonNull Task<AuthResult> task) {
-                                                               if (task.isSuccessful()) {
-                                                                   // Sign in success, update UI with the signed-in user's information
-                                                                   Log.d(TAG, "signUpWithCredential:success");
-                                                                   final FirebaseUser user = mAuth.getCurrentUser();
+                            loginWithServer();
 
-                                                                   user.getIdToken(true)
-                                                                           .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                                                                               public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                                                                   if (task.isSuccessful()) {
-                                                                                       String idToken = task.getResult().getToken();
-                                                                                       Log.d("Token:", idToken);
-                                                                                       Constants.FIREBASE_TOKEN = idToken;
-                                                                                       PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
-                                                                                       // Send token to your backend via HTTPS
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signUpWithCredential:failure", task.getException());
+                            showerror("Authentication failed.");
 
-                                                                                       PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
+                        }
 
-                                                                                   }
-                                                                               }
-                                                                           });
-                                                               } else {
-                                                                   // If sign in fails, display a message to the user.
-                                                                   Log.w(TAG, "signUpWithCredential:failure", task.getException());
-                                                                   showerror("Authentication failed.");
+                    }
+                });
 
-                                                               }
-
-                                                           }
-                                                       });
-                                           }else {
-                                               PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,true);
-                                               loginWithServer();
-                                           }
-                                       }
-                                   });
 
     }
 
@@ -400,60 +405,34 @@ public class LoginFragment extends Fragment {
 
         showProgressDialog();
 
-        mAuth.signOut();
 
-        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                if (firebaseAuth.getCurrentUser() == null) {
-                    // [START sign_in_with_email]
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(),"dsdsd",Toast.LENGTH_SHORT).show();
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d(TAG, "signInWithEmail:success");
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        user.getIdToken(true)
-                                                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                                                    public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                                        if (task.isSuccessful()) {
-                                                            String idToken = task.getResult().getToken();
-                                                            Log.d("Token:", idToken);
-                                                            Constants.FIREBASE_TOKEN = idToken;
-                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
-                                                            // Send token to your backend via HTTPS
+                                        loginWithServer();
 
-                                                        }
-                                                    }
-                                                });
 
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                                         showerror("Authentication failed.");
+                                        hideProgressDialog();
+
                                     }
 
                                     // [START_EXCLUDE]
                                     if (!task.isSuccessful()) {
 
+                                        hideProgressDialog();
                                         showerror("Authentication failed.");
                                     }
-
                                 }
-                            });
-                    // [END sign_in_with_email]
-                } else {
-                    loginWithServer();
-
-                }
-            }
-        });
-
-
-
+                });
 
     }
 

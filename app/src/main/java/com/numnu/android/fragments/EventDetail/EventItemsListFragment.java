@@ -9,10 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,20 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventItemsCategoryAdapter;
 import com.numnu.android.adapter.EventItemsListAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
-import com.numnu.android.network.response.DataItem;
-import com.numnu.android.network.response.EventItemsResponse;
 import com.numnu.android.network.response.EventTagBusiness;
-import com.numnu.android.network.response.EventTagsDataItem;
 import com.numnu.android.network.response.ItemsByTagResponse;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -83,6 +76,8 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
             eventId = bundle.getString("eventId");
             tagId = bundle.getString("tagId");
         }
+
+
     }
 
     @Override

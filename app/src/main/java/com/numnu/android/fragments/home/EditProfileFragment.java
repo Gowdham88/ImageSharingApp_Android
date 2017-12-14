@@ -4,10 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +18,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.CursorLoader;
@@ -39,7 +36,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -65,14 +61,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.BuildConfig;
 import com.numnu.android.R;
-import com.numnu.android.activity.HomeActivity;
-import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.TagsAutocompleteAdapter;
-import com.numnu.android.fragments.auth.LoginFragment;
-import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
-import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.Citylocation;
@@ -187,6 +178,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override
@@ -240,11 +232,11 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
 
-        musername=v.findViewById(R.id.et_cmpltsignup_username);
-        mEmail = v.findViewById(R.id.et_signup_email);
-        mName = v.findViewById(R.id.et_signup_name);
-        mCity = v.findViewById(R.id.et_signup_city);
-        mGender=v.findViewById(R.id.ed_gender);
+        musername = v.findViewById(R.id.et_cmpltsignup_username);
+        mEmail    = v.findViewById(R.id.et_signup_email);
+        mName     = v.findViewById(R.id.et_signup_name);
+        mCity     = v.findViewById(R.id.et_signup_city);
+        mGender   = v.findViewById(R.id.ed_gender);
         userDescription = v.findViewById(R.id.et_user_description);
 
 //        mRadioGroup = v.findViewById(R.id.radio_group);
