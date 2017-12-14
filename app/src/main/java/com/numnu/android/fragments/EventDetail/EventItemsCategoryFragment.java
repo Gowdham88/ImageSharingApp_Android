@@ -12,17 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventBusinessesAdapter;
 import com.numnu.android.adapter.EventItemsCategoryAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
-import com.numnu.android.network.response.DataItem;
-import com.numnu.android.network.response.EventBusinessesResponse;
 import com.numnu.android.network.response.EventItemsResponse;
 import com.numnu.android.network.response.EventTagsDataItem;
 import com.numnu.android.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -63,6 +59,8 @@ public class  EventItemsCategoryFragment extends Fragment {
         if (bundle != null) {
             eventId = bundle.getString("eventId");
         }
+
+
     }
 
     @Override

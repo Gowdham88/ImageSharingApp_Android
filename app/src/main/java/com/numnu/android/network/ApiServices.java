@@ -1,19 +1,17 @@
 package com.numnu.android.network;
 
 
-import com.numnu.android.fragments.detail.BusinessDetailFragment;
 import com.numnu.android.network.request.CompleteSignUpData;
 import com.numnu.android.network.response.CommonResponse;
 import com.numnu.android.network.response.EventBusinessesResponse;
 import com.numnu.android.network.response.EventDetailResponse;
 import com.numnu.android.network.response.EventItemsResponse;
+import com.numnu.android.network.response.EventPostsResponse;
 import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.network.response.ItemsByTagResponse;
 import com.numnu.android.network.response.LoginResponse;
 import com.numnu.android.network.response.SignupResponse;
 import com.numnu.android.network.response.TagsResponse;
-
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -36,13 +34,11 @@ public interface ApiServices {
     @POST("/users")
     Call<SignupResponse> completeSignUp(@Body CompleteSignUpData completeSignUpData);
 
-
     @GET("/users")
     Call<CommonResponse> checkUserName(@Query("checkusername") String s);
 
     @GET("/users/signin")
     Call<LoginResponse> login();
-
 
     @Multipart
     @POST("/users/{id}/images")
@@ -74,12 +70,17 @@ public interface ApiServices {
     @GET("/events/{id}/itemtags")
     Call<EventItemsResponse> getEventItems(@Path("id") String id,@Query("page") String page);
 
-
     @GET("/events/{eventId}/itemtags/{tagId}/items")
     Call<ItemsByTagResponse> getItemsByTagId(@Path("eventId") String eventId, @Path("tagId") String tagId);
 
     @GET("/events/{eventId}/itemtags/{tagId}/items")
     Call<ItemsByTagResponse> getItemsByTagId(@Path("eventId") String eventId,@Path("tagId") String tagId,@Query("page") String page);
+
+    @GET("/events/{id}/posts")
+    Call<EventPostsResponse> getEventPosts(@Path("id") String id);
+
+    @GET("/events/{id}/posts")
+    Call<EventPostsResponse> getEventPosts(@Path("id") String id,@Query("page") String page);
 
 //    @POST("/mobile/login")
 //    Call<Collection> login(@Query("email") String email, @Query("password") String serial, @Query("mac_address") String mac);

@@ -134,7 +134,7 @@ public class HomeActivity extends MyActivity {
     }
 
     private void updateToken(FirebaseUser user) {
-        user.getIdToken(true)
+        user.getIdToken(false)
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {

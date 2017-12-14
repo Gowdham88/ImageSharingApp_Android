@@ -2,7 +2,9 @@ package com.numnu.android.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,37 +16,48 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
-import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
-import com.numnu.android.fragments.search.EventsFragment;
-import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
+import com.numnu.android.network.response.DataItem;
+import com.numnu.android.network.response.PostdataItem;
 import com.squareup.picasso.Picasso;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by thulir on 10/10/17.
  */
 
-public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapter.ViewHolder> {
+public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<String> stringArrayList = new ArrayList<>();
+    List<PostdataItem> list = new ArrayList<>();
+    private StorageReference storageRef ;
+    private FirebaseStorage storage;
 
-    public EventReviewsAdapter(Context context, ArrayList<String> stringArrayList) {
+    public EventPostsAdapter(Context context, List<PostdataItem> stringArrayList) {
         this.context=context;
-        this.stringArrayList=stringArrayList;
+        this.list=stringArrayList;
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
     }
+    public  void addData(List<PostdataItem> stringArrayList){
+        list.addAll(stringArrayList);
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,12 +71,55 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        Picasso.with(context).load(R.drawable.pasta)
-                .placeholder(R.drawable.food_for_lunch_mom)
-                .fit()
-                .into(holder.imageViewIcon);
+
+        final PostdataItem postdataItem = list.get(position);
+        if(!postdataItem.getPostimages().isEmpty()&&postdataItem.getPostimages().get(0).getImageurl()!=null) {
+            storageRef.child(postdataItem.getPostimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_for_lunch_mom)
+                            .fit()
+                            .into(holder.imageViewIcon);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+        if(!postdataItem.getPostcreator().getUserimages().isEmpty()&&postdataItem.getPostcreator().getUserimages().get(0).getImageurl()!=null) {
+            storageRef.child(postdataItem.getPostcreator().getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_for_lunch_mom)
+                            .fit()
+                            .into(holder.imageViewIcon);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+        holder.eventName.setText(postdataItem.getEvent().getName());
+        holder.username.setText(postdataItem.getPostcreator().getUsername());
+        holder.name.setText(postdataItem.getPostcreator().getName());
+        holder.title.setText(postdataItem.getComment());
+        holder.cottageHouseText.setText(postdataItem.getBusiness().getBusinessname());
+        if(!postdataItem.getTaggeditems().isEmpty()) {
+            holder.barbequeText.setText(postdataItem.getTaggeditems().get(0).getName());
+        }
+
 //        holder.textViewName.setText(stringArrayList.get(position));
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +198,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
                 transaction.addToBackStack(null).commit();
             }
         });
-        holder.username.setOnClickListener(new View.OnClickListener() {
+        holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
@@ -151,7 +207,7 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
                 transaction.addToBackStack(null).commit();
             }
         });
-        holder.email.setOnClickListener(new View.OnClickListener() {
+        holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
@@ -171,28 +227,28 @@ public class EventReviewsAdapter extends RecyclerView.Adapter<EventReviewsAdapte
 
     @Override
     public int getItemCount() {
-        return stringArrayList.size();
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageViewIcon,barbqicon,cattgicon,eventicon;
         private  ImageView profileImage;
-        private TextView eventName,username,email;
+        private TextView eventName,username,email,name,title;
         private TextView cottageHouseText;
         private TextView barbequeText;
         ImageView dotsimg;
         public ViewHolder(View itemView) {
             super(itemView);
-//            this.textViewName =  itemView.findViewById(R.id.text_event_name);
-            //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
+            this.title =  itemView.findViewById(R.id.title);
+//            this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
 //            this.imageViewIcon = itemView.findViewById(R.id.review_image);
             this.imageViewIcon = itemView.findViewById(R.id.content_image);
             this.profileImage = itemView.findViewById(R.id.slice_profile_image);
             this.cottageHouseText = itemView.findViewById(R.id.cottage_house_txt);
             this.barbequeText = itemView.findViewById(R.id.barbq_txt);
             this.eventName = itemView.findViewById(R.id.barbados_txt);
-            this.username = itemView.findViewById(R.id.slice_toolbar_profile_name);
-            this.email = itemView.findViewById(R.id.user_name);
+            this.name = itemView.findViewById(R.id.slice_toolbar_profile_name);
+            this.username = itemView.findViewById(R.id.user_name);
             this.barbqicon = itemView.findViewById(R.id.barbq_icon);
             this.cattgicon = itemView.findViewById(R.id.cottage_house_icon);
             this.eventicon = itemView.findViewById(R.id.barbados_icon);

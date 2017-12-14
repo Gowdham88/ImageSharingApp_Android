@@ -67,6 +67,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     RecyclerView recyclerView;
     LinearLayout busCntnRelLay;
     String name="name";
+    private String  eventId;
 
     public static LocationDetailFragment newInstance() {
         return new LocationDetailFragment();
@@ -257,7 +258,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventPostsFragment(), "Posts");
+        adapter.addFragment(new EventPostsFragment().newInstance(eventId), "Posts");
         adapter.addFragment(new EventItemsCategoryFragment(), "Items");
         viewPager.setAdapter(adapter);
     }

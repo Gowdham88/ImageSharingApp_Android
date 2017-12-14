@@ -63,6 +63,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     private Boolean isExpanded = false;
+    private String eventId;
 
 
     public static SearchBusinessDetailFragment newInstance() {
@@ -233,7 +234,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventItemsCategoryFragment(), "Items");
-        adapter.addFragment(new EventPostsFragment(), "Posts");
+        adapter.addFragment(new EventPostsFragment().newInstance(eventId), "Posts");
         adapter.addFragment(new EventsFragment(), "Events");
         viewPager.setAdapter(adapter);
     }

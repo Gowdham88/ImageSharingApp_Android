@@ -2,8 +2,10 @@ package com.numnu.android.fragments.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,11 +18,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
+import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.auth.SignupFragment;
+import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -34,6 +45,10 @@ public class SettingsFragment extends Fragment {
 
     private Context context;
     String name;
+    // Create a storage reference from our app
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
+    private ImageView profileImage;
 
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
@@ -100,7 +115,8 @@ public class SettingsFragment extends Fragment {
             TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
             toolbarTitle.setText("Settings");
 
-            view.findViewById(R.id.imageView_profile_edit).setOnClickListener(new View.OnClickListener() {
+            profileImage=view.findViewById(R.id.imageView_profile_edit);
+            profileImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     editProfile();
@@ -133,12 +149,24 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        updateUI();
+
             return view;
 
     }
 
     private void logout() {
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null) {
+
+            currentUser.unlink(currentUser.getProviderId());
+            LoginManager.getInstance().logOut();
+            mAuth.signOut();
+
+        }
+        PreferencesHelper.signOut(getApplicationContext());
         PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,false);
         FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, SignupFragment.newInstance());
@@ -149,6 +177,36 @@ public class SettingsFragment extends Fragment {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, EditProfileFragment.newInstance());
         transaction.addToBackStack(null).commit();
+    }
+
+    private void updateUI() {
+
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
+
+        String profilepic=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
+
+
+        if(!profilepic.isEmpty()&&profilepic!=null) {
+            storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_715539_1920)
+                            .fit()
+                            .into(profileImage);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
     }
 
 //    private void showPrivacyPolicy() {

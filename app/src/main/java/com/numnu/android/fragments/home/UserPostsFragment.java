@@ -1,7 +1,9 @@
 package com.numnu.android.fragments.home;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,11 +17,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
+import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.fragments.auth.SignupFragment;
+import com.numnu.android.network.response.TagsItem;
+import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -33,6 +43,13 @@ public class UserPostsFragment extends Fragment {
     Context context;
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
+    private TextView toolbarTitle;
+    // Create a storage reference from our app
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
+    private TextView musername,mCity,userDescription;
+    ImageView userImage;
+    private ArrayList<TagsItem> mylist=new ArrayList<>();
 
     public static UserPostsFragment newInstance() {
         UserPostsFragment fragment = new UserPostsFragment();
@@ -100,11 +117,13 @@ public class UserPostsFragment extends Fragment {
         });
 
 
-        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
+         toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("@Marc chiriqui");
+        musername=view.findViewById(R.id.user_name);
+        userImage = view.findViewById(R.id.profile_image);
+        mCity = view.findViewById(R.id.txt_city);
+        userDescription = view.findViewById(R.id.user_description);
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
-//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         mUserPostsRecycler = view.findViewById(R.id.user_posts_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -127,10 +146,74 @@ public class UserPostsFragment extends Fragment {
         });
 
 
-
+        updateUI();
         return view;
     }
 
+    private void updateUI() {
+
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
+
+        String name=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME);
+        String username= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME);
+        String email=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL);
+        String city= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY);
+        String dob=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB);
+        String gender=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER);
+        String userinfo=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION);
+
+        String profilepic=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
+
+        musername.setText(username);
+        mCity.setText(city);
+        userDescription.setText(userinfo);
+
+        if(!profilepic.isEmpty()&&profilepic!=null) {
+            storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_715539_1920)
+                            .fit()
+                            .into(userImage);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+        //prepare Tag List
+        String tags=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS);
+        String tagIds=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS);
+
+        if(!tags.isEmpty() && tags!=null) {
+
+            String[] tag = tags.split(",");
+            String[] tagId = tagIds.split(",");
+
+
+            for (int i = 0; i < tag.length; i++) {
+
+                TagsItem tagsuggestion = new TagsItem();
+                tagsuggestion.setText(tag[i]);
+                tagsuggestion.setId(Integer.valueOf(tagId[i]));
+
+                mylist.add(tagsuggestion);
+            }
+
+            adapter = new HorizontalContentAdapter(context, mylist);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

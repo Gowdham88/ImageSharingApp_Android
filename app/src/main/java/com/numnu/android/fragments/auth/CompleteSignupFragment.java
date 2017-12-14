@@ -163,6 +163,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override
@@ -231,7 +232,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         }
 
         String username = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME);
-        if(!email.isEmpty()){
+        if(!username.isEmpty()){
             musername.setText(username);
         }
 
