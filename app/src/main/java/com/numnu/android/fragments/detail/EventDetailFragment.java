@@ -20,10 +20,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -57,6 +60,9 @@ import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -94,7 +100,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     StorageReference imageref;
     private Uri imgPath;
     public ProgressDialog mProgressDialog;
-
+     int Max=4;
 
     public static EventDetailFragment newInstance() {
         return new EventDetailFragment();
@@ -138,17 +144,21 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
+
         eventName = view.findViewById(R.id.event_name);
         city = view.findViewById(R.id.txt_city);
         eventStartDate = view.findViewById(R.id.txt_event_start_date);
-        eventEndDate = view.findViewById(R.id.txt_event_end_date);
+//        eventEndDate = view.findViewById(R.id.txt_event_end_date);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
 
         eventImageView = view.findViewById(R.id.current_event_image);
         eventImageView.setOnClickListener(this);
         viewEventMap.setOnClickListener(this);
-
         morebutton = view.findViewById(R.id.more_button);
+        morebutton.setVisibility(View.GONE);
+        if(eventDescription.getLineCount()>= Max){
+            morebutton.setVisibility(View.VISIBLE);
+        }
         morebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +179,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
             }
         });
+
 
 
 
@@ -200,6 +211,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         }
         return view;
     }
+
+
 
     private void getEventDetails(String id)
     {
@@ -259,9 +272,65 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         eventName.setText(eventDetailResponse.getName());
         eventDescription.setText(eventDetailResponse.getDescription());
+        if(eventDescription.getLineCount()>= Max){
+            morebutton.setVisibility(View.VISIBLE);
+        }
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        eventStartDate.setText(eventDetailResponse.getStartsat());
-        eventEndDate.setText(eventDetailResponse.getEndsat());
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
+
+
+        String StrtDate=eventDetailResponse.getStartsat();
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        java.util.Date date = null;
+        try
+        {
+            date = form.parse(StrtDate);
+        }
+        catch (ParseException e)
+        {
+
+            e.printStackTrace();
+        }
+        SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd,hh:mm a");
+        String StartDateStr = postFormater.format(date);
+//        eventStartDate.setText(StartDateStr);
+
+        String EndDate=eventDetailResponse.getEndsat();
+        SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        java.util.Date endate = null;
+        try
+        {
+            endate = endformat.parse(EndDate);
+        }
+        catch (ParseException e)
+        {
+
+            e.printStackTrace();
+        }
+        SimpleDateFormat Formater = new SimpleDateFormat("MMM dd,hh:mm a");
+        String endDateStr = Formater.format(endate);
+//        eventStartDate.setText(endDateStr);
+        String Serverdate=StartDateStr+" - "+endDateStr;
+        eventStartDate.setText(Serverdate);
+
         city.setText(eventDetailResponse.getLocation().getName());
 
         if(!eventDetailResponse.getEventlinks().isEmpty()) {
@@ -285,6 +354,9 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     }
 
+    public String getMonth(int month) {
+        return new DateFormatSymbols().getMonths()[month-1];
+    }
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
