@@ -86,7 +86,7 @@ public class SignupFragment extends Fragment {
             mProfileIntent = bundle.getString("ProfileIntent");
             mEventBookmarkIntent = bundle.getString("EventBookmarkIntent");
         }
-        Toast.makeText(getApplicationContext(),"sdss",Toast.LENGTH_SHORT).show();
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null) {
@@ -255,21 +255,31 @@ public class SignupFragment extends Fragment {
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
 
-                                                 // Sign in success, update UI with the signed-in user's information
-                                                Log.d(TAG, "signUpWithCredential:success");
-                                                final FirebaseUser user = mAuth.getCurrentUser();
-                                                String bookmarkBundle = "bookmark";
-                                                String profileBundle = "profile";
-                                                String eventBookmarkBundle = "eventbookmark";
-                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
-                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME, user.getDisplayName());
-                                                PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, String.valueOf(user.getPhotoUrl()));
+                                                FirebaseUser user = mAuth.getCurrentUser();
+                                                user.getIdToken(true)
+                                                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                                            public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                                                if (task.isSuccessful()) {
 
-                                                hideProgressDialog();
-                                                if(!shown) {
-                                                    completeSignup();
-                                                }
-                                                shown =true;
+                                                                    // Sign in success, update UI with the signed-in user's information
+                                                                    Log.d(TAG, "signUpWithCredential:success");
+                                                                    final FirebaseUser user = mAuth.getCurrentUser();
+                                                                    String bookmarkBundle = "bookmark";
+                                                                    String profileBundle = "profile";
+                                                                    String eventBookmarkBundle = "eventbookmark";
+                                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, user.getEmail());
+                                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME, user.getDisplayName());
+                                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, String.valueOf(user.getPhotoUrl()));
+
+                                                                    hideProgressDialog();
+                                                                    if (!shown) {
+                                                                        completeSignup();
+                                                                    }
+                                                                    shown = true;
+                                                                }
+
+                                                            }
+                                                        });
 
 
                                               } else {
@@ -306,26 +316,33 @@ public class SignupFragment extends Fragment {
 
         showProgressDialog();
 
-
                     // [START create_user_with_email]
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "createUserWithEmail:success");
-                                        final FirebaseUser user = mAuth.getCurrentUser();
-                                        mPasswordField.setText("");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        user.getIdToken(true)
+                                                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                                        if (task.isSuccessful()) {
+                                                            // Sign in success, update UI with the signed-in user's information
+                                                            Log.d(TAG, "createUserWithEmail:success");
+                                                            final FirebaseUser user = mAuth.getCurrentUser();
+                                                            mPasswordField.setText("");
 
-                                        String bookmarkBundle = "bookmark";
-                                        String profileBundle = "profile";
-                                        String eventBookmarkBundle = "eventbookmark";
+                                                            String bookmarkBundle = "bookmark";
+                                                            String profileBundle = "profile";
+                                                            String eventBookmarkBundle = "eventbookmark";
 
-                                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
-                                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
-                                        hideProgressDialog();
-                                        completeSignup();
+                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
+                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
+                                                            hideProgressDialog();
+                                                            completeSignup();
+                                                        }
+                                                    }
+                                                });
 
 
                                     } else {
@@ -334,7 +351,6 @@ public class SignupFragment extends Fragment {
                                         showerror("Authentication failed.");
                                         hideProgressDialog();
                                     }
-
                                 }
 
                             });

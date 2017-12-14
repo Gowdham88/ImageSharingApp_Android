@@ -113,8 +113,8 @@ public class LoginFragment extends Fragment {
 
             currentUser.unlink(currentUser.getProviderId());
             mAuth.signOut();
-            LoginManager.getInstance().logOut();
-            Toast.makeText(getApplicationContext(),"ds",Toast.LENGTH_SHORT).show();
+
+          
         }
 
     }
@@ -272,7 +272,7 @@ public class LoginFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),"dddd",Toast.LENGTH_SHORT).show();
+
                             String idToken = task.getResult().getToken();
                             Log.e("Token:", idToken);
                             Constants.FIREBASE_TOKEN = idToken;
@@ -411,7 +411,7 @@ public class LoginFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(getApplicationContext(),"dsdsd",Toast.LENGTH_SHORT).show();
+
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d(TAG, "signInWithEmail:success");
                                         loginWithServer();
