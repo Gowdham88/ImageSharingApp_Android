@@ -93,6 +93,8 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         storageRef = storage.getReference();
+
+
     }
 
     @Override

@@ -1,10 +1,7 @@
 package com.numnu.android.fragments.EventDetail;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,16 +18,11 @@ import com.numnu.android.network.response.DataItem;
 import com.numnu.android.network.response.EventBusinessesResponse;
 import com.numnu.android.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.SNIServerName;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 
 /**
  * Created by thulir on 9/10/17.
@@ -65,6 +57,8 @@ public class EventBusinessFragment extends Fragment {
         if (bundle != null) {
             eventId = bundle.getString("eventId");
         }
+
+
 
     }
 

@@ -38,11 +38,16 @@ import com.numnu.android.utils.Utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class OnboardingActivity extends MyActivity implements EasyPermissions.PermissionCallbacks {
     PackageInfo info;
@@ -60,7 +65,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
         setContentView(R.layout.activity_onboarding);
         textView=(TextView)findViewById(R.id.textView_info);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth  = FirebaseAuth.getInstance();
 
 
 //        try {
@@ -85,6 +90,8 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
     @Override
     public void onStart() {
         super.onStart();
+
+
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null) {
@@ -118,7 +125,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                         if (task.isSuccessful()) {
                             String idToken = task.getResult().getToken();
-                            Log.d("Token:", idToken);
+                            Log.e("Token:", idToken);
                             Constants.FIREBASE_TOKEN = idToken;
                             PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
                         }
