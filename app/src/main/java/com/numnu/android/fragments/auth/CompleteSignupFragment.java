@@ -231,7 +231,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         }
 
         String username = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_USER_NAME);
-        if(!email.isEmpty()){
+        if(!username.isEmpty()){
             musername.setText(username);
         }
 
