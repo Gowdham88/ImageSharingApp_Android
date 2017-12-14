@@ -93,6 +93,8 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         storageRef = storage.getReference();
+
+
     }
 
     @Override
@@ -188,22 +190,23 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
     private void updateUI() {
 
-
-        storageRef.child(itemDetailsResponse.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                Picasso.with(context).load(uri)
-                        .placeholder(R.drawable.food_715539_1920)
-                        .fit()
-                        .into(eventImageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        if(!itemDetailsResponse.getItemimages().isEmpty()&&itemDetailsResponse.getItemimages().get(0).getImageurl()!=null) {
+            storageRef.child(itemDetailsResponse.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_715539_1920)
+                            .fit()
+                            .into(eventImageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
 
         eventName.setText(itemDetailsResponse.getName());
         eventDescription.setText(itemDetailsResponse.getDescription());

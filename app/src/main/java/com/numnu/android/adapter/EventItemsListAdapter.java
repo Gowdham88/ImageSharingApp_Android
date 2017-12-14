@@ -70,21 +70,23 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
         holder.textViewName.setText(list.get(position).getBusinessname());
 
-        storageRef.child(dataItem.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                Picasso.with(context).load(uri)
-                        .placeholder(R.drawable.food_715539_1920)
-                        .fit()
-                        .into(holder.imageViewIcon);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        if(!dataItem.getItemimages().isEmpty()&&dataItem.getItemimages().get(0).getImageurl()!=null) {
+            storageRef.child(dataItem.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_715539_1920)
+                            .fit()
+                            .into(holder.imageViewIcon);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
 
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override

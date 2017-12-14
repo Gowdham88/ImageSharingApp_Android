@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -55,7 +54,6 @@ import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.EventDetailResponse;
 import com.numnu.android.network.response.EventlinksItem;
-import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -120,6 +118,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
          storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
          storageRef = storage.getReference();
+
 
 
     }
@@ -252,22 +251,24 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     private void updateUI( ) {
 
-        storageRef.child(eventDetailResponse.getEventimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                imgPath = uri;
-                Picasso.with(context).load(uri)
-                        .placeholder(R.drawable.food_715539_1920)
-                        .fit()
-                        .into(eventImageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        if(!eventDetailResponse.getEventimages().isEmpty()&&eventDetailResponse.getEventimages().get(0).getImageurl()!=null) {
+            storageRef.child(eventDetailResponse.getEventimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    imgPath = uri;
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_715539_1920)
+                            .fit()
+                            .into(eventImageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
 
         eventName.setText(eventDetailResponse.getName());
         eventDescription.setText(eventDetailResponse.getDescription());
@@ -451,7 +452,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(EventBusinessFragment.newInstance(eventId), "Businesses");
         adapter.addFragment(EventItemsCategoryFragment.newInstance(eventId), "Items");
-        adapter.addFragment(new EventPostsFragment(), "Posts");
+        adapter.addFragment(new EventPostsFragment().newInstance(eventId), "Posts");
         viewPager.setAdapter(adapter);
         // to keep all three tabs in memory. Remove below line if app lags and then optimize tab fragments.
         viewPager.setOffscreenPageLimit(3);

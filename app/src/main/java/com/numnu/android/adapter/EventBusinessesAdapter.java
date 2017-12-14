@@ -69,23 +69,24 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
 
         final DataItem eventBusinessesResponse = list.get(position);
 
-        holder.textViewName.setText(list.get(position).getBusinessname());
-
-        storageRef.child(eventBusinessesResponse.getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                Picasso.with(context).load(uri)
-                        .placeholder(R.drawable.food_715539_1920)
-                        .fit()
-                        .into(holder.imageViewIcon);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
+        holder.textViewName.setText(list.get(position).getBusinessusername());
+        if(!eventBusinessesResponse.getUserimages().isEmpty()&&eventBusinessesResponse.getUserimages().get(0).getImageurl()!=null) {
+            storageRef.child(eventBusinessesResponse.getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_715539_1920)
+                            .fit()
+                            .into(holder.imageViewIcon);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
 
 
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
