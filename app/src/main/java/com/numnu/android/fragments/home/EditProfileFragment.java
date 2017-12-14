@@ -357,21 +357,29 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         userDescription.setText(userinfo);
 
         if(!profilepic.isEmpty()&&profilepic!=null) {
-            storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    // Got the download URL for 'users/me/profile.png'
-                    Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
-                            .fit()
-                            .into(viewImage);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });
+
+            if (profilepic.startsWith("https")) {
+                Picasso.with(context).load(profilepic)
+                        .placeholder(R.drawable.food_715539_1920)
+                        .fit()
+                        .into(viewImage);
+            } else {
+                storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        Picasso.with(context).load(uri)
+                                .placeholder(R.drawable.food_715539_1920)
+                                .fit()
+                                .into(viewImage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
         }
 
         //prepare Tag List

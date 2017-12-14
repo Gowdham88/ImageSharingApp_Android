@@ -67,6 +67,7 @@
                 android:text="Marc Chiriqui," />
 
             <TextView
+                android:id="@+id/user_name"
                 fontPath="fonts/Avenir_next.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"

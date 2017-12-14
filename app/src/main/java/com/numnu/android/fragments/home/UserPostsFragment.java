@@ -118,7 +118,7 @@ public class UserPostsFragment extends Fragment {
 
 
          toolbarTitle=view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("@Marc chiriqui");
+
         musername=view.findViewById(R.id.user_name);
         userImage = view.findViewById(R.id.profile_image);
         mCity = view.findViewById(R.id.txt_city);
@@ -157,36 +157,41 @@ public class UserPostsFragment extends Fragment {
         // Create a storage reference from our app
         storageRef = storage.getReference();
 
-        String name=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME);
         String username= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME);
-        String email=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL);
         String city= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY);
-        String dob=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB);
-        String gender=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER);
         String userinfo=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION);
 
         String profilepic=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
 
+        toolbarTitle.setText("@"+username);
         musername.setText(username);
         mCity.setText(city);
         userDescription.setText(userinfo);
 
         if(!profilepic.isEmpty()&&profilepic!=null) {
-            storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    // Got the download URL for 'users/me/profile.png'
-                    Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
-                            .fit()
-                            .into(userImage);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });
+
+            if(profilepic.startsWith("https")){
+                Picasso.with(context).load(profilepic)
+                        .placeholder(R.drawable.food_715539_1920)
+                        .fit()
+                        .into(userImage);
+            }else {
+                storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        Picasso.with(context).load(uri)
+                                .placeholder(R.drawable.food_715539_1920)
+                                .fit()
+                                .into(userImage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
         }
 
         //prepare Tag List
