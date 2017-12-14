@@ -69,7 +69,7 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
 
         final DataItem eventBusinessesResponse = list.get(position);
 
-        holder.textViewName.setText(list.get(position).getBusinessusername());
+        holder.textViewName.setText(list.get(position).getBusinessname());
 
         storageRef.child(eventBusinessesResponse.getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

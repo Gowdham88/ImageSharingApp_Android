@@ -75,7 +75,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
-
+    int Max=4;
 
     public static ItemDetailFragment newInstance() {
         return new ItemDetailFragment();
@@ -149,26 +149,8 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         toolbarBackIcon.setOnClickListener(this);
         toolbar.setOnClickListener(this);
         morebutton = view.findViewById(R.id.more_button);
-        morebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        morebutton.setVisibility(View.GONE);
 
-                if (isExpanded) {
-
-                    isExpanded = false;
-                    eventDescription.setMaxLines(4);
-                    morebutton.setText("more");
-
-                } else {
-
-                    isExpanded = true;
-                    eventDescription.setMaxLines(1000);
-                    morebutton.setText("less");
-
-                }
-
-            }
-        });
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,6 +207,29 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
         eventName.setText(itemDetailsResponse.getName());
         eventDescription.setText(itemDetailsResponse.getDescription());
+        if(eventDescription.getLineCount()>= Max){
+            morebutton.setVisibility(View.VISIBLE);
+        }
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
 
         if(!itemDetailsResponse.getItemlinks().isEmpty()) {
             if(itemDetailsResponse.getItemlinks().size()>0){

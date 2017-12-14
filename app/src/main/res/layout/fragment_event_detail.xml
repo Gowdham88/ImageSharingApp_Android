@@ -124,29 +124,29 @@
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/font_smaller" />
 
-                <TextView
-                    android:id="@+id/txt_event_to"
-                    style="@style/FontAvenirMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text=" - "
-                    android:textColor="@color/time_color"
-                    android:textSize="@dimen/font_smaller" />
+                <!--<TextView-->
+                    <!--android:id="@+id/txt_event_to"-->
+                    <!--style="@style/FontAvenirMedium"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text=" - "-->
+                    <!--android:textColor="@color/time_color"-->
+                    <!--android:textSize="@dimen/font_smaller" />-->
 
-                <TextView
-                    android:id="@+id/txt_event_end_date"
-                    style="@style/FontAvenirMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/spacing_tiny"
-                    android:gravity="center"
-                    android:padding="1dp"
-                    android:text="Aug 30, 9:30 pm"
-                    android:textColor="@color/time_color"
-                    android:textSize="@dimen/font_smaller" />
+                <!--<TextView-->
+                    <!--android:id="@+id/txt_event_end_date"-->
+                    <!--style="@style/FontAvenirMedium"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawablePadding="@dimen/spacing_tiny"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="1dp"-->
+                    <!--android:text="Aug 30, 9:30 pm"-->
+                    <!--android:textColor="@color/time_color"-->
+                    <!--android:textSize="@dimen/font_smaller" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -240,7 +240,7 @@
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_marginTop="@dimen/spacing_tiny"
-                android:text="@string/event_description"
+                android:text=""
                 android:textColor="@color/descri_color"
                 android:textSize="13dp" />
 
