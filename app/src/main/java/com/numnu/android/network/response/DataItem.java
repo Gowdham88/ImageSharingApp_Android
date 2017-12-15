@@ -7,7 +7,7 @@ public class DataItem{
 	private boolean isemailverified;
 	private int gender;
 	private String businessusername;
-	private List<UserimagesItem> userimages;
+	private List<UserimagesItem> businessimages;
 	private String description;
 	private List<TagsItem> tags;
 	private String businessdescription;
@@ -51,11 +51,11 @@ public class DataItem{
 	}
 
 	public void setUserimages(List<UserimagesItem> userimages){
-		this.userimages = userimages;
+		this.businessimages = userimages;
 	}
 
 	public List<UserimagesItem> getUserimages(){
-		return userimages;
+		return businessimages;
 	}
 
 	public void setDescription(String description){
