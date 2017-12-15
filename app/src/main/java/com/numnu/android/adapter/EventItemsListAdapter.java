@@ -76,7 +76,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
+                            .placeholder(R.drawable.background)
                             .fit()
                             .into(holder.imageViewIcon);
                 }

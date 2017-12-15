@@ -258,7 +258,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     // Got the download URL for 'users/me/profile.png'
                     imgPath = uri;
                     Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
+                            .placeholder(R.drawable.background)
                             .fit()
                             .into(eventImageView);
                 }

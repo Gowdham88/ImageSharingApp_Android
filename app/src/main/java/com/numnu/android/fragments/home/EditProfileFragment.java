@@ -469,7 +469,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
             valid = false;
         }
         else{
-            Toast.makeText(context, "Complete Signup Successfully", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Complete Signup Successfully", Toast.LENGTH_SHORT).show();
 
         }
 //            musername.setError("User name cannot be empty");
