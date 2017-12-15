@@ -28,9 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by thulir on 10/10/17.
- */
+
 
 public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinessesAdapter.ViewHolder> {
 
@@ -69,14 +67,14 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
 
         final DataItem eventBusinessesResponse = list.get(position);
 
-        holder.textViewName.setText(list.get(position).getBusinessusername());
+        holder.textViewName.setText(list.get(position).getBusinessname());
         if(!eventBusinessesResponse.getUserimages().isEmpty()&&eventBusinessesResponse.getUserimages().get(0).getImageurl()!=null) {
             storageRef.child(eventBusinessesResponse.getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
+                            .placeholder(R.drawable.background)
                             .fit()
                             .into(holder.imageViewIcon);
                 }

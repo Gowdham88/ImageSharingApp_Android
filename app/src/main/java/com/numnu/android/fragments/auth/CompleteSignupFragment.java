@@ -98,9 +98,7 @@ import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.numnu.android.utils.Utils.hideKeyboard;
 
-/**
- * Created by lenovo on 11/18/2017.
- */
+
 
 public class CompleteSignupFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
 
