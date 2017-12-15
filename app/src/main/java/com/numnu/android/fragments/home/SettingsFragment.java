@@ -115,8 +115,8 @@ public class SettingsFragment extends Fragment {
             TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
             toolbarTitle.setText("Settings");
 
-            profileImage=view.findViewById(R.id.imageView_profile_edit);
-            profileImage.setOnClickListener(new View.OnClickListener() {
+            profileImage=view.findViewById(R.id.profile_image);
+            view.findViewById(R.id.imageView_profile_edit).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     editProfile();
@@ -190,21 +190,29 @@ public class SettingsFragment extends Fragment {
 
 
         if(!profilepic.isEmpty()&&profilepic!=null) {
-            storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    // Got the download URL for 'users/me/profile.png'
-                    Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
-                            .fit()
-                            .into(profileImage);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });
+
+            if (profilepic.startsWith("https")) {
+                Picasso.with(context).load(profilepic)
+                        .placeholder(R.drawable.food_715539_1920)
+                        .fit()
+                        .into(profileImage);
+            } else {
+                storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        Picasso.with(context).load(uri)
+                                .placeholder(R.drawable.food_715539_1920)
+                                .fit()
+                                .into(profileImage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
         }
 
     }

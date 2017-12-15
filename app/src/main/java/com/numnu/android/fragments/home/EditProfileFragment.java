@@ -82,6 +82,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -348,30 +349,51 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
         String profilepic=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
 
+        SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        Date date = null;
+        try
+        {
+            date = endformat.parse(dob);
+        }
+        catch (ParseException e)
+        {
+
+            e.printStackTrace();
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dobString = dateFormat.format(date);
         musername.setText(username);
         mEmail.setText(email);
         mName.setText(name);
         mCity.setText(city);
         mGender.setText(gender);
-        mDob.setText(dob);
+        mDob.setText(dobString);
         userDescription.setText(userinfo);
 
         if(!profilepic.isEmpty()&&profilepic!=null) {
-            storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    // Got the download URL for 'users/me/profile.png'
-                    Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
-                            .fit()
-                            .into(viewImage);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });
+
+            if (profilepic.startsWith("https")) {
+                Picasso.with(context).load(profilepic)
+                        .placeholder(R.drawable.food_715539_1920)
+                        .fit()
+                        .into(viewImage);
+            } else {
+                storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        Picasso.with(context).load(uri)
+                                .placeholder(R.drawable.food_715539_1920)
+                                .fit()
+                                .into(viewImage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
         }
 
         //prepare Tag List

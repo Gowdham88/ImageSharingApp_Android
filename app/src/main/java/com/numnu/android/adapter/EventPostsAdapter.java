@@ -124,9 +124,13 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("postId", String.valueOf(postdataItem.getId()));
+                SliceFragment sliceFragment = SliceFragment.newInstance();
+                sliceFragment.setArguments(bundle);
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SliceFragment.newInstance());
+                transaction.replace(R.id.frame_layout,sliceFragment);
                 transaction.addToBackStack(null).commit();
             }
         });

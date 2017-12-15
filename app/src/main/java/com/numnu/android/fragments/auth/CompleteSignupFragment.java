@@ -535,8 +535,8 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         String tagsString = "";
         String tagsIds = "";
         for (Tag tag:tags){
-            tagsString = tag.getText()+",";
-            tagsIds = tag.getId()+",";
+            tagsString =tagsString+ tag.getText()+",";
+            tagsIds =tagsIds+ tag.getId()+",";
         }
 
         PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS, tagsString);
@@ -560,7 +560,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, username);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL, email);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth());
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, userdescription);
 
@@ -638,11 +638,11 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     CommonResponse commonResponse = response.body();
                     if (responsecode == 201) {
 
-                        hideProgressDialog();
-                        gotoUserProfile();
-
                         PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, commonResponse.getImageurl());
                         Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
+
+                        hideProgressDialog();
+                        gotoUserProfile();
                     }
                 }
 
@@ -664,7 +664,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
         transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
-        transaction.addToBackStack(null).commit();
+        transaction.addToBackStack(null).commitAllowingStateLoss();
     }
 
     private void setupTagAutocomplete() {

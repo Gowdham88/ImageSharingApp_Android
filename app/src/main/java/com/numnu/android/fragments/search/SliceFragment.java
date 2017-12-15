@@ -2,7 +2,9 @@ package com.numnu.android.fragments.search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
@@ -22,7 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
+import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
@@ -30,8 +37,18 @@ import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.EventPostsResponse;
+import com.numnu.android.network.response.PostdataItem;
+import com.numnu.android.network.response.TagsItem;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
+import com.squareup.picasso.Picasso;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SliceFragment extends Fragment {
@@ -39,6 +56,14 @@ public class SliceFragment extends Fragment {
     Context context;
     private PopupWindow pw;
     private ImageView barbqicon,cattgicon,eventicon;
+    private String postId;
+    private ImageView userImageIcon,contentImage;
+    private TextView nameText,cottageHouseText,barbequeText,eventText,userNameTxt,title;
+    private PostdataItem postsResponse;
+    // Create a storage reference from our app
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
+    ;
 
     public static SliceFragment newInstance() {
         SliceFragment fragment = new SliceFragment();
@@ -54,7 +79,10 @@ public class SliceFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            postId = bundle.getString("postId");
+        }
 
 
     }
@@ -74,12 +102,14 @@ public class SliceFragment extends Fragment {
         eventicon = view.findViewById(R.id.barbados_icon);
         ImageView moreIcon = view.findViewById(R.id.event_dots);
         RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-        ImageView userImageIcon = view.findViewById(R.id.slice_profile_image);
-        ImageView contentImage = view.findViewById(R.id.content_image);
-        TextView userNameText = view.findViewById(R.id.slice_toolbar_profile_name);
-        TextView cottageHouseText = view.findViewById(R.id.cottage_house_txt);
-        TextView barbequeText = view.findViewById(R.id.barbq_txt);
-        TextView eventText = view.findViewById(R.id.barbados_txt);
+         userImageIcon = view.findViewById(R.id.slice_profile_image);
+         contentImage = view.findViewById(R.id.content_image);
+         nameText = view.findViewById(R.id.slice_toolbar_profile_name);
+        userNameTxt = view.findViewById(R.id.user_name);
+         cottageHouseText = view.findViewById(R.id.cottage_house_txt);
+         barbequeText = view.findViewById(R.id.barbq_txt);
+         eventText = view.findViewById(R.id.barbados_txt);
+        title=view.findViewById(R.id.title);
         ImageView toolimg = view.findViewById(R.id.toolbar_image);
         toolimg.setVisibility(View.GONE);
         contentImage.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +139,7 @@ public class SliceFragment extends Fragment {
             }
         });
 
-        userNameText.setOnClickListener(new View.OnClickListener() {
+        nameText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -183,8 +213,94 @@ public class SliceFragment extends Fragment {
             }
         });
 
+        if(Utils.isNetworkAvailable(context)) {
+            getData(postId);
+        }else {
+            showAlert();
+        }
         return view;
     }
+
+    private void showAlert() {
+    }
+
+    private void getData(String id)
+    {
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<PostdataItem> call=apiServices.getPostById(id);
+        call.enqueue(new Callback<PostdataItem>() {
+            @Override
+            public void onResponse(Call<PostdataItem> call, Response<PostdataItem> response) {
+                int responsecode = response.code();
+                if(responsecode==200) {
+                    postsResponse = response.body();
+                    updateUI();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostdataItem> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void updateUI() {
+
+            storage = FirebaseStorage.getInstance();
+            // Create a storage reference from our app
+            storageRef = storage.getReference();
+
+
+            if(!postsResponse.getPostimages().isEmpty()&&postsResponse.getPostimages().get(0).getImageurl()!=null) {
+                storageRef.child(postsResponse.getPostimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        Picasso.with(context).load(uri)
+                                .placeholder(R.drawable.food_715539_1920)
+                                .fit()
+                                .into(contentImage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+
+
+        if(!postsResponse.getPostcreator().getUserimages().isEmpty()&&postsResponse.getPostcreator().getUserimages().get(0).getImageurl()!=null) {
+            storageRef.child(postsResponse.getPostcreator().getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_for_lunch_mom)
+                            .fit()
+                            .into(userImageIcon);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+        eventText.setText(postsResponse.getEvent().getName());
+        userNameTxt.setText(postsResponse.getPostcreator().getUsername());
+        nameText.setText(postsResponse.getPostcreator().getName());
+        title.setText(postsResponse.getComment());
+        cottageHouseText.setText(postsResponse.getBusiness().getBusinessname());
+        if(!postsResponse.getTaggeditems().isEmpty()) {
+           barbequeText.setText(postsResponse.getTaggeditems().get(0).getName());
+        }
+        
+    }
+
 
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);

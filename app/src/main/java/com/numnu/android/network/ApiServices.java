@@ -10,6 +10,7 @@ import com.numnu.android.network.response.EventPostsResponse;
 import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.network.response.ItemsByTagResponse;
 import com.numnu.android.network.response.LoginResponse;
+import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.network.response.SignupResponse;
 import com.numnu.android.network.response.TagsResponse;
 
@@ -81,6 +82,9 @@ public interface ApiServices {
 
     @GET("/events/{id}/posts")
     Call<EventPostsResponse> getEventPosts(@Path("id") String id,@Query("page") String page);
+
+    @GET("/posts/{id}")
+    Call<PostdataItem> getPostById(@Path("id") String id);
 
 //    @POST("/mobile/login")
 //    Call<Collection> login(@Query("email") String email, @Query("password") String serial, @Query("mac_address") String mac);
