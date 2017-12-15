@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -105,10 +107,11 @@ public class UserPostsFragment extends Fragment {
 //                getActivity().onBackPressed();
 //            }
 //        });
-        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.slice_toolbar);
-        ImageView toolBackImage = view.findViewById(R.id.toolbar_back);
+//        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.slice_toolbar);
+        LinearLayout linlay=(LinearLayout)view.findViewById(R.id.lin_lay);
+        RelativeLayout toolBackImage = view.findViewById(R.id.toolbar_back);
         toolBackImage.setVisibility(View.GONE);
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        linlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -134,7 +137,8 @@ public class UserPostsFragment extends Fragment {
 
         setupRecyclerView();
 
-        ImageView toolbarIcon = view.findViewById(R.id.slice_toolbar_icon);
+        ImageView toolbarIcon = view.findViewById(R.id.setting_img);
+        toolbarIcon.setVisibility(View.VISIBLE);
 
         toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +176,7 @@ public class UserPostsFragment extends Fragment {
 
             if(profilepic.startsWith("https")){
                 Picasso.with(context).load(profilepic)
-                        .placeholder(R.drawable.food_715539_1920)
+                        .placeholder(R.drawable.background)
                         .fit()
                         .into(userImage);
             }else {
@@ -181,8 +185,7 @@ public class UserPostsFragment extends Fragment {
                     public void onSuccess(Uri uri) {
                         // Got the download URL for 'users/me/profile.png'
                         Picasso.with(context).load(uri)
-                                .placeholder(R.drawable.food_715539_1920)
-                                .fit()
+                                .placeholder(R.drawable.background)
                                 .into(userImage);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -202,7 +205,7 @@ public class UserPostsFragment extends Fragment {
 
             String[] tag = tags.split(",");
             String[] tagId = tagIds.split(",");
-
+            mylist.clear();
 
             for (int i = 0; i < tag.length; i++) {
 

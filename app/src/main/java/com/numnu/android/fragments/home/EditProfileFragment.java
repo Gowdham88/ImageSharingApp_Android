@@ -23,6 +23,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -59,11 +60,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 import com.numnu.android.BuildConfig;
 import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.TagsAutocompleteAdapter;
+import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.Citylocation;
@@ -371,10 +374,9 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         userDescription.setText(userinfo);
 
         if(!profilepic.isEmpty()&&profilepic!=null) {
-
             if (profilepic.startsWith("https")) {
                 Picasso.with(context).load(profilepic)
-                        .placeholder(R.drawable.food_715539_1920)
+                        .placeholder(R.drawable.background)
                         .fit()
                         .into(viewImage);
             } else {
@@ -383,14 +385,14 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                     public void onSuccess(Uri uri) {
                         // Got the download URL for 'users/me/profile.png'
                         Picasso.with(context).load(uri)
-                                .placeholder(R.drawable.food_715539_1920)
-                                .fit()
+                                .placeholder(R.drawable.background)
                                 .into(viewImage);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         // Handle any errors
+
                     }
                 });
             }
@@ -627,6 +629,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
+                showProgressDialog();
                 int responsecode = response.code();
                 SignupResponse body = response.body();
                 if (responsecode == 201) {
@@ -691,7 +694,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
      * @param contentURI ->absolute file path
      */
     public void uploadImage(String contentURI,String userId) {
-
+        showProgressDialog();
         File file = null;
         try {
             file = new File(contentURI);
@@ -703,7 +706,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         }
 
         if (file != null && file.exists()) {
-
+        showProgressDialog();
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
 
@@ -718,10 +721,12 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                     if (responsecode == 201) {
 
                         hideProgressDialog();
-                        gotoUserProfile();
+//                        gotoUserProfile();
+
 
                         PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, commonResponse.getImageurl());
                         Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
+                        hideProgressDialog();
                     }
                 }
 
@@ -732,7 +737,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                 }
             });
         } else {
-            Toast.makeText(context, "file not exists!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "file not exists!", Toast.LENGTH_SHORT).show();
             hideProgressDialog();
             gotoUserProfile();
         }
@@ -740,9 +745,9 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     }
 
     private void gotoUserProfile() {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
-        transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+        FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+        transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
         transaction.addToBackStack(null).commit();
     }
 
@@ -987,13 +992,13 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
 
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
+
 
     private boolean hasPermissions() {
         return EasyPermissions.hasPermissions(getActivity(), CAMERA);
@@ -1047,21 +1052,21 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                                  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_CANCELED) {
-            if (requestCode == PICK_IMAGE) {
+            if (requestCode == RC_PICK_IMAGE) {
                 if (data != null) {
                     Uri contentURI = data.getData();
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), contentURI);
                         viewImage.setImageBitmap(bitmap);
                         selectedImagePath=getRealPathFromURI(contentURI);
-                        uploadImage(getRealPathFromURI(contentURI),userId);
+                        uploadImage(selectedImagePath,userId);
 
                     } catch (IOException e) {
                         e.printStackTrace();
                         Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
                     }
                 }
-            } else if (requestCode == REQUEST_CAMERA) {
+            } else if (requestCode == RC_CAPTURE_IMAGE) {
                 // Show the thumbnail on ImageView
                 Uri imageUri = Uri.parse(mCurrentPhotoPath);
                 File file = new File(imageUri.getPath());
@@ -1077,10 +1082,15 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                         new String[]{imageUri.getPath()}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
                             public void onScanCompleted(String path, Uri uri) {
+
+                                Log.e("Dsds",path);
+                                selectedImagePath = path;
+                                uploadImage(selectedImagePath,userId);
                             }
                         });
-                selectedImagePath = imageUri.getPath();
-                uploadImage(imageUri.getPath(),userId);
+
+
+
 
             }
 
@@ -1089,6 +1099,8 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                     data);
         }
     }
+
+
 
 
     private void setupFocusListeners(View v) {

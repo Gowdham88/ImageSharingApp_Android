@@ -237,8 +237,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         String profile = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
         if(!profile.isEmpty()){
             Picasso.with(context).load(profile)
-                    .placeholder(R.drawable.food_715539_1920)
-                    .fit()
+                    .placeholder(R.drawable.background)
                     .into(viewImage);
         }
 
@@ -545,6 +544,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
+                showProgressDialog();
                 int responsecode = response.code();
                 SignupResponse body = response.body();
                 Log.e("Response",new Gson().toJson(response.body()));
@@ -651,7 +651,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                 }
             });
         } else {
-            Toast.makeText(context, "file not exists!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "file not exists!", Toast.LENGTH_SHORT).show();
             hideProgressDialog();
             gotoUserProfile();
         }

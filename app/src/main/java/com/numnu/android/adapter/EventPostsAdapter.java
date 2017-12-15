@@ -36,9 +36,7 @@ import com.numnu.android.utils.PreferencesHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by thulir on 10/10/17.
- */
+
 
 public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.ViewHolder> {
 
