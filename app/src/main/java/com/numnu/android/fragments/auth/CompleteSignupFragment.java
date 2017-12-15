@@ -560,7 +560,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, username);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL, email);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth());
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, userdescription);
 
