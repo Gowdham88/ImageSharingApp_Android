@@ -403,36 +403,37 @@ public class LoginFragment extends Fragment {
             return;
         }
 
-        showProgressDialog();
+            showProgressDialog();
 
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "signInWithEmail:success");
-                                        loginWithServer();
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                loginWithServer();
 
 
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                        showerror("Authentication failed.");
-                                        hideProgressDialog();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(getActivity(), "Registration failed! " + "\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+//                                showerror("Authentication failed.");
+                                hideProgressDialog();
 
-                                    }
+                            }
 
-                                    // [START_EXCLUDE]
-                                    if (!task.isSuccessful()) {
+                            // [START_EXCLUDE]
+                            if (!task.isSuccessful()) {
 
-                                        hideProgressDialog();
-                                        showerror("Authentication failed.");
-                                    }
-                                }
-                });
+                                hideProgressDialog();
+                                showerror("Authentication failed.");
+                            }
+                        }
+                    });
 
     }
 
@@ -451,7 +452,13 @@ public class LoginFragment extends Fragment {
             if(TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
                 showerror("Enter email address and password.");
                 valid = false;
-            } else if (TextUtils.isEmpty(password) || password.length()<4) {
+            }
+            else if((email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()))
+            {
+                Toast.makeText(context, "enter a valid email address", Toast.LENGTH_SHORT).show();
+//            mEmail.setError("enter a valid email address");
+                valid = false;
+            }else if (TextUtils.isEmpty(password) || password.length()<4) {
                 showerror("Enter password");
                 valid = false;
             } else {

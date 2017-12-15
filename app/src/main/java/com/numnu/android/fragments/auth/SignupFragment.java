@@ -313,47 +313,47 @@ public class SignupFragment extends Fragment {
         if (!validateForm()) {
             return;
         }
+            showProgressDialog();
 
-        showProgressDialog();
+            // [START create_user_with_email]
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                user.getIdToken(true)
+                                        .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                            public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d(TAG, "createUserWithEmail:success");
+                                                    final FirebaseUser user = mAuth.getCurrentUser();
+                                                    mPasswordField.setText("");
 
-                    // [START create_user_with_email]
-                    mAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        user.getIdToken(true)
-                                                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                                                    public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                                        if (task.isSuccessful()) {
-                                                            // Sign in success, update UI with the signed-in user's information
-                                                            Log.d(TAG, "createUserWithEmail:success");
-                                                            final FirebaseUser user = mAuth.getCurrentUser();
-                                                            mPasswordField.setText("");
+                                                    String bookmarkBundle = "bookmark";
+                                                    String profileBundle = "profile";
+                                                    String eventBookmarkBundle = "eventbookmark";
 
-                                                            String bookmarkBundle = "bookmark";
-                                                            String profileBundle = "profile";
-                                                            String eventBookmarkBundle = "eventbookmark";
-
-                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
-                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
-                                                            hideProgressDialog();
-                                                            completeSignup();
-                                                        }
-                                                    }
-                                                });
+                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
+                                                    PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
+                                                    hideProgressDialog();
+                                                    completeSignup();
+                                                }
+                                            }
+                                        });
 
 
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        showerror("Authentication failed.");
-                                        hideProgressDialog();
-                                    }
-                                }
+                            } else {
+                                Toast.makeText(getActivity(), "Registration failed! " + "\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                                showerror(" email is already exists");
+                                hideProgressDialog();
+                            }
+                        }
 
-                            });
+                    });
 
 
 
@@ -417,7 +417,14 @@ public class SignupFragment extends Fragment {
             if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password)) {
                 showerror("Enter email address and password.");
                 valid = false;
-            } else if (TextUtils.isEmpty(password) || password.length() < 4) {
+            }
+            else if((email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()))
+            {
+                Toast.makeText(context, "enter a valid email address", Toast.LENGTH_SHORT).show();
+//            mEmail.setError("enter a valid email address");
+                valid = false;
+            }
+            else if (TextUtils.isEmpty(password) || password.length() < 4) {
                 showerror("Enter password");
                 valid = false;
             } else {

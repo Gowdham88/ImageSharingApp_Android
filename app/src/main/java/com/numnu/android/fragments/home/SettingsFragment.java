@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.auth.SignupFragment;
+import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
@@ -135,7 +137,9 @@ public class SettingsFragment extends Fragment {
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().onBackPressed();
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -188,23 +192,24 @@ public class SettingsFragment extends Fragment {
 
         String profilepic=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
 
-
         if(!profilepic.isEmpty()&&profilepic!=null) {
 
             if (profilepic.startsWith("https")) {
                 Picasso.with(context).load(profilepic)
-                        .placeholder(R.drawable.food_715539_1920)
+                        .placeholder(R.drawable.background)
                         .fit()
                         .into(profileImage);
+
             } else {
+
                 storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         // Got the download URL for 'users/me/profile.png'
-                        Picasso.with(context).load(uri)
-                                .placeholder(R.drawable.food_715539_1920)
-                                .fit()
+                        Log.e("dsddfd",uri.toString());
+                        Picasso.with(context).load(uri.toString()).placeholder(R.drawable.background)
                                 .into(profileImage);
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
