@@ -133,7 +133,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             }
         });
         Picasso.with(context).load(R.drawable.burger)
-                .placeholder(R.drawable.food_715539_1920)
+                .placeholder(R.drawable.background)
                 .fit()
                 .into(entityImageView);
 
@@ -196,7 +196,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
+                            .placeholder(R.drawable.background)
                             .fit()
                             .into(eventImageView);
                 }

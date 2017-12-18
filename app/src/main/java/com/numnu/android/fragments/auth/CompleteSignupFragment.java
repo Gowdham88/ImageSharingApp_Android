@@ -214,6 +214,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
         setupTagAutocomplete();
 
+
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
 
@@ -610,6 +611,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
      * @param contentURI ->absolute file path
      */
     public void uploadImage(String contentURI,String userId) {
+        showProgressDialog();
 
         File file = null;
         try {
@@ -855,6 +857,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+//        showProgressDialog();
         if (resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == RC_PICK_IMAGE) {
                 if (data != null) {
@@ -872,6 +875,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                 }
             } else if (requestCode == RC_CAPTURE_IMAGE) {
                 // Show the thumbnail on ImageView
+//                showProgressDialog();
                 Uri imageUri = Uri.parse(mCurrentPhotoPath);
                 File file = new File(imageUri.getPath());
                 try {

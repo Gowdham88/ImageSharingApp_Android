@@ -354,9 +354,6 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     }
 
-    public String getMonth(int month) {
-        return new DateFormatSymbols().getMonths()[month-1];
-    }
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
