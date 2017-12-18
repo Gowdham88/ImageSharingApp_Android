@@ -197,7 +197,6 @@ public class SettingsFragment extends Fragment {
             if (profilepic.startsWith("https")) {
                 Picasso.with(context).load(profilepic)
                         .placeholder(R.drawable.background)
-                        .fit()
                         .into(profileImage);
 
             } else {

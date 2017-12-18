@@ -117,7 +117,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
         recyclerView1.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 //        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-        recyclerView2.setAdapter(adapter);
+//        recyclerView2.setAdapter(adapter);
         recyclerView2.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         eventImageView = view.findViewById(R.id.current_event_image);
         entityImageView = view.findViewById(R.id.entity_image);
@@ -133,7 +133,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             }
         });
         Picasso.with(context).load(R.drawable.burger)
-                .placeholder(R.drawable.food_715539_1920)
+                .placeholder(R.drawable.background)
                 .fit()
                 .into(entityImageView);
 
@@ -196,7 +196,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
+                            .placeholder(R.drawable.background)
                             .fit()
                             .into(eventImageView);
                 }
@@ -251,6 +251,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
         adapter = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
         recyclerView1.setAdapter(adapter);
+        recyclerView2 .setAdapter(adapter);
 
         hideProgressDialog();
     }

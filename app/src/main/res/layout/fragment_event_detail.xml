@@ -178,6 +178,7 @@
                     android:drawableLeft="@drawable/ic_maplocation"
                     android:drawablePadding="6dp"
                     android:padding="@dimen/spacing_tiny"
+                    android:layout_marginLeft="40dp"
                     android:text="Event Map"
                     android:textColor="@color/event_map"
                     android:textSize="@dimen/font_smaller" />

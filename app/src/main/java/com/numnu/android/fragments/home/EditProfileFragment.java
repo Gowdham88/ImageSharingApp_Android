@@ -376,8 +376,8 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         if(!profilepic.isEmpty()&&profilepic!=null) {
             if (profilepic.startsWith("https")) {
                 Picasso.with(context).load(profilepic)
-                        .placeholder(R.drawable.background)
                         .fit()
+                        .placeholder(R.drawable.background)
                         .into(viewImage);
             } else {
                 storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -694,7 +694,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
      * @param contentURI ->absolute file path
      */
     public void uploadImage(String contentURI,String userId) {
-        showProgressDialog();
+
         File file = null;
         try {
             file = new File(contentURI);
@@ -706,27 +706,25 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         }
 
         if (file != null && file.exists()) {
-        showProgressDialog();
+
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
 
 
             Call<CommonResponse> call = apiServices.uploadImage(userId, body);
             call.enqueue(new Callback<CommonResponse>() {
-
                 @Override
                 public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+                    showProgressDialog();
                     int responsecode = response.code();
                     CommonResponse commonResponse = response.body();
                     if (responsecode == 201) {
+                        showProgressDialog();
+                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, commonResponse.getImageurl());
+                        Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
 
                         hideProgressDialog();
 //                        gotoUserProfile();
-
-
-                        PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, commonResponse.getImageurl());
-                        Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
-                        hideProgressDialog();
                     }
                 }
 
@@ -1053,6 +1051,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == RC_PICK_IMAGE) {
+                showProgressDialog();
                 if (data != null) {
                     Uri contentURI = data.getData();
                     try {
@@ -1067,6 +1066,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                     }
                 }
             } else if (requestCode == RC_CAPTURE_IMAGE) {
+                showProgressDialog();
                 // Show the thumbnail on ImageView
                 Uri imageUri = Uri.parse(mCurrentPhotoPath);
                 File file = new File(imageUri.getPath());

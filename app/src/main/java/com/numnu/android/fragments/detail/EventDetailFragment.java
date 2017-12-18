@@ -351,9 +351,6 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     }
 
-    public String getMonth(int month) {
-        return new DateFormatSymbols().getMonths()[month-1];
-    }
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
         View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
@@ -634,7 +631,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         ImageView imageView = layout.findViewById(R.id.popup_image);
 
         Picasso.with(context).load(imgPath)
-                .placeholder(R.drawable.food_715539_1920)
+                .placeholder(R.drawable.background)
                 .fit()
                 .into(imageView);
 
