@@ -2,6 +2,7 @@ package com.numnu.android.network;
 
 
 import com.numnu.android.network.request.CompleteSignUpData;
+import com.numnu.android.network.response.BusinessEventsResponse;
 import com.numnu.android.network.response.BusinessResponse;
 import com.numnu.android.network.response.CommonResponse;
 import com.numnu.android.network.response.EventBusinessesResponse;
@@ -87,8 +88,21 @@ public interface ApiServices {
     @GET("/posts/{id}")
     Call<PostdataItem> getPostById(@Path("id") String id);
 
+
     @GET("/businesses/{id}")
     Call<BusinessResponse> getBusinessById(@Path("id") String id);
+
+    @GET("/businesses/{id}/events")
+    Call<BusinessEventsResponse> getEventsByBusinessId(@Path("id") String id);
+
+    @GET("/businesses/{id}/events")
+    Call<BusinessEventsResponse> getEventsByBusinessId(@Path("id") String id,@Query("page") String page);
+
+    @GET("/businesses/{id}/itemtags")
+    Call<EventItemsResponse> getBusinessItemTags(@Path("id") String id);
+
+    @GET("/businesses/{id}/itemtags")
+    Call<EventItemsResponse> getBusinessItemTags(@Path("id") String id,@Query("page") String page);
 
 
 //    @POST("/mobile/login")

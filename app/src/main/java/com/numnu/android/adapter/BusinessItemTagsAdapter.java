@@ -21,13 +21,13 @@ import java.util.List;
  * Created by thulir on 10/10/17.
  */
 
-public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCategoryAdapter.ViewHolder> {
+public class BusinessItemTagsAdapter extends RecyclerView.Adapter<BusinessItemTagsAdapter.ViewHolder> {
 
     Context context;
     String eventId;
     List<EventTagsDataItem> list = new ArrayList<>();
 
-    public EventItemsCategoryAdapter(Context context,String eventId, List<EventTagsDataItem> stringArrayList) {
+    public BusinessItemTagsAdapter(Context context, String eventId, List<EventTagsDataItem> stringArrayList) {
         this.context=context;
         this.eventId = eventId;
         this.list=stringArrayList;

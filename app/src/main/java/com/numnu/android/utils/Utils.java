@@ -25,7 +25,10 @@ import android.widget.Toast;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -135,6 +138,23 @@ public class Utils {
 		} catch (Exception ex) { } // for now eat exceptions
 
 		return null;
+	}
+
+	public  static String parseDate(String date1)
+	{
+		SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+		Date date = null;
+		try
+		{
+			date = endformat.parse(date1);
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String parsedDate = dateFormat.format(date);
+		return parsedDate;
 	}
 
 

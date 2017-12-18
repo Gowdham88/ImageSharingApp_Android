@@ -30,19 +30,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
-import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
-import com.numnu.android.fragments.EventDetail.EventBusinessFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
-import com.numnu.android.network.response.EventPostsResponse;
 import com.numnu.android.network.response.PostdataItem;
-import com.numnu.android.network.response.TagsItem;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
@@ -65,6 +60,8 @@ public class SliceFragment extends Fragment {
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
+    private String businessId;
+
     ;
 
     public static SliceFragment newInstance() {
@@ -156,7 +153,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(businessId));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -166,7 +163,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(businessId));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -236,6 +233,7 @@ public class SliceFragment extends Fragment {
                 int responsecode = response.code();
                 if(responsecode==200) {
                     postsResponse = response.body();
+                    businessId = String.valueOf(postsResponse.getBusiness().getId());
                     updateUI();
                 }
             }

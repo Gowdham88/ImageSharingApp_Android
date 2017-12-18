@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.EventDetail;
+package com.numnu.android.fragments.businessdetail;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventBusinessesAdapter;
+import com.numnu.android.adapter.EventPostsAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
-import com.numnu.android.network.response.DataItem;
-import com.numnu.android.network.response.EventBusinessesResponse;
+import com.numnu.android.network.response.EventPostsResponse;
+import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.utils.Utils;
 
 import java.util.List;
@@ -28,23 +28,22 @@ import retrofit2.Response;
  * Created by thulir on 9/10/17.
  */
 
-public class EventBusinessFragment extends Fragment {
+public class BusinessPostsFragment extends Fragment {
 
-    private RecyclerView businessRecyclerView;
-    private Context context;
-    private String eventId;
-    EventBusinessesResponse eventBusinessesResponse;
-    private EventBusinessesAdapter eventBusinessesAdapter;
+    private  String businessId;
+    private RecyclerView recyclerView;
+    Context context;
+    EventPostsResponse eventPostsResponse;
+    private EventPostsAdapter eventBusinessesAdapter;
     private boolean isLoading=false;
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
 
-    public static EventBusinessFragment newInstance(String eventId) {
-
-        EventBusinessFragment eventBusinessFragment = new EventBusinessFragment();
+    public static BusinessPostsFragment newInstance(String businessId) {
+        BusinessPostsFragment eventBusinessFragment = new BusinessPostsFragment();
         Bundle args = new Bundle();
-        args.putString("eventId", eventId);
+        args.putString("businessId", businessId);
         eventBusinessFragment.setArguments(args);
 
         return eventBusinessFragment;
@@ -55,10 +54,8 @@ public class EventBusinessFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            eventId = bundle.getString("eventId");
+            businessId = bundle.getString("businessId");
         }
-
-
 
     }
 
@@ -66,21 +63,21 @@ public class EventBusinessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View  view= inflater.inflate(R.layout.fragment_event_business, container, false);
+    View  view= inflater.inflate(R.layout.fragment_event_reviews, container, false);
 
-        businessRecyclerView = view.findViewById(R.id.business_recyclerview);
+    recyclerView = view.findViewById(R.id.reviews_recyclerview);
         final LinearLayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
-        businessRecyclerView.setLayoutManager(layoutManager);
-        businessRecyclerView.setNestedScrollingEnabled(false);
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(businessRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
-//        businessRecyclerView.addItemDecoration(dividerItemDecoration);
-            if(Utils.isNetworkAvailable(context)) {
-                getBusinessDetails(eventId);
-            }else {
-                showAlert();
-            }
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
+//    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
+//        recyclerView.addItemDecoration(dividerItemDecoration);
+        if(Utils.isNetworkAvailable(context)) {
+            getData(businessId);
+        }else {
+            showAlert();
+        }
         // Pagination
-        businessRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -97,15 +94,15 @@ public class EventBusinessFragment extends Fragment {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
                             && totalItemCount >= PAGE_SIZE) {
-                        loadMoreItems(eventId);
+                        loadMoreItems(businessId);
                     }
                 }
             }
         });
+        
         return view;
 
-    }
-
+}
     private void showAlert() {
 //        AlertDialog.Builder builder=new AlertDialog.Builder(context);
 //        builder.setMessage("No Internet connection");
@@ -119,24 +116,24 @@ public class EventBusinessFragment extends Fragment {
     }
 
 
-    private void getBusinessDetails(String id)
+    private void getData(String id)
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventBusinessesResponse> call=apiServices.getEventBusinesses(id);
-        call.enqueue(new Callback<EventBusinessesResponse>() {
+        Call<EventPostsResponse> call=apiServices.getEventPosts(id);
+        call.enqueue(new Callback<EventPostsResponse>() {
             @Override
-            public void onResponse(Call<EventBusinessesResponse> call, Response<EventBusinessesResponse> response) {
+            public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
-                     eventBusinessesResponse = response.body();
+                    eventPostsResponse = response.body();
                     updateUI();
                     isLoading = false;
                 }
             }
 
             @Override
-            public void onFailure(Call<EventBusinessesResponse> call, Throwable t) {
+            public void onFailure(Call<EventPostsResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
             }
@@ -149,16 +146,16 @@ public class EventBusinessFragment extends Fragment {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventBusinessesResponse> call=apiServices.getEventBusinesses(id, String.valueOf(nextPage));
-        call.enqueue(new Callback<EventBusinessesResponse>() {
+        Call<EventPostsResponse> call=apiServices.getEventPosts(id, String.valueOf(nextPage));
+        call.enqueue(new Callback<EventPostsResponse>() {
             @Override
-            public void onResponse(Call<EventBusinessesResponse> call, Response<EventBusinessesResponse> response) {
+            public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
-                      List<DataItem> dataItems=response.body().getData();
-                      if(!response.body().getPagination().isHasMore()){
-                          isLastPage = true;
-                      }
+                    List<PostdataItem> dataItems=response.body().getPostdata();
+                    if(!response.body().getPagination().isHasMore()){
+                        isLastPage = true;
+                    }
                     eventBusinessesAdapter.addData(dataItems);
                     eventBusinessesAdapter.notifyDataSetChanged();
                     isLoading = false;
@@ -166,7 +163,7 @@ public class EventBusinessFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<EventBusinessesResponse> call, Throwable t) {
+            public void onFailure(Call<EventPostsResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
             }
@@ -176,17 +173,17 @@ public class EventBusinessFragment extends Fragment {
 
     private void updateUI() {
 
-         eventBusinessesAdapter = new EventBusinessesAdapter(context, eventBusinessesResponse.getData());
-        businessRecyclerView.setAdapter(eventBusinessesAdapter);
+        eventBusinessesAdapter = new EventPostsAdapter(context, eventPostsResponse.getPostdata());
+        recyclerView.setAdapter(eventBusinessesAdapter);
         eventBusinessesAdapter.notifyDataSetChanged();
     }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
     }
-
 
 }
 

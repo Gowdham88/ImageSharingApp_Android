@@ -297,8 +297,10 @@ public class LoginFragment extends Fragment {
                                         PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_USER_DESCRIPTION, body.getDescription());
                                         PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GENDER, (body.getGender() == 0) ? "Male" : "Female");
                                         PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_CITY, body.getCitylocation().getName());
-//                PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC,body.getUserimages().get(0).getImageurl());
                                         PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
+                                        if(!body.getUserimages().isEmpty()&&body.getUserimages().get(0).getImageurl()!=null) {
+                                            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC, body.getUserimages().get(0).getImageurl());
+                                        }
 
                                         String tagsString = "";
                                         String tagsIds = "";

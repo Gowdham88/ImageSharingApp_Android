@@ -60,7 +60,7 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -69,7 +69,7 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
                 transaction.addToBackStack(null).commit();
             }
         });
