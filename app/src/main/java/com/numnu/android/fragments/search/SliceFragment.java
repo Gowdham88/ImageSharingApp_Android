@@ -10,6 +10,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,7 @@ public class SliceFragment extends Fragment {
     private ImageView userImageIcon,contentImage;
     private TextView nameText,cottageHouseText,barbequeText,eventText,userNameTxt,title;
     private PostdataItem postsResponse;
+    private Uri imgagePath;
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
@@ -257,9 +259,10 @@ public class SliceFragment extends Fragment {
                 storageRef.child(postsResponse.getPostimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+                        imgagePath = uri;
                         // Got the download URL for 'users/me/profile.png'
                         Picasso.with(context).load(uri)
-                                .placeholder(R.drawable.food_715539_1920)
+                                .placeholder(R.drawable.background)
                                 .fit()
                                 .into(contentImage);
                     }
@@ -278,7 +281,7 @@ public class SliceFragment extends Fragment {
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_for_lunch_mom)
+                            .placeholder(R.drawable.background)
                             .fit()
                             .into(userImageIcon);
                 }
@@ -387,6 +390,11 @@ public class SliceFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.image_popup,null);
+        ImageView image=(ImageView)layout.findViewById(R.id.popup_image);
+        Picasso.with(context).load(imgagePath)
+                .placeholder(R.drawable.background)
+                .fit()
+                .into(image);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.width = WindowManager.LayoutParams.FILL_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -394,7 +402,6 @@ public class SliceFragment extends Fragment {
         pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
         Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
         layout.startAnimation(hide);
-
         LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
