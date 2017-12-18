@@ -634,7 +634,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         ImageView imageView = layout.findViewById(R.id.popup_image);
 
         Picasso.with(context).load(imgPath)
-                .placeholder(R.drawable.food_715539_1920)
+                .placeholder(R.drawable.background)
                 .fit()
                 .into(imageView);
 

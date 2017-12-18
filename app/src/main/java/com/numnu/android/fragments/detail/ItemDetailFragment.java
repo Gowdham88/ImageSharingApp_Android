@@ -117,7 +117,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
         recyclerView1.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 //        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-        recyclerView2.setAdapter(adapter);
+//        recyclerView2.setAdapter(adapter);
         recyclerView2.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         eventImageView = view.findViewById(R.id.current_event_image);
         entityImageView = view.findViewById(R.id.entity_image);
@@ -251,6 +251,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
         adapter = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
         recyclerView1.setAdapter(adapter);
+        recyclerView2 .setAdapter(adapter);
 
         hideProgressDialog();
     }
