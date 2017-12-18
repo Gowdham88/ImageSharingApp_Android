@@ -57,7 +57,6 @@ public class PreferencesHelper {
         editor.remove(PREFERENCE_USER_DESCRIPTION);
         editor.remove(PREFERENCE_TAGS);
         editor.remove(PREFERENCE_TAG_IDS);
-        editor.remove(PREFERENCE_PROFILE_PIC);
         editor.apply();
     }
     public static void setPreference(Context context, String preference_name, String details) {
