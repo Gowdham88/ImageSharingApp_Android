@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.EventDetail;
+package com.numnu.android.fragments.businessdetail;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventItemsCategoryAdapter;
+import com.numnu.android.adapter.BusinessItemTagsAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.EventItemsResponse;
@@ -29,23 +29,23 @@ import retrofit2.Response;
  * Created by thulir on 9/10/17.
  */
 
-public class  EventItemsCategoryFragment extends Fragment {
+public class BusinessItemsTagsFragment extends Fragment {
 
     private RecyclerView menuitemsRecyclerView;
-    private String eventId;
+    private String businessId;
     private Context context;
     private boolean isLoading=false;
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
-    private EventItemsCategoryAdapter eventItemsCategoryAdapter;
+    private BusinessItemTagsAdapter businessItemTagsAdapter;
     private EventItemsResponse eventItemsResponse;
 
-    public static EventItemsCategoryFragment newInstance(String eventId) {
+    public static BusinessItemsTagsFragment newInstance(String businessId) {
 
-        EventItemsCategoryFragment eventBusinessFragment = new EventItemsCategoryFragment();
+        BusinessItemsTagsFragment eventBusinessFragment = new BusinessItemsTagsFragment();
         Bundle args = new Bundle();
-        args.putString("eventId", eventId);
+        args.putString("businessId", businessId);
         eventBusinessFragment.setArguments(args);
 
         return eventBusinessFragment;
@@ -57,7 +57,7 @@ public class  EventItemsCategoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            eventId = bundle.getString("eventId");
+            businessId = bundle.getString("businessId");
         }
 
 
@@ -77,7 +77,7 @@ public class  EventItemsCategoryFragment extends Fragment {
         menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
 
         if(Utils.isNetworkAvailable(context)) {
-            getItems(eventId);
+            getItems(businessId);
         }else {
             showAlert();
         }
@@ -99,7 +99,7 @@ public class  EventItemsCategoryFragment extends Fragment {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
                             && totalItemCount >= PAGE_SIZE) {
-                        loadMoreItems(eventId);
+                        loadMoreItems(businessId);
                     }
                 }
             }
@@ -116,7 +116,7 @@ public class  EventItemsCategoryFragment extends Fragment {
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventItemsResponse> call=apiServices.getEventItems(id);
+        Call<EventItemsResponse> call=apiServices.getBusinessItemTags(id);
         call.enqueue(new Callback<EventItemsResponse>() {
             @Override
             public void onResponse(Call<EventItemsResponse> call, Response<EventItemsResponse> response) {
@@ -142,7 +142,7 @@ public class  EventItemsCategoryFragment extends Fragment {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventItemsResponse> call=apiServices.getEventItems(id, String.valueOf(nextPage));
+        Call<EventItemsResponse> call=apiServices.getBusinessItemTags(id, String.valueOf(nextPage));
         call.enqueue(new Callback<EventItemsResponse>() {
             @Override
             public void onResponse(Call<EventItemsResponse> call, Response<EventItemsResponse> response) {
@@ -152,8 +152,8 @@ public class  EventItemsCategoryFragment extends Fragment {
                     if(!response.body().getPagination().isHasMore()){
                         isLastPage = true;
                     }
-                    eventItemsCategoryAdapter.addData(dataItems);
-                    eventItemsCategoryAdapter.notifyDataSetChanged();
+                    businessItemTagsAdapter.addData(dataItems);
+                    businessItemTagsAdapter.notifyDataSetChanged();
                     isLoading = false;
                 }
             }
@@ -169,9 +169,9 @@ public class  EventItemsCategoryFragment extends Fragment {
 
     private void updateUI() {
 
-         eventItemsCategoryAdapter = new EventItemsCategoryAdapter(context,eventId, eventItemsResponse.getData());
-        menuitemsRecyclerView.setAdapter(eventItemsCategoryAdapter);
-        eventItemsCategoryAdapter.notifyDataSetChanged();
+         businessItemTagsAdapter = new BusinessItemTagsAdapter(context,businessId, eventItemsResponse.getData());
+        menuitemsRecyclerView.setAdapter(businessItemTagsAdapter);
+        businessItemTagsAdapter.notifyDataSetChanged();
     }
     @Override
     public void onAttach(Context context) {

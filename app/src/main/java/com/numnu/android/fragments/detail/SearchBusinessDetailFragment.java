@@ -32,15 +32,13 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.fragments.BusinessEventsFragment;
+import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.EventDetail.EventPostsFragment;
-import com.numnu.android.fragments.search.EventsFragment;
-import com.numnu.android.utils.AppBarStateChangeListener;
+import com.numnu.android.fragments.businessdetail.BusinessItemsTagsFragment;
+import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
+import com.numnu.android.fragments.eventdetail.EventPostsFragment;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
-import com.numnu.android.utils.ExpandableTextView;
 import com.numnu.android.utils.PreferencesHelper;
 
 import java.util.ArrayList;
@@ -243,7 +241,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
+        adapter.addFragment(BusinessItemsTagsFragment.newInstance(businessId), "Items");
         adapter.addFragment(new EventPostsFragment().newInstance(businessId), "Posts");
         adapter.addFragment(BusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);

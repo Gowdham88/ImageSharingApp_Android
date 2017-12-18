@@ -1,4 +1,4 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.businessdetail;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,12 +12,9 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.BusinessEventsAdapter;
-import com.numnu.android.adapter.EventBusinessesAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.BusinessEventsResponse;
-import com.numnu.android.network.response.DataItem;
-import com.numnu.android.network.response.EventBusinessesResponse;
 import com.numnu.android.network.response.EventdataItem;
 import com.numnu.android.utils.Utils;
 

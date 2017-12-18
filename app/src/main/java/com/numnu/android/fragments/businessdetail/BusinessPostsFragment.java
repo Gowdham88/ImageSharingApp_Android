@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.EventDetail;
+package com.numnu.android.fragments.businessdetail;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -28,9 +28,9 @@ import retrofit2.Response;
  * Created by thulir on 9/10/17.
  */
 
-public class  EventPostsFragment extends Fragment {
+public class BusinessPostsFragment extends Fragment {
 
-    private  String eventId;
+    private  String businessId;
     private RecyclerView recyclerView;
     Context context;
     EventPostsResponse eventPostsResponse;
@@ -40,10 +40,10 @@ public class  EventPostsFragment extends Fragment {
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
 
-    public static EventPostsFragment newInstance(String eventId) {
-        EventPostsFragment eventBusinessFragment = new EventPostsFragment();
+    public static BusinessPostsFragment newInstance(String businessId) {
+        BusinessPostsFragment eventBusinessFragment = new BusinessPostsFragment();
         Bundle args = new Bundle();
-        args.putString("eventId", eventId);
+        args.putString("businessId", businessId);
         eventBusinessFragment.setArguments(args);
 
         return eventBusinessFragment;
@@ -54,7 +54,7 @@ public class  EventPostsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            eventId = bundle.getString("eventId");
+            businessId = bundle.getString("businessId");
         }
 
     }
@@ -72,7 +72,7 @@ public class  EventPostsFragment extends Fragment {
 //    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        recyclerView.addItemDecoration(dividerItemDecoration);
         if(Utils.isNetworkAvailable(context)) {
-            getData(eventId);
+            getData(businessId);
         }else {
             showAlert();
         }
@@ -94,7 +94,7 @@ public class  EventPostsFragment extends Fragment {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
                             && totalItemCount >= PAGE_SIZE) {
-                        loadMoreItems(eventId);
+                        loadMoreItems(businessId);
                     }
                 }
             }

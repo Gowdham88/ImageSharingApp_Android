@@ -15,18 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.LinkBusinessesFragment;
-import com.numnu.android.fragments.LinkEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
-import com.numnu.android.fragments.detail.BusinessDetailFragment;
 import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
-import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
-import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;

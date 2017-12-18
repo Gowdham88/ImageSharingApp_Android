@@ -1,4 +1,4 @@
-package com.numnu.android.fragments.EventDetail;
+package com.numnu.android.fragments.eventdetail;
 
 import android.content.Context;
 import android.content.DialogInterface;
