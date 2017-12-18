@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
+import com.numnu.android.fragments.BusinessEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.EventDetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.EventDetail.EventPostsFragment;
@@ -64,15 +65,24 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     RecyclerView recyclerView;
     private Boolean isExpanded = false;
     private String eventId;
+    private String businessId;
 
 
-    public static SearchBusinessDetailFragment newInstance() {
-        return new SearchBusinessDetailFragment();
+    public static SearchBusinessDetailFragment newInstance(String businessId){
+        SearchBusinessDetailFragment searchBusinessDetailFragment = new SearchBusinessDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("businessId", businessId);
+        searchBusinessDetailFragment.setArguments(args);
+        return searchBusinessDetailFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            businessId = bundle.getString("businessId");
+        }
 
     }
 
@@ -234,8 +244,8 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventItemsCategoryFragment(), "Items");
-        adapter.addFragment(new EventPostsFragment().newInstance(eventId), "Posts");
-        adapter.addFragment(new EventsFragment(), "Events");
+        adapter.addFragment(new EventPostsFragment().newInstance(businessId), "Posts");
+        adapter.addFragment(BusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);
     }
 

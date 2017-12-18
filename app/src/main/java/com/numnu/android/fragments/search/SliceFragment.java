@@ -63,6 +63,8 @@ public class SliceFragment extends Fragment {
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
+    private String businessId;
+
     ;
 
     public static SliceFragment newInstance() {
@@ -154,7 +156,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(businessId));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -164,7 +166,7 @@ public class SliceFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(businessId));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -234,6 +236,7 @@ public class SliceFragment extends Fragment {
                 int responsecode = response.code();
                 if(responsecode==200) {
                     postsResponse = response.body();
+                    businessId = String.valueOf(postsResponse.getBusiness().getId());
                     updateUI();
                 }
             }
