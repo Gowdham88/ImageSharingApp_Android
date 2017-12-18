@@ -392,7 +392,7 @@ public class SliceFragment extends Fragment {
         View layout = inflater.inflate(R.layout.image_popup,null);
         ImageView image=(ImageView)layout.findViewById(R.id.popup_image);
         Picasso.with(context).load(imgagePath)
-                .placeholder(R.drawable.background)
+                .placeholder(R.drawable.pasta)
                 .fit()
                 .into(image);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

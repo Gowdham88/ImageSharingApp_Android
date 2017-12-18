@@ -81,7 +81,7 @@ public class SettingsFragment extends Fragment {
 
             View view = inflater.inflate(R.layout.fragment_settings, container, false);
             nestedScrollView = view.findViewById(R.id.nestedScrollView);
-
+        TextView usernamesettings=(TextView) view.findViewById(R.id.username);
             TextView shareApp = view.findViewById(R.id.text_share_app);
             shareApp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -133,6 +133,12 @@ public class SettingsFragment extends Fragment {
             });
 
         RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
+
+        String username= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME);
+        usernamesettings.setText(username);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +178,7 @@ public class SettingsFragment extends Fragment {
         }
         PreferencesHelper.signOut(getApplicationContext());
         PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,false);
+//        PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_PROFILE_PIC,false);
         FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, SignupFragment.newInstance());
         transaction.addToBackStack(null).commit();
