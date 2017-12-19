@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -48,19 +49,22 @@ public class SettingsFragment extends Fragment {
     private Context context;
     String name;
     // Create a storage reference from our app
-    StorageReference storageRef ;
+    StorageReference storageRef;
     private FirebaseStorage storage;
     private ImageView profileImage;
+    private TextView userName;
 
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         return fragment;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,65 +83,68 @@ public class SettingsFragment extends Fragment {
 //
 //        }
 
-            View view = inflater.inflate(R.layout.fragment_settings, container, false);
-            nestedScrollView = view.findViewById(R.id.nestedScrollView);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        nestedScrollView = view.findViewById(R.id.nestedScrollView);
 
-            TextView shareApp = view.findViewById(R.id.text_share_app);
-            shareApp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        userName = view.findViewById(R.id.txt_username);
+
+
+        TextView shareApp = view.findViewById(R.id.text_share_app);
+        shareApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                    shareApp();
-                }
-            });
+            }
+        });
 
-            TextView rateApp = view.findViewById(R.id.text_rate_app);
-            rateApp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        TextView rateApp = view.findViewById(R.id.text_rate_app);
+        rateApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                    rateApp();
-                }
-            });
+            }
+        });
 
-            TextView terms = view.findViewById(R.id.text_terms);
-            terms.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        TextView terms = view.findViewById(R.id.text_terms);
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                    showTerms();
-                }
-            });
+            }
+        });
 
-            TextView privacy = view.findViewById(R.id.text_privacy);
-            privacy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        TextView privacy = view.findViewById(R.id.text_privacy);
+        privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                    showPrivacyPolicy();
-                }
-            });
+            }
+        });
 
-            TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-            toolbarTitle.setText("Settings");
+        TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Settings");
 
-            profileImage=view.findViewById(R.id.profile_image);
-            view.findViewById(R.id.imageView_profile_edit).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    editProfile();
-                }
-            });
+        profileImage = view.findViewById(R.id.profile_image);
+        view.findViewById(R.id.imageView_profile_edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editProfile();
+            }
+        });
 
-            view.findViewById(R.id.text_logout).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    logout();
-                }
-            });
+        view.findViewById(R.id.text_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
 
         RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -149,13 +156,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                nestedScrollView.scrollTo(0,0);
+                nestedScrollView.scrollTo(0, 0);
             }
         });
 
         updateUI();
 
-            return view;
+        return view;
 
     }
 
@@ -163,7 +170,7 @@ public class SettingsFragment extends Fragment {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser!=null) {
+        if (currentUser != null) {
 
             currentUser.unlink(currentUser.getProviderId());
             LoginManager.getInstance().logOut();
@@ -171,8 +178,8 @@ public class SettingsFragment extends Fragment {
 
         }
         PreferencesHelper.signOut(getApplicationContext());
-        PreferencesHelper.setPreferenceBoolean(getApplicationContext(),PreferencesHelper.PREFERENCE_LOGGED_IN,false);
-        FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+        PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, false);
+        FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, SignupFragment.newInstance());
         transaction.addToBackStack(null).commit();
     }
@@ -190,9 +197,12 @@ public class SettingsFragment extends Fragment {
         // Create a storage reference from our app
         storageRef = storage.getReference();
 
-        String profilepic=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
+        String profilepic = PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
+        String username = PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME);
 
-        if(!profilepic.isEmpty()&&profilepic!=null) {
+        userName.setText(username);
+
+        if (!profilepic.isEmpty() && profilepic != null) {
 
             if (profilepic.startsWith("https")) {
                 Picasso.with(context).load(profilepic)
@@ -205,7 +215,7 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onSuccess(Uri uri) {
                         // Got the download URL for 'users/me/profile.png'
-                        Log.e("dsddfd",uri.toString());
+                        Log.e("dsddfd", uri.toString());
                         Picasso.with(context).load(uri.toString()).placeholder(R.drawable.background)
                                 .into(profileImage);
 

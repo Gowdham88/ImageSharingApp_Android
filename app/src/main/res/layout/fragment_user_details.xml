@@ -24,11 +24,7 @@
         <include layout="@layout/toolbar" />
 
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/lin_lay"
-        android:background="@color/Edittxt_lineclr"/>
+
    <android.support.v4.widget.NestedScrollView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
