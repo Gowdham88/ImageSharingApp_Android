@@ -1,4 +1,4 @@
-package com.numnu.android.adapter;
+package com.numnu.android.adapter.eventdetail;
 
 import android.content.Context;
 import android.net.Uri;
@@ -18,9 +18,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
-import com.numnu.android.fragments.detail.EventDetailFragment;
-import com.numnu.android.network.response.DataItem;
-import com.numnu.android.network.response.EventdataItem;
+import com.numnu.android.adapter.HorizontalContentAdapter;
+import com.numnu.android.fragments.detail.ItemInfoFragment;
+import com.numnu.android.network.response.EventTagBusiness;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,16 +30,16 @@ import java.util.List;
  * Created by thulir on 10/10/17.
  */
 
-public class BusinessEventsAdapter extends RecyclerView.Adapter<BusinessEventsAdapter.ViewHolder> {
+public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAdapter.ViewHolder> {
 
-    private Context context;
-    private List<EventdataItem> list = new ArrayList<>();
+    Context context;
+    List<EventTagBusiness> list = new ArrayList<>();
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     private StorageReference storageRef ;
     private FirebaseStorage storage;
 
-    public BusinessEventsAdapter(Context context,List<EventdataItem> stringArrayList) {
+    public EventItemsListAdapter(Context context, List<EventTagBusiness> stringArrayList) {
         this.context=context;
         this.list=stringArrayList;
         storage = FirebaseStorage.getInstance();
@@ -47,34 +47,30 @@ public class BusinessEventsAdapter extends RecyclerView.Adapter<BusinessEventsAd
         storageRef = storage.getReference();
     }
 
-    public  void addData(List<EventdataItem> stringArrayList){
+    public  void addData(List<EventTagBusiness> stringArrayList){
         list.addAll(stringArrayList);
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.search_event_item, parent, false);
+                .inflate(R.layout.item_listitem, parent, false);
 
+        //view.setOnClickListener(MainActivity.myOnClickListener);
 
-        return new ViewHolder(view);
+        ViewHolder myViewHolder = new ViewHolder(view);
+        return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final EventdataItem eventdataItem = list.get(position);
+        final EventTagBusiness dataItem = list.get(position);
 
-        String startDate=list.get(position).getStartsat();
-        String endDate=list.get(position).getEndsat();
-        String location = list.get(position).getLocation().getName();
+        holder.textViewName.setText(list.get(position).getBusinessname());
 
-        holder.textViewName.setText(list.get(position).getName());
-        holder.textEventDate.setText(location);
-
-        if(!eventdataItem.getEventimages().isEmpty()&&eventdataItem.getEventimages().get(0).getImageurl()!=null) {
-            storageRef.child(eventdataItem.getEventimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        if(!dataItem.getItemimages().isEmpty()&&dataItem.getItemimages().get(0).getImageurl()!=null) {
+            storageRef.child(dataItem.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
@@ -91,47 +87,52 @@ public class BusinessEventsAdapter extends RecyclerView.Adapter<BusinessEventsAd
             });
         }
 
-
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, ItemInfoFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+            }
+        });
+        holder.textViewName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, ItemInfoFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
 
-        holder.textViewName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-        adapter = new HorizontalContentAdapter(context, eventdataItem.getTags());
+        adapter = new HorizontalContentAdapter(context, dataItem.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
+
 
     @Override
     public int getItemCount() {
         return list.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
-        private TextView textViewName,textEventDate;
+        private TextView textViewName;
 
-        ViewHolder(View itemView) {
+
+        public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.text_event);
+            this.textViewName =  itemView.findViewById(R.id.item_name);
             recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
-            this.textEventDate = (TextView) itemView.findViewById(R.id.txt_event_date);
-            this.imageViewIcon = itemView.findViewById(R.id.current_event_image);
+            //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
+            this.imageViewIcon = itemView.findViewById(R.id.item_image);
+
         }
     }
+
+
 }

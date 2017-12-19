@@ -35,6 +35,7 @@ import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.businessdetail.BusinessItemsTagsFragment;
+import com.numnu.android.fragments.businessdetail.BusinessPostsFragment;
 import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.eventdetail.EventPostsFragment;
 import com.numnu.android.utils.ContentWrappingViewPager;
@@ -242,7 +243,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(BusinessItemsTagsFragment.newInstance(businessId), "Items");
-        adapter.addFragment(new EventPostsFragment().newInstance(businessId), "Posts");
+        adapter.addFragment( BusinessPostsFragment.newInstance(businessId), "Posts");
         adapter.addFragment(BusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);
     }
