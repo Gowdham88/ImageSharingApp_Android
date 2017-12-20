@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventPostsAdapter;
+import com.numnu.android.adapter.businessdetail.BusinessPostsAdapter;
+import com.numnu.android.adapter.eventdetail.EventPostsAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.EventPostsResponse;
@@ -34,7 +35,7 @@ public class BusinessPostsFragment extends Fragment {
     private RecyclerView recyclerView;
     Context context;
     EventPostsResponse eventPostsResponse;
-    private EventPostsAdapter eventBusinessesAdapter;
+    private BusinessPostsAdapter businessPostsAdapter;
     private boolean isLoading=false;
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
@@ -120,7 +121,7 @@ public class BusinessPostsFragment extends Fragment {
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventPostsResponse> call=apiServices.getEventPosts(id);
+        Call<EventPostsResponse> call=apiServices.getBusinessPosts(id);
         call.enqueue(new Callback<EventPostsResponse>() {
             @Override
             public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
@@ -146,7 +147,7 @@ public class BusinessPostsFragment extends Fragment {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventPostsResponse> call=apiServices.getEventPosts(id, String.valueOf(nextPage));
+        Call<EventPostsResponse> call=apiServices.getBusinessPosts(id, String.valueOf(nextPage));
         call.enqueue(new Callback<EventPostsResponse>() {
             @Override
             public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
@@ -156,8 +157,8 @@ public class BusinessPostsFragment extends Fragment {
                     if(!response.body().getPagination().isHasMore()){
                         isLastPage = true;
                     }
-                    eventBusinessesAdapter.addData(dataItems);
-                    eventBusinessesAdapter.notifyDataSetChanged();
+                    businessPostsAdapter.addData(dataItems);
+                    businessPostsAdapter.notifyDataSetChanged();
                     isLoading = false;
                 }
             }
@@ -173,9 +174,9 @@ public class BusinessPostsFragment extends Fragment {
 
     private void updateUI() {
 
-        eventBusinessesAdapter = new EventPostsAdapter(context, eventPostsResponse.getPostdata());
-        recyclerView.setAdapter(eventBusinessesAdapter);
-        eventBusinessesAdapter.notifyDataSetChanged();
+        businessPostsAdapter = new BusinessPostsAdapter(context, eventPostsResponse.getPostdata());
+        recyclerView.setAdapter(businessPostsAdapter);
+        businessPostsAdapter.notifyDataSetChanged();
     }
 
 

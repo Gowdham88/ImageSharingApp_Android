@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.BusinessItemTagsAdapter;
+import com.numnu.android.adapter.businessdetail.BusinessItemTagsAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.EventItemsResponse;

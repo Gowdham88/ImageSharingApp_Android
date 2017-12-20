@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventItemsCategoryAdapter;
+import com.numnu.android.adapter.eventdetail.EventItemsCategoryAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.EventItemsResponse;

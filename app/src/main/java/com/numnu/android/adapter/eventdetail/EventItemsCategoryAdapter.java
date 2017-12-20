@@ -1,4 +1,4 @@
-package com.numnu.android.adapter;
+package com.numnu.android.adapter.eventdetail;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
