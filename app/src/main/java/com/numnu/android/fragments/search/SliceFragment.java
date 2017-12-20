@@ -388,18 +388,21 @@ public class SliceFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.image_popup,null);
-        ImageView image=(ImageView)layout.findViewById(R.id.popup_image);
+
+        ImageView imageView = layout.findViewById(R.id.popup_image);
+
         Picasso.with(context).load(imgagePath)
                 .placeholder(R.drawable.pasta)
-                .fit()
-                .into(image);
+                .into(imageView);
+//
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
         Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
         layout.startAnimation(hide);
+
         LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {
