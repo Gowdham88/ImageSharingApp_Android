@@ -1,8 +1,10 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,6 +36,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
+import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.LocationItemsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
@@ -76,7 +79,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     StorageReference storageRef ;
     private FirebaseStorage storage;
     int Max=4;
-    private Uri imgPath;
+    private Uri itemimgPath;
 
     public static ItemDetailFragment newInstance() {
         return new ItemDetailFragment();
@@ -196,7 +199,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 @Override
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
-                    imgPath = uri;
+                    itemimgPath = uri;
                     Picasso.with(context).load(uri)
                             .placeholder(R.drawable.background)
                             .fit()
@@ -431,31 +434,39 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     }
 
     private void initiatePopupWindow() {
+        if(itemimgPath!=null){
+            Intent intent=new Intent(getActivity(), SliceActivity.class);
+            intent.putExtra("imagepath",itemimgPath.toString());
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+        }
 
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.image_popup,null);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-
-
-        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pw.dismiss();
-            }
-        });
-
-        ImageView imageView = layout.findViewById(R.id.popup_image);
-
-        Picasso.with(context).load(imgPath)
-                .placeholder(R.drawable.background)
-                .into(imageView);
+//        LayoutInflater inflater = (LayoutInflater) context
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View layout = inflater.inflate(R.layout.image_popup,null);
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        pw = new PopupWindow(layout, lp.width, lp.height, true);
+//        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+//
+//
+//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
+//
+//        btncancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pw.dismiss();
+//            }
+//        });
+//
+//        ImageView imageView = layout.findViewById(R.id.popup_image);
+//
+//        Picasso.with(context).load(imgPath)
+//                .placeholder(R.drawable.background)
+//                .into(imageView);
     }
 }
 

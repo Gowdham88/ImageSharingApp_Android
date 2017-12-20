@@ -1,7 +1,9 @@
 package com.numnu.android.fragments.search;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;

@@ -1,8 +1,10 @@
 package com.numnu.android.fragments.eventdetail;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
@@ -65,6 +67,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
 
         return eventBusinessFragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -61,6 +61,7 @@ public class BusinessEventsAdapter extends RecyclerView.Adapter<BusinessEventsAd
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 

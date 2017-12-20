@@ -1,11 +1,13 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
+import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.activity.webFragment;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
@@ -627,32 +630,43 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     }
 
     private void initiatePopupWindow() {
+        if(imgPath!=null){
+            Intent intent=new Intent(getActivity(), SliceActivity.class);
+            intent.putExtra("imagepath",imgPath.toString());
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+        }
+//        LayoutInflater inflater = (LayoutInflater) context
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        final View layout = inflater.inflate(R.layout.image_popup,null);
+//        ImageView image=(ImageView)layout.findViewById(R.id.popup_image);
+//        Picasso.with(context).load(imgPath)
+//                .placeholder(R.drawable.background)
+//                .into(image);
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//        pw = new PopupWindow(layout, lp.width, lp.height, true);
+//        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+//        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+//        layout.startAnimation(hide);
+//
+//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
+//
+//        btncancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pw.dismiss();
+//            }
+//        });
 
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate(R.layout.image_popup,null);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
-        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
-        layout.startAnimation(hide);
-
-        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pw.dismiss();
-            }
-        });
-
-        ImageView imageView = layout.findViewById(R.id.popup_image);
-
-        Picasso.with(context).load(imgPath.toString())
-                .placeholder(R.drawable.background)
-                .into(imageView);
+//        ImageView imageView = layout.findViewById(R.id.popup_image);
+//
+//        Picasso.with(context).load(imgPath.toString())
+//                .placeholder(R.drawable.background)
+//                .into(imageView);
     }
 
 }

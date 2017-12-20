@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -1115,7 +1116,6 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         }
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + mediaFile.getAbsolutePath();
-
         return mediaFile;
     }
 

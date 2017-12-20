@@ -1,7 +1,9 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -218,7 +220,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
+                            .placeholder(R.drawable.background)
                             .fit()
                             .into(businessImage);
                 }
