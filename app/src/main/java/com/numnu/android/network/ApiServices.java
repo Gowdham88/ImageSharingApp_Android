@@ -104,6 +104,13 @@ public interface ApiServices {
     @GET("/businesses/{id}/itemtags")
     Call<EventItemsResponse> getBusinessItemTags(@Path("id") String id,@Query("page") String page);
 
+    @GET("/businesses/{id}/posts")
+    Call<EventPostsResponse> getBusinessPosts(@Path("id") String id);
+
+    @GET("/businesses/{id}/posts")
+    Call<EventPostsResponse> getBusinessPosts(@Path("id") String id,@Query("page") String page);
+
+
 
 //    @POST("/mobile/login")
 //    Call<Collection> login(@Query("email") String email, @Query("password") String serial, @Query("mac_address") String mac);

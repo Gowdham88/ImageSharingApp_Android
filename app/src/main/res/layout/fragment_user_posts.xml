@@ -70,11 +70,7 @@
             <!--</RelativeLayout>-->
         <!--</android.support.v7.widget.Toolbar>-->
     <!--</android.support.design.widget.AppBarLayout>-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/lin_lay"
-        android:background="@color/Edittxt_lineclr"/>
+
    <android.support.v4.widget.NestedScrollView
        android:id="@+id/nestedScrollView"
        android:layout_width="match_parent"

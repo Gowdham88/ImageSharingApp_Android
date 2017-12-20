@@ -1,10 +1,12 @@
 package com.numnu.android.fragments.detail;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +26,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -54,6 +57,7 @@ import com.numnu.android.network.response.EventlinksItem;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.TouchImageView;
 import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -446,7 +450,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(EventBusinessFragment.newInstance(eventId), "Businesses");
         adapter.addFragment(EventItemsCategoryFragment.newInstance(eventId), "Items");
-        adapter.addFragment(new EventPostsFragment().newInstance(eventId), "Posts");
+        adapter.addFragment(EventPostsFragment.newInstance(eventId), "Posts");
         viewPager.setAdapter(adapter);
         // to keep all three tabs in memory. Remove below line if app lags and then optimize tab fragments.
         viewPager.setOffscreenPageLimit(3);
@@ -632,12 +636,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         Picasso.with(context).load(imgPath)
                 .placeholder(R.drawable.background)
-                .fit()
                 .into(imageView);
-
+//
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         pw = new PopupWindow(layout, lp.width, lp.height, true);
         pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
         Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);

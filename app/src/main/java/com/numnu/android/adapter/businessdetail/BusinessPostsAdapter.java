@@ -1,4 +1,4 @@
-package com.numnu.android.adapter;
+package com.numnu.android.adapter.businessdetail;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,24 +28,22 @@ import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
-import com.numnu.android.network.response.DataItem;
 import com.numnu.android.network.response.PostdataItem;
-import com.squareup.picasso.Picasso;
 import com.numnu.android.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-
-public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.ViewHolder> {
+public class BusinessPostsAdapter extends RecyclerView.Adapter<BusinessPostsAdapter.ViewHolder> {
 
     Context context;
     List<PostdataItem> list = new ArrayList<>();
     private StorageReference storageRef ;
     private FirebaseStorage storage;
 
-    public EventPostsAdapter(Context context, List<PostdataItem> stringArrayList) {
+    public BusinessPostsAdapter(Context context, List<PostdataItem> stringArrayList) {
         this.context=context;
         this.list=stringArrayList;
         storage = FirebaseStorage.getInstance();
@@ -128,7 +126,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
                 sliceFragment.setArguments(bundle);
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout,sliceFragment);
+                transaction.add(R.id.frame_layout,sliceFragment);
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -138,7 +136,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
+                transaction.add(R.id.frame_layout, UserDetailsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -148,7 +146,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(postdataItem.getBusiness().getId())));
+                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(postdataItem.getBusiness().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -158,7 +156,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(postdataItem.getBusiness().getId())));
+                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(postdataItem.getBusiness().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -167,7 +165,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout,
+                transaction.add(R.id.frame_layout,
                         ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -177,7 +175,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout,
+                transaction.add(R.id.frame_layout,
                         ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -187,7 +185,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -196,7 +194,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -205,7 +203,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.add(R.id.frame_layout, UserPostsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -214,7 +212,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.add(R.id.frame_layout, UserPostsFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

@@ -7,11 +7,7 @@
     tools:context="com.numnu.android.activity.HomeActivity">
 
    <include layout="@layout/toolbar"/>
-   <View
-       android:layout_width="match_parent"
-       android:layout_height="1dp"
-       android:layout_below="@+id/toolbar"
-       android:background="@color/Edittxt_lineclr"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_recyclerview"
         android:layout_width="match_parent"

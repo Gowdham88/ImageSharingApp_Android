@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventItemsListAdapter;
+import com.numnu.android.adapter.eventdetail.EventItemsListAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
