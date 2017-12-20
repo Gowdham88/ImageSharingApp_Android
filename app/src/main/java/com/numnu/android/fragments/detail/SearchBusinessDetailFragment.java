@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
+import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
@@ -83,6 +84,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
+    private Uri BusinessimgPath;
 
 
     public static SearchBusinessDetailFragment newInstance(String businessId){
@@ -222,9 +224,10 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             storageRef.child(businessResponse.getBusinessimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
+                    BusinessimgPath = uri;
                     // Got the download URL for 'users/me/profile.png'
                     Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.food_715539_1920)
+                            .placeholder(R.drawable.background)
                             .fit()
                             .into(eventImageView);
                 }
@@ -408,26 +411,34 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     }
 
     private void initiatePopupWindow() {
+        if(BusinessimgPath!=null){
+            Intent intent=new Intent(getActivity(), SliceActivity.class);
+            intent.putExtra("imagepath",BusinessimgPath.toString());
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+        }
 
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.image_popup,null);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-
-        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
-        layout.startAnimation(hide);
-        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pw.dismiss();
-            }
-        });
+//        LayoutInflater inflater = (LayoutInflater) context
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View layout = inflater.inflate(R.layout.image_popup,null);
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//        pw = new PopupWindow(layout, lp.width, lp.height, true);
+//        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+//
+//        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+//        layout.startAnimation(hide);
+//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
+//
+//        btncancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pw.dismiss();
+//            }
+//        });
 
     }
 
