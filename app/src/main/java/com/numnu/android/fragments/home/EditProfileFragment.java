@@ -54,9 +54,13 @@ import android.widget.Toast;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBufferResponse;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -173,6 +177,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
+    private double latitude,longitude;
 
     public static EditProfileFragment newInstance() {
         EditProfileFragment fragment = new EditProfileFragment();
@@ -329,8 +334,13 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
             public void onClick(View view) {
 
                 if (validate()) {
+
+                    if(!isUsernameChanged()){
+                        completeSignUp();
+                    }else {
                     //check username
                     checKUsernameExists(musername.getText().toString());
+                    }
                 }
 
             }
@@ -338,6 +348,17 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
 
         return v;
+    }
+
+    private boolean isUsernameChanged() {
+        Boolean isUsernameChanged=false;
+        String newusername = musername.getText().toString();
+        String oldusername= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME);
+        if(!newusername.equals(oldusername)){
+            isUsernameChanged=true;
+        }
+
+        return isUsernameChanged;
     }
 
     private void updateUI() {
@@ -408,6 +429,16 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         String tags=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS);
         String tagIds=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS);
 
+        placeId =PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_GOOGLE_PLACE_ID);
+        placeType=PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_GOOGLE_PLACE_TYPE);
+        try {
+            latitude = Double.parseDouble(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE));
+            longitude = Double.parseDouble(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE));
+        }catch (Exception e)
+        {
+            Log.e("EditProfile", e+"");
+        }
+
         if(!tags.isEmpty() && tags!=null) {
 
             String[] tag = tags.split(",");
@@ -418,8 +449,13 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
                 Tagsuggestion tagsuggestion = new Tagsuggestion();
                 tagsuggestion.setText(tag[i]);
-                tagsuggestion.setId(Integer.valueOf(tagId[i]));
-
+                try {
+                    if (!tagId[i].equals("null")) {
+                        tagsuggestion.setId(Integer.valueOf(tagId[i]));
+                    }
+                }catch (Exception e){
+                    Log.e("UserPostsFrag", e+"");
+                }
                 mylist.add(tagsuggestion);
             }
 
@@ -580,6 +616,8 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         citylocation.setGoogleplaceid(placeId);
         citylocation.setAddress(placeAddress);
         citylocation.setGoogleplacetype(placeType);
+        citylocation.setLattitude(latitude);
+        citylocation.setLongitude(longitude);
 
         //converting gender to numbers
         // gender: 0 -> male, 1 -> female
@@ -923,7 +961,19 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
              read the place ID and title.
               */
             final AutocompletePrediction item = mAdapter.getItem(position);
-            final String placeId = item.getPlaceId();
+
+            if (item != null) {
+                placeId = item.getPlaceId();
+                placeAddress = item.getSecondaryText(null).toString();
+                if (!item.getPlaceTypes().isEmpty()) {
+                    placeType = "";
+                    for (int i : item.getPlaceTypes()) {
+                        placeType = placeType + i + ",";
+                    }
+                }
+                getLatLong(placeId);
+
+            }
             final CharSequence primaryText = item.getPrimaryText(null);
 
             Log.i(TAG, "Autocomplete item selected: " + primaryText);
@@ -931,6 +981,25 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
             Utils.hideKeyboard(getActivity());
         }
     };
+
+    private void getLatLong(String placeId) {
+
+        mGeoDataClient.getPlaceById(placeId).addOnCompleteListener(new OnCompleteListener<PlaceBufferResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<PlaceBufferResponse> task) {
+                if (task.isSuccessful()) {
+                    PlaceBufferResponse places = task.getResult();
+                    Place myPlace = places.get(0);
+                    Log.i(TAG, "Place found: " + myPlace.getName());
+                    latitude = myPlace.getLatLng().latitude;
+                    longitude = myPlace.getLatLng().longitude;
+                    places.release();
+                } else {
+                    Log.e(TAG, "Place not found.");
+                }
+            }
+        });
+    }
 
 
 

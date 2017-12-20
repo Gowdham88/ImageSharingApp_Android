@@ -28,6 +28,10 @@ public class PreferencesHelper {
     public static final String PREFERENCE_USER_DESCRIPTION ="user_desc";
     public static final String PREFERENCE_TAGS ="tags";
     public static final String PREFERENCE_TAG_IDS ="tag_ids";
+    public static final String PREFERENCE_GOOGLE_PLACE_ID ="google_place_id";
+    public static final String PREFERENCE_GOOGLE_PLACE_TYPE ="google_place_type";
+    public static final String PREFERENCE_LATITUDE ="latitude";
+    public static final String PREFERENCE_LONGITUDE ="longitude";
 
 
 
