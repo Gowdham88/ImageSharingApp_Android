@@ -254,6 +254,11 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
         setupFocusListeners(v);
 
+
+        String username = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_NAME);
+        if(!username.isEmpty()){
+            mName.setText(username);
+        }
         // Construct a GeoDataClient for the Google Places API for Android.
         mGeoDataClient = Places.getGeoDataClient(getActivity(), null);
         mCity.setOnItemClickListener(mAutocompleteClickListener);

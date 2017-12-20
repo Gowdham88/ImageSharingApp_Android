@@ -58,7 +58,7 @@
                     android:id="@+id/imageView_profile_edit"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_above="@+id/textView16"
+                    android:layout_above="@+id/txt_username"
                     android:layout_alignEnd="@+id/profile_image"
                     android:layout_alignRight="@+id/profile_image"
                     app:srcCompat="@drawable/edit_profile" />
