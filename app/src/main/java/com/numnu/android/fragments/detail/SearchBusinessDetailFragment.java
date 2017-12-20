@@ -2,7 +2,9 @@ package com.numnu.android.fragments.detail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
@@ -30,6 +32,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
@@ -38,12 +44,21 @@ import com.numnu.android.fragments.businessdetail.BusinessItemsTagsFragment;
 import com.numnu.android.fragments.businessdetail.BusinessPostsFragment;
 import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.eventdetail.EventPostsFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.BusinessResponse;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by thulir on 9/10/17.
@@ -63,8 +78,11 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     private Boolean isExpanded = false;
-    private String eventId;
     private String businessId;
+    private BusinessResponse businessResponse;
+    // Create a storage reference from our app
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
 
 
     public static SearchBusinessDetailFragment newInstance(String businessId){
@@ -159,7 +177,75 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             }
         });
 
+        if(Utils.isNetworkAvailable(context)) {
+            getData(businessId);
+        }else {
+            showAlert();
+        }
         return view;
+    }
+
+    private void showAlert() {
+    }
+
+
+    private void getData(String id)
+    {
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<BusinessResponse> call=apiServices.getBusinessById(id);
+        call.enqueue(new Callback<BusinessResponse>() {
+            @Override
+            public void onResponse(Call<BusinessResponse> call, Response<BusinessResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==200) {
+                    businessResponse = response.body();
+                    updateUI();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void updateUI() {
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
+
+
+        if(!businessResponse.getBusinessimages().isEmpty()&&businessResponse.getBusinessimages().get(0).getImageurl()!=null) {
+            storageRef.child(businessResponse.getBusinessimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.food_715539_1920)
+                            .fit()
+                            .into(eventImageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+
+
+        eventName.setText(businessResponse.getBusinessusername());
+        eventDescription.setText(businessResponse.getBusinessdescription());
+
+
+        adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
     }
 
     private void showBottomSheet(LayoutInflater inflater) {
@@ -240,6 +326,10 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
             }
         });
     }
+
+
+
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(BusinessItemsTagsFragment.newInstance(businessId), "Items");

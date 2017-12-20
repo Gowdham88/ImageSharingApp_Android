@@ -80,7 +80,9 @@
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_city"
         android:drawablePadding="4dp"
-        android:text="Montreal"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="Montreal,fsgjsdlg,hdhfkskhghkdsgksdhdfh"
         android:textColor="@color/event_map"
         android:textSize="15dp" />
 
