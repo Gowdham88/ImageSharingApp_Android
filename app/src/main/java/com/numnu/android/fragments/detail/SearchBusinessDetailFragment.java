@@ -1,7 +1,9 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
@@ -31,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
@@ -318,26 +321,34 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     }
 
     private void initiatePopupWindow() {
+//        if(itemimgPath!=null){
+//            Intent intent=new Intent(getActivity(), SliceActivity.class);
+//            intent.putExtra("imagepath",itemimgPath.toString());
+//            startActivity(intent);
+//        }
+//        else{
+//            Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+//        }
 
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.image_popup,null);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-
-        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
-        layout.startAnimation(hide);
-        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pw.dismiss();
-            }
-        });
+//        LayoutInflater inflater = (LayoutInflater) context
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View layout = inflater.inflate(R.layout.image_popup,null);
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//        pw = new PopupWindow(layout, lp.width, lp.height, true);
+//        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+//
+//        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+//        layout.startAnimation(hide);
+//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
+//
+//        btncancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pw.dismiss();
+//            }
+//        });
 
     }
 

@@ -1,7 +1,9 @@
 package com.numnu.android.fragments.search;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,6 +32,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
+import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
@@ -61,7 +64,7 @@ public class SliceFragment extends Fragment {
     StorageReference storageRef ;
     private FirebaseStorage storage;
     private String businessId;
-
+    boolean isVisibleToUser;
     ;
 
     public static SliceFragment newInstance() {
@@ -111,12 +114,6 @@ public class SliceFragment extends Fragment {
         title=view.findViewById(R.id.title);
         ImageView toolimg = view.findViewById(R.id.toolbar_image);
         toolimg.setVisibility(View.GONE);
-        contentImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initiatePopupWindow();
-            }
-        });
 
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +214,22 @@ public class SliceFragment extends Fragment {
         }else {
             showAlert();
         }
+        contentImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                initiatePopupWindow();
+                if(imagePath!=null){
+                    Intent intent=new Intent(getActivity(), SliceActivity.class);
+                    intent.putExtra("imagepath",imagePath.toString());
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
         return view;
     }
 
@@ -225,11 +238,14 @@ public class SliceFragment extends Fragment {
 
     private void getData(String id)
     {
+
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<PostdataItem> call=apiServices.getPostById(id);
         call.enqueue(new Callback<PostdataItem>() {
+
             @Override
             public void onResponse(Call<PostdataItem> call, Response<PostdataItem> response) {
+
                 int responsecode = response.code();
                 if(responsecode==200) {
                     postsResponse = response.body();
@@ -252,11 +268,11 @@ public class SliceFragment extends Fragment {
             // Create a storage reference from our app
             storageRef = storage.getReference();
 
-
             if(!postsResponse.getPostimages().isEmpty()&&postsResponse.getPostimages().get(0).getImageurl()!=null) {
                 storageRef.child(postsResponse.getPostimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+
                         imagePath = uri;
                         // Got the download URL for 'users/me/profile.png'
                         Picasso.with(context).load(uri)
@@ -384,7 +400,7 @@ public class SliceFragment extends Fragment {
 
 
     private void initiatePopupWindow() {
-
+//       getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.image_popup,null);

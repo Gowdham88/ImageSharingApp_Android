@@ -1,6 +1,8 @@
 package com.numnu.android.fragments.eventdetail;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +51,7 @@ public class EventBusinessFragment extends Fragment {
 
         return eventBusinessFragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

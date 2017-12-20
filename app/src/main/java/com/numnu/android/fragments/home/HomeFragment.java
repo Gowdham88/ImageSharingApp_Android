@@ -1,7 +1,9 @@
 package com.numnu.android.fragments.home;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
