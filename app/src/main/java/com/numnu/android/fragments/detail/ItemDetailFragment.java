@@ -76,6 +76,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     StorageReference storageRef ;
     private FirebaseStorage storage;
     int Max=4;
+    private Uri imgPath;
 
     public static ItemDetailFragment newInstance() {
         return new ItemDetailFragment();
@@ -195,6 +196,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 @Override
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
+                    imgPath = uri;
                     Picasso.with(context).load(uri)
                             .placeholder(R.drawable.background)
                             .fit()
@@ -449,6 +451,11 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             }
         });
 
+        ImageView imageView = layout.findViewById(R.id.popup_image);
+
+        Picasso.with(context).load(imgPath)
+                .placeholder(R.drawable.background)
+                .into(imageView);
     }
 }
 

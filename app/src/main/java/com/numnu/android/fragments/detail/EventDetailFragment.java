@@ -630,14 +630,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.image_popup,null);
-
-        ImageView imageView = layout.findViewById(R.id.popup_image);
-
-        Picasso.with(context).load(imgPath)
-                .placeholder(R.drawable.background)
-                .into(imageView);
-//
+        final View layout = inflater.inflate(R.layout.image_popup,null);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
@@ -655,6 +648,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
             }
         });
 
+        ImageView imageView = layout.findViewById(R.id.popup_image);
+
+        Picasso.with(context).load(imgPath.toString())
+                .placeholder(R.drawable.background)
+                .into(imageView);
     }
 
 }
