@@ -301,12 +301,16 @@ public class LoginFragment extends Fragment {
                                         if(!body.getUserimages().isEmpty()&&body.getUserimages().get(0).getImageurl()!=null) {
                                             PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_PROFILE_PIC, body.getUserimages().get(0).getImageurl());
                                         }
+                                        if(body.getCitylocation().getIsgoogleplace()) {
+                                            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GOOGLE_PLACE_ID, body.getCitylocation().getGoogleplaceid());
+                                            PreferencesHelper.setPreference(context, PreferencesHelper.PREFERENCE_GOOGLE_PLACE_TYPE, body.getCitylocation().getGoogleplacetype());
+                                        }
 
                                         String tagsString = "";
                                         String tagsIds = "";
                                         for (TagsItem tag : body.getTags()) {
-                                            tagsString = tag.getText() + ",";
-                                            tagsIds = tag.getId() + ",";
+                                            tagsString =tagsString+ tag.getText()+",";
+                                            tagsIds =tagsIds+ tag.getId()+",";
                                         }
 
                                         PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS, tagsString);

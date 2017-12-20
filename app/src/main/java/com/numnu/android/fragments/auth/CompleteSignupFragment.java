@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -49,7 +50,11 @@ import android.widget.Toast;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBufferResponse;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
@@ -150,6 +155,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     private Uri fileUri;
     private String mCurrentPhotoPath;
     private ProgressDialog mProgressDialog;
+    private double latitude,longitude;
 
 
     public static CompleteSignupFragment newInstance() {
@@ -480,6 +486,8 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         citylocation.setGoogleplaceid(placeId);
         citylocation.setAddress(placeAddress);
         citylocation.setGoogleplacetype(placeType);
+        citylocation.setLattitude(latitude);
+        citylocation.setLongitude(longitude);
 
         //converting gender to numbers
         // gender: 0 -> male, 1 -> female
@@ -562,6 +570,8 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth());
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, userdescription);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE, latitude+"");
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE,longitude+"");
 
                     uploadImage(selectedImagePath,String.valueOf(body.getId()));
 
@@ -923,6 +933,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                         placeType = placeType + i + ",";
                     }
                 }
+                getLatLong(placeId);
 
             }
 
@@ -933,6 +944,25 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             Utils.hideKeyboard(getActivity());
         }
     };
+
+    private void getLatLong(String placeId) {
+
+        mGeoDataClient.getPlaceById(placeId).addOnCompleteListener(new OnCompleteListener<PlaceBufferResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<PlaceBufferResponse> task) {
+                if (task.isSuccessful()) {
+                    PlaceBufferResponse places = task.getResult();
+                    Place myPlace = places.get(0);
+                    Log.i(TAG, "Place found: " + myPlace.getName());
+                    latitude = myPlace.getLatLng().latitude;
+                    longitude = myPlace.getLatLng().longitude;
+                    places.release();
+                } else {
+                    Log.e(TAG, "Place not found.");
+                }
+            }
+        });
+    }
 
     public void showAlert() {
 
