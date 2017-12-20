@@ -412,8 +412,13 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
                 Tagsuggestion tagsuggestion = new Tagsuggestion();
                 tagsuggestion.setText(tag[i]);
-                tagsuggestion.setId(Integer.valueOf(tagId[i]));
-
+                try {
+                    if (!tagId[i].equals("null")) {
+                        tagsuggestion.setId(Integer.valueOf(tagId[i]));
+                    }
+                }catch (Exception e){
+                    Log.e("UserPostsFrag", e+"");
+                }
                 mylist.add(tagsuggestion);
             }
 

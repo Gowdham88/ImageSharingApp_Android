@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -211,7 +212,13 @@ public class UserPostsFragment extends Fragment {
 
                 TagsItem tagsuggestion = new TagsItem();
                 tagsuggestion.setText(tag[i]);
-                tagsuggestion.setId(Integer.valueOf(tagId[i]));
+                try {
+                    if (!tagId[i].equals("null")) {
+                        tagsuggestion.setId(Integer.valueOf(tagId[i]));
+                    }
+                }catch (Exception e){
+                    Log.e("UserPostsFrag", e+"");
+                }
 
                 mylist.add(tagsuggestion);
             }
