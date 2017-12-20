@@ -28,6 +28,7 @@ import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -299,9 +300,6 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
                 getActivity().onBackPressed();
                 break;
 
-            case R.id.current_event_image:
-                initiatePopupWindow();
-                break;
 
             case R.id.toolbar:
                 mPostsRecycler.scrollTo(0,0);
@@ -316,29 +314,6 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
         this.context = context;
         super.onAttach(context);
-    }
-
-    private void initiatePopupWindow() {
-
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.image_popup,null);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-
-
-        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pw.dismiss();
-            }
-        });
-
     }
 
 

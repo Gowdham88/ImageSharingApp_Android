@@ -56,7 +56,7 @@ public class SliceFragment extends Fragment {
     private ImageView userImageIcon,contentImage;
     private TextView nameText,cottageHouseText,barbequeText,eventText,userNameTxt,title;
     private PostdataItem postsResponse;
-    private Uri imgagePath;
+    private Uri imagePath;
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
@@ -257,7 +257,7 @@ public class SliceFragment extends Fragment {
                 storageRef.child(postsResponse.getPostimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        imgagePath = uri;
+                        imagePath = uri;
                         // Got the download URL for 'users/me/profile.png'
                         Picasso.with(context).load(uri)
                                 .placeholder(R.drawable.background)
@@ -388,21 +388,17 @@ public class SliceFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.image_popup,null);
-
-        ImageView imageView = layout.findViewById(R.id.popup_image);
-
-        Picasso.with(context).load(imgagePath)
-                .placeholder(R.drawable.pasta)
-                .into(imageView);
-//
+        ImageView image=(ImageView)layout.findViewById(R.id.popup_image);
+        Picasso.with(context).load(imagePath)
+                .placeholder(R.drawable.background)
+                .into(image);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
         Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
         layout.startAnimation(hide);
-
         LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
         btncancel.setOnClickListener(new View.OnClickListener() {

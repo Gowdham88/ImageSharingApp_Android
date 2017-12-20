@@ -56,6 +56,7 @@ public class PreferencesHelper {
         editor.remove(PREFERENCE_FIREBASE_UUID);
         editor.remove(PREFERENCE_USER_DESCRIPTION);
         editor.remove(PREFERENCE_TAGS);
+        editor.remove(PREFERENCE_PROFILE_PIC);
         editor.remove(PREFERENCE_TAG_IDS);
         editor.apply();
     }
