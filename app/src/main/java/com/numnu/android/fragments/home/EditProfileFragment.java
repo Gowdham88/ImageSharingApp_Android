@@ -1046,7 +1046,6 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         }
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + mediaFile.getAbsolutePath();
-
         return mediaFile;
     }
 

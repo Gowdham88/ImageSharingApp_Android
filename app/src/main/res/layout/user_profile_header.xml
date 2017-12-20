@@ -78,6 +78,7 @@
         android:layout_alignStart="@+id/hrz_lin_lay"
         android:layout_below="@+id/hrz_lin_lay"
         android:layout_marginTop="20dp"
+        android:singleLine="true"
         android:drawableLeft="@drawable/ic_city"
         android:drawablePadding="4dp"
         android:text="Montreal"
