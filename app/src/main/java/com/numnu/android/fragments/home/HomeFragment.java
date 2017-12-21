@@ -89,6 +89,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
     RelativeLayout Homelinlay1,Homelinlay2,Homelinlay3;
     AppBarLayout AppLay;
     private ViewPager viewPager;
+    ImageView foodcloseimg,locationcloseimg;
 
 
     /**
@@ -151,6 +152,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
         viewPager = view.findViewById(R.id.viewpager);
         googleLogo = view.findViewById(R.id.img_google);
+
         currentEventsList = view.findViewById(R.id.current_up_recyclerview);
         currentEventsList1 = view.findViewById(R.id.current_up_recyclerview1);
         currentEventsList2 = view.findViewById(R.id.current_up_recyclerview2);
@@ -264,6 +266,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
         setupSearchListener();
 
+
         final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -276,6 +279,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
         return view;
     }
+
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -312,42 +317,24 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
     @SuppressLint("ClickableViewAccessibility")
     private void setupSearchListener() {
 
-        searchViewFood.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!searchViewFood.getText().toString().trim().equals("")){
-                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-                }else{
-                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-                }
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!searchViewFood.getText().toString().trim().equals("")){
-                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
-
-                }else{
-                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-                }
-            }
-
-
-        });
-
         searchViewLocation.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 if (!searchViewLocation.getText().toString().trim().equals("")){
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+//                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                    searchViewLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if(hasFocus){
+                                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+//                                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                            }
+                        }
+                    });
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+
                 }else {
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
@@ -362,6 +349,17 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (!searchViewLocation.getText().toString().trim().equals("")){
+
+                    searchViewLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if(hasFocus){
+                                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                                searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                            }
+                            searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                        }
+                    });
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
 
                 }else{
@@ -370,13 +368,76 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             }
         });
 
+
+
+
+        searchViewFood.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!searchViewFood.getText().toString().trim().equals("")){
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+//                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                    searchViewFood.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if(hasFocus){
+                                searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+//                                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                            }
+                        }
+                    });
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+
+                }else{
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+//                foodSearch(fooditem);
+//                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!searchViewFood.getText().toString().trim().equals("")){
+
+//                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    searchViewFood.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if(hasFocus){
+                                searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                            }
+                            searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                        }
+
+                    });
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+
+                }else{
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                }
+            }
+
+
+        });
+
+
+
         searchViewFood.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    if (searchViewFood.getCompoundDrawables()[2]!= null){
-                        if (motionEvent.getX() >=(searchViewFood.getRight()-searchViewFood.getLeft() - searchViewFood.getCompoundDrawables()[2].getBounds().width())){
+                    if (searchViewFood.getCompoundDrawables()[1]!= null){
+                        if (motionEvent.getX() >=(searchViewFood.getRight()-searchViewFood.getLeft() - searchViewFood.getCompoundDrawables()[1].getBounds().width())){
                             searchViewFood.setText("");
+
                             searchViewFood.clearFocus();
                                 Utils.hideKeyboard(getActivity());
 
@@ -391,9 +452,10 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    if (searchViewLocation.getCompoundDrawables()[2]!= null){
-                        if (motionEvent.getX() >=(searchViewLocation.getRight()-searchViewLocation.getLeft() - searchViewLocation.getCompoundDrawables()[2].getBounds().width())){
+                    if (searchViewLocation.getCompoundDrawables()[1]!= null){
+                        if (motionEvent.getX() >=(searchViewLocation.getRight()-searchViewLocation.getLeft() - searchViewLocation.getCompoundDrawables()[1].getBounds().width())){
                             searchViewLocation.setText("");
+                            searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                             searchViewLocation.clearFocus();
                             Utils.hideKeyboard(getActivity());
                         }
@@ -408,9 +470,12 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
                     //do here your stuff f
                     foodSearch(textView.getText().toString());
                     searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+//                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                     Utils.hideKeyboard(getActivity());
                     return true;
                 }
@@ -424,7 +489,9 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //do here your stuff f
+//                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                     Utils.hideKeyboard(getActivity());
                     return true;
                 }
@@ -440,7 +507,6 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
 
            searchListView.setVisibility(View.VISIBLE);
-           searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
            googleLogo.setVisibility(View.VISIBLE);
            nestedScrollView.setVisibility(View.GONE);
            viewPager.setVisibility(View.GONE);
@@ -456,6 +522,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                    final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
                    String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
                    searchViewLocation.setText(s);
+                   searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
 //                   Bundle bundle = new Bundle();
 //                   bundle.putString("keyword",s);
 //                   bundle.putString("type","location");
@@ -469,6 +536,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                    searchListView.setVisibility(View.GONE);
                    nestedScrollView.setVisibility(View.VISIBLE);
 
+
                }
            });
            searchListView.setAdapter(mAdapter);
@@ -480,6 +548,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
        }
     }
 
+
+
     private void showSearchResults() {
         googleLogo.setVisibility(View.GONE);
         searchListView.setVisibility(View.GONE);
@@ -488,6 +558,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         tabLayout.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.VISIBLE);
         setupViewPager(viewPager);
+        searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+        searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
         tabLayout.setupWithViewPager(viewPager);
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
@@ -498,6 +570,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         if(!fooditem.equals("")){
             nestedScrollView.setVisibility(View.GONE);
             searchListView.setVisibility(View.VISIBLE);
+            searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+            searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
 
 //            final String[] arr = {"burger", "chicken", "pizza", "mutton", "curry", "chicken burger", "mutton burger", "sandwich",};
 //
