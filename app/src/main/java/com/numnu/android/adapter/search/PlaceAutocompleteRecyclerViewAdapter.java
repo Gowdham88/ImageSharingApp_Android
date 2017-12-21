@@ -224,9 +224,11 @@ public class PlaceAutocompleteRecyclerViewAdapter
         // styling based on the given CharacterStyle.
 
         AutocompletePrediction item = getItem(position);
-
-        holder.textView1.setText(item.getPrimaryText(STYLE_BOLD));
-        holder.textView2.setText(item.getSecondaryText(STYLE_BOLD));
+        String merge= String.valueOf(item.getPrimaryText(STYLE_BOLD));
+        String merge1= String.valueOf(item.getSecondaryText(STYLE_BOLD));
+        String total=merge+merge1;
+        holder.textView1.setText(total);
+//        holder.textView2.setText(item.getSecondaryText(STYLE_BOLD));
     }
 
     /**
@@ -245,7 +247,7 @@ public class PlaceAutocompleteRecyclerViewAdapter
             super(itemView);
             this.itemView.setOnClickListener(this);
              textView1 = itemView.findViewById(R.id.txt_itemname);
-             textView2 = itemView.findViewById(R.id.txt_itemname2);
+//             textView2 = itemView.findViewById(R.id.txt_itemname2);
 
         }
 

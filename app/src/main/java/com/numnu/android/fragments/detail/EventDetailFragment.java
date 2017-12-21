@@ -160,29 +160,29 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         viewEventMap.setOnClickListener(this);
         morebutton = view.findViewById(R.id.more_button);
         morebutton.setVisibility(View.GONE);
-        if(eventDescription.getLineCount()>= Max){
-            morebutton.setVisibility(View.VISIBLE);
-        }
-        morebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isExpanded) {
-
-                    isExpanded = false;
-                    eventDescription.setMaxLines(4);
-                    morebutton.setText("more");
-
-                } else {
-
-                    isExpanded = true;
-                    eventDescription.setMaxLines(1000);
-                    morebutton.setText("less");
-
-                }
-
-            }
-        });
+//        if(eventDescription.getLineCount()>= Max){
+//            morebutton.setVisibility(View.VISIBLE);
+//        }
+//        morebutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (isExpanded) {
+//
+//                    isExpanded = false;
+//                    eventDescription.setMaxLines(4);
+//                    morebutton.setText("more");
+//
+//                } else {
+//
+//                    isExpanded = true;
+//                    eventDescription.setMaxLines(1000);
+//                    morebutton.setText("less");
+//
+//                }
+//
+//            }
+//        });
 
 
 
@@ -313,7 +313,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
             e.printStackTrace();
         }
-        SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd,hh:mm a");
+        SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd, hh:mm a");
         String StartDateStr = postFormater.format(date);
 //        eventStartDate.setText(StartDateStr);
 
@@ -329,7 +329,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
             e.printStackTrace();
         }
-        SimpleDateFormat Formater = new SimpleDateFormat("MMM dd,hh:mm a");
+        SimpleDateFormat Formater = new SimpleDateFormat("MMM dd, hh:mm a");
         String endDateStr = Formater.format(endate);
 //        eventStartDate.setText(endDateStr);
         String Serverdate=StartDateStr+" - "+endDateStr;

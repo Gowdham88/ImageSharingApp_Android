@@ -85,6 +85,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     StorageReference storageRef ;
     private FirebaseStorage storage;
     private Uri BusinessimgPath;
+    int Max=4;
 
 
     public static SearchBusinessDetailFragment newInstance(String businessId){
@@ -138,26 +139,27 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         });
 
         morebutton = view.findViewById(R.id.more_button);
-        morebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isExpanded) {
-
-                    isExpanded = false;
-                    eventDescription.setMaxLines(4);
-                    morebutton.setText("more");
-
-                } else {
-
-                    isExpanded = true;
-                    eventDescription.setMaxLines(1000);
-                    morebutton.setText("less");
-
-                }
-
-            }
-        });
+        morebutton.setVisibility(View.GONE);
+//        morebutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (isExpanded) {
+//
+//                    isExpanded = false;
+//                    eventDescription.setMaxLines(4);
+//                    morebutton.setText("more");
+//
+//                } else {
+//
+//                    isExpanded = true;
+//                    eventDescription.setMaxLines(1000);
+//                    morebutton.setText("less");
+//
+//                }
+//
+//            }
+//        });
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -241,10 +243,31 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
 
 
-        eventName.setText(businessResponse.getBusinessusername());
+        eventName.setText(businessResponse.getBusinessname());
         eventDescription.setText(businessResponse.getBusinessdescription());
+        if(eventDescription.getLineCount()>= Max){
+            morebutton.setVisibility(View.VISIBLE);
+        }
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if (isExpanded) {
 
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
         adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));

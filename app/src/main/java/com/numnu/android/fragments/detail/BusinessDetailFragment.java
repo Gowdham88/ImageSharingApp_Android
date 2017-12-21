@@ -71,6 +71,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
+    int Max=4;
 
     public static BusinessDetailFragment newInstance() {
         return new BusinessDetailFragment();
@@ -113,26 +114,27 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         Viewimage= view.findViewById(R.id.business_viewtxt);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
         morebutton = view.findViewById(R.id.more_button);
-        morebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isExpanded) {
-
-                    isExpanded = false;
-                    eventDescription.setMaxLines(4);
-                    morebutton.setText("more");
-
-                } else {
-
-                    isExpanded = true;
-                    eventDescription.setMaxLines(1000);
-                    morebutton.setText("less");
-
-                }
-
-            }
-        });
+        morebutton.setVisibility(View.GONE);
+//        morebutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (isExpanded) {
+//
+//                    isExpanded = false;
+//                    eventDescription.setMaxLines(4);
+//                    morebutton.setText("more");
+//
+//                } else {
+//
+//                    isExpanded = true;
+//                    eventDescription.setMaxLines(1000);
+//                    morebutton.setText("less");
+//
+//                }
+//
+//            }
+//        });
 
 
         Viewimage.setOnClickListener(new View.OnClickListener() {
@@ -237,7 +239,29 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         eventName.setText(businessResponse.getBusinessusername());
         entityTitle.setText(businessResponse.getBusinessname());
         eventDescription.setText(businessResponse.getBusinessdescription());
+        if(eventDescription.getLineCount()>= Max){
+            morebutton.setVisibility(View.VISIBLE);
+        }
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
 
         adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
         recyclerView.setAdapter(adapter);

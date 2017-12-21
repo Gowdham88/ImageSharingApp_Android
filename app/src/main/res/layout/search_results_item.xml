@@ -19,15 +19,15 @@ android:background="@color/toolbar_background_color">
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_tiny"
         />
-    <TextView
-        style="@style/FontAvenirMedium"
-        android:id="@+id/txt_itemname2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Category"
-        android:textColor="@color/time_color"
-        android:textSize="@dimen/font_small"
-        android:layout_marginBottom="@dimen/spacing_small"
-        />
+    <!--<TextView-->
+        <!--style="@style/FontAvenirMedium"-->
+        <!--android:id="@+id/txt_itemname2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Category"-->
+        <!--android:textColor="@color/time_color"-->
+        <!--android:textSize="@dimen/font_small"-->
+        <!--android:layout_marginBottom="@dimen/spacing_small"-->
+        <!--/>-->
 
 </LinearLayout>

@@ -109,7 +109,8 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
         }
 
         holder.eventName.setText(postdataItem.getEvent().getName());
-        holder.username.setText(postdataItem.getPostcreator().getUsername());
+        String UserName=postdataItem.getPostcreator().getUsername();
+        holder.username.setText("@"+UserName);
         holder.name.setText(postdataItem.getPostcreator().getName());
         holder.title.setText(postdataItem.getComment());
         holder.cottageHouseText.setText(postdataItem.getBusiness().getBusinessname());

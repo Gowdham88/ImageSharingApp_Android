@@ -40,12 +40,13 @@
                 fontPath="fonts/Avenir-Book.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="9dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="8dp"
                 android:layout_toRightOf="@+id/search_icon"
                 android:background="@drawable/edittext_corner_radius"
+                android:drawableRight="@drawable/ic_close"
                 android:hint="Search"
                 android:imeOptions="actionSearch"
                 android:inputType="textNoSuggestions"
@@ -54,8 +55,9 @@
                 android:paddingTop="0dp"
                 android:textSize="14sp"
                 tools:ignore="MissingPrefix" />
-        </RelativeLayout>
 
+
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/search_location_layout"
             android:layout_width="match_parent"
@@ -87,6 +89,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@+id/location_icon"
                 android:background="@drawable/edittext_corner_radius"
+                android:drawableRight="@drawable/ic_close"
                 android:hint="Location"
                 android:imeOptions="actionSearch"
                 android:inputType="textNoSuggestions"
