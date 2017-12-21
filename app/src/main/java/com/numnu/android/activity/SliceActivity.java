@@ -22,9 +22,9 @@ public class SliceActivity extends MyActivity {
         LinearLayout btncancel = (LinearLayout) findViewById(R.id.btncancelcat);
         try{
             Bundle in=getIntent().getExtras();
-            Uri uri= Uri.parse(in.getString("imagepath"));
+            String uri= in != null ? in.getString("imagepath") : null;
 
-            Picasso.with(getApplicationContext()).load(String.valueOf(uri))
+            Picasso.with(getApplicationContext()).load(uri)
                     .placeholder(R.drawable.background)
                     .into(image);
         }
@@ -34,7 +34,7 @@ public class SliceActivity extends MyActivity {
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               finish();
+               onBackPressed();
             }
         });
 
