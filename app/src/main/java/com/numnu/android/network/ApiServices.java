@@ -52,8 +52,15 @@ public interface ApiServices {
 
 
    //get item details
-    @GET("/items/{id}")
-    Call<ItemDetailsResponse> getItem(@Path("id") String id);
+    @GET("/items/{itemId}")
+    Call<ItemDetailsResponse> getItem(@Path("itemId") String id);
+
+    @GET("/items/{itemId}/posts")
+    Call<EventPostsResponse> getItemPosts(@Path("itemId") String id);
+
+    @GET("/items/{itemId}/posts")
+    Call<EventPostsResponse> getItemPosts(@Path("itemId") String id,@Query("page") String page);
+
 
 
     //get event details

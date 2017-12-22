@@ -21,7 +21,7 @@
 
     </LinearLayout>
 
-    <com.numnu.android.utils.CustomScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -73,7 +73,7 @@
             android:textSize="@dimen/font_small" />
 
         <TextView
-            android:id="@+id/item_header_event_name"
+            android:id="@+id/item_header_name"
             style="@style/BoldTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             android:id="@+id/hrz_lin_lay"
             android:layout_toRightOf="@id/content_image_card"
             android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_below="@+id/item_header_event_name">
+            android:layout_below="@+id/item_header_name">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/business_recyclerview"
@@ -199,7 +199,6 @@
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/user_posts_recycler"
-        android:layout_below="@+id/data_rel_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -207,5 +206,5 @@
         android:layout_marginRight="10dp" />
 
 </LinearLayout>
-    </com.numnu.android.utils.CustomScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>
