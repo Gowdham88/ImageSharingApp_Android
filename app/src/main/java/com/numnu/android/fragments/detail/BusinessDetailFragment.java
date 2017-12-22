@@ -34,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.businessdetail.BusinessItemsTagsFragment;
+import com.numnu.android.fragments.businessdetail.BusinessPostsFragment;
 import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.network.ApiServices;
@@ -351,8 +353,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
     private void setupViewPager(ViewPager viewPager) {
        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
-        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(BusinessItemsTagsFragment.newInstance(businessId), "Items");
+        adapter.addFragment(BusinessPostsFragment.newInstance(businessId), "Posts");
         viewPager.setAdapter(adapter);
     }
 
