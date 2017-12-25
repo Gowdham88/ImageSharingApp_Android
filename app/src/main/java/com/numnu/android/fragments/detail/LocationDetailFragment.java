@@ -2,6 +2,7 @@ package com.numnu.android.fragments.detail;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -33,20 +34,31 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.eventdetail.EventPostsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.request.BookmarkRequestData;
+import com.numnu.android.network.response.BookmarkResponse;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by thulir on 9/10/17.
@@ -70,14 +82,38 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     LinearLayout busCntnRelLay;
     String name="name";
     private String  eventId;
+    private ProgressDialog mProgressDialog;
+    private String locationId;
+    // Create a storage reference from our app
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
 
     public static LocationDetailFragment newInstance() {
         return new LocationDetailFragment();
     }
 
+    public static LocationDetailFragment newInstance(String locationId) {
+
+        LocationDetailFragment locationDetailFragment = new LocationDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("locationId", locationId);
+        locationDetailFragment.setArguments(args);
+        return locationDetailFragment;
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            locationId = bundle.getString("locationId");
+        }
+
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
 
     }
 
@@ -229,7 +265,8 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    postBookmark();
+                    bottomSheetDialog.dismiss();
                 }
             }
         });
@@ -251,10 +288,65 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    postBookmark();
+                    bottomSheetDialog.dismiss();
                 }
             }
         });
+    }
+
+    private void postBookmark()
+    {
+        showProgressDialog();
+        String userId = PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_ID);
+        BookmarkRequestData bookmarkRequestData = new BookmarkRequestData();
+        bookmarkRequestData.setClientapp(Constants.CLIENT_APP);
+        bookmarkRequestData.setClientip(Utils.getLocalIpAddress(context));
+        bookmarkRequestData.setType(Constants.BOOKMARK_LOCATION);
+        bookmarkRequestData.setEntityid(locationId);
+        bookmarkRequestData.setEntityname(eventName.getText().toString());
+
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<BookmarkResponse> call=apiServices.postBookmark(userId,bookmarkRequestData);
+        call.enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==201) {
+                    BookmarkResponse bookmarkResponse = response.body();
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }else if(responsecode==422) {
+
+                    Toast.makeText(context, "Already Bookmarked!!", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+            }
+        });
+
+    }
+
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
 

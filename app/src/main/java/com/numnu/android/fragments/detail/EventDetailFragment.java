@@ -55,8 +55,11 @@ import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.eventdetail.EventPostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.request.BookmarkRequestData;
+import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.EventDetailResponse;
 import com.numnu.android.network.response.EventlinksItem;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -160,31 +163,6 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         viewEventMap.setOnClickListener(this);
         morebutton = view.findViewById(R.id.more_button);
         morebutton.setVisibility(View.GONE);
-//        if(eventDescription.getLineCount()>= Max){
-//            morebutton.setVisibility(View.VISIBLE);
-//        }
-//        morebutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (isExpanded) {
-//
-//                    isExpanded = false;
-//                    eventDescription.setMaxLines(4);
-//                    morebutton.setText("more");
-//
-//                } else {
-//
-//                    isExpanded = true;
-//                    eventDescription.setMaxLines(1000);
-//                    morebutton.setText("less");
-//
-//                }
-//
-//            }
-//        });
-
-
 
 
         setupWebLinks();
@@ -408,8 +386,9 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
-                }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }else {
+                    postBookmark();
+                    bottomSheetDialog.dismiss();
                 }
             }
         });
@@ -430,12 +409,52 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
-                }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }else {
+                    postBookmark();
+                    bottomSheetDialog.dismiss();
                 }
             }
         });
     }
+
+
+    private void postBookmark()
+    {
+        showProgressDialog();
+        String userId = PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_ID);
+        BookmarkRequestData bookmarkRequestData = new BookmarkRequestData();
+        bookmarkRequestData.setClientapp(Constants.CLIENT_APP);
+        bookmarkRequestData.setClientip(Utils.getLocalIpAddress(context));
+        bookmarkRequestData.setType(Constants.BOOKMARK_EVENT);
+        bookmarkRequestData.setEntityid(eventId);
+        bookmarkRequestData.setEntityname(eventName.getText().toString());
+
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<BookmarkResponse> call=apiServices.postBookmark(userId,bookmarkRequestData);
+        call.enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==201) {
+                    BookmarkResponse bookmarkResponse = response.body();
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }else if(responsecode==422) {
+
+                    Toast.makeText(context, "Already Bookmarked!!", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+            }
+        });
+
+    }
+
 
     private void setupWebLinks() {
 

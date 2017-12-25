@@ -1,7 +1,9 @@
 package com.numnu.android.network;
 
 
+import com.numnu.android.network.request.BookmarkRequestData;
 import com.numnu.android.network.request.CompleteSignUpData;
+import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.BusinessEventsResponse;
 import com.numnu.android.network.response.BusinessResponse;
 import com.numnu.android.network.response.CommonResponse;
@@ -9,6 +11,7 @@ import com.numnu.android.network.response.EventBusinessesResponse;
 import com.numnu.android.network.response.EventDetailResponse;
 import com.numnu.android.network.response.EventItemsResponse;
 import com.numnu.android.network.response.EventPostsResponse;
+import com.numnu.android.network.response.GetBookmarksResponse;
 import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.network.response.ItemsByTagResponse;
 import com.numnu.android.network.response.LoginResponse;
@@ -111,13 +114,28 @@ public interface ApiServices {
     @GET("/businesses/{id}/itemtags")
     Call<EventItemsResponse> getBusinessItemTags(@Path("id") String id,@Query("page") String page);
 
+    @GET("/businesses/{businessId}/itemtags/{tagId}/items")
+    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String id,@Path("tagId") String tagId);
+
+    @GET("/businesses/{businessId}/itemtags/{tagId}/items")
+    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String id,@Path("tagId") String tagId,@Query("page") String page);
+
     @GET("/businesses/{id}/posts")
     Call<EventPostsResponse> getBusinessPosts(@Path("id") String id);
 
     @GET("/businesses/{id}/posts")
     Call<EventPostsResponse> getBusinessPosts(@Path("id") String id,@Query("page") String page);
 
+    //Bookmarks
+    @Headers("Content-Type: application/json")
+    @POST("/users/{userId}/bookmarks")
+    Call<BookmarkResponse> postBookmark(@Path("userId") String userId, @Body BookmarkRequestData bookmarkRequestData);
 
+    @GET("/users/{userId}/bookmarks")
+    Call<GetBookmarksResponse> getBookmark(@Path("userId") String userId);
+
+    @GET("/users/{userId}/bookmarks")
+    Call<GetBookmarksResponse> getBookmark(@Path("userId") String userId,@Query("page") String page);
 
 //    @POST("/mobile/login")
 //    Call<Collection> login(@Query("email") String email, @Query("password") String serial, @Query("mac_address") String mac);

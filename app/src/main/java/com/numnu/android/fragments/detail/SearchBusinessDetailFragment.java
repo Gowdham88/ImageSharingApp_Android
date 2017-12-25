@@ -1,5 +1,6 @@
 package com.numnu.android.fragments.detail;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -47,7 +48,10 @@ import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.eventdetail.EventPostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.request.BookmarkRequestData;
+import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.BusinessResponse;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
@@ -86,6 +90,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     private FirebaseStorage storage;
     private Uri BusinessimgPath;
     int Max=4;
+    private ProgressDialog mProgressDialog;
 
 
     public static SearchBusinessDetailFragment newInstance(String businessId){
@@ -325,7 +330,8 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    postBookmark();
+                    bottomSheetDialog.dismiss();
                 }
             }
         });
@@ -347,13 +353,65 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
                 }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    postBookmark();
+                    bottomSheetDialog.dismiss();
                 }
             }
         });
     }
 
 
+    private void postBookmark()
+    {
+        showProgressDialog();
+        String userId = PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_ID);
+        BookmarkRequestData bookmarkRequestData = new BookmarkRequestData();
+        bookmarkRequestData.setClientapp(Constants.CLIENT_APP);
+        bookmarkRequestData.setClientip(Utils.getLocalIpAddress(context));
+        bookmarkRequestData.setType(Constants.BOOKMARK_BUSNIESS);
+        bookmarkRequestData.setEntityid(businessId);
+        bookmarkRequestData.setEntityname(eventName.getText().toString());
+
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<BookmarkResponse> call=apiServices.postBookmark(userId,bookmarkRequestData);
+        call.enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==201) {
+                    BookmarkResponse bookmarkResponse = response.body();
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }else if(responsecode==422) {
+
+                    Toast.makeText(context, "Already Bookmarked!!", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+            }
+        });
+
+    }
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
 
 
     private void setupViewPager(ViewPager viewPager) {

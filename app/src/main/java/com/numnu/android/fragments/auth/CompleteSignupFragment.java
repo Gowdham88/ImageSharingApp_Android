@@ -537,7 +537,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         completeSignUpData.setFirebaseuid(uid);
         completeSignUpData.setTags(tags);
 
-        completeSignUpData.setClientapp("android");
+        completeSignUpData.setClientapp(Constants.CLIENT_APP);
         completeSignUpData.setClientip(Utils.getLocalIpAddress(context));
 
         String tagsString = "";
