@@ -279,6 +279,7 @@ public class LoginFragment extends Fragment {
                             Log.e("Token:", idToken);
                             Constants.FIREBASE_TOKEN = idToken;
                             PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_TOKEN, idToken);
+                            Log.e("tocken",idToken);
                             // Send token to your backend via HTTPS
                             ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
                             Call<LoginResponse> call = apiServices.login();

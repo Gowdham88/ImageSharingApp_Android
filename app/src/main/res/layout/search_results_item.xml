@@ -7,7 +7,10 @@ android:layout_height="wrap_content"
 android:background="@color/toolbar_background_color">
 
 
-
+<!--<ScrollView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:scrollbars="vertical">-->
     <TextView
         style="@style/FontAvenirMedium"
         android:id="@+id/txt_itemname"
@@ -29,5 +32,5 @@ android:background="@color/toolbar_background_color">
         <!--android:textSize="@dimen/font_small"-->
         <!--android:layout_marginBottom="@dimen/spacing_small"-->
         <!--/>-->
-
+<!--</ScrollView>-->
 </LinearLayout>

@@ -497,6 +497,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     //do here your stuff f
 //                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    nestedScrollView.setVisibility(View.VISIBLE);
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                     searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                     Utils.hideKeyboard(getActivity());
@@ -606,7 +607,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 //            searchListView.setAdapter(searchResultsAdapter);
 
         }else {
-            nestedScrollView.setVisibility(View.VISIBLE);googleLogo.setVisibility(View.GONE);
+            nestedScrollView.setVisibility(View.VISIBLE);
+            googleLogo.setVisibility(View.GONE);
             searchListView.setVisibility(View.GONE);
         }
     }
