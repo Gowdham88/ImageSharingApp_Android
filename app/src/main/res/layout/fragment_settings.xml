@@ -136,7 +136,7 @@
                 android:textColor="@color/tag_text_color" />
 
             <TextView
-                android:id="@+id/text_events"
+                android:id="@+id/text_bookmark_events"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -150,7 +150,7 @@
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/text_rate_business"
+                android:id="@+id/text_bookmark_business"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -164,7 +164,7 @@
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/text_items"
+                android:id="@+id/text_bookmark_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -178,7 +178,7 @@
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/text_posts"
+                android:id="@+id/text_bookmark_posts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -192,7 +192,7 @@
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/text_users"
+                android:id="@+id/text_bookmark_users"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"

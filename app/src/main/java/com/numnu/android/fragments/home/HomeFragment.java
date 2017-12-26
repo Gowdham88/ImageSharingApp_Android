@@ -167,7 +167,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         Homelinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
         Homelinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
         AppLay=(AppBarLayout)view.findViewById(R.id.appbar_layout);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         Homelinlay1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -266,6 +266,9 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
         setupSearchListener();
 
+        RelativeLayout relativeLayout = view.findViewById(R.id.home_linlay);
+        checkKeyBoardUp(relativeLayout);
+
 
         final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
 
@@ -290,28 +293,32 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         view.setOnKeyListener(this);
     }
 
-//    private void checkKeyBoardUp(final View view) {
-//
-//        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                View bottomNavigationView = getActivity().findViewById(R.id.navigation);
-//                Rect r = new Rect();
-//                view.getWindowVisibleDisplayFrame(r);
-//                int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
-//
-//                if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
-//                    //ok now we know the keyboard is up...
-//                    bottomNavigationView.setVisibility(View.GONE);
-//
-//
-//                }else{
-//                    //ok now we know the keyboard is down...
-//                    bottomNavigationView.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//    }
+    private void checkKeyBoardUp(final View view) {
+
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                View bottomNavigationView = getActivity().findViewById(R.id.navigation);
+                View bottomdivider = getActivity().findViewById(R.id.bottom_divider);
+                Rect r = new Rect();
+                view.getWindowVisibleDisplayFrame(r);
+                int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
+
+                if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
+                    //ok now we know the keyboard is up...
+                    bottomNavigationView.setVisibility(View.GONE);
+                    bottomdivider.setVisibility(View.GONE);
+
+
+
+                }else{
+                    //ok now we know the keyboard is down...
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                    bottomdivider.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
 
 
     @SuppressLint("ClickableViewAccessibility")

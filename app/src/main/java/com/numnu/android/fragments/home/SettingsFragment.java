@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
+import com.numnu.android.fragments.auth.CompleteSignupFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.auth.SignupFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
@@ -123,6 +124,49 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        TextView bookmarkEvents = view.findViewById(R.id.text_bookmark_events);
+        bookmarkEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: 26/12/17
+
+            }
+        });
+
+        TextView bookmarkBusiness = view.findViewById(R.id.text_bookmark_business);
+        bookmarkBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                   // TODO: 26/12/17
+            }
+        });
+
+        TextView bookmarkItems = view.findViewById(R.id.text_bookmark_items);
+        bookmarkItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                   // TODO: 26/12/17
+            }
+        });
+
+        TextView bookmarkPosts = view.findViewById(R.id.text_bookmark_posts);
+        bookmarkPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                     // TODO: 26/12/17
+            }
+        });
+
+        TextView bookamrkUsers = view.findViewById(R.id.text_bookmark_users);
+        bookamrkUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                   // TODO: 26/12/17
+            }
+        });
+
+
+
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Settings");
 
@@ -167,6 +211,7 @@ public class SettingsFragment extends Fragment {
         return view;
 
     }
+
 
     private void logout() {
 
