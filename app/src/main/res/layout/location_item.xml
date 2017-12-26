@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:lines="2"
+        android:lines="1"
         android:layout_marginStart="10dp"
         android:layout_toRightOf="@id/card_view"
         android:text="Bouillon Bilk,595 St Lautent Blvd,Montreal,QC H2X 2S9,Canada" />
@@ -115,7 +115,7 @@
         android:layout_toEndOf="@id/card_view"
         android:text="August 30,Montreal,canada otawa"
         android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp" />
 
 </RelativeLayout>

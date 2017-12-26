@@ -11,28 +11,58 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.LocationItemsAdapter;
+import com.numnu.android.adapter.eventdetail.EventPostsAdapter;
+import com.numnu.android.fragments.detail.LocationDetailFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.Datum;
+import com.numnu.android.network.response.EventPostsResponse;
+import com.numnu.android.network.response.ItemLocationResponse;
+import com.numnu.android.network.response.Location;
+import com.numnu.android.network.response.PostdataItem;
+import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by thulir on 9/10/17.
  */
 
 public class LocationItemsFragment extends Fragment {
-
+    private  String itemId;
     private RecyclerView menuitemsRecyclerView;
     private Context context;
+    LocationItemsAdapter currentUpAdapter;
+    private boolean isLoading=false;
+    private boolean isLastPage=false;
+    private int PAGE_SIZE = 20;
+    private int nextPage = 1;
+    ItemLocationResponse itemlocationResponse;
 
-    public static LocationItemsFragment newInstance() {
+    public static LocationItemsFragment newInstance(String itemId) {
+        LocationDetailFragment locationdetailfragment=new LocationDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("itemId", itemId);
+        locationdetailfragment.setArguments(args);
         return new LocationItemsFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            itemId = bundle.getString("itemId");
+        }
     }
 
     @Override
@@ -42,16 +72,42 @@ public class LocationItemsFragment extends Fragment {
     View  view= inflater.inflate(R.layout.fragment_location_items, container, false);
 
     menuitemsRecyclerView = view.findViewById(R.id.menu_items_recyclerview);
-    RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
+    final RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
         menuitemsRecyclerView.setLayoutManager(layoutManager);
 //    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(menuitemsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
-
-    setupRecyclerView();
+        menuitemsRecyclerView.setNestedScrollingEnabled(false);
+//    setupRecyclerView();
 
     final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
 
+        if(Utils.isNetworkAvailable(context)) {
+            getData("35");
+        }else {
+            showAlert();
+        }
+        menuitemsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.getItemCount();
+
+                if (!isLoading && !isLastPage) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= PAGE_SIZE) {
+                        loadMoreItems(itemId);
+                    }
+                }
+            }
+        });
 
 
         return view;
@@ -59,6 +115,79 @@ public class LocationItemsFragment extends Fragment {
 
 
 }
+    private void showAlert() {
+//        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+//        builder.setMessage("No Internet connection");
+//        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//            }
+//        });
+//        builder.create().show();
+    }
+
+    private void getData(String id)
+    {
+        isLoading = true;
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<ItemLocationResponse> call=apiServices.getLocation(id);
+        call.enqueue(new Callback<ItemLocationResponse>() {
+            @Override
+            public void onResponse(Call<ItemLocationResponse> call, Response<ItemLocationResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==200) {
+                    itemlocationResponse=response.body();
+                    updateUI();
+                    isLoading = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ItemLocationResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                isLoading = false;
+            }
+        });
+
+    }
+
+    private void loadMoreItems(String id)
+    {
+        nextPage += 1;
+        isLoading = true;
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<ItemLocationResponse> call=apiServices.getLocation(id, String.valueOf(nextPage));
+        call.enqueue(new Callback<ItemLocationResponse>() {
+            @Override
+            public void onResponse(Call<ItemLocationResponse> call, Response<ItemLocationResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==200) {
+                    List<Datum> location=response.body().getData();
+                    if(!response.body().getPagination().isHasMore()){
+                        isLastPage = true;
+                    }
+                    currentUpAdapter.addData(location);
+                    currentUpAdapter.notifyDataSetChanged();
+                    isLoading = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ItemLocationResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                isLoading = false;
+            }
+        });
+
+    }
+
+    private void updateUI() {
+
+        currentUpAdapter = new LocationItemsAdapter(context, itemlocationResponse.getData());
+        menuitemsRecyclerView.setAdapter(currentUpAdapter);
+        currentUpAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -67,16 +196,16 @@ public class LocationItemsFragment extends Fragment {
     }
 
 
-    private void setupRecyclerView() {
-        ArrayList<String> stringlist = new ArrayList<>();
-
-        for (int i = 1; i <= 10; i++) {
-            stringlist.add("Menu item " + i);
-
-            LocationItemsAdapter currentUpAdapter = new LocationItemsAdapter(context, stringlist);
-            menuitemsRecyclerView.setAdapter(currentUpAdapter);
-        }
-
-    }
+//    private void setupRecyclerView() {
+//        ArrayList<String> stringlist = new ArrayList<>();
+//
+//        for (int i = 1; i <= 10; i++) {
+//            stringlist.add("Menu item " + i);
+//
+//             currentUpAdapter = new LocationItemsAdapter(context, stringlist);
+//            menuitemsRecyclerView.setAdapter(currentUpAdapter);
+//        }
+//
+//    }
 }
 
