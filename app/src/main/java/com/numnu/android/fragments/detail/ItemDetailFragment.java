@@ -40,13 +40,18 @@ import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.LocationItemsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.itemdetail.ItemPostsFragment;
 import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.request.BookmarkRequestData;
+import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.ItemDetailsResponse;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -63,13 +68,13 @@ import retrofit2.Response;
 public class ItemDetailFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton,businessName;
     private ImageView eventImageView,entityImageView;
     private TextView eventDescription;
     private PopupWindow pw;
     LinearLayout busCntnRelLay;
     private CustomScrollView nestedScrollView;
-    HorizontalContentAdapter adapter;
+    HorizontalContentAdapter adapter1,adapter2;
     RecyclerView recyclerView1,recyclerView2;
     private Boolean isExpanded = false;
     private String itemId="115";
@@ -81,7 +86,18 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     int Max=4;
     private Uri itemimgPath;
 
+    public static ItemDetailFragment newInstance(String itemId) {
+
+        ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("itemId", itemId);
+        itemDetailFragment.setArguments(args);
+        return itemDetailFragment;
+
+    }
+
     public static ItemDetailFragment newInstance() {
+
         return new ItemDetailFragment();
     }
 
@@ -113,6 +129,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
+        businessName = view.findViewById(R.id.business_name);
 //        eventDate = view.findViewById(R.id.txt_event_date);
 //        eventTime = view.findViewById(R.id.txt_event_time);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
@@ -136,10 +153,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
                 transaction.addToBackStack(null).commit();
             }
         });
-        Picasso.with(context).load(R.drawable.burger)
-                .placeholder(R.drawable.background)
-                .fit()
-                .into(entityImageView);
+
 
 
 
@@ -213,7 +227,26 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             });
         }
 
+        if(!itemDetailsResponse.getBusinessdetail().getImages().isEmpty()&&itemDetailsResponse.getBusinessdetail().getImages().get(0).getImageurl()!=null) {
+            storageRef.child(itemDetailsResponse.getBusinessdetail().getImages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.background)
+                            .fit()
+                            .into(entityImageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
         eventName.setText(itemDetailsResponse.getName());
+        businessName.setText(itemDetailsResponse.getBusinessdetail().getBusinessname());
         eventDescription.setText(itemDetailsResponse.getDescription());
         if(eventDescription.getLineCount()>= Max){
             morebutton.setVisibility(View.VISIBLE);
@@ -254,9 +287,10 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
         }
 
-        adapter = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
-        recyclerView1.setAdapter(adapter);
-        recyclerView2 .setAdapter(adapter);
+        adapter1 = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
+        adapter2 = new HorizontalContentAdapter(context, itemDetailsResponse.getBusinessdetail().getTags());
+        recyclerView1.setAdapter(adapter1);
+        recyclerView2 .setAdapter(adapter2);
 
         hideProgressDialog();
     }
@@ -326,8 +360,9 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
-                }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }else {
+                    postBookmark();
+                    bottomSheetDialog.dismiss();
                 }
             }
         });
@@ -348,18 +383,54 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
-                }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                }else {
+                    postBookmark();
+                    bottomSheetDialog.dismiss();
                 }
             }
         });
     }
 
+    private void postBookmark()
+    {
+        showProgressDialog();
+        String userId = PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_ID);
+        BookmarkRequestData bookmarkRequestData = new BookmarkRequestData();
+        bookmarkRequestData.setClientapp(Constants.CLIENT_APP);
+        bookmarkRequestData.setClientip(Utils.getLocalIpAddress(context));
+        bookmarkRequestData.setType(Constants.BOOKMARK_ITEM);
+        bookmarkRequestData.setEntityid(itemId);
+        bookmarkRequestData.setEntityname(eventName.getText().toString());
 
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<BookmarkResponse> call=apiServices.postBookmark(userId,bookmarkRequestData);
+        call.enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==201) {
+                    BookmarkResponse bookmarkResponse = response.body();
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }else if(responsecode==422) {
+
+                    Toast.makeText(context, "Already Bookmarked!!", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+            }
+        });
+
+    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(new ItemPostsFragment(), "Posts");
         adapter.addFragment(new LocationItemsFragment(), "Locations");
 //        adapter.addFragment(new EventsFragment(), "Events");
         viewPager.setAdapter(adapter);

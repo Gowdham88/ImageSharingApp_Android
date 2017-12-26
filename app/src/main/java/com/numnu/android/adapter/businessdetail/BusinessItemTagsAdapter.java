@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.fragments.businessdetail.BusinessItemsListFragment;
 import com.numnu.android.fragments.eventdetail.EventItemsListFragment;
 import com.numnu.android.network.response.EventTagsDataItem;
 
@@ -24,12 +25,12 @@ import java.util.List;
 public class BusinessItemTagsAdapter extends RecyclerView.Adapter<BusinessItemTagsAdapter.ViewHolder> {
 
     Context context;
-    String eventId;
+    String businessId;
     List<EventTagsDataItem> list = new ArrayList<>();
 
-    public BusinessItemTagsAdapter(Context context, String eventId, List<EventTagsDataItem> stringArrayList) {
+    public BusinessItemTagsAdapter(Context context, String businessId, List<EventTagsDataItem> stringArrayList) {
         this.context=context;
-        this.eventId = eventId;
+        this.businessId = businessId;
         this.list=stringArrayList;
     }
 
@@ -59,11 +60,11 @@ public class BusinessItemTagsAdapter extends RecyclerView.Adapter<BusinessItemTa
             @Override
             public void onClick(View view) {
 
-                EventItemsListFragment eventItemsListFragment=EventItemsListFragment.newInstance(holder.textViewName.getText().toString(),eventId, String.valueOf(eventBusinessesResponse.getTagid()));
+                BusinessItemsListFragment businessItemsListFragment= BusinessItemsListFragment.newInstance(holder.textViewName.getText().toString(),businessId, String.valueOf(eventBusinessesResponse.getTagid()));
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout,eventItemsListFragment);
+                transaction.replace(R.id.frame_layout,businessItemsListFragment);
                 transaction.addToBackStack(null).commit();
             }
         });

@@ -38,6 +38,17 @@ public class ItemDetailsResponse{
 	@SerializedName("tags")
 	private List<TagsItem> tags;
 
+	@SerializedName("business")
+	private Businessdetail businessdetail;
+
+	public void setBusinessdetail(Businessdetail businessdetail){
+		this.businessdetail = businessdetail;
+	}
+
+	public Businessdetail getBusinessdetail(){
+		return businessdetail;
+	}
+
 	public void setCreatedat(String createdat){
 		this.createdat = createdat;
 	}
