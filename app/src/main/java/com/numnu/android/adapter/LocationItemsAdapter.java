@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ import java.util.List;
 public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdapter.ViewHolder> {
 
     Context context;
-    List<Datum> stringArrayList = new ArrayList<>();
+    List<Datum> List = new ArrayList<>();
     private StorageReference storageRef ;
     private FirebaseStorage storage;
     String Createdate;
@@ -43,13 +44,13 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
 
     public LocationItemsAdapter(Context context, List<Datum> stringArrayList) {
         this.context=context;
-        this.stringArrayList=stringArrayList;
+        this.List=stringArrayList;
         storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         storageRef = storage.getReference();
     }
     public  void addData(List<Datum> stringArrayList){
-        stringArrayList.addAll(stringArrayList);
+        List.addAll(stringArrayList);
     }
 
     @Override
@@ -78,11 +79,7 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-//        Picasso.with(context).load(R.drawable.sasitem)
-//                .placeholder(R.drawable.background)
-//                .fit()
-//                .into(holder.imageViewIcon);
-        final Datum Locationdata = stringArrayList.get(position);
+        final Datum Locationdata = List.get(position);
         if(!Locationdata.getLocationimages().isEmpty()&&Locationdata.getLocationimages().get(0).getImageurl()!=null) {
             storageRef.child(Locationdata.getLocationimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -101,23 +98,25 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
             });
         }
         holder.textViewName.setText(Locationdata.getName());
-//         Createdate= Locationdata.getCreatedat();
-//         String str= String.valueOf(Createdate);
-//        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-//        java.util.Date date = null;
-//        try
-//        {
-//            date = form.parse(str);
-//        }
-//        catch (ParseException e)
-//        {
-//
-//            e.printStackTrace();
-//        }
-//        SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd");
-//         StartDateStr = postFormater.format(date);
-        holder.crdate.setText(Locationdata.getCreatedat());
-//        holder.date.setText(Locationdata.);
+        String EndDate=Locationdata.getCreatedat();
+        if(EndDate!=null){
+            SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            java.util.Date endate = null;
+            try
+            {
+                endate = endformat.parse(EndDate);
+            }
+            catch (ParseException e)
+            {
+
+                e.printStackTrace();
+            }
+            SimpleDateFormat Formater = new SimpleDateFormat("MMM dd");
+             StartDateStr = Formater.format(endate);
+        }
+
+        holder.crdate.setText(StartDateStr);
+
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +152,8 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
 
     @Override
     public int getItemCount() {
-        return stringArrayList.size();
+//        return (List == null) ? 0 :List.size();
+        return List.size();
     }
 
 

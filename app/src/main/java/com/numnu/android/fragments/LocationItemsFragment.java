@@ -72,7 +72,7 @@ public class LocationItemsFragment extends Fragment {
     View  view= inflater.inflate(R.layout.fragment_location_items, container, false);
 
     menuitemsRecyclerView = view.findViewById(R.id.menu_items_recyclerview);
-    final RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
+        final LinearLayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
         menuitemsRecyclerView.setLayoutManager(layoutManager);
 //    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(menuitemsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
@@ -97,7 +97,7 @@ public class LocationItemsFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
                 if (!isLoading && !isLastPage) {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
@@ -129,6 +129,7 @@ public class LocationItemsFragment extends Fragment {
 
     private void getData(String id)
     {
+
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<ItemLocationResponse> call=apiServices.getLocation(id);
