@@ -769,6 +769,13 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     }
 
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
 
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
@@ -789,7 +796,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                 if (hasPermissions()) {
                     captureImage();
                 } else {
-                    EasyPermissions.requestPermissions(getActivity(), "Permissions required", PERMISSIONS_REQUEST_CAMERA, CAMERA);
+                    EasyPermissions.requestPermissions(CompleteSignupFragment.this, "Permissions required", PERMISSIONS_REQUEST_CAMERA, CAMERA);
                 }
             }
         });
@@ -801,7 +808,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
                     Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(i, RC_PICK_IMAGE);
                 } else {
-                    EasyPermissions.requestPermissions(getActivity(), "Permissions required", PERMISSIONS_REQUEST_GALLERY, CAMERA);
+                    EasyPermissions.requestPermissions(CompleteSignupFragment.this, "Permissions required", PERMISSIONS_REQUEST_GALLERY, CAMERA);
                 }
 
                 bottomSheetDialog.dismiss();
@@ -809,13 +816,41 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         });
     }
 
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+        switch (requestCode){
+
+            case PERMISSIONS_REQUEST_GALLERY:
+                if(perms.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE)&&perms.contains(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, RC_PICK_IMAGE);
+                }
+                break;
+
+            case PERMISSIONS_REQUEST_CAMERA:
+                if(perms.contains(Manifest.permission.CAMERA)) {
+                    captureImage();
+                }
+                break;
+
+        }
+
+
+    }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // Forward results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog directing them to enable the permission in app settings.
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+
     }
+
 
 
     private boolean hasPermissions() {
@@ -1145,36 +1180,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     }
 
 
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-
-        switch (requestCode) {
-
-            case PERMISSIONS_REQUEST_CAMERA:
-                captureImage();
-                break;
-
-            case PERMISSIONS_REQUEST_GALLERY:
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RC_PICK_IMAGE);
-                break;
-
-        }
-
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
-
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display a dialog directing them to enable the permission in app settings.
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
-        }
-
-    }
 
 
     @Override
