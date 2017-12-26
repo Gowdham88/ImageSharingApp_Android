@@ -18,15 +18,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -44,8 +39,6 @@ import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.businessdetail.BusinessItemsTagsFragment;
 import com.numnu.android.fragments.businessdetail.BusinessPostsFragment;
-import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.eventdetail.EventPostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.BookmarkRequestData;
@@ -416,8 +409,8 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(BusinessItemsTagsFragment.newInstance(businessId), "Items");
-        adapter.addFragment( BusinessPostsFragment.newInstance(businessId), "Posts");
+//        adapter.addFragment(BusinessItemsTagsFragment.newInstance(eventId, businessId), "Items");
+//        adapter.addFragment( BusinessPostsFragment.newInstance(eventId, businessId), "Posts");
         adapter.addFragment(BusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);
     }
