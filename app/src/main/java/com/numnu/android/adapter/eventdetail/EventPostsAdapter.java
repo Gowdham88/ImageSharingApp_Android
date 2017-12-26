@@ -108,6 +108,15 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             });
         }
 
+
+//        if(postdataItem.getRating() ==1){
+//                    holder.inloveicon.setImageResource();
+//
+//        }else if(postdataItem.getRating() ==2){
+//            holder.inloveicon.setImageResource();
+//        }else{
+//            holder.inloveicon.setImageResource();
+//        }
         holder.eventName.setText(postdataItem.getEvent().getName());
         String UserName=postdataItem.getPostcreator().getUsername();
         holder.username.setText("@"+UserName);
@@ -238,7 +247,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
         private TextView eventName,username,email,name,title;
         private TextView cottageHouseText;
         private TextView barbequeText;
-        ImageView dotsimg;
+        ImageView dotsimg,inloveicon;
         public ViewHolder(View itemView) {
             super(itemView);
             this.title =  itemView.findViewById(R.id.title);
@@ -255,6 +264,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             this.cattgicon = itemView.findViewById(R.id.cottage_house_icon);
             this.eventicon = itemView.findViewById(R.id.barbados_icon);
             dotsimg=(ImageView)itemView.findViewById(R.id.event_dots);
+            inloveicon=(ImageView)itemView.findViewById(R.id.inlove_icon);
 
         }
     }

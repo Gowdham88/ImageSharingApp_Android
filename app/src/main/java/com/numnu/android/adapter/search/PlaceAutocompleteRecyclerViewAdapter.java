@@ -226,7 +226,7 @@ public class PlaceAutocompleteRecyclerViewAdapter
         AutocompletePrediction item = getItem(position);
         String merge= String.valueOf(item.getPrimaryText(STYLE_BOLD));
         String merge1= String.valueOf(item.getSecondaryText(STYLE_BOLD));
-        String total=merge+merge1;
+        String total=merge+", "+merge1;
         holder.textView1.setText(total);
 //        holder.textView2.setText(item.getSecondaryText(STYLE_BOLD));
     }
