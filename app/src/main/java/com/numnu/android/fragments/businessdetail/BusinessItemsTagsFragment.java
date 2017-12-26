@@ -1,8 +1,6 @@
 package com.numnu.android.fragments.businessdetail;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -34,7 +32,7 @@ import retrofit2.Response;
 public class BusinessItemsTagsFragment extends Fragment {
 
     private RecyclerView menuitemsRecyclerView;
-    private String businessId;
+    private String businessId,eventId;
     private Context context;
     private boolean isLoading=false;
     private boolean isLastPage=false;
@@ -43,11 +41,12 @@ public class BusinessItemsTagsFragment extends Fragment {
     private BusinessItemTagsAdapter businessItemTagsAdapter;
     private EventItemsResponse eventItemsResponse;
 
-    public static BusinessItemsTagsFragment newInstance(String businessId) {
+    public static BusinessItemsTagsFragment newInstance(String eventId, String businessId) {
 
         BusinessItemsTagsFragment eventBusinessFragment = new BusinessItemsTagsFragment();
         Bundle args = new Bundle();
         args.putString("businessId", businessId);
+        args.putString("eventId", eventId);
         eventBusinessFragment.setArguments(args);
 
         return eventBusinessFragment;
@@ -60,6 +59,7 @@ public class BusinessItemsTagsFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             businessId = bundle.getString("businessId");
+            eventId = bundle.getString("eventId");
         }
 
 
@@ -80,7 +80,7 @@ public class BusinessItemsTagsFragment extends Fragment {
         menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
 
         if(Utils.isNetworkAvailable(context)) {
-            getItems(businessId);
+            getItems(eventId,businessId);
         }else {
             showAlert();
         }
@@ -115,11 +115,11 @@ public class BusinessItemsTagsFragment extends Fragment {
     }
 
 
-    private void getItems(String id)
+    private void getItems(String eventId, String businessId)
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventItemsResponse> call=apiServices.getBusinessItemTags(id);
+        Call<EventItemsResponse> call=apiServices.getEventBusinessItemTags(eventId,businessId);
         call.enqueue(new Callback<EventItemsResponse>() {
             @Override
             public void onResponse(Call<EventItemsResponse> call, Response<EventItemsResponse> response) {
@@ -145,7 +145,7 @@ public class BusinessItemsTagsFragment extends Fragment {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventItemsResponse> call=apiServices.getBusinessItemTags(id, String.valueOf(nextPage));
+        Call<EventItemsResponse> call=apiServices.getEventBusinessItemTags(eventId,businessId, String.valueOf(nextPage));
         call.enqueue(new Callback<EventItemsResponse>() {
             @Override
             public void onResponse(Call<EventItemsResponse> call, Response<EventItemsResponse> response) {
@@ -172,7 +172,7 @@ public class BusinessItemsTagsFragment extends Fragment {
 
     private void updateUI() {
 
-         businessItemTagsAdapter = new BusinessItemTagsAdapter(context,businessId, eventItemsResponse.getData());
+         businessItemTagsAdapter = new BusinessItemTagsAdapter(context,eventId,businessId,eventItemsResponse.getData());
         menuitemsRecyclerView.setAdapter(businessItemTagsAdapter);
         businessItemTagsAdapter.notifyDataSetChanged();
     }

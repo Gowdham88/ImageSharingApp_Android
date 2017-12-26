@@ -32,16 +32,19 @@ import java.util.List;
 
 public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinessesAdapter.ViewHolder> {
 
+
     Context context;
     List<DataItem> list = new ArrayList<>();
     HorizontalContentAdapter adapter;
     private RecyclerView recyclerView;
     private StorageReference storageRef ;
     private FirebaseStorage storage;
+    private String eventId;
 
-    public EventBusinessesAdapter(Context context, List<DataItem> stringArrayList) {
+    public EventBusinessesAdapter(Context context, String eventId,List<DataItem> stringArrayList) {
         this.context=context;
         this.list =stringArrayList;
+        this.eventId=eventId;
         storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         storageRef = storage.getReference();
@@ -90,9 +93,9 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Bundle bundle = new Bundle();
                 bundle.putString("businessId", String.valueOf(eventBusinessesResponse.getId()));
+                bundle.putString("eventId", eventId);
                 BusinessDetailFragment businessDetailFragment = BusinessDetailFragment.newInstance();
                 businessDetailFragment.setArguments(bundle);
 
@@ -108,6 +111,7 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
 
                 Bundle bundle = new Bundle();
                 bundle.putString("businessId", String.valueOf(eventBusinessesResponse.getId()));
+                bundle.putString("eventId", eventId);
                 BusinessDetailFragment businessDetailFragment = BusinessDetailFragment.newInstance();
                 businessDetailFragment.setArguments(bundle);
 

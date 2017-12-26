@@ -1,10 +1,8 @@
-package com.numnu.android.fragments.detail;
+package com.numnu.android.fragments.eventdetail;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,7 +22,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,19 +33,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
+import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
 import com.numnu.android.fragments.businessdetail.BusinessItemsTagsFragment;
 import com.numnu.android.fragments.businessdetail.BusinessPostsFragment;
-import com.numnu.android.fragments.eventdetail.EventBusinessDetailFragment;
-import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
-import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.BookmarkRequestData;
 import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.BusinessResponse;
-import com.numnu.android.network.response.EventBusinessDetailResponse;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
@@ -60,30 +59,49 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BusinessDetailFragment extends Fragment implements View.OnClickListener {
+/**
+ * Created by thulir on 9/10/17.
+ */
+
+public class EventBusinessDetailFragment extends Fragment implements View.OnClickListener {
+
+    SearchView searchViewFood, searchViewLocation;
     private Context context;
-    private ViewPager viewPagerBusiness;
-    private TabLayout tabLayout;
-    private TextView eventDescription,morebutton;
+    TextView weblink1, weblink2, weblink3;
+    private TextView viewEventMap, eventName, city, eventDate, eventTime,morebutton;
+    private ImageView eventImageView;
+    private TextView eventDescription;
     private AppBarLayout appBarLayout;
-    TextView entityTitle;
-    TextView Viewimage,eventName;
+    private PopupWindow pw;
+    private CustomScrollView nestedScrollView;
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
-    TextView ViewTxt;
-    private CustomScrollView nestedScrollView;
     private Boolean isExpanded = false;
-    ImageView busimg,businessImage;
     private String businessId,eventId;
-    private EventBusinessDetailResponse businessResponse;
+    private BusinessResponse businessResponse;
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
+    private Uri BusinessimgPath;
     int Max=4;
     private ProgressDialog mProgressDialog;
 
-    public static BusinessDetailFragment newInstance() {
-        return new BusinessDetailFragment();
+
+    public static EventBusinessDetailFragment newInstance(String eventId, String businessId){
+        EventBusinessDetailFragment searchBusinessDetailFragment = new EventBusinessDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("businessId", businessId);
+        args.putString("eventId", eventId);
+        searchBusinessDetailFragment.setArguments(args);
+        return searchBusinessDetailFragment;
+    }
+
+    public static EventBusinessDetailFragment newInstance(String businessId){
+        EventBusinessDetailFragment searchBusinessDetailFragment = new EventBusinessDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("businessId", businessId);
+        searchBusinessDetailFragment.setArguments(args);
+        return searchBusinessDetailFragment;
     }
 
     @Override
@@ -101,41 +119,23 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view=inflater.inflate(R.layout.frag_business_details, container, false);
+        final View view = inflater.inflate(R.layout.fragment_search_business_detail, container, false);
 
-        viewPagerBusiness = view.findViewById(R.id.business_viewpager);
-        tabLayout = view.findViewById(R.id.tabs);
+        ViewPager viewPager = view.findViewById(R.id.event_viewpager);
+        setupViewPager(viewPager);
+
         eventDescription = view.findViewById(R.id.event_description);
         eventName = view.findViewById(R.id.event_name);
-        entityTitle = view.findViewById(R.id.text_business_entity);
-        busimg = view.findViewById(R.id.img_calender);
-        businessImage = view.findViewById(R.id.business_image);
-
-        recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
-
-        
-        setupViewPager(viewPagerBusiness);
-        tabLayout.setupWithViewPager(viewPagerBusiness);
-        TextView toolbarTitleBuss = view.findViewById(R.id.toolbar_title);
-        toolbarTitleBuss.setText(getString(R.string.businesses));
-        ImageView toolbarIconBuss = view.findViewById(R.id.toolbar_image);
-        RelativeLayout toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
-        final Toolbar toolbar = view.findViewById(R.id.toolbar);
-        Viewimage= view.findViewById(R.id.business_viewtxt);
+        city = view.findViewById(R.id.txt_city);
+//        eventDate = view.findViewById(R.id.txt_event_date);
+//        eventTime = view.findViewById(R.id.txt_event_time);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
-        morebutton = view.findViewById(R.id.more_button);
-        morebutton.setVisibility(View.GONE);
-
-
-        Viewimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventBusinessDetailFragment.newInstance(eventId,businessId));
-                transaction.addToBackStack(null).commit();
-            }
-        });
+        recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
+//        adapter = new HorizontalContentAdapter(context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        eventImageView = view.findViewById(R.id.current_event_image);
+        eventImageView.setOnClickListener(this);
 
         eventName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,20 +147,23 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             }
         });
 
-        busimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setVisibility(View.GONE);
 
-        toolbarBackIconBuss.setOnClickListener(this);
+        TabLayout tabLayout = view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+        TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.business);
+
+        ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
+        RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbarBackIcon.setOnClickListener(this);
         toolbar.setOnClickListener(this);
 
-        toolbarIconBuss.setOnClickListener(  new View.OnClickListener() {
+        toolbarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomSheet(inflater);
@@ -168,22 +171,24 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         });
 
         if(Utils.isNetworkAvailable(context)) {
-            getData(eventId,businessId);
+            getData(businessId);
         }else {
             showAlert();
         }
         return view;
     }
+
     private void showAlert() {
     }
 
-    private void getData(String eventId, String businessId)
+
+    private void getData(String id)
     {
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventBusinessDetailResponse> call=apiServices.getEventBusinessDetail(eventId,businessId);
-        call.enqueue(new Callback<EventBusinessDetailResponse>() {
+        Call<BusinessResponse> call=apiServices.getBusinessById(id);
+        call.enqueue(new Callback<BusinessResponse>() {
             @Override
-            public void onResponse(Call<EventBusinessDetailResponse> call, Response<EventBusinessDetailResponse> response) {
+            public void onResponse(Call<BusinessResponse> call, Response<BusinessResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
                     businessResponse = response.body();
@@ -192,7 +197,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             }
 
             @Override
-            public void onFailure(Call<EventBusinessDetailResponse> call, Throwable t) {
+            public void onFailure(Call<BusinessResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
             }
         });
@@ -210,11 +215,12 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             storageRef.child(businessResponse.getBusinessimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
+                    BusinessimgPath = uri;
                     // Got the download URL for 'users/me/profile.png'
                     Picasso.with(context).load(uri)
                             .placeholder(R.drawable.background)
                             .fit()
-                            .into(businessImage);
+                            .into(eventImageView);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -226,8 +232,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
 
 
-        eventName.setText(businessResponse.getBusinessusername());
-        entityTitle.setText(businessResponse.getBusinessname());
+        eventName.setText(businessResponse.getBusinessname());
         eventDescription.setText(businessResponse.getBusinessdescription());
         if(eventDescription.getLineCount()>= Max){
             morebutton.setVisibility(View.VISIBLE);
@@ -252,13 +257,11 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
             }
         });
-
         adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
     }
-
 
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
@@ -394,23 +397,31 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         }
     }
 
+
     private void setupViewPager(ViewPager viewPager) {
-       ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(BusinessItemsTagsFragment.newInstance(eventId,businessId), "Items");
-        adapter.addFragment(BusinessPostsFragment.newInstance(eventId,businessId), "Posts");
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(BusinessItemsTagsFragment.newInstance(eventId, businessId), "Items");
+        adapter.addFragment( BusinessPostsFragment.newInstance(eventId, businessId), "Posts");
+        adapter.addFragment(BusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+            case R.id.toolbar_back:
+                getActivity().onBackPressed();
+                break;
+
             case R.id.toolbar:
                 nestedScrollView.scrollTo(0,0);
                 break;
 
-            case R.id.toolbar_back:
-                 getActivity().onBackPressed();
+            case R.id.current_event_image:
+                initiatePopupWindow();
                 break;
+
 
         }
     }
@@ -460,7 +471,41 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onAttach(Context context) {
-        this.context=context;
+        this.context = context;
         super.onAttach(context);
     }
+
+    private void initiatePopupWindow() {
+        if(BusinessimgPath!=null){
+            Intent intent=new Intent(getActivity(), SliceActivity.class);
+            intent.putExtra("imagepath",BusinessimgPath.toString());
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+        }
+
+//        LayoutInflater inflater = (LayoutInflater) context
+//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View layout = inflater.inflate(R.layout.image_popup,null);
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//        pw = new PopupWindow(layout, lp.width, lp.height, true);
+//        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+//
+//        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+//        layout.startAnimation(hide);
+//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
+//
+//        btncancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pw.dismiss();
+//            }
+//        });
+
+    }
+
 }
+

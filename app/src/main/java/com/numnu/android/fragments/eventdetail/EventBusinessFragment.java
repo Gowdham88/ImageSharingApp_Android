@@ -179,7 +179,7 @@ public class EventBusinessFragment extends Fragment {
 
     private void updateUI() {
 
-         eventBusinessesAdapter = new EventBusinessesAdapter(context, eventBusinessesResponse.getData());
+         eventBusinessesAdapter = new EventBusinessesAdapter(context,eventId, eventBusinessesResponse.getData());
         businessRecyclerView.setAdapter(eventBusinessesAdapter);
         eventBusinessesAdapter.notifyDataSetChanged();
     }

@@ -9,6 +9,7 @@ import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.BusinessEventsResponse;
 import com.numnu.android.network.response.BusinessResponse;
 import com.numnu.android.network.response.CommonResponse;
+import com.numnu.android.network.response.EventBusinessDetailResponse;
 import com.numnu.android.network.response.EventBusinessesResponse;
 import com.numnu.android.network.response.EventDetailResponse;
 import com.numnu.android.network.response.EventItemsResponse;
@@ -70,21 +71,43 @@ public interface ApiServices {
 
 
     //get event details
-    @GET("/events/{id}")
-    Call<EventDetailResponse> getEvent(@Path("id") String id);
+    @GET("/events/{eventId}")
+    Call<EventDetailResponse> getEvent(@Path("eventId") String id);
 
     //get event business details
-    @GET("/events/{id}/businesses")
-    Call<EventBusinessesResponse> getEventBusinesses(@Path("id") String id,@Query("page") String page);
+    @GET("/events/{eventId}/businesses")
+    Call<EventBusinessesResponse> getEventBusinesses(@Path("eventId") String id,@Query("page") String page);
 
-    @GET("/events/{id}/businesses")
-    Call<EventBusinessesResponse> getEventBusinesses(@Path("id") String id);
+    @GET("/events/{eventId}/businesses")
+    Call<EventBusinessesResponse> getEventBusinesses(@Path("eventId") String id);
 
-    @GET("/events/{id}/itemtags")
-    Call<EventItemsResponse> getEventItems(@Path("id") String id);
+    @GET("/events/{eventId}/businesses/{businessId}")
+    Call<EventBusinessDetailResponse> getEventBusinessDetail(@Path("eventId") String eventId, @Path("businessId") String businessId);
 
-    @GET("/events/{id}/itemtags")
-    Call<EventItemsResponse> getEventItems(@Path("id") String id,@Query("page") String page);
+    @GET("/events/{eventId}/businesses/{businessId}/itemtags")
+    Call<EventItemsResponse> getEventBusinessItemTags(@Path("eventId") String eventId,@Path("businessId") String businessId);
+
+    @GET("/events/{eventId}/businesses/{businessId}/itemtags")
+    Call<EventItemsResponse> getEventBusinessItemTags(@Path("eventId") String eventId,@Path("businessId") String businessId,@Query("page") String page);
+
+    @GET("/events/{eventId}/businesses/{businessId}/itemtags/{tagId}/items")
+    Call<ItemsByTagResponse> getEventBusinessItemsByTagId(@Path("eventId") String eventId,@Path("businessId") String businessId,@Path("tagId") String tagId);
+
+    @GET("/events/{eventId}/businesses/{businessId}/itemtags/{tagId}/items")
+    Call<ItemsByTagResponse> getEventBusinessItemsByTagId(@Path("eventId") String eventId,@Path("businessId") String businessId,@Path("tagId") String tagId,@Query("page") String page);
+
+    @GET("/events/{eventId}/businesses/{businessId}/posts")
+    Call<EventPostsResponse> getEventBusinessPosts(@Path("eventId") String eventId,@Path("businessId") String businessId);
+
+    @GET("/events/{eventId}/businesses/{businessId}/posts")
+    Call<EventPostsResponse> getEventBusinessPosts(@Path("eventId") String eventId,@Path("businessId") String businessId,@Query("page") String page);
+
+
+    @GET("/events/{eventId}/itemtags")
+    Call<EventItemsResponse> getEventItems(@Path("eventId") String id);
+
+    @GET("/events/{eventId}/itemtags")
+    Call<EventItemsResponse> getEventItems(@Path("eventId") String id,@Query("page") String page);
 
     @GET("/events/{eventId}/itemtags/{tagId}/items")
     Call<ItemsByTagResponse> getItemsByTagId(@Path("eventId") String eventId, @Path("tagId") String tagId);
@@ -92,11 +115,11 @@ public interface ApiServices {
     @GET("/events/{eventId}/itemtags/{tagId}/items")
     Call<ItemsByTagResponse> getItemsByTagId(@Path("eventId") String eventId,@Path("tagId") String tagId,@Query("page") String page);
 
-    @GET("/events/{id}/posts")
-    Call<EventPostsResponse> getEventPosts(@Path("id") String id);
+    @GET("/events/{eventId}/posts")
+    Call<EventPostsResponse> getEventPosts(@Path("eventId") String id);
 
-    @GET("/events/{id}/posts")
-    Call<EventPostsResponse> getEventPosts(@Path("id") String id,@Query("page") String page);
+    @GET("/events/{eventId}/posts")
+    Call<EventPostsResponse> getEventPosts(@Path("eventId") String id,@Query("page") String page);
 
     @GET("/posts/{id}")
     Call<PostdataItem> getPostById(@Path("id") String id);

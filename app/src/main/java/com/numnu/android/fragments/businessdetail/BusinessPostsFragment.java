@@ -1,8 +1,6 @@
 package com.numnu.android.fragments.businessdetail;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.businessdetail.BusinessPostsAdapter;
-import com.numnu.android.adapter.eventdetail.EventPostsAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.EventPostsResponse;
@@ -33,7 +30,7 @@ import retrofit2.Response;
 
 public class BusinessPostsFragment extends Fragment {
 
-    private  String businessId;
+    private  String businessId,eventId;
     private RecyclerView recyclerView;
     Context context;
     EventPostsResponse eventPostsResponse;
@@ -43,10 +40,11 @@ public class BusinessPostsFragment extends Fragment {
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
 
-    public static BusinessPostsFragment newInstance(String businessId) {
+    public static BusinessPostsFragment newInstance(String eventId, String businessId) {
         BusinessPostsFragment eventBusinessFragment = new BusinessPostsFragment();
         Bundle args = new Bundle();
         args.putString("businessId", businessId);
+        args.putString("eventId", eventId);
         eventBusinessFragment.setArguments(args);
 
         return eventBusinessFragment;
@@ -58,6 +56,7 @@ public class BusinessPostsFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             businessId = bundle.getString("businessId");
+            eventId = bundle.getString("eventId");
         }
 
     }
@@ -75,7 +74,7 @@ public class BusinessPostsFragment extends Fragment {
 //    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        recyclerView.addItemDecoration(dividerItemDecoration);
         if(Utils.isNetworkAvailable(context)) {
-            getData(businessId);
+            getData();
         }else {
             showAlert();
         }
@@ -119,11 +118,11 @@ public class BusinessPostsFragment extends Fragment {
     }
 
 
-    private void getData(String id)
+    private void getData()
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventPostsResponse> call=apiServices.getBusinessPosts(id);
+        Call<EventPostsResponse> call=apiServices.getEventBusinessPosts(eventId,businessId);
         call.enqueue(new Callback<EventPostsResponse>() {
             @Override
             public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
@@ -149,7 +148,7 @@ public class BusinessPostsFragment extends Fragment {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventPostsResponse> call=apiServices.getBusinessPosts(id, String.valueOf(nextPage));
+        Call<EventPostsResponse> call=apiServices.getEventBusinessPosts(eventId,businessId, String.valueOf(nextPage));
         call.enqueue(new Callback<EventPostsResponse>() {
             @Override
             public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {

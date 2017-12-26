@@ -45,20 +45,20 @@ public class BusinessItemsListFragment extends Fragment implements View.OnClickL
     private Context context;
     private String title;
     ImageView toolbarIcon;
-    private String businessId;
+    private String businessId,eventId,tagId;
     private boolean isLoading=false;
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
     private EventItemsListAdapter eventItemsListAdapter;
     private ItemsByTagResponse eventItemsResponse;
-    private String tagId;
 
-    public static BusinessItemsListFragment newInstance(String category, String businessId, String tagId) {
+    public static BusinessItemsListFragment newInstance(String category, String eventId,String businessId, String tagId) {
 
         BusinessItemsListFragment eventBusinessFragment = new BusinessItemsListFragment();
         Bundle args = new Bundle();
         args.putString("category", category);
+        args.putString("eventId", eventId);
         args.putString("businessId", businessId);
         args.putString("tagId", tagId);
         eventBusinessFragment.setArguments(args);
@@ -74,6 +74,7 @@ public class BusinessItemsListFragment extends Fragment implements View.OnClickL
         if (bundle != null) {
 
             title = bundle.getString("category");
+            eventId = bundle.getString("eventId");
             businessId = bundle.getString("businessId");
             tagId = bundle.getString("tagId");
         }
@@ -168,7 +169,7 @@ public class BusinessItemsListFragment extends Fragment implements View.OnClickL
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<ItemsByTagResponse> call=apiServices.getBusinessItemsByTagId(businessId,tagId);
+        Call<ItemsByTagResponse> call=apiServices.getEventBusinessItemsByTagId(eventId,businessId,tagId);
         call.enqueue(new Callback<ItemsByTagResponse>() {
             @Override
             public void onResponse(Call<ItemsByTagResponse> call, Response<ItemsByTagResponse> response) {
@@ -194,7 +195,7 @@ public class BusinessItemsListFragment extends Fragment implements View.OnClickL
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<ItemsByTagResponse> call=apiServices.getBusinessItemsByTagId(businessId,tagId, String.valueOf(nextPage));
+        Call<ItemsByTagResponse> call=apiServices.getEventBusinessItemsByTagId(eventId,businessId,tagId, String.valueOf(nextPage));
         call.enqueue(new Callback<ItemsByTagResponse>() {
             @Override
             public void onResponse(Call<ItemsByTagResponse> call, Response<ItemsByTagResponse> response) {
