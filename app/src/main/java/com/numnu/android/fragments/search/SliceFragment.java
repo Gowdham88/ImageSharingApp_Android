@@ -242,7 +242,7 @@ public class SliceFragment extends Fragment {
 
     private void getData(String id)
     {
-
+showProgressDialog();
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<PostdataItem> call=apiServices.getPostById(id);
         call.enqueue(new Callback<PostdataItem>() {
@@ -319,7 +319,7 @@ public class SliceFragment extends Fragment {
         if(!postsResponse.getTaggeditems().isEmpty()) {
            barbequeText.setText(postsResponse.getTaggeditems().get(0).getName());
         }
-        
+        hideProgressDialog();
     }
 
 

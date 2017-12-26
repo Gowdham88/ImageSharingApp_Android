@@ -162,7 +162,7 @@
                 android:drawableRight="@drawable/ic_chevron_right_black_24dpbus"
                 android:gravity="center_vertical"
                 android:padding="@dimen/size8"
-                android:text="View Profile"
+                android:text="View profile"
                 android:textColor="@color/weblink_color" />
 
             <android.support.design.widget.TabLayout
