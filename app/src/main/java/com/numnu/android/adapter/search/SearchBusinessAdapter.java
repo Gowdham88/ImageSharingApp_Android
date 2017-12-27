@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
+import com.numnu.android.fragments.eventdetail.EventBusinessDetailFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
+                transaction.add(R.id.frame_layout, EventBusinessDetailFragment.newInstance("50"));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -69,7 +70,7 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
+                transaction.add(R.id.frame_layout, EventBusinessDetailFragment.newInstance("50"));
                 transaction.addToBackStack(null).commit();
             }
         });

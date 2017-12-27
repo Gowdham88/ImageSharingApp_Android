@@ -409,6 +409,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         searchViewFood.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP){
                     if (searchViewFood.getCompoundDrawables()[2]!= null){
                         if (motionEvent.getX() >=(searchViewFood.getRight()-searchViewFood.getLeft() - searchViewFood.getCompoundDrawables()[2].getBounds().width())){
@@ -427,6 +428,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         searchViewLocation.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP){
                     if (searchViewLocation.getCompoundDrawables()[2]!= null){
                         if (motionEvent.getX() >=(searchViewLocation.getRight()-searchViewLocation.getLeft() - searchViewLocation.getCompoundDrawables()[2].getBounds().width())){

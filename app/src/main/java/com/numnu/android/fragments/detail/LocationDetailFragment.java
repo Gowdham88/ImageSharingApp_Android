@@ -44,6 +44,7 @@ import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
+import com.numnu.android.fragments.eventdetail.EventBusinessDetailFragment;
 import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.eventdetail.EventPostsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
@@ -152,7 +153,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
             public void onClick(View v) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
+                transaction.replace(R.id.frame_layout, EventBusinessDetailFragment.newInstance("50"));
                 transaction.addToBackStack(null).commit();
             }
         });
