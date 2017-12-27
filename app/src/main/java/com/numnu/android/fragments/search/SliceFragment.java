@@ -58,7 +58,7 @@ public class SliceFragment extends Fragment {
 
     Context context;
     private PopupWindow pw;
-    private ImageView barbqicon,cattgicon,eventicon;
+    private ImageView barbqicon,cattgicon,eventicon,inloveicon;
     private String postId;
     private ImageView userImageIcon,contentImage;
     private TextView nameText,cottageHouseText,barbequeText,eventText,userNameTxt,title;
@@ -116,6 +116,7 @@ public class SliceFragment extends Fragment {
          barbequeText = view.findViewById(R.id.barbq_txt);
          eventText = view.findViewById(R.id.barbados_txt);
         title=view.findViewById(R.id.title);
+        inloveicon=(ImageView)view.findViewById(R.id.inlove_icon);
         ImageView toolimg = view.findViewById(R.id.toolbar_image);
         toolimg.setVisibility(View.GONE);
 
@@ -310,7 +311,14 @@ showProgressDialog();
                 }
             });
         }
+        if(postsResponse.getRating() ==1){
+           inloveicon.setImageResource(R.drawable.rating1);
 
+        }else if(postsResponse.getRating() ==2){
+            inloveicon.setImageResource(R.drawable.rating2);
+        }else{
+            inloveicon.setImageResource(R.drawable.rating3);
+        }
         eventText.setText(postsResponse.getEvent().getName());
         userNameTxt.setText(postsResponse.getPostcreator().getUsername());
         nameText.setText(postsResponse.getPostcreator().getName());

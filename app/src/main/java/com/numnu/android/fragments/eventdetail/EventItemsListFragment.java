@@ -1,14 +1,19 @@
 package com.numnu.android.fragments.eventdetail;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +61,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
     private EventItemsListAdapter eventItemsListAdapter;
     private ItemsByTagResponse eventItemsResponse;
     private String tagId;
+    public ProgressDialog mProgressDialog;
 
     public static EventItemsListFragment newInstance(String category,String eventId,String tagId) {
 
@@ -168,6 +175,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
 
     private void getItems()
     {
+
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<ItemsByTagResponse> call=apiServices.getItemsByTagId(eventId,tagId);
@@ -186,6 +194,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
             public void onFailure(Call<ItemsByTagResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
+
             }
         });
 
@@ -193,6 +202,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
 
     private void loadMoreItems()
     {
+
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
@@ -216,6 +226,9 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
             public void onFailure(Call<ItemsByTagResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
+                showAlert();
+
+
             }
         });
 
@@ -232,6 +245,29 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+    }
+    public void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
+                PorterDuff.Mode.SRC_IN);
+        mProgressDialog.setIndeterminateDrawable(drawable);
+        mProgressDialog.show();
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(context);
+//            mProgressDialog.setMessage(getString(R.string.loading));
+//            mProgressDialog.setIndeterminate(true);
+//        }
+//
+//        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override

@@ -216,6 +216,16 @@
                 <!--android:text="Logout"-->
                 <!--android:focusable="true" />-->
             <TextView
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:background="@color/taginside_color"
+                android:textColor="@color/tag_text_color" />
+            <TextView
                 android:id="@+id/text_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

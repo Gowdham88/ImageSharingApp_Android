@@ -2,10 +2,13 @@ package com.numnu.android.fragments.auth;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +17,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -25,6 +29,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +56,7 @@ public class ForgetPassWordFragment extends Fragment {
     TextView txt_error,txt_email;
     EditText emailField;
     View emailview;
+    private ProgressDialog mProgressDialog;
 ConstraintLayout Constainlay;
     TextInputEditText emailtxtinlay;
     public static ForgetPassWordFragment newInstance() {
@@ -87,7 +93,7 @@ ConstraintLayout Constainlay;
                         showerror("Enter email Address");
 
                     } else {
-
+                        showProgressDialog();
                         FirebaseAuth auth = FirebaseAuth.getInstance();
 
                         auth.sendPasswordResetEmail(emailAddress)
@@ -101,6 +107,7 @@ ConstraintLayout Constainlay;
 //                                            Log.d(TAG, "Email sent.");
                                         }else {
                                             showerror("Reset password failed.");
+                                            hideProgressDialog();
                                         }
                                     }
                                 });
@@ -166,6 +173,31 @@ ConstraintLayout Constainlay;
         return v;
     }
 
+    public void showProgressDialog() {
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(context);
+//            mProgressDialog.setMessage(getString(R.string.loading));
+//            mProgressDialog.setIndeterminate(true);
+//        }
+//
+//        mProgressDialog.show();
+//    }
+
+        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
+                PorterDuff.Mode.SRC_IN);
+        mProgressDialog.setIndeterminateDrawable(drawable);
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
     private void Popup() {
 
 
