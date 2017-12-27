@@ -224,7 +224,7 @@
                     android:layout_height="24dp"
                     android:layout_toLeftOf="@+id/event_dots"
                     android:layout_toStartOf="@+id/event_dots"
-                    android:src="@drawable/ic_in_love" />
+                    android:src="@drawable/ic_in_lovetwo" />
 
                 <ImageView
                     android:id="@+id/event_dots"

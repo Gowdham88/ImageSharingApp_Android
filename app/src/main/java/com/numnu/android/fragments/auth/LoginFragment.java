@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +20,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -32,6 +36,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -558,12 +563,22 @@ public class LoginFragment extends Fragment {
     }
 
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(context);
+//            mProgressDialog.setMessage(getString(R.string.loading));
+//            mProgressDialog.setIndeterminate(true);
+//        }
+//
+//        mProgressDialog.show();
+//    }
 
+        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
+                PorterDuff.Mode.SRC_IN);
+        mProgressDialog.setIndeterminateDrawable(drawable);
         mProgressDialog.show();
     }
 
@@ -572,6 +587,7 @@ public class LoginFragment extends Fragment {
             mProgressDialog.dismiss();
         }
     }
+
 
     public void showerror(String error) {
 

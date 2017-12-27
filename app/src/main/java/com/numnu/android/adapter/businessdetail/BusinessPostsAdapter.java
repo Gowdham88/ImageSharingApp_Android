@@ -106,7 +106,14 @@ public class BusinessPostsAdapter extends RecyclerView.Adapter<BusinessPostsAdap
                 }
             });
         }
+        if(postdataItem.getRating() ==1){
+             holder.inloveicon.setImageResource(R.drawable.rating1);
 
+        }else if(postdataItem.getRating() ==2){
+            holder.inloveicon.setImageResource(R.drawable.rating2);
+        }else{
+            holder.inloveicon.setImageResource(R.drawable.rating3);
+        }
         holder.eventName.setText(postdataItem.getEvent().getName());
         holder.username.setText(postdataItem.getPostcreator().getUsername());
         holder.name.setText(postdataItem.getPostcreator().getName());
@@ -236,7 +243,7 @@ public class BusinessPostsAdapter extends RecyclerView.Adapter<BusinessPostsAdap
         private TextView eventName,username,email,name,title;
         private TextView cottageHouseText;
         private TextView barbequeText;
-        ImageView dotsimg;
+        ImageView dotsimg,inloveicon;
         public ViewHolder(View itemView) {
             super(itemView);
             this.title =  itemView.findViewById(R.id.title);
@@ -253,6 +260,7 @@ public class BusinessPostsAdapter extends RecyclerView.Adapter<BusinessPostsAdap
             this.cattgicon = itemView.findViewById(R.id.cottage_house_icon);
             this.eventicon = itemView.findViewById(R.id.barbados_icon);
             dotsimg=(ImageView)itemView.findViewById(R.id.event_dots);
+            inloveicon=(ImageView)itemView.findViewById(R.id.inlove_icon);
 
         }
     }

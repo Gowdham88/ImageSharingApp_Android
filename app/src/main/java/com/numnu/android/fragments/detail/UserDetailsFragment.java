@@ -109,7 +109,6 @@ public class UserDetailsFragment extends Fragment {
         setupRecyclerView();
 
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
-
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

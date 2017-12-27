@@ -1,15 +1,21 @@
 package com.numnu.android.fragments.eventdetail;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.numnu.android.R;
@@ -41,6 +47,7 @@ public class  EventPostsFragment extends Fragment {
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
+    public ProgressDialog mProgressDialog;
 
     public static EventPostsFragment newInstance(String eventId) {
         EventPostsFragment eventBusinessFragment = new EventPostsFragment();
@@ -168,6 +175,7 @@ public class  EventPostsFragment extends Fragment {
             public void onFailure(Call<EventPostsResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
+               
             }
         });
 
@@ -185,6 +193,29 @@ public class  EventPostsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+    }
+    public void showProgressDialog() {
+        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
+                PorterDuff.Mode.SRC_IN);
+        mProgressDialog.setIndeterminateDrawable(drawable);
+        mProgressDialog.show();
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(context);
+//            mProgressDialog.setMessage(getString(R.string.loading));
+//            mProgressDialog.setIndeterminate(true);
+//        }
+//
+//        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 
 }
