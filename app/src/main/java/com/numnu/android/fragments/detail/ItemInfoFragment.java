@@ -83,7 +83,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     TextView barbTxt,CatgTxt;
     ImageView BarbImg,CatgImg;
    private Boolean isExpanded = false;
-    private String itemId;
+    private String itemId,eventId;
     EventPostsResponse eventPostsResponse;
     ItemDetailsResponse itemDetailsResponse;
     private EventPostsAdapter eventBusinessesAdapter;
@@ -98,10 +98,11 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     int Max=4;
 
 
-    public static ItemInfoFragment newInstance(String itemId) {
+    public static ItemInfoFragment newInstance(String eventId,String itemId) {
 
         ItemInfoFragment itemInfoFragment = new ItemInfoFragment();
         Bundle args = new Bundle();
+        args.putString("eventId", eventId);
         args.putString("itemId", itemId);
         itemInfoFragment.setArguments(args);
         return itemInfoFragment;
@@ -113,6 +114,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             itemId = bundle.getString("itemId");
+            eventId = bundle.getString("eventId");
         }
 
         storage = FirebaseStorage.getInstance();
@@ -181,7 +183,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
         if(Utils.isNetworkAvailable(context)) {
             getItemsDetails(itemId);
-            getData("149");
+            getData();
         }else {
             showAlert();
         }
@@ -203,7 +205,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
                             && totalItemCount >= PAGE_SIZE) {
-                        loadMoreItems(itemId);
+                        loadMoreItems();
                     }
                 }
             }
@@ -252,11 +254,11 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void getData(String id)
+    private void getData()
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventPostsResponse> call=apiServices.getItemPosts(id);
+        Call<EventPostsResponse> call=apiServices.getEventItemPosts(eventId,itemId);
         call.enqueue(new Callback<EventPostsResponse>() {
             @Override
             public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
@@ -277,12 +279,12 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void loadMoreItems(String id)
+    private void loadMoreItems()
     {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventPostsResponse> call=apiServices.getItemPosts(id, String.valueOf(nextPage));
+        Call<EventPostsResponse> call=apiServices.getEventItemPosts(eventId,itemId, String.valueOf(nextPage));
         call.enqueue(new Callback<EventPostsResponse>() {
             @Override
             public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {

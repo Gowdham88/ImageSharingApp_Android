@@ -314,6 +314,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
                 }else {
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
             }
 
@@ -327,6 +328,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             public void afterTextChanged(Editable editable) {
                 if (!searchViewLocation.getText().toString().trim().equals("")){
 
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
                     searchViewLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
@@ -334,13 +336,14 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
                                 searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                                 searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
                             }
-                            searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+
                         }
                     });
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+
 
                 }else{
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
             }
         });
@@ -353,20 +356,19 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!searchViewFood.getText().toString().trim().equals("")){
                     searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-//                    searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
                     searchViewFood.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
                             if(hasFocus){
                                 searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-//                                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
+                                searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
                             }
                         }
                     });
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
 
                 }else{
                     searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
 
             }
@@ -398,6 +400,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
 
                 }else{
                     searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
+                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 }
             }
 
