@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
+import com.numnu.android.fragments.EventBookmarksFragment;
 import com.numnu.android.fragments.auth.CompleteSignupFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.auth.SignupFragment;
@@ -129,7 +130,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO: 26/12/17
-
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, EventBookmarksFragment.newInstance());
+                transaction.addToBackStack(null).commit();
             }
         });
 

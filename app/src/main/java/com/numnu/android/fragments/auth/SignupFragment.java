@@ -66,8 +66,6 @@ public class SignupFragment extends Fragment {
     TextView textViewSignIn, TxtEmai, TxtPass;
     EditText mEmailField, mPasswordField;
     public ProgressDialog mProgressDialog;
-    TextInputEditText emailtxtinlay, passTxtinLay;
-    String Signupname;
     // [START declare_auth]
     private FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
@@ -140,8 +138,6 @@ public class SignupFragment extends Fragment {
         mEmailField = view.findViewById(R.id.et_email);
         mPasswordField = view.findViewById(R.id.et_password);
         txt_error = (TextView) view.findViewById(R.id.txt_error);
-        emailtxtinlay = (TextInputEditText) view.findViewById(R.id.et_email);
-        passTxtinLay = (TextInputEditText) view.findViewById(R.id.et_password);
         textViewSignIn.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         emailview=view.findViewById(R.id.username_view);
         passview=view.findViewById(R.id.pass_view);

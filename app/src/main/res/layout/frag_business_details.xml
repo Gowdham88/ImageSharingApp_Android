@@ -149,7 +149,8 @@
                 android:textSize="13sp"/>
 
 
-
+            <!--android:drawableEnd="@drawable/ic_chevron_right_black_24dpbus"-->
+            <!--android:drawableRight="@drawable/ic_chevron_right_black_24dpbus"-->
             <TextView
                 android:id="@+id/business_viewtxt"
                 style="@style/FontAvenirMedium"
@@ -158,11 +159,9 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="10dp"
                 android:background="@color/view_grey_color"
-                android:drawableEnd="@drawable/ic_chevron_right_black_24dpbus"
-                android:drawableRight="@drawable/ic_chevron_right_black_24dpbus"
                 android:gravity="center_vertical"
                 android:padding="@dimen/size8"
-                android:text="View profile"
+                android:text=""
                 android:textColor="@color/weblink_color" />
 
             <android.support.design.widget.TabLayout

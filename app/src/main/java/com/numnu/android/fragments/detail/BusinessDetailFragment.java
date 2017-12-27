@@ -132,7 +132,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         morebutton.setVisibility(View.GONE);
 
 
-        Viewimage.setOnClickListener(new View.OnClickListener() {
+        businessImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
@@ -141,6 +141,18 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 transaction.addToBackStack(null).commit();
             }
         });
+
+
+        entityTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, EventBusinessDetailFragment.newInstance(eventId,businessId));
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
 
         eventName.setOnClickListener(new View.OnClickListener() {
             @Override

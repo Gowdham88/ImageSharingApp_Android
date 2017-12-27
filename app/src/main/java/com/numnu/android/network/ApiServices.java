@@ -184,7 +184,7 @@ public interface ApiServices {
 
     @POST("/mobile/find")
     Call<List<IdResponse>> getId(@Body IdRequest idRequest);
-*/
+  */
 
  @GET("/items/{itemId}/locations")
  Call<ItemLocationResponse> getLocation(@Path("itemId") String id);

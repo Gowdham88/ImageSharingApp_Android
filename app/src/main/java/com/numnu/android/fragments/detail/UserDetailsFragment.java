@@ -19,10 +19,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.adapter.Userdetailadapter;
 import com.numnu.android.fragments.home.SettingsFragment;
+import com.numnu.android.network.response.TagsItem;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,9 @@ public class UserDetailsFragment extends Fragment {
     RecyclerView recyclerView;
     ImageView SettingImg;
     Boolean showarrow = false;
+    StorageReference storageRef ;
+    private FirebaseStorage storage;
+    ImageView userImage;
 
 
     public static UserDetailsFragment newInstance() {

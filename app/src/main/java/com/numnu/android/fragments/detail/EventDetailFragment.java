@@ -322,14 +322,22 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         if(!eventDetailResponse.getEventlinks().isEmpty()) {
             if(eventDetailResponse.getEventlinks().size()>0){
                 weblink1.setText(eventDetailResponse.getEventlinks().get(0).getLinktext());
+            }else {
+                weblink1.setVisibility(View.GONE);
             }
 
             if(eventDetailResponse.getEventlinks().size()>1){
                 weblink2.setText(eventDetailResponse.getEventlinks().get(1).getLinktext());
             }
+            else {
+                weblink2.setVisibility(View.GONE);
+            }
 
             if(eventDetailResponse.getEventlinks().size()>2){
                 weblink3.setText(eventDetailResponse.getEventlinks().get(2).getLinktext());
+            }
+            else {
+                weblink3.setVisibility(View.GONE);
             }
 
         }
