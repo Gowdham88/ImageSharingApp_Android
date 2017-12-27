@@ -127,6 +127,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         RelativeLayout toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
         Viewimage= view.findViewById(R.id.business_viewtxt);
+        Viewimage.setVisibility(View.GONE);
         nestedScrollView= view.findViewById(R.id.nestedScrollView);
         morebutton = view.findViewById(R.id.more_button);
         morebutton.setVisibility(View.GONE);
