@@ -141,10 +141,10 @@ public interface ApiServices {
     Call<EventItemsResponse> getBusinessItemTags(@Path("id") String id,@Query("page") String page);
 
     @GET("/businesses/{businessId}/itemtags/{tagId}/items")
-    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String id,@Path("tagId") String tagId);
+    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String businessId,@Path("tagId") String tagId);
 
     @GET("/businesses/{businessId}/itemtags/{tagId}/items")
-    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String id,@Path("tagId") String tagId,@Query("page") String page);
+    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String businessId,@Path("tagId") String tagId,@Query("page") String page);
 
     @GET("/businesses/{id}/posts")
     Call<EventPostsResponse> getBusinessPosts(@Path("id") String id);

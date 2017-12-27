@@ -38,7 +38,12 @@ import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.businessdetail.BusinessItemsTagsFragment;
+import com.numnu.android.fragments.businessdetail.BusinessLocationsFragment;
 import com.numnu.android.fragments.businessdetail.BusinessPostsFragment;
+import com.numnu.android.fragments.search.SearchBusinessEventsFragment;
+import com.numnu.android.fragments.search.SearchBusinessItemsTagsFragment;
+import com.numnu.android.fragments.search.SearchBusinessLocationsFragment;
+import com.numnu.android.fragments.search.SearchBusinessPostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.BookmarkRequestData;
@@ -409,9 +414,10 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-//        adapter.addFragment(BusinessItemsTagsFragment.newInstance(eventId, businessId), "Items");
-//        adapter.addFragment( BusinessPostsFragment.newInstance(eventId, businessId), "Posts");
-        adapter.addFragment(BusinessEventsFragment.newInstance(businessId), "Events");
+        adapter.addFragment(SearchBusinessItemsTagsFragment.newInstance(businessId), "Items");
+        adapter.addFragment( SearchBusinessPostsFragment.newInstance( businessId), "Posts");
+        adapter.addFragment(SearchBusinessLocationsFragment.newInstance( businessId), "Locations");
+        adapter.addFragment(SearchBusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);
     }
 

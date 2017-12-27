@@ -239,6 +239,8 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
         setupTagAutocomplete();
 
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
 

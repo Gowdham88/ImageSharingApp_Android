@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.RelativeLayout;
 
 import com.facebook.CallbackManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,13 +43,15 @@ public class HomeActivity extends MyActivity {
 
     private CallbackManager mCallbackManager;
     private FirebaseAuth mAuth;
+    private RelativeLayout relativelayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        relativelayout=findViewById(R.id.activity_main);
+        checkKeyBoardUp(relativelayout);
         mCallbackManager = CallbackManager.Factory.create();
 
         mAuth = FirebaseAuth.getInstance();
@@ -131,6 +137,7 @@ public class HomeActivity extends MyActivity {
                 updateToken(firebaseAuth.getCurrentUser());
             }
         });
+        checkKeyBoardUp(relativelayout);
     }
 
     private void updateToken(FirebaseUser user) {
@@ -155,6 +162,31 @@ public class HomeActivity extends MyActivity {
             //System.out.println("@#@");
             fragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void checkKeyBoardUp(final View view) {
+
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                View bottomNavigationView = findViewById(R.id.navigation);
+                View bottomdivider = findViewById(R.id.bottom_divider);
+                Rect r = new Rect();
+                view.getWindowVisibleDisplayFrame(r);
+                int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
+
+                if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
+                    //ok now we know the keyboard is up...
+                    bottomNavigationView.setVisibility(View.GONE);
+                    bottomdivider.setVisibility(View.GONE);
+
+                }else{
+                    //ok now we know the keyboard is down...
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                    bottomdivider.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
 
