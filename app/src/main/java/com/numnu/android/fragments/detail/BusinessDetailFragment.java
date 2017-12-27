@@ -5,6 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -391,13 +396,21 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
     }
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
-
+        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
+                PorterDuff.Mode.SRC_IN);
+        mProgressDialog.setIndeterminateDrawable(drawable);
         mProgressDialog.show();
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(context);
+//            mProgressDialog.setMessage(getString(R.string.loading));
+//            mProgressDialog.setIndeterminate(true);
+//        }
+//
+//        mProgressDialog.show();
     }
 
     public void hideProgressDialog() {

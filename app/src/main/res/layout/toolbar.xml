@@ -74,6 +74,30 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true" />
+        <!--<RelativeLayout-->
+           <!---->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/save_txt"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toRightOf="@+id/toolbar_title"-->
+            <!--android:layout_height="40dp">-->
+            <TextView
+                android:text="Save"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/toolbar_title"
+                android:textAllCaps="false"
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/name_black"
+                android:id="@+id/button_complete_signup"
+               android:layout_centerVertical="true" />
+
+        <!--</RelativeLayout>-->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

@@ -85,7 +85,8 @@
             android:name=".activity.webFragment"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activity.SliceActivity"
-            android:screenOrientation="sensor"/>
+            android:screenOrientation="sensor"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

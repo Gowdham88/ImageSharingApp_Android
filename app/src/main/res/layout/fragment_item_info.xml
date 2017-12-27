@@ -159,23 +159,20 @@
             style="@style/FontAvenirMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_tiny"
             android:layout_below="@+id/txt_amount"
             android:textSize="13dp"
             android:maxLines="4"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat" />
+            android:layout_marginRight="10dp"/>
 
         <TextView
+
             android:id="@+id/more_button"
             style="@style/FontAvenirMedium"
             android:layout_width="38dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/event_description"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="0dp"
             android:text="more"
             android:textColor="#4A90E2"
             android:textSize="13sp"/>

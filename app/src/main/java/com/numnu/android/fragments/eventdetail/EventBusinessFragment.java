@@ -124,6 +124,7 @@ public class EventBusinessFragment extends Fragment {
 
     private void getBusinessDetails(String id)
     {
+
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<EventBusinessesResponse> call=apiServices.getEventBusinesses(id);

@@ -5,6 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +15,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,6 +95,8 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
+    int Max=4;
+
 
     public static ItemInfoFragment newInstance(String itemId) {
 
@@ -129,7 +136,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         CatgTxt=(TextView)view.findViewById(R.id.evntcottage_house_txt);
         BarbImg=(ImageView) view.findViewById(R.id.evntbarbq_icon);
         CatgImg=(ImageView)view.findViewById(R.id.evntcottage_house_icon);
-        morebutton = view.findViewById(R.id.more_button);
+
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
@@ -144,26 +151,28 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
         RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
         ItemInfoTxt=(TextView) view.findViewById(R.id.text_terms) ;
-        morebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (isExpanded) {
-
-                    isExpanded = false;
-                    eventDescription.setMaxLines(4);
-                    morebutton.setText("more");
-
-                } else {
-
-                    isExpanded = true;
-                    eventDescription.setMaxLines(1000);
-                    morebutton.setText("less");
-
-                }
-
-            }
-        });
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setVisibility(View.GONE);
+//        morebutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (isExpanded) {
+//
+//                    isExpanded = false;
+//                    eventDescription.setMaxLines(4);
+//                    morebutton.setText("more");
+//
+//                } else {
+//
+//                    isExpanded = true;
+//                    eventDescription.setMaxLines(1000);
+//                    morebutton.setText("less");
+//
+//                }
+//
+//            }
+//        });
 
         setupClickListeners();
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
@@ -320,7 +329,31 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         }
 
         itemName.setText(itemDetailsResponse.getBusinessdetail().getBusinessname());
+
         eventDescription.setText(itemDetailsResponse.getBusinessdetail().getBusinessdescription());
+        if(eventDescription.getLineCount()>= Max){
+            morebutton.setVisibility(View.VISIBLE);
+        }
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    eventDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    eventDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
         adapter = new HorizontalContentAdapter(context,itemDetailsResponse.getBusinessdetail().getTags());
         recyclerView.setAdapter(adapter);
 
@@ -514,12 +547,21 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     }
 
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(context);
+//            mProgressDialog.setMessage(getString(R.string.loading));
+//            mProgressDialog.setIndeterminate(true);
+//        }
+//
+//        mProgressDialog.show();
 
+        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
+                PorterDuff.Mode.SRC_IN);
+        mProgressDialog.setIndeterminateDrawable(drawable);
         mProgressDialog.show();
     }
 

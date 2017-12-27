@@ -98,7 +98,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
                     Picasso.with(context).load(uri)
                             .placeholder(R.drawable.background)
                             .fit()
-                            .into(holder.imageViewIcon);
+                            .into(holder.profileImage);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -109,14 +109,14 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
         }
 
 
-//        if(postdataItem.getRating() ==1){
-//                    holder.inloveicon.setImageResource();
-//
-//        }else if(postdataItem.getRating() ==2){
-//            holder.inloveicon.setImageResource();
-//        }else{
-//            holder.inloveicon.setImageResource();
-//        }
+        if(postdataItem.getRating() ==1){
+            holder.inloveicon.setImageResource(R.drawable.rating1);
+
+        }else if(postdataItem.getRating() ==2){
+            holder.inloveicon.setImageResource(R.drawable.rating2);
+        }else{
+            holder.inloveicon.setImageResource(R.drawable.rating3);
+        }
         holder.eventName.setText(postdataItem.getEvent().getName());
         String UserName=postdataItem.getPostcreator().getUsername();
         holder.username.setText("@"+UserName);

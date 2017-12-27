@@ -11,7 +11,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -43,6 +46,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -1189,12 +1193,22 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     }
 
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(context);
+//            mProgressDialog.setMessage(getString(R.string.loading));
+//            mProgressDialog.setIndeterminate(true);
+//        }
+//
+//        mProgressDialog.show();
+//    }
 
+        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
+                PorterDuff.Mode.SRC_IN);
+        mProgressDialog.setIndeterminateDrawable(drawable);
         mProgressDialog.show();
     }
 
@@ -1203,5 +1217,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
             mProgressDialog.dismiss();
         }
     }
+
 
 }

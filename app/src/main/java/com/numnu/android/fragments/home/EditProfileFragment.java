@@ -11,7 +11,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -44,6 +47,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -121,7 +125,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     Context context;
     EditText musername,mEmail, mName,mDob, userDescription;
     AutoCompleteTextView mCity;
-    Button mCompleteSignUp;
+    TextView mCompleteSignUp;
     RadioGroup mRadioGroup;
     RadioButton mRadioMale, mRadioFemale;
     private String mGenderValue = "";
@@ -257,6 +261,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         mDob = v.findViewById(R.id.et_signup_dob);
 
         mCompleteSignUp = v.findViewById(R.id.button_complete_signup);
+        mCompleteSignUp.setVisibility(View.VISIBLE);
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
 
@@ -330,7 +335,6 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         mCompleteSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (validate()) {
 
                     if(!isUsernameChanged()){
@@ -338,7 +342,9 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                     }else {
                     //check username
                     checKUsernameExists(musername.getText().toString());
+
                     }
+
                 }
 
             }
@@ -1317,12 +1323,22 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     }
 
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
+//        if (mProgressDialog == null) {
+//            mProgressDialog = new ProgressDialog(context);
+//            mProgressDialog.setMessage(getString(R.string.loading));
+//            mProgressDialog.setIndeterminate(true);
+//        }
+//
+//        mProgressDialog.show();
+//    }
 
+        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
+                PorterDuff.Mode.SRC_IN);
+        mProgressDialog.setIndeterminateDrawable(drawable);
         mProgressDialog.show();
     }
 
