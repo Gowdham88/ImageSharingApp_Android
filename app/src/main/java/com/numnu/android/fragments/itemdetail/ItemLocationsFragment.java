@@ -1,11 +1,8 @@
-package com.numnu.android.fragments;
+package com.numnu.android.fragments.itemdetail;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,18 +12,13 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.LocationItemsAdapter;
-import com.numnu.android.adapter.eventdetail.EventPostsAdapter;
 import com.numnu.android.fragments.detail.LocationDetailFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.Datum;
-import com.numnu.android.network.response.EventPostsResponse;
 import com.numnu.android.network.response.ItemLocationResponse;
-import com.numnu.android.network.response.Location;
-import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,7 +29,7 @@ import retrofit2.Response;
  * Created by thulir on 9/10/17.
  */
 
-public class LocationItemsFragment extends Fragment {
+public class ItemLocationsFragment extends Fragment {
     private  String itemId;
     private RecyclerView menuitemsRecyclerView;
     private Context context;
@@ -48,12 +40,12 @@ public class LocationItemsFragment extends Fragment {
     private int nextPage = 1;
     ItemLocationResponse itemlocationResponse;
 
-    public static LocationItemsFragment newInstance(String itemId) {
+    public static ItemLocationsFragment newInstance(String itemId) {
         LocationDetailFragment locationdetailfragment=new LocationDetailFragment();
         Bundle args = new Bundle();
         args.putString("itemId", itemId);
         locationdetailfragment.setArguments(args);
-        return new LocationItemsFragment();
+        return new ItemLocationsFragment();
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.numnu.android.fragments.detail;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,11 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -38,10 +34,9 @@ import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.fragments.LocationItemsFragment;
+import com.numnu.android.fragments.itemdetail.ItemLocationsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.itemdetail.ItemPostsFragment;
-import com.numnu.android.fragments.search.PostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.BookmarkRequestData;
@@ -431,7 +426,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new ItemPostsFragment(), "Posts");
-        adapter.addFragment(new LocationItemsFragment(), "Locations");
+        adapter.addFragment(new ItemLocationsFragment(), "Locations");
 //        adapter.addFragment(new EventsFragment(), "Events");
         viewPager.setAdapter(adapter);
     }
