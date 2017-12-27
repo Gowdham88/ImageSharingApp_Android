@@ -187,14 +187,11 @@
             android:layout_marginTop="35dp"
             android:background="@color/view_grey_color"
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_chevron_right_black_24dpbus"
-            android:drawableRight="@drawable/ic_chevron_right_black_24dpbus"
             android:focusable="true"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:padding="@dimen/spacing_small"
-            android:text="View item"
-            android:textSize="13sp"
-            android:textColor="@color/blue" />
+            android:text="Posts"
+            android:textSize="13sp" />
 
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView

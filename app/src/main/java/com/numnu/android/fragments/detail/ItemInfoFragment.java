@@ -492,7 +492,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        ItemInfoTxt.setOnClickListener(new View.OnClickListener() {
+        itemImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
@@ -500,6 +500,16 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
                 transaction.addToBackStack(null).commit();
             }
         });
+
+        itemName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance(itemId));
+                transaction.addToBackStack(null).commit();
+            }
+        });
+
 
     }
 
