@@ -30,6 +30,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -176,7 +177,7 @@ public class LoginFragment extends Fragment {
         });
         // [START initialize_auth]
 
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mCallbackManager = CallbackManager.Factory.create();
         // [END initialize_auth]
         FrameLayout loginButton = view.findViewById(R.id.login_btn_facebook);

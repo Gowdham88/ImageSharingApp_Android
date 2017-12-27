@@ -3,9 +3,6 @@ package com.numnu.android.fragments.detail;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +13,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -40,11 +35,15 @@ import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.activity.SliceActivity;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.fragments.LocationItemsFragment;
 import com.numnu.android.fragments.businessdetail.BusinessEventsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.businessdetail.BusinessItemsTagsFragment;
+import com.numnu.android.fragments.businessdetail.BusinessLocationsFragment;
 import com.numnu.android.fragments.businessdetail.BusinessPostsFragment;
+import com.numnu.android.fragments.search.SearchBusinessEventsFragment;
+import com.numnu.android.fragments.search.SearchBusinessItemsTagsFragment;
+import com.numnu.android.fragments.search.SearchBusinessLocationsFragment;
+import com.numnu.android.fragments.search.SearchBusinessPostsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.BookmarkRequestData;
@@ -82,7 +81,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     private Boolean isExpanded = false;
-    private String businessId,eventId;
+    private String businessId;
     private BusinessResponse businessResponse;
     // Create a storage reference from our app
     StorageReference storageRef ;
@@ -199,7 +198,6 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
     private void getData(String id)
     {
-        showProgressDialog();
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<BusinessResponse> call=apiServices.getBusinessById(id);
         call.enqueue(new Callback<BusinessResponse>() {
@@ -276,7 +274,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        hideProgressDialog();
+
     }
 
     private void showBottomSheet(LayoutInflater inflater) {
@@ -398,20 +396,12 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
     }
     public void showProgressDialog() {
-//        if (mProgressDialog == null) {
-//            mProgressDialog = new ProgressDialog(context);
-//            mProgressDialog.setMessage(getString(R.string.loading));
-//            mProgressDialog.setIndeterminate(true);
-//        }
-//
-//        mProgressDialog.show();
-        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
-                PorterDuff.Mode.SRC_IN);
-        mProgressDialog.setIndeterminateDrawable(drawable);
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
         mProgressDialog.show();
     }
 
@@ -424,9 +414,10 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(BusinessItemsTagsFragment.newInstance(eventId,businessId), "Items");
-        adapter.addFragment( BusinessPostsFragment.newInstance(eventId,businessId), "Posts");
-        adapter.addFragment(BusinessEventsFragment.newInstance(businessId), "Events");
+        adapter.addFragment(SearchBusinessItemsTagsFragment.newInstance(businessId), "Items");
+        adapter.addFragment( SearchBusinessPostsFragment.newInstance( businessId), "Posts");
+        adapter.addFragment(SearchBusinessLocationsFragment.newInstance( businessId), "Locations");
+        adapter.addFragment(SearchBusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);
     }
 

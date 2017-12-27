@@ -225,7 +225,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         AddTxt = (TextView) v.findViewById(R.id.add_txt);
 
         setupTagAutocomplete();
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
