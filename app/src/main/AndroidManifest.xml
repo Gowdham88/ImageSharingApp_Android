@@ -67,7 +67,7 @@
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -77,13 +77,13 @@
             android:name=".activity.OnboardingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.GoogleMapActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.webFragment"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.SliceActivity"
             android:screenOrientation="sensor"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
