@@ -13,6 +13,7 @@ import com.numnu.android.network.response.CommonResponse;
 import com.numnu.android.network.response.EventBusinessDetailResponse;
 import com.numnu.android.network.response.EventBusinessesResponse;
 import com.numnu.android.network.response.EventDetailResponse;
+import com.numnu.android.network.response.EventItemDetailResponse;
 import com.numnu.android.network.response.EventItemsResponse;
 import com.numnu.android.network.response.EventPostsResponse;
 import com.numnu.android.network.response.GetBookmarksResponse;
@@ -59,7 +60,7 @@ public interface ApiServices {
     Call<TagsResponse> getTags(@Query("beginWith") String s);
 
 
-   //get item details
+    //get item details
     @GET("/items/{itemId}")
     Call<ItemDetailsResponse> getItem(@Path("itemId") String id);
 
@@ -67,8 +68,7 @@ public interface ApiServices {
     Call<EventPostsResponse> getItemPosts(@Path("itemId") String id);
 
     @GET("/items/{itemId}/posts")
-    Call<EventPostsResponse> getItemPosts(@Path("itemId") String id,@Query("page") String page);
-
+    Call<EventPostsResponse> getItemPosts(@Path("itemId") String id, @Query("page") String page);
 
 
     //get event details
@@ -77,7 +77,7 @@ public interface ApiServices {
 
     //get event business details
     @GET("/events/{eventId}/businesses")
-    Call<EventBusinessesResponse> getEventBusinesses(@Path("eventId") String id,@Query("page") String page);
+    Call<EventBusinessesResponse> getEventBusinesses(@Path("eventId") String id, @Query("page") String page);
 
     @GET("/events/{eventId}/businesses")
     Call<EventBusinessesResponse> getEventBusinesses(@Path("eventId") String id);
@@ -86,41 +86,49 @@ public interface ApiServices {
     Call<EventBusinessDetailResponse> getEventBusinessDetail(@Path("eventId") String eventId, @Path("businessId") String businessId);
 
     @GET("/events/{eventId}/businesses/{businessId}/itemtags")
-    Call<EventItemsResponse> getEventBusinessItemTags(@Path("eventId") String eventId,@Path("businessId") String businessId);
+    Call<EventItemsResponse> getEventBusinessItemTags(@Path("eventId") String eventId, @Path("businessId") String businessId);
 
     @GET("/events/{eventId}/businesses/{businessId}/itemtags")
-    Call<EventItemsResponse> getEventBusinessItemTags(@Path("eventId") String eventId,@Path("businessId") String businessId,@Query("page") String page);
+    Call<EventItemsResponse> getEventBusinessItemTags(@Path("eventId") String eventId, @Path("businessId") String businessId, @Query("page") String page);
 
     @GET("/events/{eventId}/businesses/{businessId}/itemtags/{tagId}/items")
-    Call<ItemsByTagResponse> getEventBusinessItemsByTagId(@Path("eventId") String eventId,@Path("businessId") String businessId,@Path("tagId") String tagId);
+    Call<ItemsByTagResponse> getEventBusinessItemsByTagId(@Path("eventId") String eventId, @Path("businessId") String businessId, @Path("tagId") String tagId);
 
     @GET("/events/{eventId}/businesses/{businessId}/itemtags/{tagId}/items")
-    Call<ItemsByTagResponse> getEventBusinessItemsByTagId(@Path("eventId") String eventId,@Path("businessId") String businessId,@Path("tagId") String tagId,@Query("page") String page);
+    Call<ItemsByTagResponse> getEventBusinessItemsByTagId(@Path("eventId") String eventId, @Path("businessId") String businessId, @Path("tagId") String tagId, @Query("page") String page);
 
     @GET("/events/{eventId}/businesses/{businessId}/posts")
-    Call<EventPostsResponse> getEventBusinessPosts(@Path("eventId") String eventId,@Path("businessId") String businessId);
+    Call<EventPostsResponse> getEventBusinessPosts(@Path("eventId") String eventId, @Path("businessId") String businessId);
 
     @GET("/events/{eventId}/businesses/{businessId}/posts")
-    Call<EventPostsResponse> getEventBusinessPosts(@Path("eventId") String eventId,@Path("businessId") String businessId,@Query("page") String page);
-
+    Call<EventPostsResponse> getEventBusinessPosts(@Path("eventId") String eventId, @Path("businessId") String businessId, @Query("page") String page);
 
     @GET("/events/{eventId}/itemtags")
     Call<EventItemsResponse> getEventItems(@Path("eventId") String id);
 
     @GET("/events/{eventId}/itemtags")
-    Call<EventItemsResponse> getEventItems(@Path("eventId") String id,@Query("page") String page);
+    Call<EventItemsResponse> getEventItems(@Path("eventId") String id, @Query("page") String page);
 
     @GET("/events/{eventId}/itemtags/{tagId}/items")
     Call<ItemsByTagResponse> getItemsByTagId(@Path("eventId") String eventId, @Path("tagId") String tagId);
 
     @GET("/events/{eventId}/itemtags/{tagId}/items")
-    Call<ItemsByTagResponse> getItemsByTagId(@Path("eventId") String eventId,@Path("tagId") String tagId,@Query("page") String page);
+    Call<ItemsByTagResponse> getItemsByTagId(@Path("eventId") String eventId, @Path("tagId") String tagId, @Query("page") String page);
+
+    @GET("/events/{eventId}/items/{itemId}/posts")
+    Call<EventPostsResponse> getEventItemPosts(@Path("eventId") String eventId, @Path("itemId") String itemId);
+
+    @GET("/events/{eventId}/items/{itemId}/posts")
+    Call<EventPostsResponse> getEventItemPosts(@Path("eventId") String eventId, @Path("itemId") String itemId,@Query("page") String page);
+
+    @GET("/events/{eventId}/items/{itemId}")
+    Call<EventItemDetailResponse> getEventItemDetail(@Path("eventId") String eventId, @Path("itemId") String itemId);
 
     @GET("/events/{eventId}/posts")
     Call<EventPostsResponse> getEventPosts(@Path("eventId") String id);
 
     @GET("/events/{eventId}/posts")
-    Call<EventPostsResponse> getEventPosts(@Path("eventId") String id,@Query("page") String page);
+    Call<EventPostsResponse> getEventPosts(@Path("eventId") String id, @Query("page") String page);
 
     @GET("/posts/{id}")
     Call<PostdataItem> getPostById(@Path("id") String id);
@@ -133,25 +141,25 @@ public interface ApiServices {
     Call<BusinessEventsResponse> getEventsByBusinessId(@Path("id") String id);
 
     @GET("/businesses/{id}/events")
-    Call<BusinessEventsResponse> getEventsByBusinessId(@Path("id") String id,@Query("page") String page);
+    Call<BusinessEventsResponse> getEventsByBusinessId(@Path("id") String id, @Query("page") String page);
 
     @GET("/businesses/{id}/itemtags")
     Call<EventItemsResponse> getBusinessItemTags(@Path("id") String id);
 
     @GET("/businesses/{id}/itemtags")
-    Call<EventItemsResponse> getBusinessItemTags(@Path("id") String id,@Query("page") String page);
+    Call<EventItemsResponse> getBusinessItemTags(@Path("id") String id, @Query("page") String page);
 
     @GET("/businesses/{businessId}/itemtags/{tagId}/items")
-    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String businessId,@Path("tagId") String tagId);
+    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String businessId, @Path("tagId") String tagId);
 
     @GET("/businesses/{businessId}/itemtags/{tagId}/items")
-    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String businessId,@Path("tagId") String tagId,@Query("page") String page);
+    Call<ItemsByTagResponse> getBusinessItemsByTagId(@Path("businessId") String businessId, @Path("tagId") String tagId, @Query("page") String page);
 
     @GET("/businesses/{id}/posts")
     Call<EventPostsResponse> getBusinessPosts(@Path("id") String id);
 
     @GET("/businesses/{id}/posts")
-    Call<EventPostsResponse> getBusinessPosts(@Path("id") String id,@Query("page") String page);
+    Call<EventPostsResponse> getBusinessPosts(@Path("id") String id, @Query("page") String page);
 
     //Bookmarks
     @Headers("Content-Type: application/json")
@@ -162,7 +170,7 @@ public interface ApiServices {
     Call<GetBookmarksResponse> getBookmark(@Path("userId") String userId);
 
     @GET("/users/{userId}/bookmarks")
-    Call<GetBookmarksResponse> getBookmark(@Path("userId") String userId,@Query("page") String page);
+    Call<GetBookmarksResponse> getBookmark(@Path("userId") String userId, @Query("page") String page);
 
 //    @POST("/mobile/login")
 //    Call<Collection> login(@Query("email") String email, @Query("password") String serial, @Query("mac_address") String mac);
@@ -192,10 +200,10 @@ public interface ApiServices {
  @GET("/businesses/{businessId}/locations")
  Call<BusinessLocationResponse> getbusinesslocation(@Path("businessId") String id, @Query("page") String page);
 
- @GET("/items/{itemId}/locations")
- Call<ItemLocationResponse> getLocation(@Path("itemId") String id);
+    @GET("/items/{itemId}/locations")
+    Call<ItemLocationResponse> getLocation(@Path("itemId") String id);
 
- @GET("/items/{itemId}/locations")
- Call<ItemLocationResponse> getLocation(@Path("itemId") String id,@Query("page") String page);
+    @GET("/items/{itemId}/locations")
+    Call<ItemLocationResponse> getLocation(@Path("itemId") String id, @Query("page") String page);
 
 }

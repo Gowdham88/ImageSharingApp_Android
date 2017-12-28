@@ -1,10 +1,8 @@
-package com.numnu.android.fragments.detail;
+package com.numnu.android.fragments.eventdetail;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -19,12 +17,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -39,22 +34,23 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.adapter.UserPostsAdapter;
 import com.numnu.android.adapter.eventdetail.EventPostsAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.detail.EventDetailFragment;
+import com.numnu.android.fragments.detail.ItemDetailFragment;
+import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.BookmarkRequestData;
 import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.EventPostsResponse;
-import com.numnu.android.network.response.ItemDetailsResponse;
+import com.numnu.android.network.response.EventItemDetailResponse;
 import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -65,10 +61,10 @@ import retrofit2.Response;
  * Created by thulir on 9/10/17.
  */
 
-public class ItemInfoFragment extends Fragment implements View.OnClickListener {
+public class EventItemDetailFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
-    private TextView viewEventMap, itemName, city, eventDate, eventTime,morebutton;
+    private TextView price, itemName, viewEventMap, eventDate, eventTime,morebutton;
     private ImageView eventImageView;
     private TextView eventDescription;
     private AppBarLayout appBarLayout;
@@ -80,12 +76,12 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     private RecyclerView mPostsRecycler;
-    TextView barbTxt,CatgTxt;
+    TextView barbTxt, catgTxt;
     ImageView BarbImg,CatgImg;
    private Boolean isExpanded = false;
-    private String itemId;
+    private String itemId,eventId;
     EventPostsResponse eventPostsResponse;
-    ItemDetailsResponse itemDetailsResponse;
+    EventItemDetailResponse itemDetailsResponse;
     private EventPostsAdapter eventBusinessesAdapter;
     private boolean isLoading=false;
     private boolean isLastPage=false;
@@ -98,10 +94,11 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     int Max=4;
 
 
-    public static ItemInfoFragment newInstance(String itemId) {
+    public static EventItemDetailFragment newInstance(String eventId, String itemId) {
 
-        ItemInfoFragment itemInfoFragment = new ItemInfoFragment();
+        EventItemDetailFragment itemInfoFragment = new EventItemDetailFragment();
         Bundle args = new Bundle();
+        args.putString("eventId", eventId);
         args.putString("itemId", itemId);
         itemInfoFragment.setArguments(args);
         return itemInfoFragment;
@@ -113,6 +110,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             itemId = bundle.getString("itemId");
+            eventId = bundle.getString("eventId");
         }
 
         storage = FirebaseStorage.getInstance();
@@ -129,11 +127,12 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventDescription = view.findViewById(R.id.event_description);
         itemName = view.findViewById(R.id.item_header_name);
-        city = view.findViewById(R.id.txt_city);
+        price = view.findViewById(R.id.txt_amount);
+
         itemImageView = view.findViewById(R.id.item_image);
 
         barbTxt=(TextView)view.findViewById(R.id.evntbarbq_txt);
-        CatgTxt=(TextView)view.findViewById(R.id.evntcottage_house_txt);
+        catgTxt =(TextView)view.findViewById(R.id.evntcottage_house_txt);
         BarbImg=(ImageView) view.findViewById(R.id.evntbarbq_icon);
         CatgImg=(ImageView)view.findViewById(R.id.evntcottage_house_icon);
 
@@ -153,26 +152,6 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
         ItemInfoTxt=(TextView) view.findViewById(R.id.text_terms) ;
         morebutton = view.findViewById(R.id.more_button);
         morebutton.setVisibility(View.GONE);
-//        morebutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (isExpanded) {
-//
-//                    isExpanded = false;
-//                    eventDescription.setMaxLines(4);
-//                    morebutton.setText("more");
-//
-//                } else {
-//
-//                    isExpanded = true;
-//                    eventDescription.setMaxLines(1000);
-//                    morebutton.setText("less");
-//
-//                }
-//
-//            }
-//        });
 
         setupClickListeners();
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
@@ -180,8 +159,8 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
 
         if(Utils.isNetworkAvailable(context)) {
-            getItemsDetails(itemId);
-            getData("149");
+            getItemsDetails();
+            getData();
         }else {
             showAlert();
         }
@@ -203,7 +182,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
                             && totalItemCount >= PAGE_SIZE) {
-                        loadMoreItems(itemId);
+                        loadMoreItems();
                     }
                 }
             }
@@ -227,14 +206,14 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     private void showAlert() {
     }
 
-    private void getItemsDetails(String id)
+    private void getItemsDetails()
     {
         showProgressDialog();
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<ItemDetailsResponse> call=apiServices.getItem(id);
-        call.enqueue(new Callback<ItemDetailsResponse>() {
+        Call<EventItemDetailResponse> call=apiServices.getEventItemDetail(eventId,itemId);
+        call.enqueue(new Callback<EventItemDetailResponse>() {
             @Override
-            public void onResponse(Call<ItemDetailsResponse> call, Response<ItemDetailsResponse> response) {
+            public void onResponse(Call<EventItemDetailResponse> call, Response<EventItemDetailResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
                     itemDetailsResponse = response.body();
@@ -243,7 +222,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<ItemDetailsResponse> call, Throwable t) {
+            public void onFailure(Call<EventItemDetailResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 hideProgressDialog();
             }
@@ -252,11 +231,11 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void getData(String id)
+    private void getData()
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventPostsResponse> call=apiServices.getItemPosts(id);
+        Call<EventPostsResponse> call=apiServices.getEventItemPosts(eventId,itemId);
         call.enqueue(new Callback<EventPostsResponse>() {
             @Override
             public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
@@ -277,12 +256,12 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void loadMoreItems(String id)
+    private void loadMoreItems()
     {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventPostsResponse> call=apiServices.getItemPosts(id, String.valueOf(nextPage));
+        Call<EventPostsResponse> call=apiServices.getEventItemPosts(eventId,itemId, String.valueOf(nextPage));
         call.enqueue(new Callback<EventPostsResponse>() {
             @Override
             public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
@@ -310,8 +289,8 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
     private void updateItemUI() {
 
 
-        if(!itemDetailsResponse.getBusinessdetail().getImages().isEmpty()&&itemDetailsResponse.getBusinessdetail().getImages().get(0).getImageurl()!=null) {
-            storageRef.child(itemDetailsResponse.getBusinessdetail().getImages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        if(!itemDetailsResponse.getItemimages().isEmpty()&&itemDetailsResponse.getItemimages().get(0).getImageurl()!=null) {
+            storageRef.child(itemDetailsResponse.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
@@ -328,9 +307,15 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
             });
         }
 
-        itemName.setText(itemDetailsResponse.getBusinessdetail().getBusinessname());
+        itemName.setText(itemDetailsResponse.getItemname());
 
-        eventDescription.setText(itemDetailsResponse.getBusinessdetail().getBusinessdescription());
+        eventDescription.setText(itemDetailsResponse.getItemdescription());
+
+        price.setText(itemDetailsResponse.getPriceamount());
+
+        barbTxt.setText(itemDetailsResponse.getEventname());
+        catgTxt.setText(itemDetailsResponse.getBusinessname());
+
         if(eventDescription.getLineCount()>= Max){
             morebutton.setVisibility(View.VISIBLE);
         }
@@ -354,7 +339,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-        adapter = new HorizontalContentAdapter(context,itemDetailsResponse.getBusinessdetail().getTags());
+        adapter = new HorizontalContentAdapter(context,itemDetailsResponse.getItemtags());
         recyclerView.setAdapter(adapter);
 
         hideProgressDialog();
@@ -506,7 +491,7 @@ public class ItemInfoFragment extends Fragment implements View.OnClickListener {
                 transaction.addToBackStack(null).commit();
             }
         });
-        CatgTxt.setOnClickListener(new View.OnClickListener() {
+        catgTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
