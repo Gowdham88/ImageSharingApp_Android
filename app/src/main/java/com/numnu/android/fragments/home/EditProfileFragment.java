@@ -260,7 +260,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 //        mRadioFemale = v.findViewById(R.id.female_radio);
         mDob = v.findViewById(R.id.et_signup_dob);
 
-        mCompleteSignUp = v.findViewById(R.id.button_complete_signup);
+        mCompleteSignUp =(TextView) v.findViewById(R.id.button_complete_signup);
         mCompleteSignUp.setVisibility(View.VISIBLE);
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();

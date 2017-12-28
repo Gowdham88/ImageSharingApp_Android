@@ -115,7 +115,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     Context context;
     EditText musername, mEmail, mName, mDob, userDescription;
     AutoCompleteTextView mCity;
-    Button mCompleteSignUp;
+    Button CompleteSignUp;
     private String mGenderValue = "";
     private DatePickerDialog.OnDateSetListener datePickerDialog;
     private SimpleDateFormat dateFormat;
@@ -206,6 +206,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         EditLinearLay = (LinearLayout) v.findViewById(R.id.linear_lay);
         EditReLay = (RelativeLayout) v.findViewById(R.id.editrel_lay);
         GenderDropimg = (ImageView) v.findViewById(R.id.gender_img);
+        CompleteSignUp = (Button) v.findViewById(R.id.butn_complete_signup);
         nestedScrollView = (ScrollView) v.findViewById(R.id.nestedScrollView);
 
         EditLinearLay.setOnClickListener(new View.OnClickListener() {
@@ -259,7 +260,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 //        mRadioFemale = v.findViewById(R.id.female_radio);
         mDob = v.findViewById(R.id.et_signup_dob);
 
-        mCompleteSignUp = v.findViewById(R.id.button_complete_signup);
+
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
 
@@ -328,7 +329,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         });
 
 
-        mCompleteSignUp.setOnClickListener(new View.OnClickListener() {
+        CompleteSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

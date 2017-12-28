@@ -15,6 +15,7 @@ import com.numnu.android.adapter.LocationItemsAdapter;
 import com.numnu.android.fragments.detail.LocationDetailFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.BusinessLocationResponse;
 import com.numnu.android.network.response.Datum;
 import com.numnu.android.network.response.ItemLocationResponse;
 import com.numnu.android.utils.Utils;
@@ -38,7 +39,7 @@ public class BusinessLocationsFragment extends Fragment {
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
-    ItemLocationResponse itemlocationResponse;
+    BusinessLocationResponse BusinesslocationResponse;
 
     public static BusinessLocationsFragment newInstance(String eventId, String businessId) {
 
@@ -78,7 +79,7 @@ public class BusinessLocationsFragment extends Fragment {
     final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         if(Utils.isNetworkAvailable(context)) {
-            getData("35");
+            getData("50");
         }else {
             showAlert();
         }
@@ -99,7 +100,7 @@ public class BusinessLocationsFragment extends Fragment {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
                             && totalItemCount >= PAGE_SIZE) {
-                        loadMoreItems("35");
+                        loadMoreItems("50");
                     }
                 }
             }
@@ -128,20 +129,20 @@ public class BusinessLocationsFragment extends Fragment {
 
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<ItemLocationResponse> call=apiServices.getLocation(id);
-        call.enqueue(new Callback<ItemLocationResponse>() {
+        Call<BusinessLocationResponse> call=apiServices.getbusinesslocation(id);
+        call.enqueue(new Callback<BusinessLocationResponse>() {
             @Override
-            public void onResponse(Call<ItemLocationResponse> call, Response<ItemLocationResponse> response) {
+            public void onResponse(Call<BusinessLocationResponse> call, Response<BusinessLocationResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
-                    itemlocationResponse=response.body();
+                    BusinesslocationResponse=response.body();
                     updateUI();
                     isLoading = false;
                 }
             }
 
             @Override
-            public void onFailure(Call<ItemLocationResponse> call, Throwable t) {
+            public void onFailure(Call<BusinessLocationResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
             }
@@ -154,10 +155,10 @@ public class BusinessLocationsFragment extends Fragment {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<ItemLocationResponse> call=apiServices.getLocation(id, String.valueOf(nextPage));
-        call.enqueue(new Callback<ItemLocationResponse>() {
+        Call<BusinessLocationResponse> call=apiServices.getbusinesslocation(id, String.valueOf(nextPage));
+        call.enqueue(new Callback<BusinessLocationResponse>() {
             @Override
-            public void onResponse(Call<ItemLocationResponse> call, Response<ItemLocationResponse> response) {
+            public void onResponse(Call<BusinessLocationResponse> call, Response<BusinessLocationResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
                     List<Datum> location=response.body().getData();
@@ -171,7 +172,7 @@ public class BusinessLocationsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ItemLocationResponse> call, Throwable t) {
+            public void onFailure(Call<BusinessLocationResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
             }
@@ -181,7 +182,7 @@ public class BusinessLocationsFragment extends Fragment {
 
     private void updateUI() {
 
-        currentUpAdapter = new LocationItemsAdapter(context, itemlocationResponse.getData());
+        currentUpAdapter = new LocationItemsAdapter(context, BusinesslocationResponse.getData());
         menuitemsRecyclerView.setAdapter(currentUpAdapter);
         currentUpAdapter.notifyDataSetChanged();
     }
