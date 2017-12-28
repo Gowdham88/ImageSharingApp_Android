@@ -1,17 +1,24 @@
 package com.numnu.android.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,6 +31,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -49,15 +66,19 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class OnboardingActivity extends MyActivity implements EasyPermissions.PermissionCallbacks {
+public class OnboardingActivity extends MyActivity implements EasyPermissions.PermissionCallbacks,GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,ActivityCompat.OnRequestPermissionsResultCallback {
     PackageInfo info;
     private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final int RC_LOCATION_PERM = 1;
+    LocationHelper locationHelper;
+    private Location mLastLocation;
     TextView textView;
     Animation slideUpAnimation,slidedownAnimation;
     private FirebaseAuth mAuth;
     private String TAG=this.getClass().getSimpleName();
-
+    double latitude;
+    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +87,13 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
         textView=(TextView)findViewById(R.id.textView_info);
 
         mAuth  = FirebaseAuth.getInstance();
+        locationHelper=new LocationHelper(this);
+//        locationHelper.checkpermission();
+        if (locationHelper.checkPlayServices()) {
 
-
+            // Building the GoogleApi client
+            locationHelper.buildGoogleApiClient();
+        }
 //        try {
 //            info = getPackageManager().getPackageInfo("com.numnu.android", PackageManager.GET_SIGNATURES);
 //            for (Signature signature : info.signatures) {
@@ -133,7 +159,6 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
                 });
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -144,10 +169,87 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
 
     @AfterPermissionGranted(RC_LOCATION_PERM)
     private void gotoHome() {
-        Intent mainIntent = new Intent(OnboardingActivity.this, HomeActivity.class);
-        OnboardingActivity.this.startActivity(mainIntent);
-        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
-        OnboardingActivity.this.finish();
+//        if (locationHelper.checkPlayServices()) {
+//
+//            // Building the GoogleApi client
+//            locationHelper.buildGoogleApiClient();
+//        }
+//        locationHelper=new LocationHelper(this);
+//        locationHelper.checkpermission();
+//        mLastLocation=locationHelper.getLocation();
+//
+//        if (mLastLocation != null) {
+//            latitude = mLastLocation.getLatitude();
+//            longitude = mLastLocation.getLongitude();
+//            getAddress();
+//
+//        } else {
+            Intent mainIntent = new Intent(OnboardingActivity.this, HomeActivity.class);
+            OnboardingActivity.this.startActivity(mainIntent);
+            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+            OnboardingActivity.this.finish();
+//        }
+
+    }
+
+    public void getAddress()
+    {
+        Address locationAddress;
+
+        locationAddress=locationHelper.getAddress(latitude,longitude);
+
+        if(locationAddress!=null)
+        {
+
+            String address = locationAddress.getAddressLine(0);
+            String address1 = locationAddress.getAddressLine(1);
+            String city = locationAddress.getLocality();
+            String state = locationAddress.getAdminArea();
+            String country = locationAddress.getCountryName();
+            String postalCode = locationAddress.getPostalCode();
+
+
+            String currentLocation;
+
+            if(!TextUtils.isEmpty(address))
+            {
+                currentLocation=address;
+
+                if (!TextUtils.isEmpty(address1))
+                    currentLocation+=address1+",";
+
+                if (!TextUtils.isEmpty(city))
+                {
+                    currentLocation+=city+",";
+
+                    if (!TextUtils.isEmpty(postalCode))
+                        currentLocation+=postalCode+",";
+                }
+                else
+                {
+                    if (!TextUtils.isEmpty(postalCode))
+                        currentLocation+=postalCode+",";
+                }
+
+                if (!TextUtils.isEmpty(state))
+                    currentLocation+=state+",";
+
+                if (!TextUtils.isEmpty(country))
+                    currentLocation+=country+",";
+
+//                tvEmpty.setVisibility(View.GONE);
+//                tvAddress.setText(currentLocation);
+//                tvAddress.setVisibility(View.VISIBLE);
+//
+//                if(!btnProceed.isEnabled())
+//                    btnProceed.setEnabled(true);
+            }
+
+        }
+        else{
+
+        }
+//            showToast("Something went wrong");
     }
 
     private boolean hasLocationPermission() {
@@ -178,11 +280,12 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
 
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
 
-            Toast.makeText(this, "Location:"+(hasLocationPermission()?"yes":"no"), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location:" + (hasLocationPermission() ? "yes" : "no"), Toast.LENGTH_SHORT).show();
 
         }
-
     }
+
+
 
     public void showAlert(View view) {
         findViewById(R.id.textView_info).setVisibility(View.GONE);
@@ -233,5 +336,23 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
         lp.gravity = Gravity.CENTER;
         lp.windowAnimations = R.style.DialogAnimation;
         alertDialog1.getWindow().setAttributes(lp);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.i("Connection failed:", " ConnectionResult.getErrorCode() = "
+                + result.getErrorCode());
+    }
+
+    @Override
+    public void onConnected(Bundle arg0) {
+
+        // Once connected with google api, get the location
+        mLastLocation=locationHelper.getLocation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int arg0) {
+        locationHelper.connectApiClient();
     }
 }

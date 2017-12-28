@@ -7,6 +7,7 @@ import com.numnu.android.network.request.BookmarkRequestData;
 import com.numnu.android.network.request.CompleteSignUpData;
 import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.BusinessEventsResponse;
+import com.numnu.android.network.response.BusinessLocationResponse;
 import com.numnu.android.network.response.BusinessResponse;
 import com.numnu.android.network.response.CommonResponse;
 import com.numnu.android.network.response.EventBusinessDetailResponse;
@@ -185,6 +186,11 @@ public interface ApiServices {
     @POST("/mobile/find")
     Call<List<IdResponse>> getId(@Body IdRequest idRequest);
   */
+   @GET("/businesses/{businessId}/locations")
+   Call<BusinessLocationResponse> getbusinesslocation(@Path("businessId") String id);
+
+ @GET("/businesses/{businessId}/locations")
+ Call<BusinessLocationResponse> getbusinesslocation(@Path("businessId") String id, @Query("page") String page);
 
  @GET("/items/{itemId}/locations")
  Call<ItemLocationResponse> getLocation(@Path("itemId") String id);
