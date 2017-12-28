@@ -1,7 +1,13 @@
 package com.numnu.android.network.response;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ItemimagesItem{
+
+	@SerializedName("createdat")
 	private String createdat;
+
+	@SerializedName("imageurl")
 	private String imageurl;
 
 	public void setCreatedat(String createdat){
@@ -19,13 +25,4 @@ public class ItemimagesItem{
 	public String getImageurl(){
 		return imageurl;
 	}
-
-	@Override
- 	public String toString(){
-		return 
-			"ItemimagesItem{" + 
-			"createdat = '" + createdat + '\'' + 
-			",imageurl = '" + imageurl + '\'' + 
-			"}";
-		}
 }

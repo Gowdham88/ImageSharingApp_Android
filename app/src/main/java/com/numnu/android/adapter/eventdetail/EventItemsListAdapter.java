@@ -19,7 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.fragments.detail.ItemInfoFragment;
+import com.numnu.android.fragments.eventdetail.EventItemDetailFragment;
 import com.numnu.android.network.response.EventTagBusiness;
 import com.squareup.picasso.Picasso;
 
@@ -93,7 +93,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, ItemInfoFragment.newInstance("34","149"));
+                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance("34","149"));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -103,7 +103,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, ItemInfoFragment.newInstance("34","149"));
+                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance("34","149"));
                 transaction.addToBackStack(null).commit();
             }
         });

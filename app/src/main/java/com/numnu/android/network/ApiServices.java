@@ -12,6 +12,7 @@ import com.numnu.android.network.response.CommonResponse;
 import com.numnu.android.network.response.EventBusinessDetailResponse;
 import com.numnu.android.network.response.EventBusinessesResponse;
 import com.numnu.android.network.response.EventDetailResponse;
+import com.numnu.android.network.response.EventItemDetailResponse;
 import com.numnu.android.network.response.EventItemsResponse;
 import com.numnu.android.network.response.EventPostsResponse;
 import com.numnu.android.network.response.GetBookmarksResponse;
@@ -113,11 +114,14 @@ public interface ApiServices {
     @GET("/events/{eventId}/itemtags/{tagId}/items")
     Call<ItemsByTagResponse> getItemsByTagId(@Path("eventId") String eventId, @Path("tagId") String tagId, @Query("page") String page);
 
-    @GET(" /events/{eventId}/items/{itemId}/posts")
+    @GET("/events/{eventId}/items/{itemId}/posts")
     Call<EventPostsResponse> getEventItemPosts(@Path("eventId") String eventId, @Path("itemId") String itemId);
 
-    @GET(" /events/{eventId}/items/{itemId}/posts")
+    @GET("/events/{eventId}/items/{itemId}/posts")
     Call<EventPostsResponse> getEventItemPosts(@Path("eventId") String eventId, @Path("itemId") String itemId,@Query("page") String page);
+
+    @GET("/events/{eventId}/items/{itemId}")
+    Call<EventItemDetailResponse> getEventItemDetail(@Path("eventId") String eventId, @Path("itemId") String itemId);
 
     @GET("/events/{eventId}/posts")
     Call<EventPostsResponse> getEventPosts(@Path("eventId") String id);
