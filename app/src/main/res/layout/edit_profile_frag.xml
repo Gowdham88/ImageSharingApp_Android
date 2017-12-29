@@ -67,6 +67,18 @@
             </RelativeLayout>
             <TextView
                 style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:text="@string/profile"
+                android:background="@color/taginside_color"
+                android:textColor="@color/tag_text_color" />
+            <TextView
+                style="@style/FontAvenirMedium"
                 android:textColor="@color/completesignup_clr"
                 android:textSize="14dp"
                 android:id="@+id/text_user_name_label"
@@ -157,6 +169,52 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/Edittxt_lineclr"/>
+            <TextView
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="14dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/text_user_description_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:text="Description" />
+
+            <EditText
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/name_black"
+                android:textSize="14dp"
+                android:imeOptions="actionDone"
+                android:background="@null"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/et_user_description"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="text" />
+            <View
+                android:id="@+id/desc_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="40dp"
+                android:background="@color/Edittxt_lineclr"/>
+
+            <TextView
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:text="@string/account"
+                android:background="@color/taginside_color"
+                android:textColor="@color/tag_text_color" />
             <TextView
                 style="@style/FontAvenirMedium"
                 android:textColor="@color/completesignup_clr"
@@ -385,39 +443,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@color/Edittxt_lineclr"/>
-            <TextView
-                style="@style/FontAvenirMedium"
-                android:textColor="@color/completesignup_clr"
-                android:textSize="14dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/text_user_description_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:text="Description" />
 
-            <EditText
-                style="@style/FontAvenirMedium"
-                android:textColor="@color/name_black"
-                android:textSize="14dp"
-                android:imeOptions="actionDone"
-                android:background="@null"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/et_user_description"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:inputType="text" />
-            <View
-                android:id="@+id/desc_view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="40dp"
-                android:background="@color/Edittxt_lineclr"/>
+
             <!--<Button-->
                 <!--android:id="@+id/button_complete_signup"-->
                 <!--android:text="@string/save"-->
