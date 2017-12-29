@@ -200,6 +200,12 @@ public interface ApiServices {
  @GET("/businesses/{businessId}/locations")
  Call<BusinessLocationResponse> getbusinesslocation(@Path("businessId") String id, @Query("page") String page);
 
+    @GET("/locations/{locationId}/posts")
+    Call<EventPostsResponse> getlocationpost(@Path("locationId") String id);
+
+    @GET("/locations/{locationId}/posts")
+    Call<EventPostsResponse> getlocationpost(@Path("locationId") String id, @Query("page") String page);
+
     @GET("/items/{itemId}/locations")
     Call<ItemLocationResponse> getLocation(@Path("itemId") String id);
 
