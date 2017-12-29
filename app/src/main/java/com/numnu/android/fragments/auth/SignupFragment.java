@@ -21,6 +21,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -77,6 +78,7 @@ public class SignupFragment extends Fragment {
     View emailview,passview;
     private Context context;
     private boolean shown=false;
+    private AlertDialog dialog;
 
     public static SignupFragment newInstance() {
         SignupFragment fragment = new SignupFragment();
@@ -497,31 +499,20 @@ public class SignupFragment extends Fragment {
     }
 
     public void showProgressDialog() {
-//        if (mProgressDialog == null) {
-//            mProgressDialog = new ProgressDialog(context);
-//            mProgressDialog.setMessage(getString(R.string.loading));
-//            mProgressDialog.setIndeterminate(true);
-//        }
-//
-//        mProgressDialog.show();
-//    }
 
-        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
-                PorterDuff.Mode.SRC_IN);
-        mProgressDialog.setIndeterminateDrawable(drawable);
-        mProgressDialog.show();
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+    public void hideProgressDialog(){
+        dialog.dismiss();
     }
-
     public void showerror(String error) {
 
         txt_error.setText(error);

@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +49,7 @@ public class LocationItemsTagsFragment extends Fragment {
     private LocationItemsTagsAdapter eventItemsCategoryAdapter;
     private EventItemsResponse eventItemsResponse;
     public ProgressDialog mProgressDialog;
+    private AlertDialog dialog;
 
     public static LocationItemsTagsFragment newInstance(String locationId) {
 
@@ -193,27 +195,19 @@ public class LocationItemsTagsFragment extends Fragment {
         this.context = context;
     }
     public void showProgressDialog() {
-        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
-                PorterDuff.Mode.SRC_IN);
-        mProgressDialog.setIndeterminateDrawable(drawable);
-        mProgressDialog.show();
-//        if (mProgressDialog == null) {
-//            mProgressDialog = new ProgressDialog(context);
-//            mProgressDialog.setMessage(getString(R.string.loading));
-//            mProgressDialog.setIndeterminate(true);
-//        }
-//
-//        mProgressDialog.show();
+
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+    public void hideProgressDialog(){
+        dialog.dismiss();
     }
     
 }

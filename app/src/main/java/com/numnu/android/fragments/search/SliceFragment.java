@@ -16,6 +16,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -75,6 +76,7 @@ public class SliceFragment extends Fragment {
     private String businessId;
     boolean isVisibleToUser;
     private ProgressDialog mProgressDialog;
+    private AlertDialog dialog;
 
     public static SliceFragment newInstance() {
         SliceFragment fragment = new SliceFragment();
@@ -455,55 +457,18 @@ showProgressDialog();
     }
 
     public void showProgressDialog() {
-//        if (mProgressDialog == null) {
-//            mProgressDialog = new ProgressDialog(context);
-//            mProgressDialog.setMessage(getString(R.string.loading));
-//            mProgressDialog.setIndeterminate(true);
-//        }
-//
-//        mProgressDialog.show();
-//    }
 
-        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
-                PorterDuff.Mode.SRC_IN);
-        mProgressDialog.setIndeterminateDrawable(drawable);
-        mProgressDialog.show();
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
-    }
-
-    private void initiatePopupWindow() {
-//       getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.image_popup,null);
-        ImageView image=(ImageView)layout.findViewById(R.id.popup_image);
-        Picasso.with(context).load(imagePath)
-                .placeholder(R.drawable.background)
-                .into(image);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        pw = new PopupWindow(layout, lp.width, lp.height, true);
-        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
-        layout.startAnimation(hide);
-        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pw.dismiss();
-            }
-        });
-
+    public void hideProgressDialog(){
+        dialog.dismiss();
     }
 }

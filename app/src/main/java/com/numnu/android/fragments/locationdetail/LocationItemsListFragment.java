@@ -59,6 +59,7 @@ public class LocationItemsListFragment extends Fragment implements View.OnClickL
     private ItemsByTagResponse eventItemsResponse;
     private String tagId;
     public ProgressDialog mProgressDialog;
+    private AlertDialog dialog;
 
     public static LocationItemsListFragment newInstance(String category, String locationId, String tagId) {
 
@@ -244,29 +245,20 @@ public class LocationItemsListFragment extends Fragment implements View.OnClickL
         this.context = context;
     }
     public void showProgressDialog() {
-        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
-                PorterDuff.Mode.SRC_IN);
-        mProgressDialog.setIndeterminateDrawable(drawable);
-        mProgressDialog.show();
-//        if (mProgressDialog == null) {
-//            mProgressDialog = new ProgressDialog(context);
-//            mProgressDialog.setMessage(getString(R.string.loading));
-//            mProgressDialog.setIndeterminate(true);
-//        }
-//
-//        mProgressDialog.show();
+
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+    public void hideProgressDialog(){
+        dialog.dismiss();
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

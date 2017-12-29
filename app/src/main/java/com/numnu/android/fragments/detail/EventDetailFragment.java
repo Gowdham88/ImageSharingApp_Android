@@ -1,16 +1,12 @@
 package com.numnu.android.fragments.detail;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,24 +17,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -67,11 +55,9 @@ import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
-import com.numnu.android.utils.TouchImageView;
 import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -112,6 +98,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     private Uri imgPath;
     public ProgressDialog mProgressDialog;
      int Max=4;
+    private android.support.v7.app.AlertDialog dialog;
 
     public static EventDetailFragment newInstance() {
         return new EventDetailFragment();
@@ -633,28 +620,21 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     }
 
     public void showProgressDialog() {
-        mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
-                PorterDuff.Mode.SRC_IN);
-        mProgressDialog.setIndeterminateDrawable(drawable);
-        mProgressDialog.show();
-//        if (mProgressDialog == null) {
-//            mProgressDialog = new ProgressDialog(context);
-//            mProgressDialog.setMessage(getString(R.string.loading));
-//            mProgressDialog.setIndeterminate(true);
-//        }
-//
-//        mProgressDialog.show();
+
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+         dialog = alertDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+    public void hideProgressDialog(){
+        dialog.dismiss();
     }
+
 
     private void showAlert() {
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
@@ -677,35 +657,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         else{
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
         }
-//        LayoutInflater inflater = (LayoutInflater) context
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        final View layout = inflater.inflate(R.layout.image_popup,null);
-//        ImageView image=(ImageView)layout.findViewById(R.id.popup_image);
-//        Picasso.with(context).load(imgPath)
-//                .placeholder(R.drawable.background)
-//                .into(image);
-//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//        pw = new PopupWindow(layout, lp.width, lp.height, true);
-//        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
-//        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
-//        layout.startAnimation(hide);
-//
-//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-//
-//        btncancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                pw.dismiss();
-//            }
-//        });
 
-//        ImageView imageView = layout.findViewById(R.id.popup_image);
-//
-//        Picasso.with(context).load(imgPath.toString())
-//                .placeholder(R.drawable.background)
-//                .into(imageView);
     }
 
 }
