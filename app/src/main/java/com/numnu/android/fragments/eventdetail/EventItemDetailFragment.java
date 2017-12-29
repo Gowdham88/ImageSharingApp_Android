@@ -218,6 +218,8 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
                 if(responsecode==200) {
                     itemDetailsResponse = response.body();
                     updateItemUI();
+                }else {
+                    hideProgressDialog();
                 }
             }
 

@@ -1,12 +1,20 @@
 package com.numnu.android.fragments.home;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -46,7 +56,9 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.numnu.android.LocationUpdatesService;
 import com.numnu.android.R;
+import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.search.PlaceAutocompleteRecyclerViewAdapter;
@@ -60,9 +72,13 @@ import com.numnu.android.fragments.search.UsersFragment;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.content.ContentValues.TAG;
 import static com.numnu.android.utils.Utils.hideKeyboard;
@@ -72,7 +88,7 @@ import static com.numnu.android.utils.Utils.hideKeyboard;
  * Created by thulir on 9/10/17.
  */
 
-public class HomeFragment extends Fragment implements View.OnKeyListener {
+public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPermissions.PermissionCallbacks {
 
 
     EditText searchViewFood,searchViewLocation;
@@ -90,6 +106,11 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
     AppBarLayout AppLay;
     private ViewPager viewPager;
     ImageView foodcloseimg,locationcloseimg;
+    // The BroadcastReceiver used to listen from broadcasts from the service.
+    private MyReceiver myReceiver;
+    private Boolean isLocationSetByGps=false;
+    private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION};
+    private static final int RC_LOCATION_PERM = 1;
 
 
     /**
@@ -113,6 +134,16 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(hasLocationPermission()) {
+            context.startService(new Intent(context, LocationUpdatesService.class));
+        }else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(
+                    HomeFragment.this,
+                    getString(R.string.rationale_location),
+                    RC_LOCATION_PERM,
+                    LOCATION);
+        }
 
     }
 
@@ -139,10 +170,20 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(this);
+        myReceiver = new MyReceiver();
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(myReceiver, new IntentFilter(LocationUpdatesService.ACTION_BROADCAST));
 
     }
 
+    private boolean hasLocationPermission() {
+        return EasyPermissions.hasPermissions(getActivity(), LOCATION);
+    }
 
+    @Override
+    public void onPause() {
+        LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).unregisterReceiver(myReceiver);
+        super.onPause();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -289,7 +330,12 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         view.setOnKeyListener(this);
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     private void setupSearchListener() {
@@ -483,38 +529,41 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
     private void locationSearch(final CharSequence charSequence) {
        if(!charSequence.toString().equals("")){
 
+            if(!isLocationSetByGps) {
+                searchListView.setVisibility(View.VISIBLE);
+                googleLogo.setVisibility(View.VISIBLE);
+                nestedScrollView.setVisibility(View.GONE);
+                viewPager.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.GONE);
 
-           searchListView.setVisibility(View.VISIBLE);
-           googleLogo.setVisibility(View.VISIBLE);
-           nestedScrollView.setVisibility(View.GONE);
-           viewPager.setVisibility(View.GONE);
-           tabLayout.setVisibility(View.GONE);
+                AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
+                // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
+                mAdapter = new PlaceAutocompleteRecyclerViewAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, autocompleteFilter);
+                mAdapter.getFilter().filter(charSequence.toString());
+                mAdapter.setOnItemClickListener(new SearchResultsAdapter.OnItemClickListener() {
+                    @Override
+                    public void onRecyclerItemClick(View view, int position) {
+                        final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
+                        String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
+                        searchViewLocation.setText(s);
+                        searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 
-           AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
-           // Set up the adapter that will retrieve suggestions from the Places Geo Data Client.
-           mAdapter = new PlaceAutocompleteRecyclerViewAdapter(getActivity(), mGeoDataClient, Constants.BOUNDS_GREATER_SYDNEY, autocompleteFilter);
-           mAdapter.getFilter().filter(charSequence.toString());
-           mAdapter.setOnItemClickListener(new SearchResultsAdapter.OnItemClickListener() {
-               @Override
-               public void onRecyclerItemClick(View view, int position) {
-                   final CharacterStyle STYLE_BOLD = new StyleSpan(Typeface.NORMAL);
-                   String s = mAdapter.getItem(position).getPrimaryText(STYLE_BOLD).toString();
-                   searchViewLocation.setText(s);
-                   searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
-
-                   Utils.hideKeyboard(getActivity());
-                   googleLogo.setVisibility(View.GONE);
-                   searchListView.setVisibility(View.GONE);
-                   if(searchViewFood.getText().toString().isEmpty()) {
-                       nestedScrollView.setVisibility(View.VISIBLE);
-                   }else {
-                       showSearchResults();
-                   }
+                        Utils.hideKeyboard(getActivity());
+                        googleLogo.setVisibility(View.GONE);
+                        searchListView.setVisibility(View.GONE);
+                        if (searchViewFood.getText().toString().isEmpty()) {
+                            nestedScrollView.setVisibility(View.VISIBLE);
+                        } else {
+                            showSearchResults();
+                        }
 
 
-               }
-           });
-           searchListView.setAdapter(mAdapter);
+                    }
+                });
+                searchListView.setAdapter(mAdapter);
+            }else {
+                isLocationSetByGps = false;
+            }
 
        }else {
            googleLogo.setVisibility(View.GONE);
@@ -562,6 +611,16 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         adapter.addFragment(new UsersFragment(), "Users");
 //        adapter.addFragment(new SearchListFragment(), "Lists");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        context.startService(new Intent(context, LocationUpdatesService.class));
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
     }
 
 
@@ -653,6 +712,66 @@ public class HomeFragment extends Fragment implements View.OnKeyListener {
         return false;
     }
 
+
+    /**
+     * Receiver for broadcasts sent by {@link LocationUpdatesService}.
+     */
+    private class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Location location = intent.getParcelableExtra(LocationUpdatesService.EXTRA_LOCATION);
+            if (location != null) {
+                String s = getAddress(location);
+                isLocationSetByGps = true;
+                searchViewLocation.setText(s);
+
+            }
+        }
+    }
+
+    public String getAddress(Location location) {
+
+        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+        // Address found using the Geocoder.
+        List<Address> addresses = null;
+
+        try {
+            // Using getFromLocation() returns an array of Addresses for the area immediately
+            // surrounding the given latitude and longitude. The results are a best guess and are
+            // not guaranteed to be accurate.
+            addresses = geocoder.getFromLocation(
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    // In this sample, we get just a single address.
+                    1);
+        } catch (IOException ioException) {
+            // Catch network or other I/O problems.
+//            errorMessage = getString(R.string.service_not_available);
+//            Log.e(TAG, errorMessage, ioException);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            // Catch invalid latitude or longitude values.
+//            errorMessage = getString(R.string.invalid_lat_long_used);
+//            Log.e(TAG, errorMessage + ". " +
+//                    "Latitude = " + location.getLatitude() +
+//                    ", Longitude = " + location.getLongitude(), illegalArgumentException);
+        }
+
+        // Handle case where no address was found.
+        if (addresses == null || addresses.size() == 0) {
+//            if (errorMessage.isEmpty()) {
+//                errorMessage = getString(R.string.no_address_found);
+//                Log.e(TAG, errorMessage);
+//            }
+//            deliverResultToReceiver(Constants.FAILURE_RESULT, errorMessage);
+            Toast.makeText(context, "Geocoding failed!", Toast.LENGTH_SHORT).show();
+            return "";
+        } else {
+            Address address = addresses.get(0);
+
+         return address.getLocality();
+        }
+    }
 
 
 }
