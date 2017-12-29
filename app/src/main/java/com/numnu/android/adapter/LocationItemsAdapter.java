@@ -114,8 +114,9 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
             SimpleDateFormat Formater = new SimpleDateFormat("MMM dd");
              StartDateStr = Formater.format(endate);
         }
-
-        holder.crdate.setText(StartDateStr);
+        String add=Locationdata.getAddress();
+        String finalStr=StartDateStr+","+add;
+        holder.crdate.setText(add);
 
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,6 +7,7 @@ import com.numnu.android.network.request.BookmarkRequestData;
 import com.numnu.android.network.request.CompleteSignUpData;
 import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.BusinessEventsResponse;
+import com.numnu.android.network.response.BusinessLocationResponse;
 import com.numnu.android.network.response.BusinessResponse;
 import com.numnu.android.network.response.CommonResponse;
 import com.numnu.android.network.response.EventBusinessDetailResponse;
@@ -119,7 +120,7 @@ public interface ApiServices {
     Call<EventPostsResponse> getEventItemPosts(@Path("eventId") String eventId, @Path("itemId") String itemId);
 
     @GET("/events/{eventId}/items/{itemId}/posts")
-    Call<EventPostsResponse> getEventItemPosts(@Path("eventId") String eventId, @Path("itemId") String itemId,@Query("page") String page);
+    Call<EventPostsResponse> getEventItemPosts(@Path("eventId") String eventId, @Path("itemId") String itemId, @Query("page") String page);
 
     @GET("/events/{eventId}/items/{itemId}")
     Call<EventItemDetailResponse> getEventItemDetail(@Path("eventId") String eventId, @Path("itemId") String itemId);
@@ -178,6 +179,14 @@ public interface ApiServices {
     @GET("/items/{itemId}/locations")
     Call<ItemLocationResponse> getLocation(@Path("itemId") String id, @Query("page") String page);
 
+
+    @GET("/businesses/{businessId}/locations")
+    Call<BusinessLocationResponse> getbusinesslocation(@Path("businessId") String id);
+
+    @GET("/businesses/{businessId}/locations")
+    Call<BusinessLocationResponse> getbusinesslocation(@Path("businessId") String id, @Query("page") String page);
+
+
     @GET("/locations/{locationId}")
     Call<LocationDetailResponse> getLocationDetail(@Path("locationId") String id);
 
@@ -186,6 +195,12 @@ public interface ApiServices {
 
     @GET("/locations/{locationId}/itemtags")
     Call<EventItemsResponse> getLocationItemTags(@Path("locationId") String id, @Query("page") String page);
+
+    @GET("/locations/{locationId}/posts")
+    Call<EventPostsResponse> getlocationpost(@Path("locationId") String id);
+
+    @GET("/locations/{locationId}/posts")
+    Call<EventPostsResponse> getlocationpost(@Path("locationId") String id, @Query("page") String page);
 
     @GET("/locations/{locationId}/itemtags/{tagId}/items")
     Call<ItemsByTagResponse> getLocationItemsByTagId(@Path("locationId") String locationId, @Path("tagId") String tagId);

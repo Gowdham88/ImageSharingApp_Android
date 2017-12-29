@@ -417,7 +417,7 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/Edittxt_lineclr"/>
             <Button
-                android:id="@+id/button_complete_signup"
+                android:id="@+id/butn_complete_signup"
                 android:text="Complete Signup"
                 style="@style/login_button"
                 android:imeOptions="actionDone"

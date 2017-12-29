@@ -75,9 +75,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by thulir on 9/10/17.
- */
 
 public class LocationDetailFragment extends Fragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks  {
 
@@ -447,7 +444,6 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
 //
 //        mProgressDialog.show();
         mProgressDialog = new ProgressDialog(getActivity(),R.style.Custom);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         Drawable drawable = new ProgressBar(getActivity()).getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ContextCompat.getColor(getActivity(), R.color.White_clr),
@@ -465,7 +461,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventPostsFragment().newInstance(eventId), "Posts");
+        adapter.addFragment(new LocationpostFragment().newInstance(locationId), "Posts");
         adapter.addFragment(LocationItemsTagsFragment.newInstance(locationId), "Items");
         viewPager.setAdapter(adapter);
     }
