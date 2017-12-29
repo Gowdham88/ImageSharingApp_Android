@@ -509,30 +509,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
         }
 
-//        LayoutInflater inflater = (LayoutInflater) context
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View layout = inflater.inflate(R.layout.image_popup,null);
-//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        pw = new PopupWindow(layout, lp.width, lp.height, true);
-//        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-//
-//
-//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-//
-//        btncancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                pw.dismiss();
-//            }
-//        });
-//
-//        ImageView imageView = layout.findViewById(R.id.popup_image);
-//
-//        Picasso.with(context).load(imgPath)
-//                .placeholder(R.drawable.background)
-//                .into(imageView);
+
     }
 }
 

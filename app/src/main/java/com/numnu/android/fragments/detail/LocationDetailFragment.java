@@ -9,7 +9,9 @@ import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
@@ -23,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +42,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
@@ -48,15 +53,19 @@ import com.numnu.android.fragments.eventdetail.EventBusinessDetailFragment;
 import com.numnu.android.fragments.eventdetail.EventItemsCategoryFragment;
 import com.numnu.android.fragments.eventdetail.EventPostsFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.locationdetail.LocationItemsTagsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.request.BookmarkRequestData;
 import com.numnu.android.network.response.BookmarkResponse;
+import com.numnu.android.network.response.ItemDetailsResponse;
+import com.numnu.android.network.response.LocationDetailResponse;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.ContentWrappingViewPager;
 import com.numnu.android.utils.CustomScrollView;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,11 +81,12 @@ import retrofit2.Response;
 
 public class LocationDetailFragment extends Fragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks  {
 
+    private static final String TAG ="LocationDetail" ;
     private Context context;
-    private TextView viewEventMap, eventName, city, eventDate, eventTime;
+    private TextView viewEventMap, eventName, city, businessName;
     LinearLayout openMap;
     TextView openmapTxt;
-    private ImageView eventImageView;
+    private ImageView eventImageView,entityImageView;
     private AppBarLayout appBarLayout;
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -93,6 +103,8 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
+    private LocationDetailResponse locationDetailResponse;
+    private double latitude,longitude;
 
     public static LocationDetailFragment newInstance() {
         return new LocationDetailFragment();
@@ -136,6 +148,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         viewEventMap = view.findViewById(R.id.txt_view_event_map);
         eventName = view.findViewById(R.id.event_name);
         city = view.findViewById(R.id.txt_city);
+        businessName = view.findViewById(R.id.business_name);
 //        eventDate = view.findViewById(R.id.txt_event_date);
 //        eventTime = view.findViewById(R.id.txt_event_time);
         openMap = view.findViewById(R.id.txt_open_map);
@@ -143,9 +156,8 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         openmapTxt.setText("Open map");
 
         eventImageView = view.findViewById(R.id.current_event_image);
+        entityImageView = view.findViewById(R.id.entity_image);
         recyclerView=(RecyclerView)view.findViewById(R.id.flatron_recyclerview);
-//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         busCntnRelLay=(LinearLayout) view.findViewById(R.id.buss_content);
         busCntnRelLay.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +191,85 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
             }
         });
 
+        if(Utils.isNetworkAvailable(context)) {
+            getLocationDetails(locationId);
+        }else {
+            showAlert();
+        }
+        return view;
+    }
+
+    private void showAlert() {
+    }
+
+    private void getLocationDetails(String id)
+    {
+        showProgressDialog();
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<LocationDetailResponse> call=apiServices.getLocationDetail(id);
+        call.enqueue(new Callback<LocationDetailResponse>() {
+            @Override
+            public void onResponse(Call<LocationDetailResponse> call, Response<LocationDetailResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==200) {
+                    locationDetailResponse = response.body();
+                    updateUI();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LocationDetailResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void updateUI() {
+
+        if(!locationDetailResponse.getLocationimages().isEmpty()&&locationDetailResponse.getLocationimages().get(0).getImageurl()!=null) {
+            storageRef.child(locationDetailResponse.getLocationimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.background)
+                            .fit()
+                            .into(eventImageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+        if(!locationDetailResponse.getLocationbusiness().getImages().isEmpty()&&locationDetailResponse.getLocationbusiness().getImages().get(0).getImageurl()!=null) {
+            storageRef.child(locationDetailResponse.getLocationbusiness().getImages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.background)
+                            .fit()
+                            .into(entityImageView);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+        try {
+            latitude = (double) locationDetailResponse.getLattitude();
+            longitude = (double) locationDetailResponse.getLongitude();
+        }catch (Exception e){
+            Log.e(TAG, e+"");
+        }
+
+
         mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.location_detailmap));
         if (mapFragment != null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -191,8 +282,16 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
             Toast.makeText(context, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
-        return view;
+        eventName.setText(locationDetailResponse.getLocationbusiness().getBusinessname());
+        city.setText(locationDetailResponse.getName());
+        businessName.setText(locationDetailResponse.getLocationbusiness().getBusinessname());
+
+        adapter = new HorizontalContentAdapter(context, locationDetailResponse.getLocationbusiness().getTags());
+        recyclerView.setAdapter(adapter);
+
+        hideProgressDialog();
     }
+
 
     protected void loadMap(GoogleMap googleMap) {
         map = googleMap;
@@ -201,8 +300,8 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
             if (hasLocationPermission()) {
 
                 // Add a marker in Montreal and move the camera
-                LatLng sydney = new LatLng(45.5088400, -73.5878100);
-                map.addMarker(new MarkerOptions().position(sydney).title("Marker in Montreal"));
+                LatLng sydney = new LatLng(latitude, longitude);
+                map.addMarker(new MarkerOptions().position(sydney).title("Marker"));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,17));
             }else {
                 // Ask for one permission
@@ -367,7 +466,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventPostsFragment().newInstance(eventId), "Posts");
-        adapter.addFragment(new EventItemsCategoryFragment(), "Items");
+        adapter.addFragment(LocationItemsTagsFragment.newInstance(locationId), "Items");
         viewPager.setAdapter(adapter);
     }
 
