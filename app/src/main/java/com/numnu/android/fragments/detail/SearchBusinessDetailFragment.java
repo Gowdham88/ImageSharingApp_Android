@@ -411,13 +411,14 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(SearchBusinessItemsTagsFragment.newInstance(businessId), "Items");
         adapter.addFragment( SearchBusinessPostsFragment.newInstance( businessId), "Posts");
+        adapter.addFragment(SearchBusinessItemsTagsFragment.newInstance(businessId), "Items");
         adapter.addFragment(SearchBusinessLocationsFragment.newInstance( businessId), "Locations");
         adapter.addFragment(SearchBusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);

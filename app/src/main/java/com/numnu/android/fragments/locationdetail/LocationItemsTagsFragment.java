@@ -207,6 +207,7 @@ public class LocationItemsTagsFragment extends Fragment {
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
     

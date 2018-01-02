@@ -403,6 +403,7 @@ public class EventBusinessDetailFragment extends Fragment implements View.OnClic
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 

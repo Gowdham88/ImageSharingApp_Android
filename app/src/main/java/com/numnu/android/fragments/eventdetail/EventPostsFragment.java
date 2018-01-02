@@ -209,6 +209,7 @@ public class  EventPostsFragment extends Fragment {
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 }

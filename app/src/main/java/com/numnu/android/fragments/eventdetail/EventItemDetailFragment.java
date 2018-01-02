@@ -548,6 +548,7 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 

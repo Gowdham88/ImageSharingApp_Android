@@ -257,6 +257,7 @@ public class LocationItemsListFragment extends Fragment implements View.OnClickL
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
     @Override

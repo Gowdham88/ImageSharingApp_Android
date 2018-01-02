@@ -578,6 +578,7 @@ public class LoginFragment extends Fragment {
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 

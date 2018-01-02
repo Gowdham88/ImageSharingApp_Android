@@ -1207,6 +1207,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 

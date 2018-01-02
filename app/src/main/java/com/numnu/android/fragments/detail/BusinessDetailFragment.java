@@ -411,6 +411,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
     private void setupViewPager(ViewPager viewPager) {

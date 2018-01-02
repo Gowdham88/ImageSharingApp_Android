@@ -511,6 +511,7 @@ public class SignupFragment extends Fragment {
     }
 
     public void hideProgressDialog(){
+       if(dialog!=null)
         dialog.dismiss();
     }
     public void showerror(String error) {

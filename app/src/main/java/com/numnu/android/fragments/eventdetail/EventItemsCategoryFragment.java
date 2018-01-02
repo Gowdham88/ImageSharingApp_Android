@@ -208,6 +208,7 @@ public class  EventItemsCategoryFragment extends Fragment {
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 }

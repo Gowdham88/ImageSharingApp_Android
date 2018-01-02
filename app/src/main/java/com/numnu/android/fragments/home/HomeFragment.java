@@ -374,7 +374,6 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
             public void afterTextChanged(Editable editable) {
                 if (!searchViewLocation.getText().toString().trim().equals("")){
 
-                    searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_close),null);
                     searchViewLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
@@ -563,6 +562,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
                 searchListView.setAdapter(mAdapter);
             }else {
                 isLocationSetByGps = false;
+                searchViewLocation.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
             }
 
        }else {

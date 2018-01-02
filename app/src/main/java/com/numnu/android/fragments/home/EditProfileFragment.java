@@ -1336,6 +1336,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 

@@ -450,6 +450,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 

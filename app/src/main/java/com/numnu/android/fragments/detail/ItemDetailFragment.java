@@ -305,6 +305,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     }
 
     public void hideProgressDialog(){
+        if(dialog!=null)
         dialog.dismiss();
     }
 
