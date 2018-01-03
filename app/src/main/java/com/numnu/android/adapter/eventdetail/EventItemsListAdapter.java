@@ -66,8 +66,14 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final EventTagBusiness dataItem = list.get(position);
+        String itemStr=list.get(position).getBusinessname();
+        if(itemStr==null){
+            holder.textViewName.setVisibility(View.GONE);
 
+        }else {
             holder.textViewName.setText(list.get(position).getBusinessname());
+        }
+
 
 
 
