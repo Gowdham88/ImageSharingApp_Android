@@ -124,7 +124,7 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, LocationDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, LocationDetailFragment.newInstance("220"));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -134,7 +134,7 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, LocationDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, LocationDetailFragment.newInstance("220"));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -144,7 +144,7 @@ public class LocationItemsAdapter extends RecyclerView.Adapter<LocationItemsAdap
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, LocationDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, LocationDetailFragment.newInstance("220"));
                 transaction.addToBackStack(null).commit();
             }
         });

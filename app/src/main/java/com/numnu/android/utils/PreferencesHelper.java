@@ -32,6 +32,7 @@ public class PreferencesHelper {
     public static final String PREFERENCE_GOOGLE_PLACE_TYPE ="google_place_type";
     public static final String PREFERENCE_LATITUDE ="latitude";
     public static final String PREFERENCE_LONGITUDE ="longitude";
+    static final String KEY_REQUESTING_LOCATION_UPDATES = "requesting_locaction_updates";
 
 
 

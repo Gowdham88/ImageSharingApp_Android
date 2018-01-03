@@ -1,4 +1,4 @@
-package com.numnu.android.adapter.eventdetail;
+package com.numnu.android.adapter.locationdetail;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.eventdetail.EventItemsListFragment;
+import com.numnu.android.fragments.locationdetail.LocationItemsListFragment;
 import com.numnu.android.network.response.EventTagsDataItem;
 
 import java.util.ArrayList;
@@ -21,15 +22,15 @@ import java.util.List;
  * Created by thulir on 10/10/17.
  */
 
-public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCategoryAdapter.ViewHolder> {
+public class LocationItemsTagsAdapter extends RecyclerView.Adapter<LocationItemsTagsAdapter.ViewHolder> {
 
     Context context;
-    String eventId;
+    String locationId;
     List<EventTagsDataItem> list = new ArrayList<>();
 
-    public EventItemsCategoryAdapter(Context context,String eventId, List<EventTagsDataItem> stringArrayList) {
+    public LocationItemsTagsAdapter(Context context, String locationId, List<EventTagsDataItem> stringArrayList) {
         this.context=context;
-        this.eventId = eventId;
+        this.locationId = locationId;
         this.list=stringArrayList;
     }
 
@@ -59,11 +60,11 @@ public class EventItemsCategoryAdapter extends RecyclerView.Adapter<EventItemsCa
             @Override
             public void onClick(View view) {
 
-                EventItemsListFragment eventItemsListFragment=EventItemsListFragment.newInstance(holder.textViewName.getText().toString(),eventId, String.valueOf(eventBusinessesResponse.getTagid()));
+                LocationItemsListFragment eventItemsListFragment= LocationItemsListFragment.newInstance(holder.textViewName.getText().toString(),locationId, String.valueOf(eventBusinessesResponse.getTagid()));
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout,eventItemsListFragment);
+                transaction.replace(R.id.frame_layout,eventItemsListFragment);
                 transaction.addToBackStack(null).commit();
             }
         });

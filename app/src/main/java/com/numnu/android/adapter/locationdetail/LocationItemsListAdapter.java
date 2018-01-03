@@ -1,8 +1,7 @@
-package com.numnu.android.adapter.eventdetail;
+package com.numnu.android.adapter.locationdetail;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -21,43 +19,42 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.fragments.detail.BusinessDetailFragment;
-import com.numnu.android.network.response.DataItem;
+import com.numnu.android.fragments.eventdetail.EventItemDetailFragment;
+import com.numnu.android.network.response.EventTagBusiness;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by thulir on 10/10/17.
+ */
 
-
-public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinessesAdapter.ViewHolder> {
-
+public class LocationItemsListAdapter extends RecyclerView.Adapter<LocationItemsListAdapter.ViewHolder> {
 
     Context context;
-    List<DataItem> list = new ArrayList<>();
+    List<EventTagBusiness> list = new ArrayList<>();
     HorizontalContentAdapter adapter;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
     private StorageReference storageRef ;
     private FirebaseStorage storage;
-    private String eventId;
 
-    public EventBusinessesAdapter(Context context, String eventId,List<DataItem> stringArrayList) {
+    public LocationItemsListAdapter(Context context, List<EventTagBusiness> stringArrayList) {
         this.context=context;
-        this.list =stringArrayList;
-        this.eventId=eventId;
+        this.list=stringArrayList;
         storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         storageRef = storage.getReference();
     }
 
-    public  void addData(List<DataItem> stringArrayList){
+    public  void addData(List<EventTagBusiness> stringArrayList){
         list.addAll(stringArrayList);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.event_business_item, parent, false);
+                .inflate(R.layout.item_listitem, parent, false);
 
         //view.setOnClickListener(MainActivity.myOnClickListener);
 
@@ -68,11 +65,12 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final DataItem eventBusinessesResponse = list.get(position);
+        final EventTagBusiness dataItem = list.get(position);
 
         holder.textViewName.setText(list.get(position).getBusinessname());
-        if(!eventBusinessesResponse.getUserimages().isEmpty()&&eventBusinessesResponse.getUserimages().get(0).getImageurl()!=null) {
-            storageRef.child(eventBusinessesResponse.getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+        if(!dataItem.getItemimages().isEmpty()&&dataItem.getItemimages().get(0).getImageurl()!=null) {
+            storageRef.child(dataItem.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
@@ -89,43 +87,32 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
             });
         }
 
-
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("businessId", String.valueOf(eventBusinessesResponse.getId()));
-                bundle.putString("eventId", eventId);
-                BusinessDetailFragment businessDetailFragment = BusinessDetailFragment.newInstance();
-                businessDetailFragment.setArguments(bundle);
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, businessDetailFragment);
+                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance("34","149"));
                 transaction.addToBackStack(null).commit();
             }
         });
-        holder.RelativeLay.setOnClickListener(new View.OnClickListener() {
+        holder.textViewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("businessId", String.valueOf(eventBusinessesResponse.getId()));
-                bundle.putString("eventId", eventId);
-                BusinessDetailFragment businessDetailFragment = BusinessDetailFragment.newInstance();
-                businessDetailFragment.setArguments(bundle);
-
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, businessDetailFragment);
+                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance("34","149"));
                 transaction.addToBackStack(null).commit();
             }
         });
 
-        adapter = new HorizontalContentAdapter(context, eventBusinessesResponse.getTags());
+        adapter = new HorizontalContentAdapter(context, dataItem.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
+
 
     @Override
     public int getItemCount() {
@@ -135,15 +122,17 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
     public class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
         private TextView textViewName;
-        private  RelativeLayout RelativeLay;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.business_name);
+            this.textViewName =  itemView.findViewById(R.id.item_name);
             recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
-            this.imageViewIcon = itemView.findViewById(R.id.notification_image);
-            this.RelativeLay=itemView.findViewById(R.id.business_rel_lay);
+            this.imageViewIcon = itemView.findViewById(R.id.item_image);
+
         }
     }
+
+
 }

@@ -188,17 +188,5 @@ public class ItemLocationsFragment extends Fragment {
         this.context = context;
     }
 
-
-//    private void setupRecyclerView() {
-//        ArrayList<String> stringlist = new ArrayList<>();
-//
-//        for (int i = 1; i <= 10; i++) {
-//            stringlist.add("Menu item " + i);
-//
-//             currentUpAdapter = new LocationItemsAdapter(context, stringlist);
-//            menuitemsRecyclerView.setAdapter(currentUpAdapter);
-//        }
-//
-//    }
 }
 

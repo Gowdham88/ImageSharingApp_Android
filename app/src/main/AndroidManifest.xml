@@ -72,7 +72,7 @@
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activity.OnboardingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -84,11 +84,11 @@
         <activity
             android:name=".activity.webFragment"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.SliceActivity"
+        <activity android:name=".activity.SliceActivity"
             android:screenOrientation="sensor"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".fragments.detail.LocationpostFragment"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <service android:name=".LocationUpdatesService" />
     </application>
 
 </manifest>

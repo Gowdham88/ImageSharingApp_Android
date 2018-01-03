@@ -3,6 +3,7 @@ package com.numnu.android.fragments.detail;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -80,6 +82,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
     private FirebaseStorage storage;
     int Max=4;
     private Uri itemimgPath;
+    private AlertDialog dialog;
 
     public static ItemDetailFragment newInstance(String itemId) {
 
@@ -290,19 +293,20 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         hideProgressDialog();
     }
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
 
-        mProgressDialog.show();
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+    public void hideProgressDialog(){
+        if(dialog!=null)
+        dialog.dismiss();
     }
 
     private void showBottomSheet(LayoutInflater inflater) {
@@ -509,30 +513,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
         }
 
-//        LayoutInflater inflater = (LayoutInflater) context
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View layout = inflater.inflate(R.layout.image_popup,null);
-//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        pw = new PopupWindow(layout, lp.width, lp.height, true);
-//        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-//
-//
-//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-//
-//        btncancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                pw.dismiss();
-//            }
-//        });
-//
-//        ImageView imageView = layout.findViewById(R.id.popup_image);
-//
-//        Picasso.with(context).load(imgPath)
-//                .placeholder(R.drawable.background)
-//                .into(imageView);
+
     }
 }
 

@@ -3,6 +3,7 @@ package com.numnu.android.fragments.detail;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -89,6 +91,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     private Uri BusinessimgPath;
     int Max=4;
     private ProgressDialog mProgressDialog;
+    private AlertDialog dialog;
 
 
     public static SearchBusinessDetailFragment newInstance(String businessId){
@@ -396,26 +399,26 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
     }
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
 
-        mProgressDialog.show();
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+    public void hideProgressDialog(){
+        if(dialog!=null)
+        dialog.dismiss();
     }
-
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(SearchBusinessItemsTagsFragment.newInstance(businessId), "Items");
         adapter.addFragment( SearchBusinessPostsFragment.newInstance( businessId), "Posts");
+        adapter.addFragment(SearchBusinessItemsTagsFragment.newInstance(businessId), "Items");
         adapter.addFragment(SearchBusinessLocationsFragment.newInstance( businessId), "Locations");
         adapter.addFragment(SearchBusinessEventsFragment.newInstance(businessId), "Events");
         viewPager.setAdapter(adapter);

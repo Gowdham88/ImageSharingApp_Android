@@ -1,11 +1,9 @@
-package com.numnu.android.fragments.eventdetail;
+package com.numnu.android.fragments.locationdetail;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,9 +24,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.numnu.android.R;
-import com.numnu.android.adapter.eventdetail.EventItemsListAdapter;
+import com.numnu.android.adapter.locationdetail.LocationItemsListAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
@@ -47,29 +44,29 @@ import retrofit2.Response;
  * Created by thulir on 9/10/17.
  */
 
-public class  EventItemsListFragment extends Fragment implements View.OnClickListener {
+public class LocationItemsListFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView menuitemsRecyclerView;
     private Context context;
     private String title;
     ImageView toolbarIcon;
-    private String eventId;
+    private String locationId;
     private boolean isLoading=false;
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
-    private EventItemsListAdapter eventItemsListAdapter;
+    private LocationItemsListAdapter eventItemsListAdapter;
     private ItemsByTagResponse eventItemsResponse;
     private String tagId;
     public ProgressDialog mProgressDialog;
     private AlertDialog dialog;
 
-    public static EventItemsListFragment newInstance(String category,String eventId,String tagId) {
+    public static LocationItemsListFragment newInstance(String category, String locationId, String tagId) {
 
-        EventItemsListFragment eventBusinessFragment = new EventItemsListFragment();
+        LocationItemsListFragment eventBusinessFragment = new LocationItemsListFragment();
         Bundle args = new Bundle();
         args.putString("category", category);
-        args.putString("eventId", eventId);
+        args.putString("locationId", locationId);
         args.putString("tagId", tagId);
         eventBusinessFragment.setArguments(args);
 
@@ -84,7 +81,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
         if (bundle != null) {
 
             title = bundle.getString("category");
-            eventId = bundle.getString("eventId");
+            locationId = bundle.getString("locationId");
             tagId = bundle.getString("tagId");
         }
 
@@ -179,7 +176,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
 
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<ItemsByTagResponse> call=apiServices.getItemsByTagId(eventId,tagId);
+        Call<ItemsByTagResponse> call=apiServices.getLocationItemsByTagId(locationId,tagId);
         call.enqueue(new Callback<ItemsByTagResponse>() {
             @Override
             public void onResponse(Call<ItemsByTagResponse> call, Response<ItemsByTagResponse> response) {
@@ -207,7 +204,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<ItemsByTagResponse> call=apiServices.getItemsByTagId(eventId,tagId, String.valueOf(nextPage));
+        Call<ItemsByTagResponse> call=apiServices.getLocationItemsByTagId(locationId,tagId, String.valueOf(nextPage));
         call.enqueue(new Callback<ItemsByTagResponse>() {
             @Override
             public void onResponse(Call<ItemsByTagResponse> call, Response<ItemsByTagResponse> response) {
@@ -237,7 +234,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
 
     private void updateUI() {
 
-        eventItemsListAdapter = new EventItemsListAdapter(context, eventItemsResponse.getData());
+        eventItemsListAdapter = new LocationItemsListAdapter(context, eventItemsResponse.getData());
         menuitemsRecyclerView.setAdapter(eventItemsListAdapter);
         eventItemsListAdapter.notifyDataSetChanged();
     }

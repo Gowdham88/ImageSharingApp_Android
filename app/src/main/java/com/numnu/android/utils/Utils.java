@@ -158,5 +158,24 @@ public class Utils {
 	}
 
 
+	/**
+	 * Returns true if requesting location updates, otherwise returns false.
+	 *
+	 * @param context The {@link Context}.
+	 */
+	public static boolean requestingLocationUpdates(Context context) {
+
+		return  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.KEY_REQUESTING_LOCATION_UPDATES);
+	}
+
+	/**
+	 * Stores the location updates state in SharedPreferences.
+	 * @param requestingLocationUpdates The location updates state.
+	 */
+	public static void setRequestingLocationUpdates(Context context, boolean requestingLocationUpdates) {
+		PreferencesHelper.setPreferenceBoolean(context,PreferencesHelper.KEY_REQUESTING_LOCATION_UPDATES,requestingLocationUpdates);
+	}
+
+
 
 }
