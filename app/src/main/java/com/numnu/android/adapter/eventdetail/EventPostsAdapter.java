@@ -37,6 +37,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -141,11 +143,11 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
 
             e.printStackTrace();
         }
-        SimpleDateFormat Formater = new SimpleDateFormat("yyy-MM-ddhh:mm");
-        String postendDateStr = Formater.format(endate);
+//        SimpleDateFormat Formater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        String postendDateStr = Formater.format(endate);
 
-
-        holder.TimeTxt.setText(postendDateStr);
+        String times=getTimeAgo(endate,context);
+        holder.TimeTxt.setText(times);
         holder.cottageHouseText.setText(postdataItem.getBusiness().getBusinessname());
         if(!postdataItem.getTaggeditems().isEmpty()) {
             holder.barbequeText.setText(postdataItem.getTaggeditems().get(0).getName());
@@ -371,26 +373,87 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             }
         });
     }
-//    public static String parseDate(String timeAtMiliseconds) {
-//        if (timeAtMiliseconds.equalsIgnoreCase("")) {
+
+    public static Date currentDate() {
+        Calendar calendar = Calendar.getInstance();
+        return (Date) calendar.getTime();
+    }
+
+    public static String getTimeAgo(java.util.Date date, Context ctx) {
+
+        if(date == null) {
+            return null;
+        }
+
+        long time = date.getTime();
+
+        Date curDate = currentDate();
+        long now = curDate.getTime();
+        if (time > now || time <= 0) {
+            return null;
+        }
+
+        int dim = getTimeDistanceInMinutes(time);
+
+        String timeAgo = null;
+
+        if (dim == 0) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_term_less) + " " +  ctx.getResources().getString(R.string.date_util_term_a) + " " + ctx.getResources().getString(R.string.date_util_unit_minute);
+        } else if (dim == 1) {
+            return "1 " + ctx.getResources().getString(R.string.date_util_unit_minute);
+        } else if (dim >= 2 && dim <= 44) {
+            timeAgo = dim + " " + ctx.getResources().getString(R.string.date_util_unit_minutes);
+        } else if (dim >= 45 && dim <= 89) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_an)+ " " + ctx.getResources().getString(R.string.date_util_unit_hour);
+        } else if (dim >= 90 && dim <= 1439) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " " + (Math.round(dim / 60)) + " " + ctx.getResources().getString(R.string.date_util_unit_hours);
+        } else if (dim >= 1440 && dim <= 2519) {
+            timeAgo = "1 " + ctx.getResources().getString(R.string.date_util_unit_day);
+        } else if (dim >= 2520 && dim <= 43199) {
+            timeAgo = (Math.round(dim / 1440)) + " " + ctx.getResources().getString(R.string.date_util_unit_days);
+        } else if (dim >= 43200 && dim <= 86399) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_month);
+        } else if (dim >= 86400 && dim <= 525599) {
+            timeAgo = (Math.round(dim / 43200)) + " " + ctx.getResources().getString(R.string.date_util_unit_months);
+        } else if (dim >= 525600 && dim <= 655199) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_year);
+        } else if (dim >= 655200 && dim <= 914399) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_over) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_year);
+        } else if (dim >= 914400 && dim <= 1051199) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_almost) + " 2 " + ctx.getResources().getString(R.string.date_util_unit_years);
+        } else {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " " + (Math.round(dim / 525600)) + " " + ctx.getResources().getString(R.string.date_util_unit_years);
+        }
+
+        return timeAgo + " " + ctx.getResources().getString(R.string.date_util_suffix);
+    }
+
+    private static int getTimeDistanceInMinutes(long time) {
+        long timeDistance = currentDate().getTime() - time;
+        return Math.round((Math.abs(timeDistance) / 1000) / 60);
+    }
+//    public static String parseDate(String millis) {
+//        if (millis.equalsIgnoreCase("")) {
 //            return "";
 //        }
 //        //API.log("Day Ago "+dayago);
 //        String result = "now";
 //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String dataSot = formatter.format(new Date());
+//        java.util.Date date = new java.util.Date();
+//        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 //        Calendar calendar = Calendar.getInstance();
 //
-//        long dayagolong = Long.valueOf(timeAtMiliseconds) * 1000;
+//        long dayagolong = Long.valueOf(millis) * 1000;
 //        calendar.setTimeInMillis(dayagolong);
 //        String agoformater = formatter.format(calendar.getTime());
 //
-//        Date CurrentDate = null;
-//        Date CreateDate = null;
+//        java.util.Date CurrentDate = null;
+//        java.util.Date CreateDate = null;
 //
 //        try {
-//            CurrentDate = (Date) formatter.parse(dataSot);
-//            CreateDate = (Date) formatter.parse(agoformater);
+//
+//            CurrentDate = new java.util.Date();
+//            CreateDate = (java.util.Date) formatter.parse(String.valueOf(sqlDate));
 //
 //            long different = Math.abs(CurrentDate.getTime() - CreateDate.getTime());
 //
