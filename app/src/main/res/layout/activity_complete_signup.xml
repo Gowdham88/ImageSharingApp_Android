@@ -22,8 +22,6 @@
         android:scrollbars="vertical">
         <LinearLayout
             android:id="@+id/linear_lay"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -67,6 +65,17 @@
             </RelativeLayout>
             <TextView
                 style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/profile"
+                android:background="@color/taginside_color"
+                android:textColor="@color/tag_text_color" />
+            <TextView
+                style="@style/FontAvenirMedium"
                 android:textColor="@color/completesignup_clr"
                 android:textSize="14dp"
                 android:id="@+id/text_user_name_label"
@@ -74,16 +83,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:text="@string/user_name" />
             <EditText
                 style="@style/FontAvenirMedium"
                 android:textSize="14dp"
                 android:background="@null"
                 android:textColor="@color/name_black"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:id="@+id/et_cmpltsignup_username"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -92,15 +101,15 @@
                 android:id="@+id/username_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:background="@color/Edittxt_lineclr"/>
             <TextView
                 style="@style/FontAvenirMedium"
                 android:textColor="@color/completesignup_clr"
                 android:textSize="14dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:id="@+id/text_name_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,8 +122,8 @@
                 android:textSize="14dp"
                 android:background="@null"
                 android:textColor="@color/name_black"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:id="@+id/et_signup_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -123,46 +132,16 @@
                 android:id="@+id/name_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:background="@color/Edittxt_lineclr"/>
-            <TextView
-                style="@style/FontAvenirMedium"
-                android:textColor="@color/completesignup_clr"
-                android:textSize="14dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/text_email_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="10dp"
-                android:text="@string/email_address" />
 
-            <EditText
-                style="@style/FontAvenirMedium"
-                android:textColor="@color/name_black"
-                android:textSize="14dp"
-                android:background="@null"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/et_signup_email"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:inputType="textEmailAddress" />
-            <View
-                android:id="@+id/email_view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/Edittxt_lineclr"/>
             <TextView
                 style="@style/FontAvenirMedium"
                 android:textColor="@color/completesignup_clr"
                 android:textSize="14dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:id="@+id/text_city_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,8 +154,8 @@
                 android:textColor="@color/name_black"
                 android:textSize="14dp"
                 android:background="@null"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:id="@+id/et_signup_city"
                 android:layout_width="match_parent"
                 android:imeOptions="actionNext"
@@ -187,15 +166,163 @@
                 android:id="@+id/city_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:background="@color/Edittxt_lineclr"/>
             <TextView
                 style="@style/FontAvenirMedium"
                 android:textColor="@color/completesignup_clr"
                 android:textSize="14dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:id="@+id/text_food_preferences_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:text="@string/foodpreferences" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:orientation="vertical"
+                android:id="@+id/food_layout">
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/food_recyclerview"
+                    android:orientation="vertical"
+                    android:scrollbars="vertical">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <AutoCompleteTextView
+                    style="@style/FontAvenirMedium"
+                    android:textColor="@color/name_black"
+                    android:textSize="14dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginRight="26dp"
+                    android:id="@+id/autoCompleteTextView1"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="50dp"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        style="@style/FontAvenirMedium"
+                        android:id="@+id/add_txt"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="25dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/blue"/>
+                </RelativeLayout>
+            </FrameLayout>
+            <View
+                android:id="@+id/food_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:background="@color/Edittxt_lineclr"/>
+            <TextView
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="14dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:id="@+id/text_user_description_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:text="Description" />
+
+            <EditText
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/name_black"
+                android:textSize="13dp"
+                android:background="@null"
+                android:imeOptions="actionDone"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:id="@+id/et_user_description"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="text" />
+            <View
+                android:id="@+id/desc_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:background="@color/Edittxt_lineclr"/>
+            <TextView
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:text="@string/account"
+                android:background="@color/taginside_color"
+                android:textColor="@color/tag_text_color" />
+            <TextView
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="14dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:id="@+id/text_email_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:text="@string/email_address" />
+
+            <EditText
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/name_black"
+                android:textSize="14dp"
+                android:background="@null"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:id="@+id/et_signup_email"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="textEmailAddress" />
+            <View
+                android:id="@+id/email_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:background="@color/Edittxt_lineclr"/>
+            <TextView
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/completesignup_clr"
+                android:textSize="14dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:id="@+id/text_gender_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -243,8 +370,8 @@
                     style="@style/FontAvenirMedium"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginRight="26dp"
                     android:gravity="center_vertical"
                     android:inputType="textEmailAddress"
                     android:textColor="@color/name_black"
@@ -269,8 +396,8 @@
                 android:id="@+id/gender_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:background="@color/Edittxt_lineclr"/>
 
             <!--<EditText-->
@@ -282,8 +409,8 @@
                 style="@style/FontAvenirMedium"
                 android:textColor="@color/completesignup_clr"
                 android:textSize="14dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:id="@+id/text_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -296,8 +423,8 @@
                 android:textSize="14dp"
                 android:background="@null"
                 android:id="@+id/et_signup_dob"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:textColor="@color/name_black"
@@ -308,114 +435,10 @@
                 android:id="@+id/dob_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
                 android:background="@color/Edittxt_lineclr"/>
-            <TextView
-                style="@style/FontAvenirMedium"
-                android:textColor="@color/completesignup_clr"
-                android:textSize="14dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/text_food_preferences_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="10dp"
-                android:text="@string/foodpreferences" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="vertical"
-                android:id="@+id/food_layout">
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/food_recyclerview"
-                    android:orientation="vertical"
-                    android:scrollbars="vertical">
 
-                </android.support.v7.widget.RecyclerView>
-
-            </LinearLayout>
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <AutoCompleteTextView
-                    style="@style/FontAvenirMedium"
-                    android:textColor="@color/name_black"
-                    android:textSize="14dp"
-                    android:background="@null"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:id="@+id/autoCompleteTextView1"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="50dp"
-                    />
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        style="@style/FontAvenirMedium"
-                        android:id="@+id/add_txt"
-                        android:layout_alignParentRight="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Add"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="25dp"
-                        android:textSize="14dp"
-                        android:textColor="@color/blue"/>
-                </RelativeLayout>
-            </FrameLayout>
-            <View
-                android:id="@+id/food_view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/Edittxt_lineclr"/>
-            <TextView
-                style="@style/FontAvenirMedium"
-                android:textColor="@color/completesignup_clr"
-                android:textSize="14dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/text_user_description_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:text="Description" />
-
-            <EditText
-                style="@style/FontAvenirMedium"
-                android:textColor="@color/name_black"
-                android:textSize="13dp"
-                android:background="@null"
-                android:imeOptions="actionDone"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/et_user_description"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:inputType="text" />
-            <View
-                android:id="@+id/desc_view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/Edittxt_lineclr"/>
             <Button
                 android:id="@+id/butn_complete_signup"
                 android:text="Complete Signup"
