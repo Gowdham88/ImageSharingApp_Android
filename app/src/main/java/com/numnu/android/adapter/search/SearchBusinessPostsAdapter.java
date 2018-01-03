@@ -26,7 +26,6 @@ import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
-import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.utils.PreferencesHelper;
@@ -203,7 +202,7 @@ public class SearchBusinessPostsAdapter extends RecyclerView.Adapter<SearchBusin
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.add(R.id.frame_layout,  UserDetailsFragment.newInstance(String.valueOf(postdataItem.getPostcreator().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -212,7 +211,7 @@ public class SearchBusinessPostsAdapter extends RecyclerView.Adapter<SearchBusin
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.add(R.id.frame_layout,  UserDetailsFragment.newInstance(String.valueOf(postdataItem.getPostcreator().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });

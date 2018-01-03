@@ -28,23 +28,18 @@ import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
-import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.network.response.PostdataItem;
-import com.numnu.android.utils.Utils;
-import com.squareup.picasso.Picasso;
 import com.numnu.android.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.ViewHolder> {
@@ -245,7 +240,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.add(R.id.frame_layout,  UserDetailsFragment.newInstance(String.valueOf(postdataItem.getPostcreator().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -254,7 +249,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.add(R.id.frame_layout,  UserDetailsFragment.newInstance(String.valueOf(postdataItem.getPostcreator().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });

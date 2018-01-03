@@ -20,7 +20,6 @@ import com.numnu.android.fragments.detail.EventDetailFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.detail.UserDetailsFragment;
-import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
@@ -136,7 +135,7 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance("1"));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -145,7 +144,7 @@ public class UserPostsAdapter extends RecyclerView.Adapter<UserPostsAdapter.View
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserPostsFragment.newInstance());
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance("1"));
                 transaction.addToBackStack(null).commit();
             }
         });
