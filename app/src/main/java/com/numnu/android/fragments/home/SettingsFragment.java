@@ -30,12 +30,15 @@ import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
+import com.numnu.android.activity.GoogleMapActivity;
+import com.numnu.android.activity.webFragment;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.fragments.EventBookmarksFragment;
 import com.numnu.android.fragments.auth.CompleteSignupFragment;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.fragments.auth.SignupFragment;
 import com.numnu.android.fragments.detail.ItemDetailFragment;
+import com.numnu.android.fragments.detail.LocationDetailFragment;
 import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
@@ -51,13 +54,12 @@ public class SettingsFragment extends Fragment {
     ScrollView nestedScrollView;
 
     private Context context;
-    String name;
+    String textterms="terms",privacypol="privacy";
     // Create a storage reference from our app
     StorageReference storageRef;
     private FirebaseStorage storage;
     private ImageView profileImage;
     private TextView userName;
-
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         return fragment;
@@ -113,7 +115,10 @@ public class SettingsFragment extends Fragment {
         terms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    showTerms();
+                Intent setintent=new Intent(getActivity(),webFragment.class);
+                setintent.putExtra("textterms",textterms);
+                SettingsFragment.this.startActivity(setintent   );
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             }
         });
 
@@ -121,7 +126,10 @@ public class SettingsFragment extends Fragment {
         privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    showPrivacyPolicy();
+                Intent setintent=new Intent(context, webFragment.class);
+                setintent.putExtra("textterms",privacypol);
+                SettingsFragment.this.startActivity(setintent);
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             }
         });
 

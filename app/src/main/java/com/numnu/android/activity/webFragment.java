@@ -25,6 +25,10 @@ public class webFragment  extends MyActivity {
     RelativeLayout toolbarBackicon;
     CustomTabsIntent customTabsIntent;
     String url="http://www.totc.ca";
+    String urlterms="http://www.numnu.com/terms/";
+    String urlprivacy=" http://numnu.com/privacy-policy/";
+    String testStr="null";
+    TextView toolbar_title;
 //    public static webFragment newInstance() {
 //        return new webFragment();
 //    }
@@ -46,7 +50,7 @@ public class webFragment  extends MyActivity {
         forwardButton.setVisibility(View.VISIBLE);
         backButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
         forwardButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
-
+        String names =getIntent().getStringExtra("textterms");
         toolbarBackicon=(RelativeLayout)findViewById(R.id.toolbar_back);
         toolbarBackicon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,9 +58,15 @@ public class webFragment  extends MyActivity {
                 onBackPressed();
             }
         });
-        TextView toolbar_title=(TextView)findViewById(R.id.toolbar_title);
+        if(names.equals("terms")){
+            url="http://www.numnu.com/terms/";
+        }else if(names.equals("privacy")){
+            url="http://numnu.com/privacy-policy/";
+        }else{
+            url="http://www.totc.ca";
+        }
+         toolbar_title=(TextView)findViewById(R.id.toolbar_title);
         toolbar_title.setText(url);
-
 
         BrowseIcon=(ImageView)findViewById(R.id.google_img);
         BrowseIcon.setVisibility(View.VISIBLE);

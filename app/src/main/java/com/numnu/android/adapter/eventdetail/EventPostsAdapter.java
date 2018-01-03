@@ -3,8 +3,10 @@ package com.numnu.android.adapter.eventdetail;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -29,12 +31,20 @@ import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.fragments.home.UserPostsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.network.response.PostdataItem;
+import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 import com.numnu.android.utils.PreferencesHelper;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-
+import java.util.concurrent.TimeUnit;
 
 
 public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.ViewHolder> {
@@ -43,6 +53,9 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
     List<PostdataItem> list = new ArrayList<>();
     private StorageReference storageRef ;
     private FirebaseStorage storage;
+    String postEndDate;
+    Duration diff;
+    String difference;
 
     public EventPostsAdapter(Context context, List<PostdataItem> stringArrayList) {
         this.context=context;
@@ -67,6 +80,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
         return myViewHolder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
@@ -122,6 +136,23 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
         holder.username.setText("@"+UserName);
         holder.name.setText(postdataItem.getPostcreator().getName());
         holder.title.setText(postdataItem.getComment());
+         postEndDate=postdataItem.getCreatedat();
+        SimpleDateFormat postendformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        java.util.Date endate = null;
+        try
+        {
+            endate = postendformat.parse(postEndDate);
+        }
+        catch (ParseException e)
+        {
+
+            e.printStackTrace();
+        }
+        SimpleDateFormat Formater = new SimpleDateFormat("yyy-MM-ddhh:mm");
+        String postendDateStr = Formater.format(endate);
+
+
+        holder.TimeTxt.setText(postendDateStr);
         holder.cottageHouseText.setText(postdataItem.getBusiness().getBusinessname());
         if(!postdataItem.getTaggeditems().isEmpty()) {
             holder.barbequeText.setText(postdataItem.getTaggeditems().get(0).getName());
@@ -246,7 +277,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
         private  ImageView profileImage;
         private TextView eventName,username,email,name,title;
         private TextView cottageHouseText;
-        private TextView barbequeText;
+        private TextView barbequeText,TimeTxt;
         ImageView dotsimg,inloveicon;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -265,6 +296,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             this.eventicon = itemView.findViewById(R.id.barbados_icon);
             dotsimg=(ImageView)itemView.findViewById(R.id.event_dots);
             inloveicon=(ImageView)itemView.findViewById(R.id.inlove_icon);
+            TimeTxt=(TextView)itemView.findViewById(R.id.time);
 
         }
     }
@@ -346,5 +378,120 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             }
         });
     }
-
+//    public static String parseDate(String timeAtMiliseconds) {
+//        if (timeAtMiliseconds.equalsIgnoreCase("")) {
+//            return "";
+//        }
+//        //API.log("Day Ago "+dayago);
+//        String result = "now";
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dataSot = formatter.format(new Date());
+//        Calendar calendar = Calendar.getInstance();
+//
+//        long dayagolong = Long.valueOf(timeAtMiliseconds) * 1000;
+//        calendar.setTimeInMillis(dayagolong);
+//        String agoformater = formatter.format(calendar.getTime());
+//
+//        Date CurrentDate = null;
+//        Date CreateDate = null;
+//
+//        try {
+//            CurrentDate = (Date) formatter.parse(dataSot);
+//            CreateDate = (Date) formatter.parse(agoformater);
+//
+//            long different = Math.abs(CurrentDate.getTime() - CreateDate.getTime());
+//
+//            long secondsInMilli = 1000;
+//            long minutesInMilli = secondsInMilli * 60;
+//            long hoursInMilli = minutesInMilli * 60;
+//            long daysInMilli = hoursInMilli * 24;
+//
+//            long elapsedDays = different / daysInMilli;
+//            different = different % daysInMilli;
+//
+//            long elapsedHours = different / hoursInMilli;
+//            different = different % hoursInMilli;
+//
+//            long elapsedMinutes = different / minutesInMilli;
+//            different = different % minutesInMilli;
+//
+//            long elapsedSeconds = different / secondsInMilli;
+//
+//            different = different % secondsInMilli;
+//            if (elapsedDays == 0) {
+//                if (elapsedHours == 0) {
+//                    if (elapsedMinutes == 0) {
+//                        if (elapsedSeconds < 0) {
+//                            return "0" + " s";
+//                        } else {
+//                            if (elapsedDays > 0 && elapsedSeconds < 59) {
+//                                return "now";
+//                            }
+//                        }
+//                    } else {
+//                        return String.valueOf(elapsedMinutes) + "m ago";
+//                    }
+//                } else {
+//                    return String.valueOf(elapsedHours) + "h ago";
+//                }
+//
+//            } else {
+//                if (elapsedDays <= 29) {
+//                    return String.valueOf(elapsedDays) + "d ago";
+//                }
+//                if (elapsedDays > 29 && elapsedDays <= 58) {
+//                    return "1Mth ago";
+//                }
+//                if (elapsedDays > 58 && elapsedDays <= 87) {
+//                    return "2Mth ago";
+//                }
+//                if (elapsedDays > 87 && elapsedDays <= 116) {
+//                    return "3Mth ago";
+//                }
+//                if (elapsedDays > 116 && elapsedDays <= 145) {
+//                    return "4Mth ago";
+//                }
+//                if (elapsedDays > 145 && elapsedDays <= 174) {
+//                    return "5Mth ago";
+//                }
+//                if (elapsedDays > 174 && elapsedDays <= 203) {
+//                    return "6Mth ago";
+//                }
+//                if (elapsedDays > 203 && elapsedDays <= 232) {
+//                    return "7Mth ago";
+//                }
+//                if (elapsedDays > 232 && elapsedDays <= 261) {
+//                    return "8Mth ago";
+//                }
+//                if (elapsedDays > 261 && elapsedDays <= 290) {
+//                    return "9Mth ago";
+//                }
+//                if (elapsedDays > 290 && elapsedDays <= 319) {
+//                    return "10Mth ago";
+//                }
+//                if (elapsedDays > 319 && elapsedDays <= 348) {
+//                    return "11Mth ago";
+//                }
+//                if (elapsedDays > 348 && elapsedDays <= 360) {
+//                    return "12Mth ago";
+//                }
+//
+//                if (elapsedDays > 360 && elapsedDays <= 720) {
+//                    return "1 year ago";
+//                }
+//
+//                if (elapsedDays > 720) {
+//                    SimpleDateFormat formatterYear = new SimpleDateFormat("MM/dd/yyyy");
+//                    Calendar calendarYear = Calendar.getInstance();
+//                    calendarYear.setTimeInMillis(dayagolong);
+//                    return formatterYear.format(calendarYear.getTime()) + "";
+//                }
+//
+//            }
+//
+//        } catch (java.text.ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 }
