@@ -1,8 +1,6 @@
 package com.numnu.android.fragments.home;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,22 +19,31 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
-import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.adapter.UserPostsAdapter;
+import com.numnu.android.adapter.UserdetailPostsAdapter;
 import com.numnu.android.fragments.auth.SignupFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.EventPostsResponse;
+import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.network.response.TagsItem;
-import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by dhivy on 06/11/2017.
@@ -56,6 +63,14 @@ public class UserPostsFragment extends Fragment {
     ImageView userImage;
     private ArrayList<TagsItem> mylist=new ArrayList<>();
 
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    private int PAGE_SIZE = 20;
+    private int nextPage = 1;
+    EventPostsResponse eventPostsResponse;
+    private String userId;
+    private UserdetailPostsAdapter userPostAdapter;
+
     public static UserPostsFragment newInstance() {
         UserPostsFragment fragment = new UserPostsFragment();
         return fragment;
@@ -64,6 +79,7 @@ public class UserPostsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+         userId= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_ID);
     }
     public void onResume() {
 
@@ -132,13 +148,10 @@ public class UserPostsFragment extends Fragment {
         recyclerView=(RecyclerView)view.findViewById(R.id.business_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         mUserPostsRecycler = view.findViewById(R.id.user_posts_recycler);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         mUserPostsRecycler.setLayoutManager(layoutManager);
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mUserPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
-//        mUserPostsRecycler.addItemDecoration(dividerItemDecoration);
         mUserPostsRecycler.setNestedScrollingEnabled(false);
 
-        setupRecyclerView();
 
         ImageView toolbarIcon = view.findViewById(R.id.setting_img);
         toolbarIcon.setVisibility(View.VISIBLE);
@@ -154,7 +167,96 @@ public class UserPostsFragment extends Fragment {
 
 
         updateUI();
+
+        if (Utils.isNetworkAvailable(context)) {
+            getData("51");
+        } else {
+            showAlert();
+        }
+        // Pagination
+        mUserPostsRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                if (!isLoading && !isLastPage) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= PAGE_SIZE) {
+                        loadMoreItems(userId);
+                    }
+                }
+            }
+        });
         return view;
+    }
+
+
+    private void showAlert() {
+    }
+
+    private void getData(String id) {
+        isLoading = true;
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<EventPostsResponse> call = apiServices.getPostsByUserId(id);
+        call.enqueue(new Callback<EventPostsResponse>() {
+            @Override
+            public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
+                int responsecode = response.code();
+                if (responsecode == 200) {
+                    eventPostsResponse = response.body();
+                    updatePostsUI();
+                    isLoading = false;
+                }else {
+                    Toast.makeText(context, "There are no user posts", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EventPostsResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                isLoading = false;
+            }
+        });
+
+    }
+
+    private void loadMoreItems(String id) {
+        nextPage += 1;
+        isLoading = true;
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<EventPostsResponse> call = apiServices.getPostsByUserId(id, String.valueOf(nextPage));
+        call.enqueue(new Callback<EventPostsResponse>() {
+            @Override
+            public void onResponse(Call<EventPostsResponse> call, Response<EventPostsResponse> response) {
+                int responsecode = response.code();
+                if (responsecode == 200) {
+                    List<PostdataItem> dataItems = response.body().getPostdata();
+                    if (!response.body().getPagination().isHasMore()) {
+                        isLastPage = true;
+                    }
+                    userPostAdapter.addData(dataItems);
+                    userPostAdapter.notifyDataSetChanged();
+                    isLoading = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EventPostsResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                isLoading = false;
+
+            }
+        });
+
     }
 
     private void updateUI() {
@@ -231,20 +333,19 @@ public class UserPostsFragment extends Fragment {
         }
 
     }
+
+    private void updatePostsUI() {
+
+        userPostAdapter = new UserdetailPostsAdapter(context, eventPostsResponse.getPostdata());
+        mUserPostsRecycler.setAdapter(userPostAdapter);
+        userPostAdapter.notifyDataSetChanged();
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
     }
 
-    private void setupRecyclerView() {
-        ArrayList<String> stringlist = new ArrayList<>();
 
-        for (int i = 1; i <= 10; i++) {
-            stringlist.add("Post item " + i);
-            UserPostsAdapter userPostAdapter = new UserPostsAdapter(context, stringlist);
-            mUserPostsRecycler.setAdapter(userPostAdapter);
-        }
-    }
 
 }
