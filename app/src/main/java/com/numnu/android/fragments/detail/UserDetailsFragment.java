@@ -88,7 +88,6 @@ public class UserDetailsFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             userId = bundle.getString("userId");
-            showarrow = bundle.getBoolean("Showarrow");
 
         }
 
@@ -104,18 +103,6 @@ public class UserDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_details, container, false);
 
         RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
-        toolbarBackImage.setVisibility(View.GONE);
-        SettingImg = (ImageView) view.findViewById(R.id.setting_img);
-        SettingImg.setVisibility(View.VISIBLE);
-        SettingImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,15 +135,13 @@ public class UserDetailsFragment extends Fragment {
             }
         });
 
-        if (showarrow) {
-            toolbarBackImage.setVisibility(View.VISIBLE);
+
             toolbarBackImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     getActivity().onBackPressed();
                 }
             });
-        }
 
         if (Utils.isNetworkAvailable(context)) {
             getData(userId);
