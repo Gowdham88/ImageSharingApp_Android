@@ -64,16 +64,16 @@ public class SliceFragment extends Fragment {
 
     Context context;
     private PopupWindow pw;
-    private ImageView barbqicon,cattgicon,eventicon,inloveicon;
+    private ImageView barbqicon, cattgicon, eventicon, inloveicon;
     private String postId;
-    private ImageView userImageIcon,contentImage;
-    private TextView nameText,cottageHouseText,barbequeText,eventText,userNameTxt,title;
+    private ImageView userImageIcon, contentImage;
+    private TextView nameText, cottageHouseText, barbequeText, eventText, userNameTxt, title;
     private PostdataItem postsResponse;
     private Uri imagePath;
     // Create a storage reference from our app
-    StorageReference storageRef ;
+    StorageReference storageRef;
     private FirebaseStorage storage;
-    private String businessId;
+    private String businessId,userId;
     boolean isVisibleToUser;
     private ProgressDialog mProgressDialog;
     private AlertDialog dialog;
@@ -110,20 +110,20 @@ public class SliceFragment extends Fragment {
 //        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
 //        bottomSheetDialog.setContentView(bottomSheetView);
 
-       barbqicon = view.findViewById(R.id.barbq_icon);
-      cattgicon = view.findViewById(R.id.cottage_house_icon);
+        barbqicon = view.findViewById(R.id.barbq_icon);
+        cattgicon = view.findViewById(R.id.cottage_house_icon);
         eventicon = view.findViewById(R.id.barbados_icon);
         ImageView moreIcon = view.findViewById(R.id.event_dots);
         RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-         userImageIcon = view.findViewById(R.id.slice_profile_image);
-         contentImage = view.findViewById(R.id.content_image);
-         nameText = view.findViewById(R.id.slice_toolbar_profile_name);
+        userImageIcon = view.findViewById(R.id.slice_profile_image);
+        contentImage = view.findViewById(R.id.content_image);
+        nameText = view.findViewById(R.id.slice_toolbar_profile_name);
         userNameTxt = view.findViewById(R.id.user_name);
-         cottageHouseText = view.findViewById(R.id.cottage_house_txt);
-         barbequeText = view.findViewById(R.id.barbq_txt);
-         eventText = view.findViewById(R.id.barbados_txt);
-        title=view.findViewById(R.id.title);
-        inloveicon=(ImageView)view.findViewById(R.id.inlove_icon);
+        cottageHouseText = view.findViewById(R.id.cottage_house_txt);
+        barbequeText = view.findViewById(R.id.barbq_txt);
+        eventText = view.findViewById(R.id.barbados_txt);
+        title = view.findViewById(R.id.title);
+        inloveicon = (ImageView) view.findViewById(R.id.inlove_icon);
         ImageView toolimg = view.findViewById(R.id.toolbar_image);
         toolimg.setVisibility(View.GONE);
 
@@ -134,15 +134,15 @@ public class SliceFragment extends Fragment {
             }
         });
 
-        TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
+        TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Post");
 
         userImageIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance(userId));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -151,27 +151,27 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance());
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.replace(R.id.frame_layout, UserDetailsFragment.newInstance(userId));
                 transaction.addToBackStack(null).commit();
             }
         });
 
-  cottageHouseText.setOnClickListener(new View.OnClickListener() {
+        cottageHouseText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(businessId));
                 transaction.addToBackStack(null).commit();
             }
         });
 
-      cattgicon.setOnClickListener(new View.OnClickListener() {
+        cattgicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(businessId));
                 transaction.addToBackStack(null).commit();
             }
@@ -180,7 +180,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout,
                         ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
@@ -190,7 +190,7 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout,
                         ItemDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
@@ -200,16 +200,16 @@ public class SliceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
-       eventicon.setOnClickListener(new View.OnClickListener() {
+        eventicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -221,21 +221,20 @@ public class SliceFragment extends Fragment {
             }
         });
 
-        if(Utils.isNetworkAvailable(context)) {
+        if (Utils.isNetworkAvailable(context)) {
             getData(postId);
-        }else {
+        } else {
             showAlert();
         }
         contentImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                initiatePopupWindow();
-                if(imagePath!=null){
-                    Intent intent=new Intent(getActivity(), SliceActivity.class);
-                    intent.putExtra("imagepath",imagePath.toString());
+                if (imagePath != null) {
+                    Intent intent = new Intent(getActivity(), SliceActivity.class);
+                    intent.putExtra("imagepath", imagePath.toString());
                     startActivity(intent);
-                }
-                else{
+                } else {
                     Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 }
 
@@ -248,18 +247,17 @@ public class SliceFragment extends Fragment {
     private void showAlert() {
     }
 
-    private void getData(String id)
-    {
-showProgressDialog();
+    private void getData(String id) {
+        showProgressDialog();
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<PostdataItem> call=apiServices.getPostById(id);
+        Call<PostdataItem> call = apiServices.getPostById(id);
         call.enqueue(new Callback<PostdataItem>() {
 
             @Override
             public void onResponse(Call<PostdataItem> call, Response<PostdataItem> response) {
 
                 int responsecode = response.code();
-                if(responsecode==200) {
+                if (responsecode == 200) {
                     postsResponse = response.body();
                     businessId = String.valueOf(postsResponse.getBusiness().getId());
                     updateUI();
@@ -269,6 +267,7 @@ showProgressDialog();
             @Override
             public void onFailure(Call<PostdataItem> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
             }
         });
 
@@ -276,32 +275,32 @@ showProgressDialog();
 
     private void updateUI() {
 
-            storage = FirebaseStorage.getInstance();
-            // Create a storage reference from our app
-            storageRef = storage.getReference();
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
 
-            if(!postsResponse.getPostimages().isEmpty()&&postsResponse.getPostimages().get(0).getImageurl()!=null) {
-                storageRef.child(postsResponse.getPostimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
+        if (!postsResponse.getPostimages().isEmpty() && postsResponse.getPostimages().get(0).getImageurl() != null) {
+            storageRef.child(postsResponse.getPostimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
 
-                        imagePath = uri;
-                        // Got the download URL for 'users/me/profile.png'
-                        Picasso.with(context).load(uri)
-                                .placeholder(R.drawable.background)
-                                .fit()
-                                .into(contentImage);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
-                    }
-                });
-            }
+                    imagePath = uri;
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.background)
+                            .fit()
+                            .into(contentImage);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
 
 
-        if(!postsResponse.getPostcreator().getUserimages().isEmpty()&&postsResponse.getPostcreator().getUserimages().get(0).getImageurl()!=null) {
+        if (!postsResponse.getPostcreator().getUserimages().isEmpty() && postsResponse.getPostcreator().getUserimages().get(0).getImageurl() != null) {
             storageRef.child(postsResponse.getPostcreator().getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -318,12 +317,12 @@ showProgressDialog();
                 }
             });
         }
-        if(postsResponse.getRating() ==1){
-           inloveicon.setImageResource(R.drawable.rating1);
+        if (postsResponse.getRating() == 1) {
+            inloveicon.setImageResource(R.drawable.rating1);
 
-        }else if(postsResponse.getRating() ==2){
+        } else if (postsResponse.getRating() == 2) {
             inloveicon.setImageResource(R.drawable.rating2);
-        }else{
+        } else {
             inloveicon.setImageResource(R.drawable.rating3);
         }
         eventText.setText(postsResponse.getEvent().getName());
@@ -331,8 +330,8 @@ showProgressDialog();
         nameText.setText(postsResponse.getPostcreator().getName());
         title.setText(postsResponse.getComment());
         cottageHouseText.setText(postsResponse.getBusiness().getBusinessname());
-        if(!postsResponse.getTaggeditems().isEmpty()) {
-           barbequeText.setText(postsResponse.getTaggeditems().get(0).getName());
+        if (!postsResponse.getTaggeditems().isEmpty()) {
+            barbequeText.setText(postsResponse.getTaggeditems().get(0).getName());
         }
         hideProgressDialog();
     }
@@ -340,7 +339,7 @@ showProgressDialog();
 
     private void showBottomSheet(LayoutInflater inflater) {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
+        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark, null);
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
         ImageView shareimg = bottomSheetView.findViewById(R.id.dialog_image);
@@ -353,7 +352,7 @@ showProgressDialog();
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..." + context.getPackageName());
                 sendIntent.setType("text/plain");
                 context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
                 bottomSheetDialog.dismiss();
@@ -365,7 +364,7 @@ showProgressDialog();
 
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..." + context.getPackageName());
                 sendIntent.setType("text/plain");
                 context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
                 bottomSheetDialog.dismiss();
@@ -374,21 +373,21 @@ showProgressDialog();
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
+                Boolean loginStatus = PreferencesHelper.getPreferenceBoolean(context, PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
+                    bundle.putString("BusinessBookmarkIntent", "businessbookmark");
                     LoginFragment logFragment = new LoginFragment();
                     logFragment.setArguments(bundle);
                     FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
                     transaction.replace(R.id.frame_layout, logFragment);
                     transaction.addToBackStack(null).commit();
 //                    Intent intent = new Intent(context, LoginFragment.class);
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
-                }else if (loginStatus){
+                } else if (loginStatus) {
                     postBookmark();
                     bottomSheetDialog.dismiss();
                 }
@@ -397,21 +396,21 @@ showProgressDialog();
         bookmarkimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
+                Boolean loginStatus = PreferencesHelper.getPreferenceBoolean(context, PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
+                    bundle.putString("BusinessBookmarkIntent", "businessbookmark");
                     LoginFragment logFragment = new LoginFragment();
                     logFragment.setArguments(bundle);
                     FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
                     transaction.replace(R.id.frame_layout, logFragment);
                     transaction.addToBackStack(null).commit();
 //                    Intent intent = new Intent(context, LoginFragment.class);
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
 //                    context.startActivity(intent);
                     bottomSheetDialog.dismiss();
-                }else if (loginStatus){
+                } else if (loginStatus) {
                     postBookmark();
                     bottomSheetDialog.dismiss();
                 }
@@ -419,8 +418,7 @@ showProgressDialog();
         });
     }
 
-    private void postBookmark()
-    {
+    private void postBookmark() {
         showProgressDialog();
         String userId = PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_ID);
         BookmarkRequestData bookmarkRequestData = new BookmarkRequestData();
@@ -431,16 +429,16 @@ showProgressDialog();
         bookmarkRequestData.setEntityname(eventText.getText().toString());
 
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<BookmarkResponse> call=apiServices.postBookmark(userId,bookmarkRequestData);
+        Call<BookmarkResponse> call = apiServices.postBookmark(userId, bookmarkRequestData);
         call.enqueue(new Callback<BookmarkResponse>() {
             @Override
             public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
                 int responsecode = response.code();
-                if(responsecode==201) {
+                if (responsecode == 201) {
                     BookmarkResponse bookmarkResponse = response.body();
                     Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
                     hideProgressDialog();
-                }else if(responsecode==422) {
+                } else if (responsecode == 422) {
 
                     Toast.makeText(context, "Already Bookmarked!!", Toast.LENGTH_SHORT).show();
                     hideProgressDialog();
@@ -468,8 +466,8 @@ showProgressDialog();
 
     }
 
-    public void hideProgressDialog(){
-        if(dialog!=null)
-        dialog.dismiss();
+    public void hideProgressDialog() {
+        if (dialog != null)
+            dialog.dismiss();
     }
 }

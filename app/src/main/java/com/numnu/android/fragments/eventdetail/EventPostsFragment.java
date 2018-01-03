@@ -48,7 +48,6 @@ public class  EventPostsFragment extends Fragment {
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
-    public ProgressDialog mProgressDialog;
     private AlertDialog dialog;
 
     public static EventPostsFragment newInstance(String eventId) {

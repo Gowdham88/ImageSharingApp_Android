@@ -57,6 +57,12 @@ public interface ApiServices {
     @POST("/users/{id}/images")
     Call<CommonResponse> uploadImage(@Path("id") String id, @Part MultipartBody.Part image);
 
+    @GET("/users/{userId}/posts")
+    Call<EventPostsResponse> getPostsByUserId(@Path("userId") String userId);
+
+    @GET("/users/{userId}/posts")
+    Call<EventPostsResponse> getPostsByUserId(@Path("userId") String userId, @Query("page") String page);
+
     @GET("/tags")
     Call<TagsResponse> getTags(@Query("beginWith") String s);
 
