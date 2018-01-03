@@ -1,6 +1,7 @@
 package com.numnu.android.fragments.detail;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.numnu.android.adapter.eventdetail.EventPostsAdapter;
 import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.BusinessResponse;
 import com.numnu.android.network.response.EventPostsResponse;
 import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.utils.PreferencesHelper;
@@ -69,6 +71,7 @@ public class UserDetailsFragment extends Fragment {
     EventPostsResponse eventPostsResponse;
     private String userId;
     private UserdetailPostsAdapter userPostAdapter;
+    private BusinessResponse businessResponse;
 
 
     public static UserDetailsFragment newInstance(String userId) {
@@ -85,10 +88,13 @@ public class UserDetailsFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             userId = bundle.getString("userId");
-            username = bundle.getString("uname", "Festival");
             showarrow = bundle.getBoolean("Showarrow");
 
         }
+
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
     }
 
     @Nullable
@@ -154,6 +160,7 @@ public class UserDetailsFragment extends Fragment {
 
         if (Utils.isNetworkAvailable(context)) {
             getData(userId);
+            getBusinessData(userId);
         } else {
             showAlert();
         }
@@ -185,6 +192,29 @@ public class UserDetailsFragment extends Fragment {
     }
 
     private void showAlert() {
+    }
+
+
+    private void getBusinessData(String id) {
+        showProgressDialog();
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<BusinessResponse> call = apiServices.getBusinessById(id);
+        call.enqueue(new Callback<BusinessResponse>() {
+            @Override
+            public void onResponse(Call<BusinessResponse> call, Response<BusinessResponse> response) {
+                int responsecode = response.code();
+                if (responsecode == 200) {
+                    businessResponse = response.body();
+                    updateUserUI();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BusinessResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void getData(String id) {
@@ -244,52 +274,39 @@ public class UserDetailsFragment extends Fragment {
     private void updateUserUI() {
 
 
-        storage = FirebaseStorage.getInstance();
-        // Create a storage reference from our app
-        storageRef = storage.getReference();
-
-        String username = PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME);
-        String city = PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY);
-        String userinfo = PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION);
-
-        String profilepic = PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_PROFILE_PIC);
+        username = businessResponse.getBusinessusername();
 
         toolbarTitle.setText("@" + username);
         musername.setText(username);
-        mCity.setText(city);
-        userDescription.setText(userinfo);
+        mCity.setText(businessResponse.getCitylocation().getName());
+        userDescription.setText(businessResponse.getBusinessdescription());
 
-        if (!profilepic.isEmpty() && profilepic != null) {
+        if (!businessResponse.getBusinessimages().isEmpty() && businessResponse.getBusinessimages().get(0).getImageurl() != null) {
 
-            if (profilepic.startsWith("https")) {
-                Picasso.with(context).load(profilepic)
-                        .placeholder(R.drawable.background)
-                        .fit()
-                        .into(userImage);
-            } else {
-                storageRef.child(profilepic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        // Got the download URL for 'users/me/profile.png'
-                        Picasso.with(context).load(uri)
-                                .placeholder(R.drawable.background)
-                                .into(userImage);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
-                    }
-                });
-            }
+
+            storageRef.child(businessResponse.getBusinessimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.background)
+                            .into(userImage);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+
         }
 
 
-        adapter = new HorizontalContentAdapter(context, eventPostsResponse.getPostdata().get(0).getTags());
+        adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-
+        hideProgressDialog();
     }
 
     private void updatePostsUI() {
@@ -304,6 +321,22 @@ public class UserDetailsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+    }
+
+    public void showProgressDialog() {
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+    }
+
+    public void hideProgressDialog() {
+        if (dialog != null)
+            dialog.dismiss();
     }
 
 
