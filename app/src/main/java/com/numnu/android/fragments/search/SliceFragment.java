@@ -55,6 +55,11 @@ import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,7 +72,7 @@ public class SliceFragment extends Fragment {
     private ImageView barbqicon, cattgicon, eventicon, inloveicon;
     private String postId;
     private ImageView userImageIcon, contentImage;
-    private TextView nameText, cottageHouseText, barbequeText, eventText, userNameTxt, title;
+    private TextView nameText, cottageHouseText, barbequeText, eventText, userNameTxt, title,TimeTxt;
     private PostdataItem postsResponse;
     private Uri imagePath;
     // Create a storage reference from our app
@@ -124,6 +129,7 @@ public class SliceFragment extends Fragment {
         eventText = view.findViewById(R.id.barbados_txt);
         title = view.findViewById(R.id.title);
         inloveicon = (ImageView) view.findViewById(R.id.inlove_icon);
+        TimeTxt=(TextView)view.findViewById(R.id.time);
         ImageView toolimg = view.findViewById(R.id.toolbar_image);
         toolimg.setVisibility(View.GONE);
 
@@ -329,6 +335,23 @@ public class SliceFragment extends Fragment {
         userNameTxt.setText(postsResponse.getPostcreator().getUsername());
         nameText.setText(postsResponse.getPostcreator().getName());
         title.setText(postsResponse.getComment());
+        String postEndDate=postsResponse.getCreatedat();
+        SimpleDateFormat postendformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        java.util.Date endate = null;
+        try
+        {
+            endate = postendformat.parse(postEndDate);
+        }
+        catch (ParseException e)
+        {
+
+            e.printStackTrace();
+        }
+//        SimpleDateFormat Formater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        String postendDateStr = Formater.format(endate);
+
+        String times=getTimeAgo(endate,context);
+       TimeTxt.setText(times);
         cottageHouseText.setText(postsResponse.getBusiness().getBusinessname());
         if (!postsResponse.getTaggeditems().isEmpty()) {
             barbequeText.setText(postsResponse.getTaggeditems().get(0).getName());
@@ -470,4 +493,63 @@ public class SliceFragment extends Fragment {
         if (dialog != null)
             dialog.dismiss();
     }
+    public static Date currentDate() {
+        Calendar calendar = Calendar.getInstance();
+        return (Date) calendar.getTime();
+    }
+
+    public static String getTimeAgo(java.util.Date date, Context ctx) {
+
+        if(date == null) {
+            return null;
+        }
+
+        long time = date.getTime();
+
+        Date curDate = currentDate();
+        long now = curDate.getTime();
+        if (time > now || time <= 0) {
+            return null;
+        }
+
+        int dim = getTimeDistanceInMinutes(time);
+
+        String timeAgo = null;
+
+        if (dim == 0) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_term_less) + " " +  ctx.getResources().getString(R.string.date_util_term_a) + " " + ctx.getResources().getString(R.string.date_util_unit_minute);
+        } else if (dim == 1) {
+            return "1 " + ctx.getResources().getString(R.string.date_util_unit_minute);
+        } else if (dim >= 2 && dim <= 44) {
+            timeAgo = dim + " " + ctx.getResources().getString(R.string.date_util_unit_minutes);
+        } else if (dim >= 45 && dim <= 89) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_an)+ " " + ctx.getResources().getString(R.string.date_util_unit_hour);
+        } else if (dim >= 90 && dim <= 1439) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " " + (Math.round(dim / 60)) + " " + ctx.getResources().getString(R.string.date_util_unit_hours);
+        } else if (dim >= 1440 && dim <= 2519) {
+            timeAgo = "1 " + ctx.getResources().getString(R.string.date_util_unit_day);
+        } else if (dim >= 2520 && dim <= 43199) {
+            timeAgo = (Math.round(dim / 1440)) + " " + ctx.getResources().getString(R.string.date_util_unit_days);
+        } else if (dim >= 43200 && dim <= 86399) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_month);
+        } else if (dim >= 86400 && dim <= 525599) {
+            timeAgo = (Math.round(dim / 43200)) + " " + ctx.getResources().getString(R.string.date_util_unit_months);
+        } else if (dim >= 525600 && dim <= 655199) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_year);
+        } else if (dim >= 655200 && dim <= 914399) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_over) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_year);
+        } else if (dim >= 914400 && dim <= 1051199) {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_almost) + " 2 " + ctx.getResources().getString(R.string.date_util_unit_years);
+        } else {
+            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " " + (Math.round(dim / 525600)) + " " + ctx.getResources().getString(R.string.date_util_unit_years);
+        }
+
+        return timeAgo + " " + ctx.getResources().getString(R.string.date_util_suffix);
+    }
+
+    private static int getTimeDistanceInMinutes(long time) {
+        long timeDistance = currentDate().getTime() - time;
+        return Math.round((Math.abs(timeDistance) / 1000) / 60);
+    }
+
 }

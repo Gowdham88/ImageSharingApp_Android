@@ -67,7 +67,9 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
         final EventTagBusiness dataItem = list.get(position);
 
-        holder.textViewName.setText(list.get(position).getBusinessname());
+            holder.textViewName.setText(list.get(position).getBusinessname());
+
+
 
         if(!dataItem.getItemimages().isEmpty()&&dataItem.getItemimages().get(0).getImageurl()!=null) {
             storageRef.child(dataItem.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
