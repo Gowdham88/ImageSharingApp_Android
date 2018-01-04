@@ -561,21 +561,19 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
 
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
-                showProgressDialog();
+
                 int responsecode = response.code();
                 SignupResponse body = response.body();
                 Log.e("Response",new Gson().toJson(response.body()));
                 if (responsecode == 201) {
-//id=102
 
-//                        context.getApplicationContext().this.finish();
                     PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, name);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, username);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL, email);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth());
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth()!=null?body.getDateofbirth():"");
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, userdescription);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE, latitude+"");
@@ -629,7 +627,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
      * @param contentURI ->absolute file path
      */
     public void uploadImage(String contentURI,String userId) {
-        showProgressDialog();
 
         File file = null;
         try {
@@ -1195,7 +1192,6 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     }
 
     public void showProgressDialog() {
-
 
         android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
         //View view = getLayoutInflater().inflate(R.layout.progress);
