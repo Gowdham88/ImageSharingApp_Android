@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -16,9 +17,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -29,8 +32,11 @@ import com.numnu.android.adapter.locationdetail.LocationItemsListAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.request.BookmarkRequestData;
+import com.numnu.android.network.response.BookmarkResponse;
 import com.numnu.android.network.response.EventTagBusiness;
 import com.numnu.android.network.response.ItemsByTagResponse;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 
@@ -103,7 +109,7 @@ public class LocationItemsListFragment extends Fragment implements View.OnClickL
       toolbarIcon.setOnClickListener(new View.OnClickListener() {
                         @Override
             public void onClick(View v) {
-                            showBottomSheet(inflater);
+                            showAlertshare();
             }
         });
         RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
@@ -272,42 +278,33 @@ public class LocationItemsListFragment extends Fragment implements View.OnClickL
         }
     }
 
-    private void showBottomSheet(LayoutInflater inflater) {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
-        ImageView shareimg = bottomSheetView.findViewById(R.id.dialog_image);
-        ImageView bookmarkimg = bottomSheetView.findViewById(R.id.bookmark_icon);
-        TextView share = bottomSheetView.findViewById(R.id.share_title);
-        TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    public void showAlertshare() {
 
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(R.layout.bookmark_layout, null);
+        final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        alertDialog.setView(deleteDialogView);
+        final TextView shareTxt = (TextView) deleteDialogView.findViewById(R.id.share);
+        final TextView BookmarkTxt = (TextView) deleteDialogView.findViewById(R.id.bookmark);
+        TextView cancel = (TextView) deleteDialogView.findViewById(R.id.gender_cancel);
+//        LinearLayout GenderLinLay = (LinearLayout) deleteDialogView.findViewById(R.id.genlin_lay);
+//        Button ok = deleteDialogView.findViewById(R.id.ok_button);
+
+        final android.support.v7.app.AlertDialog alertDialog1 = alertDialog.create();
+        shareTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
                 sendIntent.setType("text/plain");
                 context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
-                bottomSheetDialog.dismiss();
+                alertDialog1.dismiss();
             }
         });
-        shareimg.setOnClickListener(new View.OnClickListener() {
+        BookmarkTxt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
-                sendIntent.setType("text/plain");
-                context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
-                bottomSheetDialog.dismiss();
-            }
-        });
-        bookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
                     Bundle bundle = new Bundle();
@@ -316,39 +313,93 @@ public class LocationItemsListFragment extends Fragment implements View.OnClickL
                     logFragment.setArguments(bundle);
                     FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.add(R.id.frame_layout, logFragment);
                     transaction.addToBackStack(null).commit();
 //                    Intent intent = new Intent(context, LoginFragment.class);
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
 //                    context.startActivity(intent);
-                    bottomSheetDialog.dismiss();
-                }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    alertDialog1.dismiss();
+                }else {
+                    postBookmark();
+                    alertDialog1.dismiss();
                 }
+
             }
         });
-        bookmarkimg.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
-                if (!loginStatus) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
-                    LoginFragment logFragment = new LoginFragment();
-                    logFragment.setArguments(bundle);
-                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                    transaction.replace(R.id.frame_layout, logFragment);
-                    transaction.addToBackStack(null).commit();
-//                    Intent intent = new Intent(context, LoginFragment.class);
-//                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
-//                    context.startActivity(intent);
-                    bottomSheetDialog.dismiss();
-                }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View v) {
+                alertDialog1.dismiss();
             }
         });
+//        GenderLinLay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                alertDialog1.dismiss();
+//            }
+//        });
+
+//        ok.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//            }
+//        });
+
+
+        alertDialog1.setCanceledOnTouchOutside(false);
+        try {
+            alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        alertDialog1.show();
+//        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(290,
+//                getActivity()),(int)Utils.convertDpToPixel(290,getActivity()));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alertDialog1.getWindow().getAttributes());
+        lp.gravity = Gravity.BOTTOM;
+        lp.windowAnimations = R.style.shareDialogAnimation;
+        alertDialog1.getWindow().setAttributes(lp);
     }
+
+    private void postBookmark()
+    {
+        showProgressDialog();
+        String userId = PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_ID);
+        BookmarkRequestData bookmarkRequestData = new BookmarkRequestData();
+        bookmarkRequestData.setClientapp(Constants.CLIENT_APP);
+        bookmarkRequestData.setClientip(Utils.getLocalIpAddress(context));
+        bookmarkRequestData.setType(Constants.BOOKMARK_LOCATION);
+        bookmarkRequestData.setEntityid(locationId);
+//        bookmarkRequestData.setEntityname(eventName.getText().toString());
+
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<BookmarkResponse> call=apiServices.postBookmark(userId,bookmarkRequestData);
+        call.enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==201) {
+                    BookmarkResponse bookmarkResponse = response.body();
+                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }else if(responsecode==422) {
+
+                    Toast.makeText(context, "Already Bookmarked!!", Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+            }
+        });
+
+    }
+
 }
 

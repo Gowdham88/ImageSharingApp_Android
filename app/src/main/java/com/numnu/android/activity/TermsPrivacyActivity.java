@@ -2,8 +2,9 @@ package com.numnu.android.activity;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,21 +17,13 @@ import android.widget.Toast;
 
 import com.numnu.android.R;
 
-/**
- * Created by czsm4 on 27/11/17.
- */
-
-public class webFragment  extends MyActivity {
+public class TermsPrivacyActivity extends MyActivity {
     private WebView webView;
     ImageView BrowseIcon,backButton,forwardButton;
     RelativeLayout toolbarBackicon;
     CustomTabsIntent customTabsIntent;
     String url="http://www.totc.ca",url1;
-    String urlterms="http://www.numnu.com/terms/";
-    String urlprivacy=" http://numnu.com/privacy-policy/";
-    String testStr="null";
     TextView toolbar_title;
-    String names="empty";
 //    public static webFragment newInstance() {
 //        return new webFragment();
 //    }
@@ -43,7 +36,7 @@ public class webFragment  extends MyActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.web_fragment);
+        setContentView(R.layout.terms_privacy);
 
         Toolbar toolbar=findViewById(R.id.toolbar);
         backButton =(ImageView) findViewById(R.id.back_word);
@@ -52,7 +45,6 @@ public class webFragment  extends MyActivity {
         forwardButton.setVisibility(View.VISIBLE);
         backButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
         forwardButton.setColorFilter(getResources().getColor(R.color.tag_text_color));
-         names =getIntent().getStringExtra("textterms");
         url = getIntent().getStringExtra("url");
         toolbarBackicon=(RelativeLayout)findViewById(R.id.toolbar_back);
         toolbarBackicon.setOnClickListener(new View.OnClickListener() {
@@ -61,18 +53,8 @@ public class webFragment  extends MyActivity {
                 onBackPressed();
             }
         });
-        if(!names.equals("empty")&& TextUtils.isEmpty(null)){
-            if(names.equals("terms")){
-                url="http://www.numnu.com/terms/";
-            }else if(names.equals("privacy")){
-                url="http://numnu.com/privacy-policy/";
-            }else{
-                url="http://www.totc.ca";
-            }
 
-        }
-
-         toolbar_title=(TextView)findViewById(R.id.toolbar_title);
+        toolbar_title=(TextView)findViewById(R.id.toolbar_title);
         toolbar_title.setText(url);
 
         BrowseIcon=(ImageView)findViewById(R.id.google_img);
@@ -83,8 +65,8 @@ public class webFragment  extends MyActivity {
                 String url2 = "https://www.google.com/";
                 CustomTabsIntent.Builder builder2 = new CustomTabsIntent.Builder();
                 // set toolbar color
-                 customTabsIntent = builder2.build();
-                customTabsIntent.launchUrl(webFragment.this, Uri.parse(url2));
+                customTabsIntent = builder2.build();
+                customTabsIntent.launchUrl(TermsPrivacyActivity.this, Uri.parse(url2));
             }
         });
         webView = (WebView) findViewById(R.id.webView1);
@@ -155,7 +137,7 @@ public class webFragment  extends MyActivity {
             public void onReceivedError( WebView view, int errorCode, String description, String failingUrl ) {
 
                 super.onReceivedError( webView, errorCode, description, failingUrl );
-                Toast.makeText( webFragment.this, description, Toast.LENGTH_LONG );
+                Toast.makeText( TermsPrivacyActivity.this, description, Toast.LENGTH_LONG );
             }
         } );
         webView.loadUrl(url);

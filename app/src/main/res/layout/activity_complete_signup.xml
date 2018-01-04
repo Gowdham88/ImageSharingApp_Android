@@ -437,17 +437,18 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
-                android:background="@color/Edittxt_lineclr"/>
+                android:background="@color/Edittxt_lineclr"
+                android:layout_marginBottom="60dp"/>
 
-            <Button
-                android:id="@+id/butn_complete_signup"
-                android:text="Complete Signup"
-                style="@style/login_button"
-                android:imeOptions="actionDone"
-                android:layout_marginTop="80dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="88dp"/>
+            <!--<Button-->
+                <!--android:id="@+id/butn_complete_signup"-->
+                <!--android:text="Complete Signup"-->
+                <!--style="@style/login_button"-->
+                <!--android:imeOptions="actionDone"-->
+                <!--android:layout_marginTop="80dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="88dp"/>-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

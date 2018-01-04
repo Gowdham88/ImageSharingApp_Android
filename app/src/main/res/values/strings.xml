@@ -72,7 +72,7 @@
     <string name="profile_header_str">I have loved pizza since I\n was born!</string>
     <string name="event_description">This much-talked-about festival brings all your favorite Food Network personalities and celebrity chefs to Miami for five days of events, from intimate dinners cooked by Sean Brock to a late-night Tacos After Dark session with Aarón Sanchez. If you\'ve always dreamed of drinking tiki cocktails with Guy Fieri or having a rosé brunch with Martha Stewart, the South Beach Wine &amp; Food Festival can make your wishes come true.
     </string>
-<!--DateStrings-->
+    <!--DateStrings-->
     <string name="date_util_term_less">less than</string>
     <string name="date_util_term_a">a</string>
     <string name="date_util_term_an">an</string>

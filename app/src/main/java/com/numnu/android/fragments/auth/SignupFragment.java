@@ -353,11 +353,65 @@ public class SignupFragment extends Fragment {
 
 
                             } else {
-                                Toast.makeText(getActivity(), "Registration failed! " + "\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                                showerror(" email is already exists");
                                 hideProgressDialog();
+                                if (task.getException().getMessage().equals("The email address is already in use by another account.")){
+                                    showProgressDialog();
+                                    mAuth.signInWithEmailAndPassword(email, password)
+                                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (task.isSuccessful()) {
+                                                        hideProgressDialog();
+                                                        // Sign in success, update UI with the signed-in user's information
+                                                        Log.d(TAG, "signInWithEmail:success");
+                                                        FirebaseUser user = mAuth.getCurrentUser();
+                                                        user.getIdToken(true)
+                                                                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                                                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            // Sign in success, update UI with the signed-in user's information
+                                                                            Log.d(TAG, "createUserWithEmail:success");
+                                                                            final FirebaseUser user = mAuth.getCurrentUser();
+                                                                            mPasswordField.setText("");
+
+                                                                            String bookmarkBundle = "bookmark";
+                                                                            String profileBundle = "profile";
+                                                                            String eventBookmarkBundle = "eventbookmark";
+
+                                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_EMAIL, email);
+                                                                            PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_FIREBASE_UUID, user.getUid());
+                                                                            hideProgressDialog();
+                                                                            completeSignup();
+                                                                        }
+                                                                    }
+                                                                });
+
+
+                                                    } else {
+                                                        // If sign in fails, display a message to the user.
+                                                        Toast.makeText(getActivity(), "Registration failed! " + "\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+//                                showerror("Authentication failed.");
+                                                       hideProgressDialog();
+
+                                                    }
+
+//                                                    // [START_EXCLUDE]
+//                                                    if (!task.isSuccessful()) {
+//
+//                                                        hideProgressDialog();
+//                                                        showerror("Authentication failed.");
+//                                                    }
+                                                }
+                                            });
+                                }else{
+                                    Toast.makeText(getActivity(), "Registration failed! " + "\n" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                }
+
+//                                showerror(" email is already exists");
+
                             }
                         }
 

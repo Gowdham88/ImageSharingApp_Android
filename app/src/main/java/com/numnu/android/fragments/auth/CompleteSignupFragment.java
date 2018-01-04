@@ -208,6 +208,8 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         EditReLay = (RelativeLayout) v.findViewById(R.id.editrel_lay);
         GenderDropimg = (ImageView) v.findViewById(R.id.gender_img);
         CompleteSignUp = (Button) v.findViewById(R.id.butn_complete_signup);
+        CompleteSignUp.setText("SignUp");
+        CompleteSignUp.setVisibility(View.VISIBLE);
         nestedScrollView = (ScrollView) v.findViewById(R.id.nestedScrollView);
 
         EditLinearLay.setOnClickListener(new View.OnClickListener() {
@@ -1070,6 +1072,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alertDialog1.getWindow().getAttributes());
         lp.gravity = Gravity.BOTTOM;
+        lp.windowAnimations = R.style.shareDialogAnimation;
         alertDialog1.getWindow().setAttributes(lp);
     }
 
