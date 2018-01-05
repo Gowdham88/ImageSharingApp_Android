@@ -334,6 +334,8 @@ public class SignupFragment extends Fragment {
                                         .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                                             public void onComplete(@NonNull Task<GetTokenResult> task) {
                                                 if (task.isSuccessful()) {
+                                                    String idToken = task.getResult().getToken();
+                                                    Log.e("idToken:", idToken);
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d(TAG, "createUserWithEmail:success");
                                                     final FirebaseUser user = mAuth.getCurrentUser();

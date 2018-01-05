@@ -27,73 +27,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by thulir on 10/10/17.
+ * Created by czsm4 on 05/01/18.
  */
 
-public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapter.ViewHolder> {
+public class SearchEventAdapter extends RecyclerView.Adapter<SearchEventAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<String> stringArrayList = new ArrayList<>();
-    List<DataItem> list = new ArrayList<>();
     HorizontalContentAdapter adapter;
     RecyclerView recyclerView;
     private StorageReference storageRef ;
     private FirebaseStorage storage;
 
 
-    public SearchEventsAdapter(Context context,List<DataItem> stringArrayList) {
+    public SearchEventAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
-        this.list =stringArrayList;
-        storage = FirebaseStorage.getInstance();
-        // Create a storage reference from our app
-        storageRef = storage.getReference();
-    }
-    public  void addData(List<DataItem> stringArrayList){
-        list.addAll(stringArrayList);
+        this.stringArrayList=stringArrayList;
     }
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SearchEventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.search_event_item, parent, false);
 
 
-        return new ViewHolder(view);
+        ViewHolder myViewHolder = new ViewHolder(view);
+        return myViewHolder;
     }
-    class ViewHolder extends RecyclerView.ViewHolder {
-        private  ImageView imageViewIcon;
-        private TextView textViewName;
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            this.textViewName =  itemView.findViewById(R.id.text_event);
-            recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
-            //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
-            this.imageViewIcon = itemView.findViewById(R.id.current_event_image);
-        }
-    }
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-
-        final DataItem eventhomeBusinesRespo = list.get(position);
-        holder.textViewName.setText(list.get(position).getBusinessname());
-        if(!eventhomeBusinesRespo.getUserimages().isEmpty()&&eventhomeBusinesRespo.getUserimages().get(0).getImageurl()!=null) {
-            storageRef.child(eventhomeBusinesRespo.getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    // Got the download URL for 'users/me/profile.png'
-                    Picasso.with(context).load(uri)
-                            .placeholder(R.drawable.background)
-                            .fit()
-                            .into(holder.imageViewIcon);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });
-        }
-
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,15 +77,27 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
             }
         });
 //        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-        adapter = new HorizontalContentAdapter(context, eventhomeBusinesRespo.getTags());
+//        adapter = new HorizontalContentAdapter(context, eventhomeBusinesResponse.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
+
 
     @Override
     public int getItemCount() {
         return stringArrayList.size();
     }
 
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imageViewIcon;
+        private TextView textViewName;
 
+        ViewHolder(View itemView) {
+            super(itemView);
+            this.textViewName =  itemView.findViewById(R.id.text_event);
+            recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
+            //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
+            this.imageViewIcon = itemView.findViewById(R.id.current_event_image);
+        }
+    }
 }

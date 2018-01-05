@@ -72,7 +72,7 @@
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.OnboardingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
