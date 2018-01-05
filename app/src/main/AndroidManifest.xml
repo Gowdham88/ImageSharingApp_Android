@@ -72,7 +72,7 @@
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activity.OnboardingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -84,15 +84,21 @@
         <activity
             android:name=".activity.webFragment"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.SliceActivity"
+        <activity android:name=".activity.SliceActivity"
             android:screenOrientation="sensor"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <service android:name=".LocationUpdatesService" />
-
-        <activity android:name=".activity.TermsPrivacyActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <service android:name=".firebase.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".firebase.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
