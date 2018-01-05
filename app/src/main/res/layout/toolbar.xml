@@ -107,7 +107,7 @@
             android:layout_toRightOf="@+id/toolbar_title"
             android:textAllCaps="false"
             style="@style/FontAvenirMedium"
-            android:textColor="@color/name_black"
+            android:textColor="@color/weblink_color"
             android:id="@+id/butn_complete_signup"
             android:layout_centerVertical="true" />
 
