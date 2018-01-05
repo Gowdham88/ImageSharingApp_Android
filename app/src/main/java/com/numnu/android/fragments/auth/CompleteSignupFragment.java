@@ -115,7 +115,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
     Context context;
     EditText musername, mEmail, mName, mDob, userDescription;
     AutoCompleteTextView mCity;
-    Button CompleteSignUp;
+    TextView CompleteSignUp;
     private String mGenderValue = "";
     private DatePickerDialog.OnDateSetListener datePickerDialog;
     private SimpleDateFormat dateFormat;
@@ -207,7 +207,7 @@ public class CompleteSignupFragment extends Fragment implements EasyPermissions.
         EditLinearLay = (LinearLayout) v.findViewById(R.id.linear_lay);
         EditReLay = (RelativeLayout) v.findViewById(R.id.editrel_lay);
         GenderDropimg = (ImageView) v.findViewById(R.id.gender_img);
-        CompleteSignUp = (Button) v.findViewById(R.id.butn_complete_signup);
+        CompleteSignUp = (TextView) v.findViewById(R.id.butn_complete_signup);
         CompleteSignUp.setText("SignUp");
         CompleteSignUp.setVisibility(View.VISIBLE);
         nestedScrollView = (ScrollView) v.findViewById(R.id.nestedScrollView);

@@ -267,7 +267,7 @@ public class SettingsFragment extends Fragment {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, SignupFragment.newInstance());
                 transaction.addToBackStack(null).commit();
-
+                alertDialog1.dismiss();
 
             }
         });

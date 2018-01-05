@@ -84,6 +84,9 @@
         <activity
             android:name=".activity.webFragment"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.TermsPrivacyActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.SliceActivity"
             android:screenOrientation="sensor"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
