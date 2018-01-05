@@ -508,8 +508,8 @@ public class LoginFragment extends Fragment {
         }else if (mReceivedIntent.equals(profileBundle)){
             signUpCall("ProfileIntent",profileBundle);
         }else if (mReceivedIntent.equals(eventBookmarkBundle)){
-            signUpCall("EventBookmarkIntent",bookmarkBundle);
-        }else if (mReceivedIntent.equals(eventBookmarkBundle)){
+            signUpCall("EventBookmarkIntent",eventBookmarkBundle);
+        }else if (mReceivedIntent.equals(businessBookmarkBundle)){
             signUpCall("BusinessBookmarkIntent",businessBookmarkBundle);
         }
     }
