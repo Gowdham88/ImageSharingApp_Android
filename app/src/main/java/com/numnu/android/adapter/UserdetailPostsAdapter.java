@@ -180,7 +180,7 @@ public class UserdetailPostsAdapter extends RecyclerView.Adapter<UserdetailPosts
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(postdataItem.getBusiness().getId())));
+                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(postdataItem.getPostcreator().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -190,7 +190,7 @@ public class UserdetailPostsAdapter extends RecyclerView.Adapter<UserdetailPosts
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(postdataItem.getBusiness().getId())));
+                transaction.add(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(postdataItem.getPostcreator().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
