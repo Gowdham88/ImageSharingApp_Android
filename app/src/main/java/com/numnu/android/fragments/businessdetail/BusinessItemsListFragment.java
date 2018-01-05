@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.adapter.businessdetail.BusinessItemsListAdapter;
 import com.numnu.android.adapter.eventdetail.EventItemsListAdapter;
 import com.numnu.android.fragments.auth.LoginFragment;
 import com.numnu.android.network.ApiServices;
@@ -54,7 +55,7 @@ public class BusinessItemsListFragment extends Fragment implements View.OnClickL
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
-    private EventItemsListAdapter eventItemsListAdapter;
+    private BusinessItemsListAdapter businessItemsListAdapter;
     private ItemsByTagResponse eventItemsResponse;
 
     public static BusinessItemsListFragment newInstance(String category, String eventId,String businessId, String tagId) {
@@ -209,8 +210,8 @@ public class BusinessItemsListFragment extends Fragment implements View.OnClickL
                     if(!response.body().getPagination().isHasMore()){
                         isLastPage = true;
                     }
-                    eventItemsListAdapter.addData(dataItems);
-                    eventItemsListAdapter.notifyDataSetChanged();
+                    businessItemsListAdapter.addData(dataItems);
+                    businessItemsListAdapter.notifyDataSetChanged();
                     isLoading = false;
                 }
             }
@@ -226,9 +227,9 @@ public class BusinessItemsListFragment extends Fragment implements View.OnClickL
 
     private void updateUI() {
 
-        eventItemsListAdapter = new EventItemsListAdapter(context, eventItemsResponse.getData());
-        menuitemsRecyclerView.setAdapter(eventItemsListAdapter);
-        eventItemsListAdapter.notifyDataSetChanged();
+        businessItemsListAdapter = new BusinessItemsListAdapter(context, eventItemsResponse.getData());
+        menuitemsRecyclerView.setAdapter(businessItemsListAdapter);
+        businessItemsListAdapter.notifyDataSetChanged();
     }
 
     @Override

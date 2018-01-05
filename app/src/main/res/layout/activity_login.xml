@@ -146,7 +146,7 @@
         android:layout_marginLeft="3dp"
         app:layout_constraintLeft_toRightOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@+id/textView2"
-        />
+        tools:ignore="OnClick" />
 
 
 
@@ -172,7 +172,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@null"
-            android:inputType="textEmailAddress"
+            android:inputType="textNoSuggestions|textVisiblePassword"
             android:backgroundTint="@color/Edittxt_lineclr"/>
     </android.support.design.widget.TextInputLayout>
 

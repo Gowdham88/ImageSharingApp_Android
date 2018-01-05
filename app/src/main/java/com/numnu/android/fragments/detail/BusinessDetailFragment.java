@@ -218,7 +218,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
             @Override
             public void onFailure(Call<EventBusinessDetailResponse> call, Throwable t) {
-                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
             }
         });
 
@@ -231,7 +232,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         storageRef = storage.getReference();
 
 
-        if(!businessResponse.getBusinessimages().isEmpty()&&businessResponse.getBusinessimages().get(0).getImageurl()!=null) {
+        if (!businessResponse.getBusinessimages().isEmpty() && businessResponse.getBusinessimages().get(0).getImageurl() != null) {
             storageRef.child(businessResponse.getBusinessimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -251,11 +252,15 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         }
 
 
-
         eventName.setText(businessResponse.getBusinessusername());
         entityTitle.setText(businessResponse.getBusinessname());
-        eventDescription.setText(businessResponse.getBusinessdescription());
-        if(eventDescription.getLineCount()>= Max){
+        if(!businessResponse.getBusinessdescription().isEmpty()) {
+            eventDescription.setText(businessResponse.getBusinessdescription());
+        }
+        else {
+            eventDescription.setVisibility(View.GONE);
+        }
+        if (eventDescription.getLineCount() >= Max) {
             morebutton.setVisibility(View.VISIBLE);
         }
         morebutton.setOnClickListener(new View.OnClickListener() {
@@ -279,9 +284,13 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             }
         });
 
-        adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        if (!businessResponse.getTags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        }else {
+            recyclerView.setVisibility(View.GONE);
+        }
 
     }
 

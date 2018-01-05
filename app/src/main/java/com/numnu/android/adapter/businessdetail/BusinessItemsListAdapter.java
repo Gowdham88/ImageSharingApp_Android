@@ -1,4 +1,4 @@
-package com.numnu.android.adapter.eventdetail;
+package com.numnu.android.adapter.businessdetail;
 
 import android.content.Context;
 import android.net.Uri;
@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
+import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.eventdetail.EventItemDetailFragment;
 import com.numnu.android.network.response.EventTagBusiness;
 import com.squareup.picasso.Picasso;
@@ -30,9 +31,8 @@ import java.util.List;
  * Created by thulir on 10/10/17.
  */
 
-public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAdapter.ViewHolder> {
+public class BusinessItemsListAdapter extends RecyclerView.Adapter<BusinessItemsListAdapter.ViewHolder> {
 
-    private final String eventId;
     Context context;
     List<EventTagBusiness> list = new ArrayList<>();
     HorizontalContentAdapter adapter;
@@ -40,11 +40,10 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
     private StorageReference storageRef ;
     private FirebaseStorage storage;
 
-    public EventItemsListAdapter(Context context, String eventId, List<EventTagBusiness> stringArrayList) {
+    public BusinessItemsListAdapter(Context context, List<EventTagBusiness> stringArrayList) {
         this.context=context;
         this.list=stringArrayList;
         storage = FirebaseStorage.getInstance();
-        this.eventId = eventId;
         // Create a storage reference from our app
         storageRef = storage.getReference();
     }
@@ -103,7 +102,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance(eventId, String.valueOf(dataItem.getId())));
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance(String.valueOf(dataItem.getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -113,7 +112,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance(eventId,String.valueOf(dataItem.getId())));
+                transaction.replace(R.id.frame_layout, ItemDetailFragment.newInstance(String.valueOf(dataItem.getId())));
                 transaction.addToBackStack(null).commit();
             }
         });

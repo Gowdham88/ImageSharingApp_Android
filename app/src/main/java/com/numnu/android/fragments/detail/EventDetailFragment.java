@@ -249,7 +249,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         }
 
         eventName.setText(eventDetailResponse.getName());
-        eventDescription.setText(eventDetailResponse.getDescription());
+        if(!eventDetailResponse.getDescription().isEmpty()) {
+            eventDescription.setText(eventDetailResponse.getDescription());
+        }else {
+            eventDescription.setVisibility(View.GONE);
+        }
         if(eventDescription.getLineCount()>= Max){
             morebutton.setVisibility(View.VISIBLE);
         }
@@ -334,8 +338,12 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         }
 
-        adapter = new HorizontalContentAdapter(context,eventDetailResponse.getTags());
-        recyclerView.setAdapter(adapter);
+        if(!eventDetailResponse.getTags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
+            recyclerView.setAdapter(adapter);
+        }else {
+            recyclerView.setVisibility(View.GONE);
+        }
         hideProgressDialog();
 
     }
