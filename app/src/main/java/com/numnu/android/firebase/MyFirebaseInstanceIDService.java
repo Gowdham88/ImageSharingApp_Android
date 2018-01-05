@@ -21,14 +21,8 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.thulir.tracker.network.ApiServices;
-import com.thulir.tracker.network.ServiceGenerator;
-import com.thulir.tracker.network.request.UserRegister;
-import com.thulir.tracker.network.response.CommonResponse;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
 
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
@@ -50,7 +44,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
-        sendRegistrationToServer(refreshedToken);
+//        sendRegistrationToServer(refreshedToken);
     }
     // [END refresh_token]
 
@@ -62,36 +56,36 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send token to your app server.
-        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        UserRegister signIn = new UserRegister();
-        signIn.setFcmToken(token);
-        Call<CommonResponse> call = apiServices.updateFcmId("token",signIn);
-        Log.d(TAG, "call " + String.valueOf(call));
-        call.enqueue(new Callback<CommonResponse>() {
-            @Override
-            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
-                int response_code = response.code();
-                Log.d(TAG, "`response code " + response_code);
-                CommonResponse result = response.body();
-                if (response_code == 200) {
-                    if (result.getStatus()) {
-
-                        Toast.makeText(getApplicationContext(), "Token Updated", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "failed to update token!!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CommonResponse> call, Throwable t) {
-
-            }
-        });
-
-    }
+//    private void sendRegistrationToServer(String token) {
+//        // TODO: Implement this method to send token to your app server.
+//        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+//        UserRegister signIn = new UserRegister();
+//        signIn.setFcmToken(token);
+//        Call<CommonResponse> call = apiServices.updateFcmId("token",signIn);
+//        Log.d(TAG, "call " + String.valueOf(call));
+//        call.enqueue(new Callback<CommonResponse>() {
+//            @Override
+//            public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
+//                int response_code = response.code();
+//                Log.d(TAG, "`response code " + response_code);
+//                CommonResponse result = response.body();
+//                if (response_code == 200) {
+//                    if (result.getStatus()) {
+//
+//                        Toast.makeText(getApplicationContext(), "Token Updated", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), "failed to update token!!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CommonResponse> call, Throwable t) {
+//
+//            }
+//        });
+//
+//    }
 
 
 
