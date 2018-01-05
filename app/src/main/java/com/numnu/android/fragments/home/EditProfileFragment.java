@@ -262,6 +262,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         mDob = v.findViewById(R.id.et_signup_dob);
 
         mCompleteSignUp =(TextView) v.findViewById(R.id.button_complete_signup);
+        mCompleteSignUp.setText("Save");
         mCompleteSignUp.setVisibility(View.VISIBLE);
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
@@ -950,6 +951,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(alertDialog1.getWindow().getAttributes());
         lp.gravity = Gravity.BOTTOM;
+        lp.windowAnimations = R.style.shareDialogAnimation;
         alertDialog1.getWindow().setAttributes(lp);
     }
 

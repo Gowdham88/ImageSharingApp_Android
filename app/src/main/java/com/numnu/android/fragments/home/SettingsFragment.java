@@ -2,8 +2,11 @@ package com.numnu.android.fragments.home;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +15,15 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -31,6 +38,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
 import com.numnu.android.activity.GoogleMapActivity;
+import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.activity.webFragment;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.fragments.EventBookmarksFragment;
@@ -41,7 +49,10 @@ import com.numnu.android.fragments.detail.ItemDetailFragment;
 import com.numnu.android.fragments.detail.LocationDetailFragment;
 import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -192,7 +203,8 @@ public class SettingsFragment extends Fragment {
         view.findViewById(R.id.text_logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logout();
+//                logout();
+                showAlertlogout();
             }
         });
 
@@ -224,24 +236,66 @@ public class SettingsFragment extends Fragment {
     }
 
 
-    private void logout() {
+//    private void logout() {
+//        showAlertlogout();
+//
+//    }
+    public void showAlertlogout() {
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(R.layout.logout_popup, null);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setView(deleteDialogView);
+        final TextView ok = (TextView) deleteDialogView.findViewById(R.id.ok_txt);
+        final TextView cancel = (TextView) deleteDialogView.findViewById(R.id.cancel_txt);
 
-            currentUser.unlink(currentUser.getProviderId());
-            LoginManager.getInstance().logOut();
-            mAuth.signOut();
+        final AlertDialog alertDialog1 = alertDialog.create();
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
 
-        }
-        PreferencesHelper.signOut(getApplicationContext());
-        PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, false);
-        FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, SignupFragment.newInstance());
-        transaction.addToBackStack(null).commit();
+                    currentUser.unlink(currentUser.getProviderId());
+                    LoginManager.getInstance().logOut();
+                    mAuth.signOut();
+
+                }
+                PreferencesHelper.signOut(getApplicationContext());
+                PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, false);
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, SignupFragment.newInstance());
+                transaction.addToBackStack(null).commit();
+
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog1.dismiss();
+            }
+        });
+        alertDialog1.show();
+//        alertDialog1.setCanceledOnTouchOutside(false);
+//        try {
+//            alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+//        alertDialog1.getWindow().setLayout((int) Utils.convertDpToPixel(228,getActivity()),(int)Utils.convertDpToPixel(220,getActivity()));
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.copyFrom(alertDialog1.getWindow().getAttributes());
+////        lp.height=200dp;
+////        lp.width=228;
+//        lp.gravity = Gravity.CENTER;
+////        lp.windowAnimations = R.style.DialogAnimation;
+//        alertDialog1.getWindow().setAttributes(lp);
+
     }
-
     private void editProfile() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, EditProfileFragment.newInstance());

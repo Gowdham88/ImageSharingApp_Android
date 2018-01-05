@@ -144,6 +144,10 @@
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <!--<item name="android:windowExitAnimation">@anim/slide_bottom</item>-->
    </style>
+    <style name="shareDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_up</item>
+        <!--<item name="android:windowExitAnimation">@anim/slide_bottom</item>-->
+    </style>
 
     <style name="TabWidget">
         <item name="android:textSize">14sp</item>
