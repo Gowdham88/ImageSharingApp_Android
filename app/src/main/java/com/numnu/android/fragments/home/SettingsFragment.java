@@ -260,7 +260,7 @@ public class SettingsFragment extends Fragment {
                     currentUser.unlink(currentUser.getProviderId());
                     LoginManager.getInstance().logOut();
                     mAuth.signOut();
-
+                    alertDialog1.dismiss();
                 }
                 PreferencesHelper.signOut(getApplicationContext());
                 PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, false);
