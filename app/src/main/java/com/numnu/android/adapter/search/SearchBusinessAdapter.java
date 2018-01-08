@@ -11,13 +11,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.fragments.eventdetail.EventBusinessDetailFragment;
+import com.numnu.android.network.response.HBussresp;
+import com.numnu.android.network.response.HomeItemRes;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by thulir on 10/10/17.
@@ -27,15 +32,23 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
 
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
-    HorizontalContentAdapter adapter;
+    List<HBussresp> listbuss= new ArrayList<>();
+    private StorageReference storageRef ;
+    private FirebaseStorage storage;
+    HorizontalAdapterHome adapter;
     RecyclerView recyclerView;
 
 
-    public SearchBusinessAdapter(Context context, ArrayList<String> stringArrayList) {
+    public SearchBusinessAdapter(Context context, List<HBussresp> stringArrayList) {
         this.context=context;
-        this.stringArrayList=stringArrayList;
+        this.listbuss=stringArrayList;
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
     }
-
+    public  void addData(List<HBussresp> stringArrayList){
+        listbuss.addAll(stringArrayList);
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -49,11 +62,11 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        holder.textViewName.setText(stringArrayList.get(position));
+        final HBussresp homebusRespo = listbuss.get(position);
+        holder.textViewName.setText(listbuss.get(position).getBusinessname());
 
         Picasso.with(context).load(R.drawable.sasitem)
-                .placeholder(R.drawable.food_715539_1920)
+                .placeholder(R.drawable.background)
                 .fit()
                 .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
@@ -75,14 +88,14 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
             }
         });
 
-//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
+        adapter = new HorizontalAdapterHome(context, homebusRespo.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
     public int getItemCount() {
-        return stringArrayList.size();
+        return listbuss.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

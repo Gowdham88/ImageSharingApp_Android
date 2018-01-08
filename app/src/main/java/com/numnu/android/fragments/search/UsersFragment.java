@@ -1,21 +1,26 @@
 package com.numnu.android.fragments.search;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.numnu.android.R;
 import com.numnu.android.adapter.UsersAdapter;
 import com.numnu.android.adapter.search.SearchEventsAdapter;
+import com.numnu.android.adapter.search.SearchItemsListAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
 import com.numnu.android.network.response.DataItem;
@@ -44,6 +49,7 @@ public class UsersFragment extends Fragment {
     private int nextPage = 1;
     UsersAdapter usersAdapter;
     HomeUserresponse userhomeresponse;
+    private android.support.v7.app.AlertDialog dialog;
 
 
     public static UsersFragment newInstance() {
@@ -70,6 +76,8 @@ public class UsersFragment extends Fragment {
             getuserhomeData();
         }else {
             showAlert();
+
+
         }
         usersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -93,7 +101,6 @@ public class UsersFragment extends Fragment {
                 }
             }
         });
-//        setupRecyclerView();
 
         return view;
     }
@@ -101,33 +108,44 @@ public class UsersFragment extends Fragment {
     }
     private void getuserhomeData()
     {
-//        LocationObject citylocation = new LocationObject();
-//        citylocation.setLattitude(13.625475);
-//        citylocation.setLongitude(77.111111);
-//        citylocation.setNearMeRadiusInMiles(14000);
-//        LocationHomePost locationhomepost=new LocationHomePost();
-//        locationhomepost.setClientapp(Constants.CLIENT_APP);
-//        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
-//        locationhomepost.setLocationObject(citylocation);
-//        locationhomepost.setSearchText("burger");
+        showProgressDialog();
+        LocationObject citylocation = new LocationObject();
+        citylocation.setLattitude(13.625475);
+        citylocation.setLongitude(77.111111);
+        citylocation.setNearMeRadiusInMiles(15000);
+        LocationHomePost locationhomepost=new LocationHomePost();
+        locationhomepost.setClientapp(Constants.CLIENT_APP);
+        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
+        locationhomepost.setLocationObject(citylocation);
+        locationhomepost.setSearchText("b");
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<HomeUserresponse> call=apiServices.gethomeuser();
+        Call<HomeUserresponse> call=apiServices.gethomeuser(locationhomepost);
         call.enqueue(new Callback<HomeUserresponse>() {
             @Override
             public void onResponse(Call<HomeUserresponse> call, Response<HomeUserresponse> response) {
                 int responsecode = response.code();
-                if(responsecode==200) {
+                Log.e("userString", new Gson().toJson(response.body()));
+                if(responsecode==200){
+                   userhomeresponse=new HomeUserresponse();
                     userhomeresponse = response.body();
+
+//                    usersAdapter = new UsersAdapter(context,response.body().getData());
+//                    usersRecyclerView.setAdapter(usersAdapter);
+//                    usersAdapter.notifyDataSetChanged();
                     updateUI();
                     isLoading = false;
+                    hideProgressDialog();
                 }
+
+
             }
 
             @Override
             public void onFailure(Call<HomeUserresponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
+                hideProgressDialog();
             }
         });
 
@@ -136,26 +154,26 @@ public class UsersFragment extends Fragment {
         LocationObject citylocation = new LocationObject();
         citylocation.setLattitude(13.625475);
         citylocation.setLongitude(77.111111);
-        citylocation.setNearMeRadiusInMiles(14000);
+        citylocation.setNearMeRadiusInMiles(15000);
         LocationHomePost locationhomepost=new LocationHomePost();
         locationhomepost.setClientapp(Constants.CLIENT_APP);
         locationhomepost.setClientip(Utils.getLocalIpAddress(context));
         locationhomepost.setLocationObject(citylocation);
-        locationhomepost.setSearchText("burger");
+        locationhomepost.setSearchText("b");
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<HomeUserresponse> call = apiServices.gethomeuser(String.valueOf(nextPage));
+        Call<HomeUserresponse> call = apiServices.gethomeuser(String.valueOf(nextPage),locationhomepost);
         call.enqueue(new Callback<HomeUserresponse>() {
             @Override
             public void onResponse(Call<HomeUserresponse> call, Response<HomeUserresponse> response) {
                 int responsecode = response.code();
                 if (responsecode == 200) {
-                    List<Homeuserresp> dataItems = response.body().getData();
+                    List<Homeuserresp> userItems = response.body().getData();
                     if (!response.body().getPagination().isHasMore()) {
                         isLastPage = true;
                     }
-                    usersAdapter.addData(dataItems);
+                    usersAdapter.addData(userItems);
                     usersAdapter.notifyDataSetChanged();
                     isLoading = false;
                 }
@@ -180,16 +198,23 @@ public class UsersFragment extends Fragment {
         usersRecyclerView.setAdapter(usersAdapter);
         usersAdapter.notifyDataSetChanged();
     }
-//    private void setupRecyclerView() {
-//        ArrayList<String> stringlist = new ArrayList<>();
-//
-//        for (int i = 1; i <= 10; i++) {
-//            stringlist.add("Users Item " + i);
-//
-//            UsersAdapter usersAdapter = new UsersAdapter(context, stringlist);
-//            usersRecyclerView.setAdapter(usersAdapter);
-//        }
-//
-//    }
+    public void showProgressDialog() {
+
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+    }
+
+    public void hideProgressDialog(){
+        if(dialog!=null)
+            dialog.dismiss();
+    }
+
 }
 

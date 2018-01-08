@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public class Homeuserresp {
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -76,5 +77,6 @@ public class Homeuserresp {
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
+
 
 }

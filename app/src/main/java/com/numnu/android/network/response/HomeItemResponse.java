@@ -6,17 +6,17 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by czsm4 on 05/01/18.
+ * Created by czsm4 on 08/01/18.
  */
 
-public class HomeUserresponse {
+public class HomeItemResponse {
 
     @SerializedName("pagination")
     @Expose
     private Pagination pagination;
     @SerializedName("data")
     @Expose
-    private List<Homeuserresp> data = null;
+    private List<HomeItemRes> data = null;
 
     public Pagination getPagination() {
         return pagination;
@@ -26,14 +26,12 @@ public class HomeUserresponse {
         this.pagination = pagination;
     }
 
-    public List<Homeuserresp> getData() {
+    public List<HomeItemRes> getData() {
         return data;
     }
 
-    public void setData(List<Homeuserresp> data) {
+    public void setData(List<HomeItemRes> data) {
         this.data = data;
     }
 
 }
-
-

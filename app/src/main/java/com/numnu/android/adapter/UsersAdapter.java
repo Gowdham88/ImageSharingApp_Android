@@ -34,7 +34,7 @@ import java.util.List;
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
-    List<Homeuserresp> list = new ArrayList<>();
+    List<Homeuserresp> listuser = new ArrayList<>();
     private StorageReference storageRef ;
     private FirebaseStorage storage;
     HorizontalContentAdapter adapter;
@@ -42,13 +42,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     public UsersAdapter(Context context, List<Homeuserresp> stringArrayList) {
         this.context = context;
-        this.list =stringArrayList;
+        this.listuser =stringArrayList;
         storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         storageRef = storage.getReference();
     }
-    public  void addData(List<Homeuserresp> stringArrayList){
-        list.addAll(stringArrayList);
+    public  void addData(List<Homeuserresp> stringArrayList) {
+        listuser.addAll(stringArrayList);
     }
     @Override
     public UsersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -60,9 +60,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final UsersAdapter.ViewHolder holder, int position) {
-        final Homeuserresp homeuserRespo = list.get(position);
-        holder.usertextView.setText(list.get(position).getUsername());
-        holder.emailtextView.setText("@"+list.get(position).getUsername());
+        final Homeuserresp homeuserRespo = listuser.get(position);
+        holder.usertextView.setText(listuser.get(position).getUsername());
+        holder.emailtextView.setText("@"+listuser.get(position).getUsername());
         if(!homeuserRespo.getUserimages().isEmpty()&&homeuserRespo.getUserimages().get(0).getImageurl()!=null) {
             storageRef.child(homeuserRespo.getUserimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -117,7 +117,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return stringArrayList.size();
+        return listuser.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
