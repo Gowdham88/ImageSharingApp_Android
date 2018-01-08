@@ -150,7 +150,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             public void onClick(View v) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(itemDetailsResponse.getBusinessuserid())));
                 transaction.addToBackStack(null).commit();
             }
         });

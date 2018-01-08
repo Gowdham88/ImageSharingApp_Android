@@ -79,7 +79,7 @@ public class LocationpostFragment extends Fragment {
 //    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        recyclerView.addItemDecoration(dividerItemDecoration);
         if(Utils.isNetworkAvailable(context)) {
-            getData("180");
+            getData(locationId);
         }else {
             showAlert();
         }

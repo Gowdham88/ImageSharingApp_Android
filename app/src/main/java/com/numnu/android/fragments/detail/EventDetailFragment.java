@@ -105,8 +105,14 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
      int Max=4;
     private android.support.v7.app.AlertDialog dialog;
 
-    public static EventDetailFragment newInstance() {
-        return new EventDetailFragment();
+    public static EventDetailFragment newInstance(String eventId) {
+
+        EventDetailFragment eventDetailFragment = new EventDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("eventId", eventId);
+        eventDetailFragment.setArguments(args);
+
+        return eventDetailFragment;
     }
 
     @Override
@@ -115,7 +121,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            eventId = bundle.getString("eventId","34");
+            eventId = bundle.getString("eventId");
         }
 
          storage = FirebaseStorage.getInstance();

@@ -137,15 +137,15 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         eventImageView = view.findViewById(R.id.current_event_image);
         eventImageView.setOnClickListener(this);
 
-        eventName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+//        eventName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
 
         morebutton = view.findViewById(R.id.more_button);
         morebutton.setVisibility(View.GONE);
@@ -494,7 +494,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         if(BusinessimgPath!=null){
             Intent intent=new Intent(getActivity(), SliceActivity.class);
             intent.putExtra("imagepath",BusinessimgPath.toString());
-            context.startActivity(intent);
+            startActivity(intent);
         }
         else{
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();

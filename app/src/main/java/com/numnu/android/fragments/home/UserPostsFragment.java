@@ -140,7 +140,7 @@ public class UserPostsFragment extends Fragment {
         }else {
 
             if (Utils.isNetworkAvailable(context)) {
-                getData("51");
+                getData(userId);
             } else {
                 showAlert();
             }

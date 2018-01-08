@@ -88,7 +88,7 @@ public class LocationItemsTagsFragment extends Fragment {
         menuitemsRecyclerView.addItemDecoration(dividerItemDecoration);
 
         if(Utils.isNetworkAvailable(context)) {
-            getItems("179");
+            getItems(locationId);
         }else {
             showAlert();
         }

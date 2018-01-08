@@ -72,7 +72,7 @@ public class ItemPostsFragment extends Fragment {
 //    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        recyclerView.addItemDecoration(dividerItemDecoration);
         if(Utils.isNetworkAvailable(context)) {
-            getData("149");
+            getData(itemId);
         }else {
             showAlert();
         }

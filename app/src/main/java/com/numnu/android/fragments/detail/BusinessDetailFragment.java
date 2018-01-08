@@ -165,7 +165,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance(eventId));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -175,7 +175,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance(eventId));
                 transaction.addToBackStack(null).commit();
             }
         });

@@ -50,7 +50,7 @@ public interface ApiServices {
     @GET("/users")
     Call<CommonResponse> checkUserName(@Query("checkusername") String s);
 
-    @GET("/users/signin")
+    @GET("/signinuser")
     Call<LoginResponse> login();
 
     @Multipart

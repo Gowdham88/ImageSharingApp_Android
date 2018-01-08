@@ -113,7 +113,7 @@ public class HomeActivity extends MyActivity {
                     transaction.addToBackStack(null).commit();
         }else if (eventBookmarkBundle != null && eventBookmarkBundle.equals("eventbookmark")) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+            transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance("51"));
             transaction.addToBackStack(null).commit();
         }else if (businessBookmarkBundle != null && businessBookmarkBundle.equals("businessbookmark")) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
