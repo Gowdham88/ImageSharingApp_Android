@@ -11,12 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.EventBookmarksAdapter;
-import com.numnu.android.adapter.eventdetail.EventBusinessesAdapter;
+import com.numnu.android.adapter.BookmarksAdapter;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
-import com.numnu.android.network.response.DataItem;
-import com.numnu.android.network.response.EventBusinessesResponse;
+import com.numnu.android.network.response.BookmarkdataItem;
+import com.numnu.android.network.response.GetBookmarksResponse;
 import com.numnu.android.utils.Utils;
 
 import java.util.List;
@@ -29,31 +28,32 @@ import retrofit2.Response;
  * Created by thulir on 9/10/17.
  */
 
-public class EventBookmarksFragment extends Fragment {
+public class BookmarksFragment extends Fragment {
 
     private RecyclerView businessRecyclerView;
     private Context context;
     private String userId,type;
-    EventBusinessesResponse eventBusinessesResponse;
-    private EventBookmarksAdapter eventBookmarksAdapter;
+    GetBookmarksResponse bookmarksResponse;
+    private BookmarksAdapter bookmarksAdapter;
     private boolean isLoading=false;
     private boolean isLastPage=false;
     private int PAGE_SIZE = 20;
     private int nextPage = 1;
 
-    public static EventBookmarksFragment newInstance(String userId) {
+    public static BookmarksFragment newInstance(String userId,String type) {
 
-        EventBookmarksFragment eventBusinessFragment = new EventBookmarksFragment();
+        BookmarksFragment eventBusinessFragment = new BookmarksFragment();
         Bundle args = new Bundle();
         args.putString("userId", userId);
+        args.putString("type", type);
         eventBusinessFragment.setArguments(args);
 
         return eventBusinessFragment;
     }
 
-    public static EventBookmarksFragment newInstance() {
+    public static BookmarksFragment newInstance() {
         
-        return new EventBookmarksFragment();
+        return new BookmarksFragment();
     }
 
 
@@ -75,7 +75,7 @@ public class EventBookmarksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View  view= inflater.inflate(R.layout.fragment_event_business, container, false);
+        View  view= inflater.inflate(R.layout.fragment_bookmarks, container, false);
 
         businessRecyclerView = view.findViewById(R.id.business_recyclerview);
         final LinearLayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
@@ -132,20 +132,20 @@ public class EventBookmarksFragment extends Fragment {
     {
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventBusinessesResponse> call=apiServices.getEventBusinesses(userId);
-        call.enqueue(new Callback<EventBusinessesResponse>() {
+        Call<GetBookmarksResponse> call=apiServices.getBookmark(userId);
+        call.enqueue(new Callback<GetBookmarksResponse>() {
             @Override
-            public void onResponse(Call<EventBusinessesResponse> call, Response<EventBusinessesResponse> response) {
+            public void onResponse(Call<GetBookmarksResponse> call, Response<GetBookmarksResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
-                     eventBusinessesResponse = response.body();
+                     bookmarksResponse = response.body();
                     updateUI();
                     isLoading = false;
                 }
             }
 
             @Override
-            public void onFailure(Call<EventBusinessesResponse> call, Throwable t) {
+            public void onFailure(Call<GetBookmarksResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
             }
@@ -158,24 +158,24 @@ public class EventBookmarksFragment extends Fragment {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<EventBusinessesResponse> call=apiServices.getEventBusinesses(userId, String.valueOf(nextPage));
-        call.enqueue(new Callback<EventBusinessesResponse>() {
+        Call<GetBookmarksResponse> call=apiServices.getBookmark(userId, String.valueOf(nextPage));
+        call.enqueue(new Callback<GetBookmarksResponse>() {
             @Override
-            public void onResponse(Call<EventBusinessesResponse> call, Response<EventBusinessesResponse> response) {
+            public void onResponse(Call<GetBookmarksResponse> call, Response<GetBookmarksResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
-                      List<DataItem> dataItems=response.body().getData();
+                      List<BookmarkdataItem> dataItems=response.body().getBookmarkdata();
                       if(!response.body().getPagination().isHasMore()){
                           isLastPage = true;
                       }
-                    eventBookmarksAdapter.addData(dataItems);
-                    eventBookmarksAdapter.notifyDataSetChanged();
+                    bookmarksAdapter.addData(dataItems);
+                    bookmarksAdapter.notifyDataSetChanged();
                     isLoading = false;
                 }
             }
 
             @Override
-            public void onFailure(Call<EventBusinessesResponse> call, Throwable t) {
+            public void onFailure(Call<GetBookmarksResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
             }
@@ -185,9 +185,9 @@ public class EventBookmarksFragment extends Fragment {
 
     private void updateUI() {
 
-        eventBookmarksAdapter = new EventBookmarksAdapter(context,userId, eventBusinessesResponse.getData());
-        businessRecyclerView.setAdapter(eventBookmarksAdapter);
-        eventBookmarksAdapter.notifyDataSetChanged();
+        bookmarksAdapter = new BookmarksAdapter(context,userId,type, bookmarksResponse.getBookmarkdata());
+        businessRecyclerView.setAdapter(bookmarksAdapter);
+        bookmarksAdapter.notifyDataSetChanged();
     }
 
     @Override

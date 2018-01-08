@@ -280,7 +280,7 @@
         android:layout_height="1dp"
         android:background="#CCCCCC"
         android:layout_marginBottom="6dp"
-        android:layout_above="@+id/textView4"
+        android:layout_above="@+id/text_terms_privacy"
         />
 
 
