@@ -46,7 +46,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-public class GoogleMapActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+public class GoogleMapActivity extends MyActivity implements EasyPermissions.PermissionCallbacks {
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -183,7 +183,7 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
      * Called when the Activity is no longer visible.
 	 */
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
     }
 

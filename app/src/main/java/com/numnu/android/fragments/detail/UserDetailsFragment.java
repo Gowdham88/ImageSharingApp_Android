@@ -264,7 +264,11 @@ public class UserDetailsFragment extends Fragment {
         toolbarTitle.setText("@" + username);
         musername.setText(username);
         mCity.setText(businessResponse.getCitylocation().getName());
-        userDescription.setText(businessResponse.getBusinessdescription());
+        if(!businessResponse.getBusinessdescription().isEmpty()) {
+            userDescription.setText(businessResponse.getBusinessdescription());
+        }else {
+            userDescription.setVisibility(View.GONE);
+        }
 
         if (!businessResponse.getBusinessimages().isEmpty() && businessResponse.getBusinessimages().get(0).getImageurl() != null) {
 
@@ -286,10 +290,12 @@ public class UserDetailsFragment extends Fragment {
 
         }
 
+        if(!businessResponse.getTags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
 
-        adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
         hideProgressDialog();
     }

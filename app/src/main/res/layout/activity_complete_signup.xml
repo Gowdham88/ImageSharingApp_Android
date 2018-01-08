@@ -96,7 +96,7 @@
                 android:id="@+id/et_cmpltsignup_username"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:inputType="text" />
+                android:inputType="textNoSuggestions|textVisiblePassword"/>
             <View
                 android:id="@+id/username_view"
                 android:layout_width="match_parent"
@@ -127,7 +127,7 @@
                 android:id="@+id/et_signup_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:inputType="text" />
+                android:inputType="textNoSuggestions|textVisiblePassword" />
             <View
                 android:id="@+id/name_view"
                 android:layout_width="match_parent"
@@ -266,7 +266,7 @@
                 android:id="@+id/et_user_description"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:inputType="text" />
+                android:inputType="textNoSuggestions|textVisiblePassword" />
             <View
                 android:id="@+id/desc_view"
                 android:layout_width="match_parent"
@@ -309,7 +309,7 @@
                 android:id="@+id/et_signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress|textNoSuggestions|textVisiblePassword" />
             <View
                 android:id="@+id/email_view"
                 android:layout_width="match_parent"
@@ -430,7 +430,7 @@
                 android:textColor="@color/name_black"
                 android:imeOptions="actionNext"
                 android:focusable="false"
-                android:inputType="date" />
+                android:inputType="date|textNoSuggestions|textVisiblePassword" />
             <View
                 android:id="@+id/dob_view"
                 android:layout_width="match_parent"

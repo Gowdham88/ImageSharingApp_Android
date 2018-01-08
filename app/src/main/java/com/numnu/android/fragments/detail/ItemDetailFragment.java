@@ -248,7 +248,11 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
         eventName.setText(itemDetailsResponse.getName());
         businessName.setText(itemDetailsResponse.getBusinessdetail().getBusinessname());
-        eventDescription.setText(itemDetailsResponse.getDescription());
+        if(!itemDetailsResponse.getDescription().isEmpty()) {
+            eventDescription.setText(itemDetailsResponse.getDescription());
+        }else {
+            eventDescription.setVisibility(View.GONE);
+        }
         if(eventDescription.getLineCount()>= Max){
             morebutton.setVisibility(View.VISIBLE);
         }
@@ -287,10 +291,14 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             }
 
         }
+        if(!itemDetailsResponse.getTags().isEmpty()) {
+            adapter1 = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
+            recyclerView1.setAdapter(adapter1);
+        }else {
+            recyclerView1.setVisibility(View.GONE);
+        }
 
-        adapter1 = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
         adapter2 = new HorizontalContentAdapter(context, itemDetailsResponse.getBusinessdetail().getTags());
-        recyclerView1.setAdapter(adapter1);
         recyclerView2 .setAdapter(adapter2);
 
         hideProgressDialog();

@@ -315,8 +315,12 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
         }
 
         itemName.setText(itemDetailsResponse.getItemname());
-
+       if(!itemDetailsResponse.getItemdescription().isEmpty()){
         eventDescription.setText(itemDetailsResponse.getItemdescription());
+       }else {
+           eventDescription.setVisibility(View.GONE);
+       }
+
 
         price.setText(itemDetailsResponse.getPriceamount());
 
@@ -346,8 +350,12 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
 
             }
         });
-        adapter = new HorizontalContentAdapter(context,itemDetailsResponse.getItemtags());
-        recyclerView.setAdapter(adapter);
+        if(!itemDetailsResponse.getItemtags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, itemDetailsResponse.getItemtags());
+            recyclerView.setAdapter(adapter);
+        }else {
+            recyclerView.setVisibility(View.GONE);
+        }
 
         hideProgressDialog();
     }

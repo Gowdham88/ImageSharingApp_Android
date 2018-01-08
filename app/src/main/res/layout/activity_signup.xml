@@ -285,7 +285,7 @@
 
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/text_terms_privacy"
         style="@style/FontAvenirMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -293,6 +293,8 @@
         android:text="@string/by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"
         android:textColor="@color/bysignup_txtcolor"
         android:textSize="12sp"
+        android:textColorLink="@color/blue"
+        android:textColorHighlight="@color/White_clr"
         android:visibility="visible"
         android:layout_marginBottom="5dp"
         android:layout_alignParentBottom="true"

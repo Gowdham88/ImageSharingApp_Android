@@ -287,9 +287,12 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         eventName.setText(locationDetailResponse.getLocationbusiness().getBusinessname());
         city.setText(locationDetailResponse.getName());
         businessName.setText(locationDetailResponse.getLocationbusiness().getBusinessname());
-
-        adapter = new HorizontalContentAdapter(context, locationDetailResponse.getLocationbusiness().getTags());
-        recyclerView.setAdapter(adapter);
+        if(!locationDetailResponse.getLocationbusiness().getTags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, locationDetailResponse.getLocationbusiness().getTags());
+            recyclerView.setAdapter(adapter);
+        }else {
+            recyclerView.setVisibility(View.GONE);
+        }
 
         hideProgressDialog();
     }
