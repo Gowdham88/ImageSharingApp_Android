@@ -523,7 +523,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         if(itemimgPath!=null){
             Intent intent=new Intent(getActivity(), SliceActivity.class);
             intent.putExtra("imagepath",itemimgPath.toString());
-            startActivity(intent);
+            context.startActivity(intent);
         }
         else{
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();

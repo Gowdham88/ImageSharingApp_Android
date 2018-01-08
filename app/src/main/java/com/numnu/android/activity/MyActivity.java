@@ -2,6 +2,7 @@ package com.numnu.android.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.Snackbar;
@@ -75,6 +76,32 @@ public class MyActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         hideProgressDialog();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransitionExit();
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransitionEnter();
+    }
+
+    /**
+     * Overrides the pending Activity transition by performing the "Enter" animation.
+     */
+    protected void overridePendingTransitionEnter() {
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+    }
+
+    /**
+     * Overrides the pending Activity transition by performing the "Exit" animation.
+     */
+    protected void overridePendingTransitionExit() {
+        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_righ);
     }
 
 

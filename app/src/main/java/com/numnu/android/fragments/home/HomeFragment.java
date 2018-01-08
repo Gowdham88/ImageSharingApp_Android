@@ -70,6 +70,7 @@ import com.numnu.android.fragments.search.SearchBusinessFragment;
 import com.numnu.android.fragments.search.SearchItemsFragment;
 import com.numnu.android.fragments.search.UsersFragment;
 import com.numnu.android.utils.Constants;
+import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 
 import java.io.IOException;
@@ -172,6 +173,10 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
         getView().setOnKeyListener(this);
         myReceiver = new MyReceiver();
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(myReceiver, new IntentFilter(LocationUpdatesService.ACTION_BROADCAST));
+        String s= PreferencesHelper.getPreference(getActivity(),PreferencesHelper.PREFERENCE_SEARCH_LOCATION);
+        isLocationSetByGps = true;
+        searchViewLocation.setText(s);
+
 
     }
 
@@ -724,6 +729,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
                 String s = getAddress(location);
                 isLocationSetByGps = true;
                 searchViewLocation.setText(s);
+                PreferencesHelper.setPreference(getActivity(),PreferencesHelper.PREFERENCE_SEARCH_LOCATION,s);
 
             }
         }

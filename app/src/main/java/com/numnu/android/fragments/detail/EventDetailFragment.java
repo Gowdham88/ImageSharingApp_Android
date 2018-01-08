@@ -518,7 +518,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     if(eventDetailResponse.getEventlinks().size()>0){
                         Intent web1 = new Intent(getActivity(), TermsPrivacyActivity.class);
                             web1.putExtra("url",weblinkzero);
-                        startActivity(web1);
+                        context.startActivity(web1);
                     }
 
                 }
@@ -537,7 +537,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     if(eventDetailResponse.getEventlinks().size()>1){
                         Intent web2 = new Intent(getActivity(), TermsPrivacyActivity.class);
                         web2.putExtra("url",weblinkone);
-                        startActivity(web2);
+                        context.startActivity(web2);
                     }
 
                 }
@@ -556,7 +556,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     if(eventDetailResponse.getEventlinks().size()>2){
                         Intent web3 = new Intent(getActivity(), TermsPrivacyActivity.class);
                         web3.putExtra("url",weblinktwo);
-                        startActivity(web3);
+                        context.startActivity(web3);
                     }
 
                 }
@@ -672,7 +672,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         if(imgPath!=null){
             Intent intent=new Intent(getActivity(), SliceActivity.class);
             intent.putExtra("imagepath",imgPath.toString());
-            startActivity(intent);
+            context.startActivity(intent);
         }
         else{
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();

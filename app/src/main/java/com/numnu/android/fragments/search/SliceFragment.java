@@ -240,7 +240,7 @@ public class SliceFragment extends Fragment {
                 if (imagePath != null) {
                     Intent intent = new Intent(getActivity(), SliceActivity.class);
                     intent.putExtra("imagepath", imagePath.toString());
-                    startActivity(intent);
+                    context.startActivity(intent);
                 } else {
                     Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 }

@@ -322,7 +322,7 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
        }
 
 
-        price.setText(itemDetailsResponse.getPriceamount());
+        price.setText(String.format("%s %s", itemDetailsResponse.getCurrencycode(), itemDetailsResponse.getPriceamount()));
 
         barbTxt.setText(itemDetailsResponse.getEventname());
         catgTxt.setText(itemDetailsResponse.getBusinessname());

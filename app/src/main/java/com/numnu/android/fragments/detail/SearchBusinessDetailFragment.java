@@ -494,7 +494,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         if(BusinessimgPath!=null){
             Intent intent=new Intent(getActivity(), SliceActivity.class);
             intent.putExtra("imagepath",BusinessimgPath.toString());
-            startActivity(intent);
+            context.startActivity(intent);
         }
         else{
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
