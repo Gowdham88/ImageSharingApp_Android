@@ -73,7 +73,7 @@ public class SearchItemsFragment extends Fragment {
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(usersRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        usersRecyclerView.addItemDecoration(dividerItemDecoration);
         if(Utils.isNetworkAvailable(context)) {
-//            getitemhomeData();
+            getitemhomeData();
         }else {
             showAlert();
 
@@ -96,7 +96,7 @@ public class SearchItemsFragment extends Fragment {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
                             && totalItemCount >= PAGE_SIZE) {
-//                        loadMoreItems();
+                        loadMoreItems();
                     }
                 }
             }
@@ -108,79 +108,79 @@ public class SearchItemsFragment extends Fragment {
 
     private void showAlert() {
     }
-//    private void getitemhomeData()
-//    {
-//        showProgressDialog();
-//        LocationObject citylocation = new LocationObject();
-//        citylocation.setLattitude(13.625475);
-//        citylocation.setLongitude(77.111111);
-//        citylocation.setNearMeRadiusInMiles(14000);
-//        LocationHomePost locationhomepost=new LocationHomePost();
-//        locationhomepost.setClientapp(Constants.CLIENT_APP);
-//        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
-//        locationhomepost.setLocationObject(citylocation);
-//        locationhomepost.setSearchText("b");
-//        isLoading = true;
-//        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-//        Call<HomeItemResponse> call=apiServices.gethomeitems(locationhomepost);
-//        call.enqueue(new Callback<HomeItemResponse>() {
-//            @Override
-//            public void onResponse(Call<HomeItemResponse> call, Response<HomeItemResponse> response) {
-//                int responsecode = response.code();
-//                if(responsecode==200) {
-////                    homeitemResp=new HomeItemResponse();
-//                    homeitemResp = response.body();
-//                    updateUI();
-//                    isLoading = false;
-//                    hideProgressDialog();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HomeItemResponse> call, Throwable t) {
-//                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
-//                isLoading = false;
-//
-//            }
-//        });
-//
-//    }
-//    private void loadMoreItems() {
-//        LocationObject citylocation = new LocationObject();
-//        citylocation.setLattitude(13.625475);
-//        citylocation.setLongitude(77.111111);
-//        citylocation.setNearMeRadiusInMiles(14000);
-//        LocationHomePost locationhomepost=new LocationHomePost();
-//        locationhomepost.setClientapp(Constants.CLIENT_APP);
-//        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
-//        locationhomepost.setLocationObject(citylocation);
-//        locationhomepost.setSearchText("b");
-//        nextPage += 1;
-//        isLoading = true;
-//        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-//        Call<HomeItemResponse> call = apiServices.gethomeitems(String.valueOf(nextPage),locationhomepost);
-//        call.enqueue(new Callback<HomeItemResponse>() {
-//            @Override
-//            public void onResponse(Call<HomeItemResponse> call, Response<HomeItemResponse> response) {
-//                int responsecode = response.code();
-//                if (responsecode == 200) {
-//                    List<HomeItemRes> Items = response.body().getData();
-//                    if (!response.body().getPagination().isHasMore()) {
-//                        isLastPage = true;
-//                    }
-//                    currentUpAdapter.addData(Items);
-//                    currentUpAdapter.notifyDataSetChanged();
-//                    isLoading = false;
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HomeItemResponse> call, Throwable t) {
-//                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
-//                isLoading = false;
-//            }
-//        });
-//    }
+    private void getitemhomeData()
+    {
+        showProgressDialog();
+        LocationObject citylocation = new LocationObject();
+        citylocation.setLattitude(13.625475);
+        citylocation.setLongitude(77.111111);
+        citylocation.setNearMeRadiusInMiles(14000);
+        LocationHomePost locationhomepost=new LocationHomePost();
+        locationhomepost.setClientapp(Constants.CLIENT_APP);
+        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
+        locationhomepost.setLocationObject(citylocation);
+        locationhomepost.setSearchText("b");
+        isLoading = true;
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<HomeItemResponse> call=apiServices.gethomeitems(locationhomepost);
+        call.enqueue(new Callback<HomeItemResponse>() {
+            @Override
+            public void onResponse(Call<HomeItemResponse> call, Response<HomeItemResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==200) {
+//                    homeitemResp=new HomeItemResponse();
+                    homeitemResp = response.body();
+                    updateUI();
+                    isLoading = false;
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomeItemResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                isLoading = false;
+
+            }
+        });
+
+    }
+    private void loadMoreItems() {
+        LocationObject citylocation = new LocationObject();
+        citylocation.setLattitude(13.625475);
+        citylocation.setLongitude(77.111111);
+        citylocation.setNearMeRadiusInMiles(14000);
+        LocationHomePost locationhomepost=new LocationHomePost();
+        locationhomepost.setClientapp(Constants.CLIENT_APP);
+        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
+        locationhomepost.setLocationObject(citylocation);
+        locationhomepost.setSearchText("b");
+        nextPage += 1;
+        isLoading = true;
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<HomeItemResponse> call = apiServices.gethomeitems(String.valueOf(nextPage),locationhomepost);
+        call.enqueue(new Callback<HomeItemResponse>() {
+            @Override
+            public void onResponse(Call<HomeItemResponse> call, Response<HomeItemResponse> response) {
+                int responsecode = response.code();
+                if (responsecode == 200) {
+                    List<HomeItemRes> Items = response.body().getData();
+                    if (!response.body().getPagination().isHasMore()) {
+                        isLastPage = true;
+                    }
+                    currentUpAdapter.addData(Items);
+                    currentUpAdapter.notifyDataSetChanged();
+                    isLoading = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomeItemResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                isLoading = false;
+            }
+        });
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

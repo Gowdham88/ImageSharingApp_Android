@@ -21,6 +21,8 @@ import com.numnu.android.network.response.HBussresp;
 import com.numnu.android.network.response.HomeItemRes;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +66,38 @@ public class SearchBusinessAdapter extends RecyclerView.Adapter<SearchBusinessAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         final HBussresp homebusRespo = listbuss.get(position);
         holder.textViewName.setText(listbuss.get(position).getBusinessname());
-
+//        String StrtDate=homebusRespo.;
+//        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+//        java.util.Date date = null;
+//        try
+//        {
+//            date = form.parse(StrtDate);
+//        }
+//        catch (ParseException e)
+//        {
+//
+//            e.printStackTrace();
+//        }
+//        SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd, hh:mm a");
+//        String StartDateStr = postFormater.format(date);
+////        eventStartDate.setText(StartDateStr);
+//
+//        String EndDate=homebusRespo.getEndsat();
+//        SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+//        java.util.Date endate = null;
+//        try
+//        {
+//            endate = endformat.parse(EndDate);
+//        }
+//        catch (ParseException e)
+//        {
+//
+//            e.printStackTrace();
+//        }
+//        SimpleDateFormat Formater = new SimpleDateFormat("MMM dd, hh:mm a");
+//        String endDateStr = Formater.format(endate);
+//        String Serverdate=StartDateStr+" - "+endDateStr;
+//        holder.txtdate.setText(Serverdate);
         Picasso.with(context).load(R.drawable.sasitem)
                 .placeholder(R.drawable.background)
                 .fit()

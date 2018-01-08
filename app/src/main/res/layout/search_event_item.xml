@@ -61,7 +61,7 @@
         android:layout_below="@id/hrz_lin_lay"
         android:layout_toRightOf="@id/card_view"
         android:layout_toEndOf="@id/card_view"
-        android:text="August 30,Montreal"
+        android:text=""
         android:textSize="12sp"
         android:layout_marginTop="3dp"
         android:layout_marginLeft="8dp"
