@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -201,7 +202,8 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
                showAlertshare();
             }
         });
-
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setOnClickListener(this);
 
         return view;
     }
