@@ -131,6 +131,7 @@ public class EventsFragment extends Fragment {
                     eventhomeResponse = response.body();
                     updateUI();
                     isLoading = false;
+                    hideProgressDialog();
                 }
             }
 
@@ -138,7 +139,7 @@ public class EventsFragment extends Fragment {
             public void onFailure(Call<HomeEventResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
-                hideProgressDialog();
+
             }
         });
 
