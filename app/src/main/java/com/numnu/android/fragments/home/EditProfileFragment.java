@@ -151,7 +151,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     String GenderStr;
     LinearLayout EditLinearLay,Linearlay;
     ScrollView nestedScrollView;
-    Call<Void> piccall;
+
     public String placeId, placeType = "city", placeAddress;
 
     private RecyclerView myRecyclerView;
@@ -763,7 +763,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
      * This function will upload the image to server
      * @param contentURI ->absolute file path
      */
-    public void uploadImage(String contentURI, final String userId) {
+    public void uploadImage(String contentURI,String userId) {
 
         File file = null;
         try {
@@ -778,11 +778,11 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         if (file != null && file.exists()) {
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-            final MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), reqFile);
 
 
-            Call<CommonResponse> callpic = apiServices.uploadImage(userId, body);
-            callpic.enqueue(new Callback<CommonResponse>() {
+            Call<CommonResponse> call = apiServices.uploadImage(userId, body);
+            call.enqueue(new Callback<CommonResponse>() {
                 @Override
                 public void onResponse(Call<CommonResponse> call, Response<CommonResponse> response) {
                     showProgressDialog();
@@ -790,21 +790,6 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
                     CommonResponse commonResponse = response.body();
                     if (responsecode == 201) {
                         showProgressDialog();
-                        String imagerev=PreferencesHelper.getPreference(getActivity(),PreferencesHelper.PREFERENCE_PROFILE_PIC);
-                        String newString = imagerev.replace("/images/users/", " ");
-                        piccall = apiServices.getimageDelete(userId,newString);
-                        piccall.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                Toast.makeText(getActivity(), "Previous image delete success", Toast.LENGTH_SHORT).show();
-                                hasPermissions();
-                            }
-
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-
-                            }
-                        });
                         PreferencesHelper.setPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_PROFILE_PIC, commonResponse.getImageurl());
                         Toast.makeText(context, "Image Uploaded!", Toast.LENGTH_LONG).show();
 
