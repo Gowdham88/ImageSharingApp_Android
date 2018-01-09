@@ -2,20 +2,16 @@ package com.numnu.android.fragments.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
@@ -31,41 +27,31 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.numnu.android.LocationUpdatesService;
 import com.numnu.android.R;
-import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
-import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.search.PlaceAutocompleteRecyclerViewAdapter;
 import com.numnu.android.adapter.search.SearchResultsAdapter;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
-import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.search.SearchPostsFragment;
 import com.numnu.android.fragments.search.SearchBusinessFragment;
 import com.numnu.android.fragments.search.SearchItemsFragment;
 import com.numnu.android.fragments.search.UsersFragment;
@@ -75,13 +61,11 @@ import com.numnu.android.utils.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static android.content.ContentValues.TAG;
 import static com.numnu.android.utils.Utils.hideKeyboard;
 
 
@@ -612,7 +596,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new SearchBusinessFragment(), "Businesses");
         adapter.addFragment(new SearchItemsFragment(), "Items");
-        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(new SearchPostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
 //        adapter.addFragment(new SearchListFragment(), "Lists");
         viewPager.setAdapter(adapter);

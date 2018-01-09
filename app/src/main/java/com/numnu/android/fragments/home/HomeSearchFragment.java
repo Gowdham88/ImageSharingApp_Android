@@ -1,8 +1,6 @@
 package com.numnu.android.fragments.home;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,14 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.search.EventsFragment;
-import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.search.SearchPostsFragment;
 import com.numnu.android.fragments.search.SearchBusinessFragment;
 import com.numnu.android.fragments.search.SearchItemsFragment;
 import com.numnu.android.fragments.search.UsersFragment;
@@ -171,7 +167,7 @@ public class HomeSearchFragment extends Fragment {
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new SearchBusinessFragment(), "Businesses");
         adapter.addFragment(new SearchItemsFragment(), "Items");
-        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(new SearchPostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
 //        adapter.addFragment(new SearchListFragment(), "Lists");
         viewPager.setAdapter(adapter);
