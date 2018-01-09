@@ -521,8 +521,10 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
     private void initiatePopupWindow() {
         if(itemimgPath!=null){
+
             Intent intent=new Intent(getActivity(), SliceActivity.class);
             intent.putExtra("imagepath",itemimgPath.toString());
+
             context.startActivity(intent);
         }
         else{

@@ -35,6 +35,7 @@ import com.numnu.android.network.response.TagsResponse;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -265,6 +266,10 @@ public interface ApiServices {
     @Headers("Content-Type: application/json")
     @POST("/homeSearch/posts")
     Call<HomePostResponse> gethomeposts(@Body LocationHomePost s);
+
+    @Headers("Content-Type: application/json")
+    @DELETE("/users/{userId}/images/{imageName}")
+    Call<Void> getimageDelete(@Path("userId") String userId,@Path ("imageName") String ImageName);
 
 
 
