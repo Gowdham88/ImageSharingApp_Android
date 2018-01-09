@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.auth.LoginFragment;
@@ -34,12 +32,12 @@ import java.util.ArrayList;
  * Created by thulir on 10/10/17.
  */
 
-public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
+public class SearchPostsAdapter extends RecyclerView.Adapter<SearchPostsAdapter.ViewHolder> {
 
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
 
-    public PostsAdapter(Context context, ArrayList<String> stringArrayList) {
+    public SearchPostsAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
         this.stringArrayList=stringArrayList;
     }

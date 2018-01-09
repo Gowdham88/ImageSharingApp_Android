@@ -1,8 +1,6 @@
 package com.numnu.android.fragments.search;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
-import com.numnu.android.adapter.search.SearchEventAdapter;
-import com.numnu.android.adapter.search.SearchEventsAdapter;
+import com.numnu.android.adapter.search.EventsWithToolbarAdapter;
 
 import java.util.ArrayList;
 
@@ -86,7 +82,7 @@ public class EventsFragmentwithToolbar extends Fragment {
             stringlist.add("Item " + i);
         }
 
-        SearchEventAdapter currentUpAdapter = new SearchEventAdapter(context, stringlist);
+        EventsWithToolbarAdapter currentUpAdapter = new EventsWithToolbarAdapter(context, stringlist);
         searchEventsList.setAdapter(currentUpAdapter);
 
     }
