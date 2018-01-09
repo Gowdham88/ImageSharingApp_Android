@@ -34,6 +34,7 @@ import com.numnu.android.network.response.TagsResponse;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -184,7 +185,7 @@ public interface ApiServices {
     @GET("/users/{userId}/bookmarks")
     Call<GetBookmarksResponse> getBookmark(@Path("userId") String userId, @Query("page") String page);
 
-    @GET("/bookmarks/{bookmarkId}")
+    @DELETE("/bookmarks/{bookmarkId}")
     Call<Void> deleteBookmark(@Path("bookmarkId") String bookmarkId);
 
     @GET("/items/{itemId}/locations")

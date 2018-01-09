@@ -23,12 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.numnu.android.R;
+import com.numnu.android.network.response.BookmarkdataItem;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -238,6 +240,16 @@ public class Utils {
 		return Math.round((Math.abs(timeDistance) / 1000) / 60);
 	}
 
+	public static List<BookmarkdataItem> bookmarkFilter(List<BookmarkdataItem> bookmarkdataItems,String type){
+		List<BookmarkdataItem> filteredList=new ArrayList<>();
+		for (BookmarkdataItem bookmarkdataItem:bookmarkdataItems) {
+			if(bookmarkdataItem.getType().equals(type)){
+				filteredList.add(bookmarkdataItem);
+			}
+		}
+		return filteredList;
+
+	}
 
 
 }
