@@ -20,6 +20,7 @@ import com.numnu.android.network.response.GetBookmarksResponse;
 import com.numnu.android.network.response.HomeBusinessResponse;
 import com.numnu.android.network.response.HomeEventResponse;
 import com.numnu.android.network.response.HomeItemResponse;
+import com.numnu.android.network.response.HomePostResponse;
 import com.numnu.android.network.response.HomeUserresponse;
 import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.network.response.ItemLocationResponse;
@@ -35,10 +36,12 @@ import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -52,6 +55,10 @@ public interface ApiServices {
     @Headers("Content-Type: application/json")
     @POST("/users")
     Call<SignupResponse> completeSignUp(@Body CompleteSignUpData completeSignUpData);
+
+    @Headers("Content-Type: application/json")
+    @PUT("/users/{userId}")
+    Call<SignupResponse> editprofile(@Path("userId") String userId,@Body CompleteSignUpData completeSignUpData);
 
     @GET("/users")
     Call<CommonResponse> checkUserName(@Query("checkusername") String s);
@@ -253,7 +260,14 @@ public interface ApiServices {
     @POST("/homeSearch/events")
     Call<HomeEventResponse> gethomeevents(@Body LocationHomePost s);
 
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/posts")
+    Call<HomePostResponse> gethomeposts(@Body String s, LocationHomePost locationhomepost);
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/posts")
+    Call<HomePostResponse> gethomeposts(@Body LocationHomePost s);
 
-//ghgg
+
+
 
 }

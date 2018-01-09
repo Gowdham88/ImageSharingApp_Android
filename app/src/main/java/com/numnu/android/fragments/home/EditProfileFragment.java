@@ -136,7 +136,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     LinearLayout FoodLinearLay;
     TextView AddTxt;
     AutoCompleteTextView autoComplete;
-    String ItemModelList;
+    String ItemModelList,cityid;
     ArrayList<Tagsuggestion> mylist = new ArrayList<>();
     ImageView viewImage, EditBtn;
     TextView Gallery,mGender;
@@ -178,12 +178,14 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
     private String mCurrentPhotoPath;
     private ProgressDialog mProgressDialog;
     private String userId;
+    String USERId;
     // Create a storage reference from our app
     StorageReference storageRef ;
     private FirebaseStorage storage;
     private double latitude,longitude;
     private AlertDialog dialog;
-
+    SignupResponse signupResp;
+    Citylocation   citylocation ;
     public static EditProfileFragment newInstance() {
         EditProfileFragment fragment = new EditProfileFragment();
         return fragment;
@@ -245,7 +247,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         setupTagAutocomplete();
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
+        citylocation = new Citylocation();
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
 
@@ -267,6 +269,8 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         mDob.setInputType(InputType.TYPE_NULL);
         mDob.requestFocus();
 
+        USERId=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_ID);
+        Toast.makeText(context, USERId, Toast.LENGTH_SHORT).show();
         setupFocusListeners(v);
 
 
@@ -379,6 +383,7 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         String username= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME);
         String email=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL);
         String city= PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY);
+        String cityid=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY_ID);
         String dob=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB);
         String gender=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER);
         String userinfo=PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION);
@@ -405,6 +410,8 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         mGender.setText(gender);
         mDob.setText(dob);
         userDescription.setText(userinfo!=null?userinfo:"");
+        citylocation = new Citylocation();
+        citylocation.setId(cityid);
 
         if(!profilepic.isEmpty()&&profilepic!=null) {
             if (profilepic.startsWith("https")) {
@@ -615,18 +622,9 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         final String gender = mGender.getText().toString().trim();
         final String dob = mDob.getText().toString().trim();
         final String userdescription = userDescription.getText().toString().trim();
-
-        Citylocation citylocation = new Citylocation();
-        citylocation.setIsgoogleplace(true);
-        citylocation.setName(city);
-        citylocation.setGoogleplaceid(placeId);
-        citylocation.setAddress(placeAddress);
-        citylocation.setGoogleplacetype(placeType);
-        citylocation.setLattitude(latitude);
-        citylocation.setLongitude(longitude);
-
+        Log.e("citylocation",""+citylocation.getLattitude()+citylocation.getLongitude()+citylocation.getAddress()+citylocation.getId());
         //converting gender to numbers
-        // gender: 0 -> male, 1 -> female
+        // gender: 0 -> male, 1 -> femal
         int genderNumber = 0;
 
         if (gender.equals("Male")) {
@@ -668,33 +666,47 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         completeSignUpData.setDateofbirth(dob);
         completeSignUpData.setDescription(userdescription);
         completeSignUpData.setIsbusinessuser(false);
-        completeSignUpData.setFirebaseuid(uid);
         completeSignUpData.setTags(tags);
 
         completeSignUpData.setClientapp("android");
         completeSignUpData.setClientip(Utils.getLocalIpAddress(context));
+        String tagsString = "";
+        String tagsIds = "";
+        for (Tag tag:tags){
+            tagsString =tagsString+ tag.getText()+",";
+            tagsIds =tagsIds+ tag.getId()+",";
+        }
 
-        Call<SignupResponse> call = apiServices.completeSignUp(completeSignUpData);
+        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAGS, tagsString);
+        PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_TAG_IDS, tagsIds);
+        showProgressDialog();
+        Call<SignupResponse> call = apiServices.editprofile(USERId,completeSignUpData);
         call.enqueue(new Callback<SignupResponse>() {
 
             @Override
             public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
-                showProgressDialog();
                 int responsecode = response.code();
                 SignupResponse body = response.body();
                 if (responsecode == 201) {
 //id=102
 
 //                        context.getApplicationContext().this.finish();
-                    PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
+                    PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, name);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, username);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL, email);
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+                    PreferencesHelper.setPreference(getActivity(),PreferencesHelper.PREFERENCE_CITY_ID,cityid);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth()!=null?body.getDateofbirth():"");
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, dob);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, userdescription);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE, latitude+"");
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE,longitude+"");
+
+                    hideProgressDialog();
+                    Toast.makeText(context, "Profile edited successfully ", Toast.LENGTH_SHORT).show();
+                    gotoSeetings();
 
 //                    uploadImage(selectedImagePath,String.valueOf(body.getId()));
 
@@ -719,6 +731,14 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
             }
         });
+    }
+
+    private void gotoSeetings() {
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_righ);
+        transaction.replace(R.id.frame_layout, SettingsFragment.newInstance());
+        transaction.addToBackStack(null).commitAllowingStateLoss();
     }
 
     /*
@@ -989,17 +1009,26 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
         }
     };
 
-    private void getLatLong(String placeId) {
+    private void getLatLong(final String placeId) {
 
         mGeoDataClient.getPlaceById(placeId).addOnCompleteListener(new OnCompleteListener<PlaceBufferResponse>() {
             @Override
             public void onComplete(@NonNull Task<PlaceBufferResponse> task) {
                 if (task.isSuccessful()) {
+                    final String city = mCity.getText().toString().trim();
                     PlaceBufferResponse places = task.getResult();
                     Place myPlace = places.get(0);
                     Log.i(TAG, "Place found: " + myPlace.getName());
                     latitude = myPlace.getLatLng().latitude;
                     longitude = myPlace.getLatLng().longitude;
+                    citylocation=new Citylocation();
+                    citylocation.setIsgoogleplace(true);
+                    citylocation.setName(city);
+                    citylocation.setGoogleplaceid(placeId);
+                    citylocation.setAddress(placeAddress);
+                    citylocation.setGoogleplacetype(placeType);
+                    citylocation.setLattitude(latitude);
+                    citylocation.setLongitude(longitude);
                     places.release();
                 } else {
                     Log.e(TAG, "Place not found.");

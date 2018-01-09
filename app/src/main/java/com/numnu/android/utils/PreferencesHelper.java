@@ -20,6 +20,7 @@ public class PreferencesHelper {
     public static final String PREFERENCE_IS_FIRST ="IsFirst";
     public static final String PREFERENCE_NAME ="name";
     public static final String PREFERENCE_CITY ="city";
+    public static final String PREFERENCE_CITY_ID ="cityid";
     public static final String PREFERENCE_DOB ="dob";
     public static final String PREFERENCE_GENDER ="gender";
     public static final String PREFERENCE_LOGGED_IN ="logged in";
