@@ -80,7 +80,14 @@ public class SearchItemsListAdapter extends RecyclerView.Adapter<SearchItemsList
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final HomeItemRes homeitemRespo = listitem.get(position);
-        holder.textViewName.setText(listitem.get(position).getBusinessname());
+        String itemStr=listitem.get(position).getBusinessname();
+        if(itemStr==null){
+            holder.textViewName.setVisibility(View.GONE);
+
+        }else {
+            holder.textViewName.setText(listitem.get(position).getBusinessname());
+        }
+
 
         if(!homeitemRespo.getItemimages().isEmpty()&&homeitemRespo.getItemimages().get(0).getImageurl()!=null) {
             storageRef.child(homeitemRespo.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
