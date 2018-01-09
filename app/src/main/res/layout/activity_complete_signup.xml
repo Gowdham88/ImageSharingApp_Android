@@ -260,7 +260,7 @@
                 android:textColor="@color/name_black"
                 android:textSize="13dp"
                 android:background="@null"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:id="@+id/et_user_description"
@@ -304,6 +304,7 @@
                 android:textColor="@color/name_black"
                 android:textSize="14dp"
                 android:background="@null"
+                android:imeOptions="actionNext"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
                 android:id="@+id/et_signup_email"
@@ -370,6 +371,8 @@
                     style="@style/FontAvenirMedium"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:imeOptions="actionNext"
+
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="26dp"
                     android:gravity="center_vertical"
@@ -428,7 +431,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:textColor="@color/name_black"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:focusable="false"
                 android:inputType="date|textNoSuggestions|textVisiblePassword" />
             <View
