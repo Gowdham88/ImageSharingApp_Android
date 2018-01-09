@@ -137,7 +137,7 @@ public class SearchItemsListAdapter extends RecyclerView.Adapter<SearchItemsList
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, ItemDetailFragment.newInstance(String.valueOf(homeitemRespo.getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -147,7 +147,7 @@ public class SearchItemsListAdapter extends RecyclerView.Adapter<SearchItemsList
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, ItemDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, ItemDetailFragment.newInstance(String.valueOf(homeitemRespo.getId())));
                 transaction.addToBackStack(null).commit();
             }
         });

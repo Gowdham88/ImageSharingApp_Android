@@ -36,7 +36,6 @@ import java.util.List;
 public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<String> stringArrayList = new ArrayList<>();
     List<HomeEvebtResp> list = new ArrayList<>();
     HorizontalAdapterHome adapter;
     RecyclerView recyclerView;
@@ -136,7 +135,7 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance("51"));
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance(String.valueOf(eventhomeRespo.getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -146,7 +145,7 @@ public class SearchEventsAdapter extends RecyclerView.Adapter<SearchEventsAdapte
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance("51"));
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance(String.valueOf(eventhomeRespo.getId())));
                 transaction.addToBackStack(null).commit();
             }
         });

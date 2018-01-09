@@ -85,6 +85,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("Showarrow",  true);
+                bundle.putString("userId", String.valueOf(homeuserRespo.getId()));
                 UserDetailsFragment userFragment = new UserDetailsFragment();
                 userFragment.setArguments(bundle);
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
@@ -102,6 +103,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("Showarrow",  true);
+                bundle.putString("userId", String.valueOf(homeuserRespo.getId()));
                 UserDetailsFragment userFragment = new UserDetailsFragment();
                 userFragment.setArguments(bundle);
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();

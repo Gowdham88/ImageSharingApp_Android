@@ -1,10 +1,6 @@
 package com.numnu.android.adapter.search;
 
 import android.content.Context;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,24 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
-import com.numnu.android.fragments.detail.EventDetailFragment;
-import com.numnu.android.network.response.DataItem;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by czsm4 on 05/01/18.
  */
 
-public class SearchEventAdapter extends RecyclerView.Adapter<SearchEventAdapter.ViewHolder> {
+public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToolbarAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<String> stringArrayList = new ArrayList<>();
@@ -40,12 +30,12 @@ public class SearchEventAdapter extends RecyclerView.Adapter<SearchEventAdapter.
     private FirebaseStorage storage;
 
 
-    public SearchEventAdapter(Context context, ArrayList<String> stringArrayList) {
+    public EventsWithToolbarAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
         this.stringArrayList=stringArrayList;
     }
     @Override
-    public SearchEventAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EventsWithToolbarAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.search_event_item, parent, false);
 
@@ -59,21 +49,21 @@ public class SearchEventAdapter extends RecyclerView.Adapter<SearchEventAdapter.
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
+//
+//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
             }
         });
 
         holder.textViewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
+//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
             }
         });
 //        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
