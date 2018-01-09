@@ -50,6 +50,7 @@ public class EventBusinessesAdapter extends RecyclerView.Adapter<EventBusinesses
         storageRef = storage.getReference();
     }
 
+
     public  void addData(List<DataItem> stringArrayList){
         list.addAll(stringArrayList);
     }

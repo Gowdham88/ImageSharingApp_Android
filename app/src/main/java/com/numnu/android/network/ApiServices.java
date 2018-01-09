@@ -17,10 +17,15 @@ import com.numnu.android.network.response.EventItemDetailResponse;
 import com.numnu.android.network.response.EventItemsResponse;
 import com.numnu.android.network.response.EventPostsResponse;
 import com.numnu.android.network.response.GetBookmarksResponse;
+import com.numnu.android.network.response.HomeBusinessResponse;
+import com.numnu.android.network.response.HomeEventResponse;
+import com.numnu.android.network.response.HomeItemResponse;
+import com.numnu.android.network.response.HomeUserresponse;
 import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.network.response.ItemLocationResponse;
 import com.numnu.android.network.response.ItemsByTagResponse;
 import com.numnu.android.network.response.LocationDetailResponse;
+import com.numnu.android.network.response.LocationHomePost;
 import com.numnu.android.network.response.LoginResponse;
 import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.network.response.SignupResponse;
@@ -216,6 +221,38 @@ public interface ApiServices {
 
     @GET("/locations/{locationId}/itemtags/{tagId}/items")
     Call<ItemsByTagResponse> getLocationItemsByTagId(@Path("locationId") String locationId, @Path("tagId") String tagId, @Query("page") String page);
+
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/users")
+    Call<HomeUserresponse> gethomeuser(@Body String s,LocationHomePost locationhomepost);
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/users")
+    Call<HomeUserresponse> gethomeuser(@Body LocationHomePost s);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/items")
+    Call<HomeItemResponse> gethomeitems(@Body String s, LocationHomePost locationhomepost);
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/items")
+    Call<HomeItemResponse> gethomeitems(@Body LocationHomePost s);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/businesses")
+    Call<HomeBusinessResponse> gethomebusines(@Body String s, LocationHomePost locationhomepost);
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/businesses")
+    Call<HomeBusinessResponse> gethomebusines(@Body LocationHomePost s);
+
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/events")
+    Call<HomeEventResponse> gethomeevents(@Body String s, LocationHomePost locationhomepost);
+    @Headers("Content-Type: application/json")
+    @POST("/homeSearch/events")
+    Call<HomeEventResponse> gethomeevents(@Body LocationHomePost s);
+
+
 
 
 }

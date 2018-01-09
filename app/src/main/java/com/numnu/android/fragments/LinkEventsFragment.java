@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
+import com.numnu.android.adapter.search.SearchEventAdapter;
 import com.numnu.android.adapter.search.SearchEventsAdapter;
 
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class LinkEventsFragment extends Fragment {
             stringlist.add("Item " + i);
         }
 
-        SearchEventsAdapter currentUpAdapter = new SearchEventsAdapter(context, stringlist);
+        SearchEventAdapter currentUpAdapter = new SearchEventAdapter(context, stringlist);
         searchEventsList.setAdapter(currentUpAdapter);
 
     }
