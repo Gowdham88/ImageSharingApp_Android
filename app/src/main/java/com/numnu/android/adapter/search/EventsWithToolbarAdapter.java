@@ -28,7 +28,7 @@ public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToo
     RecyclerView recyclerView;
     private StorageReference storageRef ;
     private FirebaseStorage storage;
-
+    private String eventId;
 
     public EventsWithToolbarAdapter(Context context, ArrayList<String> stringArrayList) {
         this.context=context;
@@ -49,21 +49,26 @@ public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToo
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//
-//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-//                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
-//                transaction.addToBackStack(null).commit();
+
+
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance("51"));
+                transaction.addToBackStack(null).commit();
+
             }
         });
 
         holder.textViewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-//                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
-//                transaction.addToBackStack(null).commit();
+
+                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance("51"));
+                transaction.addToBackStack(null).commit();
+
             }
         });
 //        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
