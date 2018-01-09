@@ -28,6 +28,7 @@ import com.numnu.android.network.response.HomeEventResponse;
 import com.numnu.android.network.response.LocationHomePost;
 import com.numnu.android.network.response.LocationObject;
 import com.numnu.android.utils.Constants;
+import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
@@ -53,15 +54,27 @@ public class EventsFragment extends Fragment {
     private int nextPage = 1;
     SearchEventsAdapter currentUpAdapter;
     private android.support.v7.app.AlertDialog dialog;
+    private String keyword;
+    private Double lat,lng;
 
-    public static EventsFragment newInstance() {
+    public static EventsFragment newInstance(String keyword) {
         EventsFragment fragment = new EventsFragment();
+        Bundle args = new Bundle();
+        args.putString("keyword", keyword);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            keyword = bundle.getString("keyword");
+        }
+
+         lat = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE));
+         lng = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE));
     }
 
     @Override
@@ -110,15 +123,16 @@ public class EventsFragment extends Fragment {
     private void geteventhomeData()
     {
         showProgressDialog();
+
         LocationObject citylocation = new LocationObject();
-        citylocation.setLattitude(13.625475);
-        citylocation.setLongitude(77.111111);
+        citylocation.setLattitude(lat);
+        citylocation.setLongitude(lng);
         citylocation.setNearMeRadiusInMiles(14000);
         LocationHomePost locationhomepost=new LocationHomePost();
         locationhomepost.setClientapp(Constants.CLIENT_APP);
         locationhomepost.setClientip(Utils.getLocalIpAddress(context));
         locationhomepost.setLocationObject(citylocation);
-        locationhomepost.setSearchText("b");
+        locationhomepost.setSearchText(keyword);
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
         Call<HomeEventResponse> call=apiServices.gethomeevents(locationhomepost);
@@ -147,14 +161,14 @@ public class EventsFragment extends Fragment {
     private void loadMoreItems()
     {
         LocationObject citylocation = new LocationObject();
-        citylocation.setLattitude(13.625475);
-        citylocation.setLongitude(77.111111);
+        citylocation.setLattitude(lat);
+        citylocation.setLongitude(lng);
         citylocation.setNearMeRadiusInMiles(14000);
         LocationHomePost locationhomepost=new LocationHomePost();
         locationhomepost.setClientapp(Constants.CLIENT_APP);
         locationhomepost.setClientip(Utils.getLocalIpAddress(context));
         locationhomepost.setLocationObject(citylocation);
-        locationhomepost.setSearchText("b");
+        locationhomepost.setSearchText(keyword);
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);

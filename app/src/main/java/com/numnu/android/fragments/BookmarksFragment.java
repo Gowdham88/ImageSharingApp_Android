@@ -182,6 +182,7 @@ public class BookmarksFragment extends Fragment {
     private void updateUI() {
 
         List<BookmarkdataItem> bookmarkdata = bookmarksResponse.getBookmarkdata();
+        if(bookmarkdata!=null)
         bookmarksAdapter = new BookmarksAdapter(context,userId,type, Utils.bookmarkFilter(bookmarkdata,type));
         businessRecyclerView.setAdapter(bookmarksAdapter);
         bookmarksAdapter.notifyDataSetChanged();

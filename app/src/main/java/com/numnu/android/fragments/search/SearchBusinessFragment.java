@@ -28,6 +28,7 @@ import com.numnu.android.network.response.HomeBusinessResponse;
 import com.numnu.android.network.response.LocationHomePost;
 import com.numnu.android.network.response.LocationObject;
 import com.numnu.android.utils.Constants;
+import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
 
 import java.util.ArrayList;
@@ -52,14 +53,28 @@ public class SearchBusinessFragment extends Fragment {
     SearchBusinessAdapter currentUpAdapter;
     HomeBusinessResponse HbusResp;
     private android.support.v7.app.AlertDialog dialog;
+    private String keyword;
+    private Double lat,lng;
 
-    public static SearchBusinessFragment newInstance() {
-        return new SearchBusinessFragment();
+    public static SearchBusinessFragment newInstance(String keyword) {
+
+        SearchBusinessFragment fragment = new SearchBusinessFragment();
+        Bundle args = new Bundle();
+        args.putString("keyword", keyword);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            keyword = bundle.getString("keyword");
+        }
+
+        lat = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE));
+        lng = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE));
     }
 
     @Override
@@ -112,14 +127,14 @@ public class SearchBusinessFragment extends Fragment {
     {
         showProgressDialog();
         LocationObject citylocation = new LocationObject();
-        citylocation.setLattitude(13.625475);
-        citylocation.setLongitude(77.111111);
+        citylocation.setLattitude(lat);
+        citylocation.setLongitude(lng);
         citylocation.setNearMeRadiusInMiles(13900);
         LocationHomePost locationhomepost=new LocationHomePost();
         locationhomepost.setClientapp(Constants.CLIENT_APP);
         locationhomepost.setClientip(Utils.getLocalIpAddress(context));
         locationhomepost.setLocationObject(citylocation);
-        locationhomepost.setSearchText("b");
+        locationhomepost.setSearchText(keyword);
         isLoading = true;
         Log.e("String", String.valueOf(locationhomepost));
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
@@ -148,14 +163,14 @@ public class SearchBusinessFragment extends Fragment {
     private void loadMoreItems()
     {
         LocationObject citylocation = new LocationObject();
-        citylocation.setLattitude(13.625475);
-        citylocation.setLongitude(77.111111);
+        citylocation.setLattitude(lat);
+        citylocation.setLongitude(lng);
         citylocation.setNearMeRadiusInMiles(14000);
         LocationHomePost locationhomepost=new LocationHomePost();
         locationhomepost.setClientapp(Constants.CLIENT_APP);
         locationhomepost.setClientip(Utils.getLocalIpAddress(context));
         locationhomepost.setLocationObject(citylocation);
-        locationhomepost.setSearchText("burger");
+        locationhomepost.setSearchText(keyword);
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
