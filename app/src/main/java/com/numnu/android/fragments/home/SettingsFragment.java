@@ -1,29 +1,18 @@
 package com.numnu.android.fragments.home;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -37,22 +26,11 @@ import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.numnu.android.R;
-import com.numnu.android.activity.GoogleMapActivity;
-import com.numnu.android.activity.OnboardingActivity;
 import com.numnu.android.activity.webFragment;
-import com.numnu.android.adapter.FoodAdapter;
-import com.numnu.android.fragments.EventBookmarksFragment;
-import com.numnu.android.fragments.auth.CompleteSignupFragment;
-import com.numnu.android.fragments.auth.LoginFragment;
+import com.numnu.android.fragments.BookmarksFragment;
 import com.numnu.android.fragments.auth.SignupFragment;
-import com.numnu.android.fragments.detail.ItemDetailFragment;
-import com.numnu.android.fragments.detail.LocationDetailFragment;
-import com.numnu.android.network.response.Tagsuggestion;
 import com.numnu.android.utils.PreferencesHelper;
-import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
-
-import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -150,7 +128,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 // TODO: 26/12/17
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, EventBookmarksFragment.newInstance());
+                transaction.replace(R.id.frame_layout, BookmarksFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });

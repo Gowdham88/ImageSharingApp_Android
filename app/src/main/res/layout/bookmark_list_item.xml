@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/toolbar_background_color">
+
+
+<!--<ScrollView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:scrollbars="vertical">-->
+    <TextView
+        style="@style/FontAvenirMedium"
+        android:id="@+id/txt_itemname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textColor="@color/time_color"
+        android:textSize="@dimen/font_normal"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_tiny"
+        />
+    <!--<TextView-->
+        <!--style="@style/FontAvenirMedium"-->
+        <!--android:id="@+id/txt_itemname2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Category"-->
+        <!--android:textColor="@color/time_color"-->
+        <!--android:textSize="@dimen/font_small"-->
+        <!--android:layout_marginBottom="@dimen/spacing_small"-->
+        <!--/>-->
+<!--</ScrollView>-->
+</LinearLayout>

@@ -23,8 +23,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -54,6 +58,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 import com.numnu.android.R;
+import com.numnu.android.activity.webFragment;
+import com.numnu.android.fragments.home.SettingsFragment;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 
@@ -79,6 +85,7 @@ public class SignupFragment extends Fragment {
     private Context context;
     private boolean shown=false;
     private AlertDialog dialog;
+    final static String TERMS="terms",PRIVACY="privacy";
 
     public static SignupFragment newInstance() {
         SignupFragment fragment = new SignupFragment();
@@ -215,20 +222,38 @@ public class SignupFragment extends Fragment {
 
             }
         });
-//        view.findViewById(R.id.button_signup).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_layout, CompleteSignupFragment.newInstance());
-//                transaction.addToBackStack(null).commit();
-//            }
-//        });
+
 
         textViewSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
             }
+        });
+
+        TextView termsPrivacy = (TextView) view.findViewById(R.id.text_terms_privacy);
+        ClickableSpan termsOfServicesClick = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent setintent=new Intent(getActivity(),webFragment.class);
+                setintent.putExtra("textterms",TERMS);
+                SignupFragment.this.startActivity(setintent   );
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+            }
+        };
+
+        ClickableSpan privacyPolicyClick = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent setintent=new Intent(getActivity(),webFragment.class);
+                setintent.putExtra("textterms",PRIVACY);
+                SignupFragment.this.startActivity(setintent   );
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+            }
+        };
+
+        makeLinks(termsPrivacy, new String[] { "Terms of\nService", "Privacy Policy" }, new ClickableSpan[] {
+                termsOfServicesClick, privacyPolicyClick
         });
 
         return view;
@@ -652,6 +677,18 @@ public class SignupFragment extends Fragment {
             }
         });
     }
+    public void makeLinks(TextView textView, String[] links, ClickableSpan[] clickableSpans) {
+        SpannableString spannableString = new SpannableString(textView.getText());
+        for (int i = 0; i < links.length; i++) {
+            ClickableSpan clickableSpan = clickableSpans[i];
+            String link = links[i];
 
+            int startIndexOfLink = textView.getText().toString().indexOf(link);
+            spannableString.setSpan(clickableSpan, startIndexOfLink, startIndexOfLink + link.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(spannableString, TextView.BufferType.SPANNABLE);
+    }
 
 }

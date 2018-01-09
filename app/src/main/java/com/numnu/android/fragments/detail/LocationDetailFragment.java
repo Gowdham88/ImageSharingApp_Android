@@ -167,7 +167,7 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
             public void onClick(View v) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventBusinessDetailFragment.newInstance("50"));
+                transaction.replace(R.id.frame_layout, EventBusinessDetailFragment.newInstance(String.valueOf(locationDetailResponse.getLocationbusiness().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -287,9 +287,12 @@ public class LocationDetailFragment extends Fragment implements View.OnClickList
         eventName.setText(locationDetailResponse.getLocationbusiness().getBusinessname());
         city.setText(locationDetailResponse.getName());
         businessName.setText(locationDetailResponse.getLocationbusiness().getBusinessname());
-
-        adapter = new HorizontalContentAdapter(context, locationDetailResponse.getLocationbusiness().getTags());
-        recyclerView.setAdapter(adapter);
+        if(!locationDetailResponse.getLocationbusiness().getTags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, locationDetailResponse.getLocationbusiness().getTags());
+            recyclerView.setAdapter(adapter);
+        }else {
+            recyclerView.setVisibility(View.GONE);
+        }
 
         hideProgressDialog();
     }

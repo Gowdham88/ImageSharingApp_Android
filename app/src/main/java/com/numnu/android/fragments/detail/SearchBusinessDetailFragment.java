@@ -137,38 +137,18 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         eventImageView = view.findViewById(R.id.current_event_image);
         eventImageView.setOnClickListener(this);
 
-        eventName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
+//        eventName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
 
         morebutton = view.findViewById(R.id.more_button);
         morebutton.setVisibility(View.GONE);
-//        morebutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (isExpanded) {
-//
-//                    isExpanded = false;
-//                    eventDescription.setMaxLines(4);
-//                    morebutton.setText("more");
-//
-//                } else {
-//
-//                    isExpanded = true;
-//                    eventDescription.setMaxLines(1000);
-//                    morebutton.setText("less");
-//
-//                }
-//
-//            }
-//        });
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -253,7 +233,11 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
 
         eventName.setText(businessResponse.getBusinessname());
-        eventDescription.setText(businessResponse.getBusinessdescription());
+        if(!businessResponse.getDescription().isEmpty()) {
+            eventDescription.setText(businessResponse.getDescription());
+        }else {
+            eventDescription.setVisibility(View.GONE);
+        }
         if(eventDescription.getLineCount()>= Max){
             morebutton.setVisibility(View.VISIBLE);
         }
@@ -277,9 +261,14 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
 
             }
         });
-        adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        if(!businessResponse.getTags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, businessResponse.getTags());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        }else {
+            recyclerView.setVisibility(View.GONE);
+        }
+
 
     }
 

@@ -33,6 +33,7 @@ import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -140,7 +141,7 @@ public class BusinessPostsAdapter extends RecyclerView.Adapter<BusinessPostsAdap
 //        SimpleDateFormat Formater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //        String postendDateStr = Formater.format(endate);
 
-        String times=getTimeAgo(endate,context);
+        String times= Utils.getTimeAgo(endate,context);
         holder.TimeTxt.setText(times);
         holder.cottageHouseText.setText(postdataItem.getBusiness().getBusinessname());
         if(!postdataItem.getTaggeditems().isEmpty()) {
@@ -216,7 +217,7 @@ public class BusinessPostsAdapter extends RecyclerView.Adapter<BusinessPostsAdap
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance(String.valueOf(postdataItem.getEvent().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -225,7 +226,7 @@ public class BusinessPostsAdapter extends RecyclerView.Adapter<BusinessPostsAdap
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance(String.valueOf(postdataItem.getEvent().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -373,65 +374,6 @@ public class BusinessPostsAdapter extends RecyclerView.Adapter<BusinessPostsAdap
         lp.gravity = Gravity.BOTTOM;
         lp.windowAnimations = R.style.shareDialogAnimation;
         alertDialog1.getWindow().setAttributes(lp);
-    }
-
-    public static Date currentDate() {
-        Calendar calendar = Calendar.getInstance();
-        return (Date) calendar.getTime();
-    }
-
-    public static String getTimeAgo(java.util.Date date, Context ctx) {
-
-        if(date == null) {
-            return null;
-        }
-
-        long time = date.getTime();
-
-        Date curDate = currentDate();
-        long now = curDate.getTime();
-        if (time > now || time <= 0) {
-            return null;
-        }
-
-        int dim = getTimeDistanceInMinutes(time);
-
-        String timeAgo = null;
-
-        if (dim == 0) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_term_less) + " " +  ctx.getResources().getString(R.string.date_util_term_a) + " " + ctx.getResources().getString(R.string.date_util_unit_minute);
-        } else if (dim == 1) {
-            return "1 " + ctx.getResources().getString(R.string.date_util_unit_minute);
-        } else if (dim >= 2 && dim <= 44) {
-            timeAgo = dim + " " + ctx.getResources().getString(R.string.date_util_unit_minutes);
-        } else if (dim >= 45 && dim <= 89) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_an)+ " " + ctx.getResources().getString(R.string.date_util_unit_hour);
-        } else if (dim >= 90 && dim <= 1439) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " " + (Math.round(dim / 60)) + " " + ctx.getResources().getString(R.string.date_util_unit_hours);
-        } else if (dim >= 1440 && dim <= 2519) {
-            timeAgo = "1 " + ctx.getResources().getString(R.string.date_util_unit_day);
-        } else if (dim >= 2520 && dim <= 43199) {
-            timeAgo = (Math.round(dim / 1440)) + " " + ctx.getResources().getString(R.string.date_util_unit_days);
-        } else if (dim >= 43200 && dim <= 86399) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_month);
-        } else if (dim >= 86400 && dim <= 525599) {
-            timeAgo = (Math.round(dim / 43200)) + " " + ctx.getResources().getString(R.string.date_util_unit_months);
-        } else if (dim >= 525600 && dim <= 655199) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_year);
-        } else if (dim >= 655200 && dim <= 914399) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_over) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_year);
-        } else if (dim >= 914400 && dim <= 1051199) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_almost) + " 2 " + ctx.getResources().getString(R.string.date_util_unit_years);
-        } else {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " " + (Math.round(dim / 525600)) + " " + ctx.getResources().getString(R.string.date_util_unit_years);
-        }
-
-        return timeAgo + " " + ctx.getResources().getString(R.string.date_util_suffix);
-    }
-
-    private static int getTimeDistanceInMinutes(long time) {
-        long timeDistance = currentDate().getTime() - time;
-        return Math.round((Math.abs(timeDistance) / 1000) / 60);
     }
 
 }

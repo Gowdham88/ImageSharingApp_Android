@@ -150,7 +150,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             public void onClick(View v) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(itemDetailsResponse.getBusinessuserid())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -248,7 +248,11 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
 
         eventName.setText(itemDetailsResponse.getName());
         businessName.setText(itemDetailsResponse.getBusinessdetail().getBusinessname());
-        eventDescription.setText(itemDetailsResponse.getDescription());
+        if(!itemDetailsResponse.getDescription().isEmpty()) {
+            eventDescription.setText(itemDetailsResponse.getDescription());
+        }else {
+            eventDescription.setVisibility(View.GONE);
+        }
         if(eventDescription.getLineCount()>= Max){
             morebutton.setVisibility(View.VISIBLE);
         }
@@ -287,10 +291,14 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             }
 
         }
+        if(!itemDetailsResponse.getTags().isEmpty()) {
+            adapter1 = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
+            recyclerView1.setAdapter(adapter1);
+        }else {
+            recyclerView1.setVisibility(View.GONE);
+        }
 
-        adapter1 = new HorizontalContentAdapter(context, itemDetailsResponse.getTags());
         adapter2 = new HorizontalContentAdapter(context, itemDetailsResponse.getBusinessdetail().getTags());
-        recyclerView1.setAdapter(adapter1);
         recyclerView2 .setAdapter(adapter2);
 
         hideProgressDialog();
@@ -515,7 +523,7 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         if(itemimgPath!=null){
             Intent intent=new Intent(getActivity(), SliceActivity.class);
             intent.putExtra("imagepath",itemimgPath.toString());
-            startActivity(intent);
+            context.startActivity(intent);
         }
         else{
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();

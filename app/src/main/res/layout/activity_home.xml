@@ -14,7 +14,7 @@
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/navigation"
+        android:layout_above="@+id/bottom_divider"
         android:animateLayoutChanges="true">
 
     </FrameLayout>
@@ -22,15 +22,17 @@
         android:id="@+id/bottom_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-       android:layout_alignParentBottom="true"
-        android:layout_marginBottom="55dp"
+        android:layout_above="@+id/tabs"
         android:background="@color/Edittxt_lineclr"/>
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        app:tabIndicatorHeight="0dp"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:paddingTop="@dimen/spacing_normal"
-        app:itemTextColor="@android:color/darker_gray"
-        app:menu="@menu/bottom_navigation_items"/>
+        android:background="@android:color/white"
+        app:tabSelectedTextColor="@color/event_map"
+        app:tabTextAppearance="@style/TabWidget"
+        app:tabTextColor="@color/tab_unselected_color" />
 </RelativeLayout>

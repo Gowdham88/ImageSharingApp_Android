@@ -74,7 +74,7 @@ public class ItemLocationsFragment extends Fragment {
     final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         if(Utils.isNetworkAvailable(context)) {
-            getData("35");
+            getData(itemId);
         }else {
             showAlert();
         }

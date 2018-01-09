@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -201,7 +202,8 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
                showAlertshare();
             }
         });
-
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setOnClickListener(this);
 
         return view;
     }
@@ -315,10 +317,14 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
         }
 
         itemName.setText(itemDetailsResponse.getItemname());
-
+       if(!itemDetailsResponse.getItemdescription().isEmpty()){
         eventDescription.setText(itemDetailsResponse.getItemdescription());
+       }else {
+           eventDescription.setVisibility(View.GONE);
+       }
 
-        price.setText(itemDetailsResponse.getPriceamount());
+
+        price.setText(String.format("%s %s", itemDetailsResponse.getCurrencycode(), itemDetailsResponse.getPriceamount()));
 
         barbTxt.setText(itemDetailsResponse.getEventname());
         catgTxt.setText(itemDetailsResponse.getBusinessname());
@@ -346,8 +352,12 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
 
             }
         });
-        adapter = new HorizontalContentAdapter(context,itemDetailsResponse.getItemtags());
-        recyclerView.setAdapter(adapter);
+        if(!itemDetailsResponse.getItemtags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, itemDetailsResponse.getItemtags());
+            recyclerView.setAdapter(adapter);
+        }else {
+            recyclerView.setVisibility(View.GONE);
+        }
 
         hideProgressDialog();
     }
@@ -491,7 +501,7 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance(eventId));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -500,7 +510,7 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance(eventId));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -509,7 +519,7 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(itemDetailsResponse.getBusinessuserid())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -518,7 +528,7 @@ public class EventItemDetailFragment extends Fragment implements View.OnClickLis
             public void onClick(View v) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance("50"));
+                transaction.replace(R.id.frame_layout, SearchBusinessDetailFragment.newInstance(String.valueOf(itemDetailsResponse.getBusinessuserid())));
                 transaction.addToBackStack(null).commit();
             }
         });

@@ -50,7 +50,7 @@ public interface ApiServices {
     @GET("/users")
     Call<CommonResponse> checkUserName(@Query("checkusername") String s);
 
-    @GET("/users/signin")
+    @GET("/signinuser")
     Call<LoginResponse> login();
 
     @Multipart
@@ -178,6 +178,9 @@ public interface ApiServices {
 
     @GET("/users/{userId}/bookmarks")
     Call<GetBookmarksResponse> getBookmark(@Path("userId") String userId, @Query("page") String page);
+
+    @GET("/bookmarks/{bookmarkId}")
+    Call<Void> deleteBookmark(@Path("bookmarkId") String bookmarkId);
 
     @GET("/items/{itemId}/locations")
     Call<ItemLocationResponse> getLocation(@Path("itemId") String id);

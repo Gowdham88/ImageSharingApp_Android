@@ -32,6 +32,7 @@ import java.util.List;
 
 public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAdapter.ViewHolder> {
 
+    private final String eventId;
     Context context;
     List<EventTagBusiness> list = new ArrayList<>();
     HorizontalContentAdapter adapter;
@@ -39,10 +40,11 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
     private StorageReference storageRef ;
     private FirebaseStorage storage;
 
-    public EventItemsListAdapter(Context context, List<EventTagBusiness> stringArrayList) {
+    public EventItemsListAdapter(Context context, String eventId, List<EventTagBusiness> stringArrayList) {
         this.context=context;
         this.list=stringArrayList;
         storage = FirebaseStorage.getInstance();
+        this.eventId = eventId;
         // Create a storage reference from our app
         storageRef = storage.getReference();
     }
@@ -101,7 +103,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance("34","149"));
+                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance(eventId, String.valueOf(dataItem.getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -111,7 +113,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance("34","149"));
+                transaction.replace(R.id.frame_layout, EventItemDetailFragment.newInstance(eventId,String.valueOf(dataItem.getId())));
                 transaction.addToBackStack(null).commit();
             }
         });

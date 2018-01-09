@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Base64;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 
 import com.facebook.CallbackManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +48,12 @@ public class HomeActivity extends MyActivity {
     private CallbackManager mCallbackManager;
     private FirebaseAuth mAuth;
     private RelativeLayout relativelayout;
+    private int[] icons = {
+            R.drawable.ic_bottom_menu_home,
+            R.drawable.ic_bottom_menu_notification,
+            R.drawable.ic_bottom_menu_profile
+    };
+    private TabLayout tabLayout;
 
 
     @Override
@@ -51,36 +61,38 @@ public class HomeActivity extends MyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         relativelayout=findViewById(R.id.activity_main);
-        checkKeyBoardUp(relativelayout);
         mCallbackManager = CallbackManager.Factory.create();
 
         mAuth = FirebaseAuth.getInstance();
 
-        final BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.navigation);
+//        final BottomNavigationView bottomNavigationView = (BottomNavigationView)
+//                findViewById(R.id.navigation);
+        tabLayout = findViewById(R.id.tabs);
+        setupTabs();
+        checkKeyBoardUp(relativelayout);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener
-                (new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment selectedFragment = null;
-                        switch (item.getItemId()) {
-                            case R.id.action_item1:
-                                selectedFragment = HomeFragment.newInstance();
-                                break;
-                            case R.id.action_item2:
-                                selectedFragment = NotificationFragment.newInstance();
-                                break;
-                            case R.id.action_item3:
-                                selectedFragment = UserPostsFragment.newInstance();
-                                break;
-                        }
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.addToBackStack(null).commit();
-                        return true;
-                    }
-                });
+//        bottomNavigationView.setOnNavigationItemSelectedListener
+//                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                    @Override
+//                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                        Fragment selectedFragment = null;
+//                        switch (item.getItemId()) {
+//                            case R.id.action_item1:
+//                                selectedFragment = HomeFragment.newInstance();
+//                                break;
+//                            case R.id.action_item2:
+//                                selectedFragment = NotificationFragment.newInstance();
+//                                break;
+//                            case R.id.action_item3:
+//                                selectedFragment = UserPostsFragment.newInstance();
+//                                break;
+//                        }
+//                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                        transaction.replace(R.id.frame_layout, selectedFragment);
+//                        transaction.addToBackStack(null).commit();
+//                        return true;
+//                    }
+//                });
 
         String bookmarkBundle = getIntent().getStringExtra("BookmarkIntent");
         String profileBundle = getIntent().getStringExtra("ProfileIntent");
@@ -101,7 +113,7 @@ public class HomeActivity extends MyActivity {
                     transaction.addToBackStack(null).commit();
         }else if (eventBookmarkBundle != null && eventBookmarkBundle.equals("eventbookmark")) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance());
+            transaction.replace(R.id.frame_layout, EventDetailFragment.newInstance("51"));
             transaction.addToBackStack(null).commit();
         }else if (businessBookmarkBundle != null && businessBookmarkBundle.equals("businessbookmark")) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -169,7 +181,7 @@ public class HomeActivity extends MyActivity {
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                View bottomNavigationView = findViewById(R.id.navigation);
+
                 View bottomdivider = findViewById(R.id.bottom_divider);
                 Rect r = new Rect();
                 view.getWindowVisibleDisplayFrame(r);
@@ -177,18 +189,61 @@ public class HomeActivity extends MyActivity {
 
                 if (heightDiff > 100) { // if more than 100 pixels, its probably a keyboard...
                     //ok now we know the keyboard is up...
-                    bottomNavigationView.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
                     bottomdivider.setVisibility(View.GONE);
 
                 }else{
                     //ok now we know the keyboard is down...
-                    bottomNavigationView.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
                     bottomdivider.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
+    private void setupTabs() {
+
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setIcon(icons[i]);
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
+                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                Fragment selectedFragment = null;
+                switch (tab.getPosition()){
+                    case 0:
+                        selectedFragment = HomeFragment.newInstance();
+                        break;
+                    case 1:
+                        selectedFragment = NotificationFragment.newInstance();
+                        break;
+                    case 2:
+                        selectedFragment = UserPostsFragment.newInstance();
+                        break;
+                }
+
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.addToBackStack(null).commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.tab_unselected_color);
+                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
 
 
 }

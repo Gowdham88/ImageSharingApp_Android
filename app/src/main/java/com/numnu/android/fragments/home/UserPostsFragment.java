@@ -107,14 +107,6 @@ public class UserPostsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
-        {
-            SignupFragment signupFragment=new SignupFragment();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-            transaction.replace(R.id.frame_layout,signupFragment);
-            transaction.addToBackStack(null).commit();
-        }
 
         View view = inflater.inflate(R.layout.fragment_user_posts, container, false);
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
@@ -138,6 +130,21 @@ public class UserPostsFragment extends Fragment {
             }
         });
 
+        if(!PreferencesHelper.getPreferenceBoolean(getActivity(),PreferencesHelper.PREFERENCE_LOGGED_IN))
+        {
+            SignupFragment signupFragment=new SignupFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+            transaction.replace(R.id.frame_layout,signupFragment);
+            transaction.addToBackStack(null).commit();
+        }else {
+
+            if (Utils.isNetworkAvailable(context)) {
+                getData(userId);
+            } else {
+                showAlert();
+            }
+        }
 
          toolbarTitle=view.findViewById(R.id.toolbar_title);
 
@@ -168,11 +175,7 @@ public class UserPostsFragment extends Fragment {
 
         updateUI();
 
-        if (Utils.isNetworkAvailable(context)) {
-            getData("51");
-        } else {
-            showAlert();
-        }
+
         // Pagination
         mUserPostsRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

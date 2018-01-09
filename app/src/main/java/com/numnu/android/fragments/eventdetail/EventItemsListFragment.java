@@ -240,7 +240,7 @@ public class  EventItemsListFragment extends Fragment implements View.OnClickLis
 
     private void updateUI() {
 
-        eventItemsListAdapter = new EventItemsListAdapter(context, eventItemsResponse.getData());
+        eventItemsListAdapter = new EventItemsListAdapter(context, eventId,eventItemsResponse.getData());
         menuitemsRecyclerView.setAdapter(eventItemsListAdapter);
         eventItemsListAdapter.notifyDataSetChanged();
     }

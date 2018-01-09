@@ -70,7 +70,6 @@
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:text="Barbadous and food Rum Festival"
                 android:textColor="@color/name_black"
                 android:textSize="@dimen/font_normal"
                 tools:ignore="MissingPrefix" />
@@ -80,7 +79,8 @@
                 android:id="@+id/hrz_lin_lay"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="@dimen/spacing_small"
-                android:layout_below="@+id/event_name">
+                android:layout_below="@+id/event_name"
+                android:layout_marginStart="@dimen/spacing_small">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/business_recyclerview"
@@ -108,7 +108,7 @@
                 <TextView
                     android:id="@+id/txt_event_start_date"
                     style="@style/FontAvenirMedium"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_time"
@@ -116,7 +116,6 @@
                     android:drawablePadding="6dp"
                     android:gravity="center"
                     android:padding="1dp"
-                    android:text="Aug 20, 07:30 am"
                     android:textColor="@color/time_color"
                     android:textSize="@dimen/font_smaller" />
 
@@ -162,7 +161,6 @@
                     android:drawableLeft="@drawable/ic_city"
                     android:drawablePadding="8dp"
                     android:padding="@dimen/spacing_tiny"
-                    android:text="Montreal"
                     android:textSize="@dimen/font_smaller" />
 
                 <TextView
@@ -170,14 +168,15 @@
                     style="@style/FontAvenirheavy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/event_name"
                     android:drawableLeft="@drawable/ic_maplocation"
                     android:drawablePadding="15dp"
                     android:padding="@dimen/spacing_tiny"
                     android:layout_marginLeft="40dp"
                     android:text="Event Map"
                     android:textColor="@color/event_map"
-                    android:textSize="@dimen/font_smaller" />
+                    android:textSize="@dimen/font_smaller"
+                    android:drawableStart="@drawable/ic_maplocation"
+                    android:layout_marginStart="40dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -187,7 +186,9 @@
                 android:layout_below="@+id/location_layout"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="@dimen/spacing_small">
 
                 <TextView
                     android:id="@+id/txt_weblink_1"
@@ -197,9 +198,8 @@
                     android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_marginStart="@dimen/spacing_small"
                     android:layout_marginTop="@dimen/spacing_tiny"
-                    android:text="Weblink 1"
                     android:textColor="@color/weblink_color"
-                    android:textSize="13dp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/txt_weblink_2"
@@ -208,9 +208,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_marginStart="@dimen/spacing_small"
-                    android:text="Weblink 2"
                     android:textColor="@color/weblink_color"
-                    android:textSize="13dp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/txt_weblink_3"
@@ -220,9 +219,8 @@
                     android:layout_marginLeft="@dimen/spacing_small"
                     android:layout_marginStart="@dimen/spacing_small"
                     android:layout_marginBottom="4dp"
-                    android:text="Weblink 3"
                     android:textColor="@color/weblink_color"
-                    android:textSize="13dp" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -237,9 +235,8 @@
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
                 android:layout_marginTop="@dimen/spacing_tiny"
-                android:text=""
                 android:textColor="@color/descri_color"
-                android:textSize="13dp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:visibility="gone"
@@ -252,7 +249,8 @@
                 android:layout_marginTop="0dp"
                 android:text="more"
                 android:textColor="#4A90E2"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:layout_marginStart="8dp" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"

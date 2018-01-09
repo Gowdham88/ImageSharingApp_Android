@@ -105,8 +105,14 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
      int Max=4;
     private android.support.v7.app.AlertDialog dialog;
 
-    public static EventDetailFragment newInstance() {
-        return new EventDetailFragment();
+    public static EventDetailFragment newInstance(String eventId) {
+
+        EventDetailFragment eventDetailFragment = new EventDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("eventId", eventId);
+        eventDetailFragment.setArguments(args);
+
+        return eventDetailFragment;
     }
 
     @Override
@@ -115,7 +121,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            eventId = bundle.getString("eventId","34");
+            eventId = bundle.getString("eventId");
         }
 
          storage = FirebaseStorage.getInstance();
@@ -249,7 +255,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         }
 
         eventName.setText(eventDetailResponse.getName());
-        eventDescription.setText(eventDetailResponse.getDescription());
+        if(!eventDetailResponse.getDescription().isEmpty()) {
+            eventDescription.setText(eventDetailResponse.getDescription());
+        }else {
+            eventDescription.setVisibility(View.GONE);
+        }
         if(eventDescription.getLineCount()>= Max){
             morebutton.setVisibility(View.VISIBLE);
         }
@@ -334,8 +344,12 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
         }
 
-        adapter = new HorizontalContentAdapter(context,eventDetailResponse.getTags());
-        recyclerView.setAdapter(adapter);
+        if(!eventDetailResponse.getTags().isEmpty()) {
+            adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
+            recyclerView.setAdapter(adapter);
+        }else {
+            recyclerView.setVisibility(View.GONE);
+        }
         hideProgressDialog();
 
     }
@@ -510,7 +524,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     if(eventDetailResponse.getEventlinks().size()>0){
                         Intent web1 = new Intent(getActivity(), TermsPrivacyActivity.class);
                             web1.putExtra("url",weblinkzero);
-                        startActivity(web1);
+                        context.startActivity(web1);
                     }
 
                 }
@@ -529,7 +543,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     if(eventDetailResponse.getEventlinks().size()>1){
                         Intent web2 = new Intent(getActivity(), TermsPrivacyActivity.class);
                         web2.putExtra("url",weblinkone);
-                        startActivity(web2);
+                        context.startActivity(web2);
                     }
 
                 }
@@ -548,7 +562,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                     if(eventDetailResponse.getEventlinks().size()>2){
                         Intent web3 = new Intent(getActivity(), TermsPrivacyActivity.class);
                         web3.putExtra("url",weblinktwo);
-                        startActivity(web3);
+                        context.startActivity(web3);
                     }
 
                 }
@@ -664,7 +678,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         if(imgPath!=null){
             Intent intent=new Intent(getActivity(), SliceActivity.class);
             intent.putExtra("imagepath",imgPath.toString());
-            startActivity(intent);
+            context.startActivity(intent);
         }
         else{
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();

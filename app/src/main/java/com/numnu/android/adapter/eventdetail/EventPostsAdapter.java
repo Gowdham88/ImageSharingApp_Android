@@ -35,6 +35,7 @@ import com.numnu.android.fragments.detail.UserDetailsFragment;
 import com.numnu.android.fragments.search.SliceFragment;
 import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.utils.PreferencesHelper;
+import com.numnu.android.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -150,7 +151,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
 //        SimpleDateFormat Formater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //        String postendDateStr = Formater.format(endate);
 
-        String times=getTimeAgo(endate,context);
+        String times= Utils.getTimeAgo(endate,context);
         holder.TimeTxt.setText(times);
         holder.cottageHouseText.setText(postdataItem.getBusiness().getBusinessname());
         if(!postdataItem.getTaggeditems().isEmpty()) {
@@ -226,7 +227,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance(String.valueOf(postdataItem.getEvent().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -235,7 +236,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance());
+                transaction.add(R.id.frame_layout, EventDetailFragment.newInstance(String.valueOf(postdataItem.getEvent().getId())));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -386,180 +387,4 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
     }
 
 
-    public static Date currentDate() {
-        Calendar calendar = Calendar.getInstance();
-        return (Date) calendar.getTime();
-    }
-
-    public static String getTimeAgo(java.util.Date date, Context ctx) {
-
-        if(date == null) {
-            return null;
-        }
-
-        long time = date.getTime();
-
-        Date curDate = currentDate();
-        long now = curDate.getTime();
-        if (time > now || time <= 0) {
-            return null;
-        }
-
-        int dim = getTimeDistanceInMinutes(time);
-
-        String timeAgo = null;
-
-        if (dim == 0) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_term_less) + " " +  ctx.getResources().getString(R.string.date_util_term_a) + " " + ctx.getResources().getString(R.string.date_util_unit_minute);
-        } else if (dim == 1) {
-            return "1 " + ctx.getResources().getString(R.string.date_util_unit_minute);
-        } else if (dim >= 2 && dim <= 44) {
-            timeAgo = dim + " " + ctx.getResources().getString(R.string.date_util_unit_minutes);
-        } else if (dim >= 45 && dim <= 89) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_an)+ " " + ctx.getResources().getString(R.string.date_util_unit_hour);
-        } else if (dim >= 90 && dim <= 1439) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " " + (Math.round(dim / 60)) + " " + ctx.getResources().getString(R.string.date_util_unit_hours);
-        } else if (dim >= 1440 && dim <= 2519) {
-            timeAgo = "1 " + ctx.getResources().getString(R.string.date_util_unit_day);
-        } else if (dim >= 2520 && dim <= 43199) {
-            timeAgo = (Math.round(dim / 1440)) + " " + ctx.getResources().getString(R.string.date_util_unit_days);
-        } else if (dim >= 43200 && dim <= 86399) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_month);
-        } else if (dim >= 86400 && dim <= 525599) {
-            timeAgo = (Math.round(dim / 43200)) + " " + ctx.getResources().getString(R.string.date_util_unit_months);
-        } else if (dim >= 525600 && dim <= 655199) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_year);
-        } else if (dim >= 655200 && dim <= 914399) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_over) + " "+ctx.getResources().getString(R.string.date_util_term_a)+ " " + ctx.getResources().getString(R.string.date_util_unit_year);
-        } else if (dim >= 914400 && dim <= 1051199) {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_almost) + " 2 " + ctx.getResources().getString(R.string.date_util_unit_years);
-        } else {
-            timeAgo = ctx.getResources().getString(R.string.date_util_prefix_about) + " " + (Math.round(dim / 525600)) + " " + ctx.getResources().getString(R.string.date_util_unit_years);
-        }
-
-        return timeAgo + " " + ctx.getResources().getString(R.string.date_util_suffix);
-    }
-
-    private static int getTimeDistanceInMinutes(long time) {
-        long timeDistance = currentDate().getTime() - time;
-        return Math.round((Math.abs(timeDistance) / 1000) / 60);
-    }
-//    public static String parseDate(String millis) {
-//        if (millis.equalsIgnoreCase("")) {
-//            return "";
-//        }
-//        //API.log("Day Ago "+dayago);
-//        String result = "now";
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        java.util.Date date = new java.util.Date();
-//        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-//        Calendar calendar = Calendar.getInstance();
-//
-//        long dayagolong = Long.valueOf(millis) * 1000;
-//        calendar.setTimeInMillis(dayagolong);
-//        String agoformater = formatter.format(calendar.getTime());
-//
-//        java.util.Date CurrentDate = null;
-//        java.util.Date CreateDate = null;
-//
-//        try {
-//
-//            CurrentDate = new java.util.Date();
-//            CreateDate = (java.util.Date) formatter.parse(String.valueOf(sqlDate));
-//
-//            long different = Math.abs(CurrentDate.getTime() - CreateDate.getTime());
-//
-//            long secondsInMilli = 1000;
-//            long minutesInMilli = secondsInMilli * 60;
-//            long hoursInMilli = minutesInMilli * 60;
-//            long daysInMilli = hoursInMilli * 24;
-//
-//            long elapsedDays = different / daysInMilli;
-//            different = different % daysInMilli;
-//
-//            long elapsedHours = different / hoursInMilli;
-//            different = different % hoursInMilli;
-//
-//            long elapsedMinutes = different / minutesInMilli;
-//            different = different % minutesInMilli;
-//
-//            long elapsedSeconds = different / secondsInMilli;
-//
-//            different = different % secondsInMilli;
-//            if (elapsedDays == 0) {
-//                if (elapsedHours == 0) {
-//                    if (elapsedMinutes == 0) {
-//                        if (elapsedSeconds < 0) {
-//                            return "0" + " s";
-//                        } else {
-//                            if (elapsedDays > 0 && elapsedSeconds < 59) {
-//                                return "now";
-//                            }
-//                        }
-//                    } else {
-//                        return String.valueOf(elapsedMinutes) + "m ago";
-//                    }
-//                } else {
-//                    return String.valueOf(elapsedHours) + "h ago";
-//                }
-//
-//            } else {
-//                if (elapsedDays <= 29) {
-//                    return String.valueOf(elapsedDays) + "d ago";
-//                }
-//                if (elapsedDays > 29 && elapsedDays <= 58) {
-//                    return "1Mth ago";
-//                }
-//                if (elapsedDays > 58 && elapsedDays <= 87) {
-//                    return "2Mth ago";
-//                }
-//                if (elapsedDays > 87 && elapsedDays <= 116) {
-//                    return "3Mth ago";
-//                }
-//                if (elapsedDays > 116 && elapsedDays <= 145) {
-//                    return "4Mth ago";
-//                }
-//                if (elapsedDays > 145 && elapsedDays <= 174) {
-//                    return "5Mth ago";
-//                }
-//                if (elapsedDays > 174 && elapsedDays <= 203) {
-//                    return "6Mth ago";
-//                }
-//                if (elapsedDays > 203 && elapsedDays <= 232) {
-//                    return "7Mth ago";
-//                }
-//                if (elapsedDays > 232 && elapsedDays <= 261) {
-//                    return "8Mth ago";
-//                }
-//                if (elapsedDays > 261 && elapsedDays <= 290) {
-//                    return "9Mth ago";
-//                }
-//                if (elapsedDays > 290 && elapsedDays <= 319) {
-//                    return "10Mth ago";
-//                }
-//                if (elapsedDays > 319 && elapsedDays <= 348) {
-//                    return "11Mth ago";
-//                }
-//                if (elapsedDays > 348 && elapsedDays <= 360) {
-//                    return "12Mth ago";
-//                }
-//
-//                if (elapsedDays > 360 && elapsedDays <= 720) {
-//                    return "1 year ago";
-//                }
-//
-//                if (elapsedDays > 720) {
-//                    SimpleDateFormat formatterYear = new SimpleDateFormat("MM/dd/yyyy");
-//                    Calendar calendarYear = Calendar.getInstance();
-//                    calendarYear.setTimeInMillis(dayagolong);
-//                    return formatterYear.format(calendarYear.getTime()) + "";
-//                }
-//
-//            }
-//
-//        } catch (java.text.ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
 }
