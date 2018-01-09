@@ -69,8 +69,8 @@ public class SearchItemsFragment extends Fragment {
             keyword = bundle.getString("keywor");
         }
 
-        lat = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE));
-        lng = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE));
+        lat = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_SEARCH_LATITUDE));
+        lng = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_SEARCH_LONGITUDE));
     }
 
     @Override

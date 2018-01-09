@@ -35,6 +35,8 @@ public class PreferencesHelper {
     public static final String PREFERENCE_LONGITUDE ="longitude";
     static final String KEY_REQUESTING_LOCATION_UPDATES = "requesting_locaction_updates";
     public static final String PREFERENCE_SEARCH_LOCATION ="search_location";
+    public static final String PREFERENCE_SEARCH_LATITUDE ="search_latitude";
+    public static final String PREFERENCE_SEARCH_LONGITUDE ="search_longitude";
 
 
 

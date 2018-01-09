@@ -73,8 +73,8 @@ public class SearchBusinessFragment extends Fragment {
             keyword = bundle.getString("keyword");
         }
 
-        lat = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE));
-        lng = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE));
+        lat = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_SEARCH_LATITUDE));
+        lng = Double.valueOf(PreferencesHelper.getPreference(getActivity(), PreferencesHelper.PREFERENCE_SEARCH_LONGITUDE));
     }
 
     @Override

@@ -693,16 +693,28 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 //                        context.getApplicationContext().this.finish();
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_ID, String.valueOf(body.getId()));
                     PreferencesHelper.setPreferenceBoolean(getActivity(), PreferencesHelper.PREFERENCE_LOGGED_IN, true);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, name);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME, username);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL, email);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY, city);
                     PreferencesHelper.setPreference(getActivity(),PreferencesHelper.PREFERENCE_CITY_ID,cityid);
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_NAME, body.getName()!=null?body.getName():"");
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_NAME,  body.getUsername()!=null?body.getUsername():"");
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_EMAIL,  body.getEmail()!=null?body.getEmail():"");
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_CITY,  body.getCitylocation().getName()!=null?body.getCitylocation().getName():"");
                     PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_DOB, body.getDateofbirth()!=null?body.getDateofbirth():"");
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, gender);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, userdescription);
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE, latitude+"");
-                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE,longitude+"");
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_USER_DESCRIPTION, body.getDescription()!=null?body.getDescription():"");
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LATITUDE, String.valueOf(body.getCitylocation().getLattitude()!=null?body.getCitylocation().getLattitude():""));
+                    PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_LONGITUDE, String.valueOf(body.getCitylocation().getLongitude()!=null?body.getCitylocation().getLongitude():""));
+
+
+                    if(body.getGender()!=null){
+                        if(body.getGender()==0)
+                        {
+                            PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER, "Male");
+                        }
+                        else {
+                            PreferencesHelper.setPreference(getActivity(), PreferencesHelper.PREFERENCE_GENDER,"FeMale" );
+                        }
+                    }
+
+
 
                     hideProgressDialog();
                     Toast.makeText(context, "Profile edited successfully ", Toast.LENGTH_SHORT).show();
