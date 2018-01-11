@@ -29,6 +29,7 @@ import com.numnu.android.R;
 import com.numnu.android.activity.webFragment;
 import com.numnu.android.fragments.BookmarksFragment;
 import com.numnu.android.fragments.auth.SignupFragment;
+import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
@@ -49,6 +50,8 @@ public class SettingsFragment extends Fragment {
     private FirebaseStorage storage;
     private ImageView profileImage;
     private TextView userName;
+    private String userId;
+
     public static SettingsFragment newInstance() {
         SettingsFragment fragment = new SettingsFragment();
         return fragment;
@@ -78,6 +81,7 @@ public class SettingsFragment extends Fragment {
 //
 //        }
 
+        userId = PreferencesHelper.getPreference(getApplicationContext(), PreferencesHelper.PREFERENCE_ID);
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
 
@@ -128,7 +132,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 // TODO: 26/12/17
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, BookmarksFragment.newInstance());
+                transaction.replace(R.id.frame_layout, BookmarksFragment.newInstance(userId, Constants.BOOKMARK_EVENT));
                 transaction.addToBackStack(null).commit();
             }
         });
@@ -138,6 +142,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                    // TODO: 26/12/17
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, BookmarksFragment.newInstance(userId, Constants.BOOKMARK_BUSNIESS));
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -146,6 +153,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                    // TODO: 26/12/17
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, BookmarksFragment.newInstance(userId, Constants.BOOKMARK_ITEM));
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -154,6 +164,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                      // TODO: 26/12/17
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, BookmarksFragment.newInstance(userId, Constants.BOOKMARK_POST));
+                transaction.addToBackStack(null).commit();
             }
         });
 
@@ -162,6 +175,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                    // TODO: 26/12/17
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, BookmarksFragment.newInstance(userId, Constants.BOOKMARK_LOCATION));
+                transaction.addToBackStack(null).commit();
             }
         });
 

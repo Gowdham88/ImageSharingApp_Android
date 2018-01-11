@@ -285,41 +285,42 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         });
 
 
-        String StrtDate=eventDetailResponse.getStartsat();
+        String strtDate=eventDetailResponse.getStartsat();
+        String EndDate=eventDetailResponse.getEndsat();
         SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         java.util.Date date = null;
-        try
-        {
-            date = form.parse(StrtDate);
-        }
-        catch (ParseException e)
-        {
+        if(strtDate!=null &&EndDate!=null) {
+            try {
+                date = form.parse(strtDate);
+            } catch (ParseException e) {
 
-            e.printStackTrace();
-        }
-        SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd, hh:mm a");
-        String StartDateStr = postFormater.format(date);
+                e.printStackTrace();
+            }
+
+            SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd, hh:mm a");
+            String StartDateStr = postFormater.format(date);
 //        eventStartDate.setText(StartDateStr);
 
-        String EndDate=eventDetailResponse.getEndsat();
-        SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-        java.util.Date endate = null;
-        try
-        {
-            endate = endformat.parse(EndDate);
-        }
-        catch (ParseException e)
-        {
 
-            e.printStackTrace();
-        }
-        SimpleDateFormat Formater = new SimpleDateFormat("MMM dd, hh:mm a");
-        String endDateStr = Formater.format(endate);
+            SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            java.util.Date endate = null;
+
+            try {
+                endate = endformat.parse(EndDate);
+            } catch (ParseException e) {
+
+                e.printStackTrace();
+            }
+
+            SimpleDateFormat Formater = new SimpleDateFormat("MMM dd, hh:mm a");
+            String endDateStr = Formater.format(endate);
 //        eventStartDate.setText(endDateStr);
-        String Serverdate=StartDateStr+" - "+endDateStr;
-        eventStartDate.setText(Serverdate);
-
-        city.setText(eventDetailResponse.getLocation().getName());
+            String Serverdate = StartDateStr + " - " + endDateStr;
+            eventStartDate.setText(Serverdate);
+        }
+        if(eventDetailResponse.getLocation()!=null) {
+            city.setText(eventDetailResponse.getLocation().getName());
+        }
 
         if(!eventDetailResponse.getEventlinks().isEmpty()) {
             if(eventDetailResponse.getEventlinks().size()>0){

@@ -19,6 +19,7 @@ import com.numnu.android.network.response.GetBookmarksResponse;
 import com.numnu.android.utils.Utils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,11 +50,6 @@ public class BookmarksFragment extends Fragment {
         eventBusinessFragment.setArguments(args);
 
         return eventBusinessFragment;
-    }
-
-    public static BookmarksFragment newInstance() {
-        
-        return new BookmarksFragment();
     }
 
 
@@ -168,7 +164,7 @@ public class BookmarksFragment extends Fragment {
                       if(!response.body().getPagination().isHasMore()){
                           isLastPage = true;
                       }
-                    bookmarksAdapter.addData(dataItems);
+                    bookmarksAdapter.addData(Utils.bookmarkFilter(dataItems,type));
                     bookmarksAdapter.notifyDataSetChanged();
                     isLoading = false;
                 }
@@ -185,7 +181,9 @@ public class BookmarksFragment extends Fragment {
 
     private void updateUI() {
 
-        bookmarksAdapter = new BookmarksAdapter(context,userId,type, bookmarksResponse.getBookmarkdata());
+        List<BookmarkdataItem> bookmarkdata = bookmarksResponse.getBookmarkdata();
+        if(bookmarkdata!=null)
+        bookmarksAdapter = new BookmarksAdapter(context,userId,type, Utils.bookmarkFilter(bookmarkdata,type));
         businessRecyclerView.setAdapter(bookmarksAdapter);
         bookmarksAdapter.notifyDataSetChanged();
     }

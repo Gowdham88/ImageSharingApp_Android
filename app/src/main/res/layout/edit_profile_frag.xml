@@ -387,15 +387,18 @@
                     android:textSize="14dp" />
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
+                    >
 
-                <ImageView
-                    android:id="@+id/gender_img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/dropdown"
-                    android:layout_alignParentRight="true"/>
+                    <ImageView
+                        android:id="@+id/gender_img"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/dropdown" />
                 </RelativeLayout>
 
 

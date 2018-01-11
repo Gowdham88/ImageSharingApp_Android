@@ -593,11 +593,11 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new EventsFragment(), "Events");
-        adapter.addFragment(new SearchBusinessFragment(), "Businesses");
-        adapter.addFragment(new SearchItemsFragment(), "Items");
-        adapter.addFragment(new SearchPostsFragment(), "Posts");
-        adapter.addFragment(new UsersFragment(), "Users");
+        adapter.addFragment(EventsFragment.newInstance(searchViewFood.getText().toString()), "Events");
+        adapter.addFragment(SearchBusinessFragment.newInstance(searchViewFood.getText().toString()), "Businesses");
+        adapter.addFragment( SearchItemsFragment.newInstance(searchViewFood.getText().toString()), "Items");
+        adapter.addFragment( SearchPostsFragment.newInstance(searchViewFood.getText().toString()), "Posts");
+        adapter.addFragment( UsersFragment.newInstance(searchViewFood.getText().toString()), "Users");
 //        adapter.addFragment(new SearchListFragment(), "Lists");
         viewPager.setAdapter(adapter);
     }
@@ -714,6 +714,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
                 isLocationSetByGps = true;
                 searchViewLocation.setText(s);
                 PreferencesHelper.setPreference(getActivity(),PreferencesHelper.PREFERENCE_SEARCH_LOCATION,s);
+                PreferencesHelper.setPreference(getActivity(),PreferencesHelper.PREFERENCE_SEARCH_LATITUDE, String.valueOf(location.getLatitude()));
+                PreferencesHelper.setPreference(getActivity(),PreferencesHelper.PREFERENCE_SEARCH_LONGITUDE,String.valueOf(location.getLongitude()));
 
             }
         }
