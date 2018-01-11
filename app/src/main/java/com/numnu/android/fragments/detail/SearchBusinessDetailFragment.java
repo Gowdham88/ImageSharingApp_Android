@@ -26,7 +26,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -491,34 +494,34 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
     }
 
     private void initiatePopupWindow() {
+
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.image_popup,null);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        pw = new PopupWindow(layout, lp.width, lp.height, true);
+        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
         if(BusinessimgPath!=null){
             Intent intent=new Intent(getActivity(), SliceActivity.class);
             intent.putExtra("imagepath",BusinessimgPath.toString());
-            startActivity(intent);
+            context.startActivity(intent);
         }
         else{
             Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
         }
+        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+        layout.startAnimation(hide);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
-//        LayoutInflater inflater = (LayoutInflater) context
-//                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View layout = inflater.inflate(R.layout.image_popup,null);
-//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        lp.width = WindowManager.LayoutParams.FILL_PARENT;
-//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//        pw = new PopupWindow(layout, lp.width, lp.height, true);
-//        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-//
-//        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
-//        layout.startAnimation(hide);
-//        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
-//
-//        btncancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                pw.dismiss();
-//            }
-//        });
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pw.dismiss();
+            }
+        });
 
     }
 
