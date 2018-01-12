@@ -29,7 +29,7 @@ app:srcCompat="@drawable/ic_arrow" />
 <android.support.v7.widget.RecyclerView
 android:id="@+id/past_recyclerview"
 android:layout_width="match_parent"
-android:layout_height="250dp"
+android:layout_height="210dp"
 android:layout_below="@+id/past_events_text"
 android:layout_marginLeft="@dimen/spacing_small"
 android:layout_marginRight="@dimen/spacing_small"

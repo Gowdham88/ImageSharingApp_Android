@@ -91,10 +91,13 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final BookmarkdataItem bookmarkdataItem = list.get(position);
-
+        try {
         holder.textViewName.setText(bookmarkdataItem.getEntityname());
+        } catch (NullPointerException e) {
 
-
+            e.printStackTrace();
+        }
+        try {
         holder.textViewName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,15 +130,24 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
 
             }
         });
+        } catch (NullPointerException e) {
 
-        holder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlert(String.valueOf(bookmarkdataItem.getId()));
-            }
-        });
+            e.printStackTrace();
+        }try{
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showAlert(String.valueOf(bookmarkdataItem.getId()));
+                }
+            });
+
+        } catch (NullPointerException e) {
+
+            e.printStackTrace();
+        }
 
     }
+
 
     @Override
     public int getItemCount() {
