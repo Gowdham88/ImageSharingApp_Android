@@ -131,7 +131,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:maxLines="4"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:text=""
                 android:textColor="@color/descri_color"
                 android:textSize="13dp" />

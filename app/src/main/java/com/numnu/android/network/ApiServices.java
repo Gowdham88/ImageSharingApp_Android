@@ -21,6 +21,7 @@ import com.numnu.android.network.response.HomeBusinessResponse;
 import com.numnu.android.network.response.HomeEventResponse;
 import com.numnu.android.network.response.HomeItemResponse;
 import com.numnu.android.network.response.HomePostResponse;
+import com.numnu.android.network.response.HomeResponse;
 import com.numnu.android.network.response.HomeUserresponse;
 import com.numnu.android.network.response.ItemDetailsResponse;
 import com.numnu.android.network.response.ItemLocationResponse;
@@ -31,6 +32,8 @@ import com.numnu.android.network.response.LoginResponse;
 import com.numnu.android.network.response.PostdataItem;
 import com.numnu.android.network.response.SignupResponse;
 import com.numnu.android.network.response.TagsResponse;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -266,6 +269,21 @@ public interface ApiServices {
     @Headers("Content-Type: application/json")
     @POST("/homeSearch/posts")
     Call<HomePostResponse> gethomeposts(@Body LocationHomePost s);
+
+    @Headers("Content-Type: application/json")
+    @POST("/homeLists")
+    Call<List<HomeResponse>> gethomeresp(@Body String s, LocationHomePost locationhomepost);
+    @Headers("Content-Type: application/json")
+    @POST("/homeLists")
+    Call<List<HomeResponse>> gethomeresp(@Body LocationHomePost s);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("/homeLists")
+    Call<HomeResponse> gethomeevntresp(@Body String s, LocationHomePost locationhomepost);
+    @Headers("Content-Type: application/json")
+    @POST("/homeLists")
+    Call<HomeResponse> gethomeevntresp(@Body LocationHomePost s);
 
 
 

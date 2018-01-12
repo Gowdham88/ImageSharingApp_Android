@@ -117,7 +117,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         setupViewPager(viewPagerBusiness);
         tabLayout.setupWithViewPager(viewPagerBusiness);
         TextView toolbarTitleBuss = view.findViewById(R.id.toolbar_title);
-        toolbarTitleBuss.setText(getString(R.string.businesses));
+        toolbarTitleBuss.setText("Vendors");
         ImageView toolbarIconBuss = view.findViewById(R.id.toolbar_image);
         RelativeLayout toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
@@ -243,7 +243,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
 
 
         eventName.setText(businessResponse.getBusinessusername());
-        entityTitle.setText(businessResponse.getBusinessname());
+        entityTitle.setText(businessResponse.getBusinessname()+">");
         if(!businessResponse.getBusinessdescription().isEmpty()) {
             eventDescription.setText(businessResponse.getBusinessdescription());
         }

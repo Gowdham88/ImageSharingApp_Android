@@ -164,7 +164,7 @@ public class EventPostsAdapter extends RecyclerView.Adapter<EventPostsAdapter.Vi
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("postId", String.valueOf(postdataItem.getId()));
-                SliceFragment sliceFragment = SliceFragment.newInstance();
+                SliceFragment  sliceFragment = SliceFragment.newInstance();
                 sliceFragment.setArguments(bundle);
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);

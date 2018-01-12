@@ -1,6 +1,8 @@
 package com.numnu.android.adapter.search;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,13 +13,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.numnu.android.R;
 import com.numnu.android.adapter.HorizontalContentAdapter;
 import com.numnu.android.fragments.detail.EventDetailFragment;
+import com.numnu.android.network.response.DataItem;
+import com.numnu.android.network.response.HomeApiResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by czsm4 on 05/01/18.
@@ -26,16 +34,24 @@ import java.util.ArrayList;
 public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToolbarAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<String> stringArrayList = new ArrayList<>();
-    HorizontalContentAdapter adapter;
+    List<HomeApiResponse> List = new ArrayList<>();
+    HorizontalAdapterHome adapter;
     RecyclerView recyclerView;
     private StorageReference storageRef ;
     private FirebaseStorage storage;
     private String eventId;
+    HomeApiResponse homeapires;
 
-    public EventsWithToolbarAdapter(Context context, ArrayList<String> stringArrayList) {
+    public EventsWithToolbarAdapter(Context context, List<HomeApiResponse> stringArrayList) {
         this.context=context;
-        this.stringArrayList=stringArrayList;
+        this.List=stringArrayList;
+        storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        storageRef = storage.getReference();
+    }
+
+    public  void addData(List<HomeApiResponse> stringArrayList){
+        List.addAll(stringArrayList);
     }
     @Override
     public EventsWithToolbarAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,7 +64,28 @@ public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        final HomeApiResponse homeapires = List.get(position);
+
+        holder.textViewName.setText(List.get(position).getBusinessname());
+        if(!homeapires.getEventimages().isEmpty()&&homeapires.getEventimages().get(0).getImageurl()!=null) {
+            storageRef.child(homeapires.getEventimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    Picasso.with(context).load(uri)
+                            .placeholder(R.drawable.background)
+                            .fit()
+                            .into(holder.imageViewIcon);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +112,7 @@ public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToo
             }
         });
 //        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
-//        adapter = new HorizontalContentAdapter(context, eventhomeBusinesResponse.getTags());
+        adapter = new HorizontalAdapterHome(context, homeapires.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
@@ -83,7 +120,7 @@ public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToo
 
     @Override
     public int getItemCount() {
-        return stringArrayList.size();
+        return List.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

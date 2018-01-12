@@ -48,6 +48,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:text="2 hrs"
+        android:textAllCaps="false"
         android:layout_marginRight="4dp"
         android:textSize="13sp"
         android:gravity="center"
@@ -92,8 +93,7 @@
             android:id="@+id/tag_entity_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/inlove_icon"
-            android:weightSum="10">
+            android:layout_toLeftOf="@id/inlove_icon">
 
             <ImageView
                 android:id="@+id/barbq_icon"
@@ -106,7 +106,7 @@
 
             <TextView
                 android:id="@+id/barbq_txt"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/post_interests_layout"
                 android:layout_toEndOf="@id/cottage_house_icon"
@@ -117,28 +117,71 @@
                 android:text="Barbeque side platter"
                 android:textSize="13sp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tag_entity_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tag_entity_layout">
             <ImageView
+                android:layout_width="15dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
                 android:id="@+id/cottage_house_icon"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
-                android:layout_below="@id/cottage_house_txt"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
+                android:layout_below="@+id/post_interests_layout"
+                android:src="@drawable/restaurant_ico"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:id="@+id/cottage_house_txt"
+                android:text="Cottage House"
+                android:layout_toRightOf="@id/barbados_icon"
+                android:layout_toEndOf="@id/barbados_icon"
+                android:layout_below="@+id/post_interests_layout"
+                android:gravity="center_vertical"
+                android:textSize="13sp"
                 android:layout_marginTop="2dp"
-                android:layout_weight="0.5"
-                android:src="@drawable/restaurant_ico" />
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="8dp"
+
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tag_entity_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/tag_entity_layout1">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="16dp"
+                android:id="@+id/barbados_icon"
+                android:layout_below="@+id/cottage_house_icon"
+                android:src="@drawable/ic_calendar"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="6dp"
+                />
 
             <TextView
-                android:id="@+id/cottage_house_txt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cottage_house_txt"
-                android:layout_toEndOf="@id/barbq_icon"
-                android:layout_toRightOf="@id/barbq_icon"
-                android:layout_weight="4"
+                android:id="@+id/barbados_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="8dp"
                 android:gravity="center_vertical"
-                android:text="Cottage House"
+                android:text="Barbados food and rum festival"
                 android:textSize="13sp" />
+
+
         </LinearLayout>
 
         <!--<ImageView-->
@@ -192,30 +235,7 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_eventdots" />
     </RelativeLayout>
-    <ImageView
-        android:layout_width="15dp"
-        android:layout_height="16dp"
-        android:id="@+id/barbados_icon"
-        android:layout_below="@+id/post_interests_layout"
-        android:src="@drawable/ic_calendar"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="6dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:id="@+id/barbados_txt"
-        android:text="Barbados food and rum festival"
-        android:layout_toRightOf="@id/barbados_icon"
-        android:layout_toEndOf="@id/barbados_icon"
-        android:layout_below="@+id/post_interests_layout"
-        android:gravity="center_vertical"
-        android:textSize="13sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
 
-        />
 
 
 
