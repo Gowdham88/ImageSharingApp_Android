@@ -34,7 +34,7 @@ import java.util.List;
 public class CurrentUpEventsAdapter extends RecyclerView.Adapter<CurrentUpEventsAdapter.ViewHolder> {
 
     private Context context;
-    List<HomeApiResponse> list = new ArrayList<>();
+    List<HomeApiResponse> list;
     private StorageReference storageRef ;
     private FirebaseStorage storage;
     //private ArrayList<String> stringArrayList = new ArrayList<>();

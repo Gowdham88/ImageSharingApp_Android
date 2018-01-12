@@ -1,8 +1,6 @@
 <RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_weight="1"
-    android:gravity="center_vertical"
     android:visibility="visible"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -10,7 +8,6 @@
 android:id="@+id/past_events_text"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:layout_marginBottom="10dp"
 android:layout_marginLeft="@dimen/spacing_small"
 android:layout_marginRight="@dimen/spacing_small"
 android:text="@string/past_events"
@@ -30,7 +27,7 @@ app:srcCompat="@drawable/ic_arrow" />
 <android.support.v7.widget.RecyclerView
 android:id="@+id/past_recyclerview"
 android:layout_width="match_parent"
-android:layout_height="match_parent"
+android:layout_height="250dp"
 android:layout_below="@+id/past_events_text"
 android:layout_marginLeft="@dimen/spacing_small"
 android:layout_marginRight="@dimen/spacing_small"
