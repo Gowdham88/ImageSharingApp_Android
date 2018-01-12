@@ -69,9 +69,9 @@ public class HomeSearchFragment extends Fragment {
         searchViewLocation=view.findViewById(R.id.et_search_location);
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
-        SearchLinlay1=(RelativeLayout)view.findViewById(R.id.search_linlay1);
-        SearchLinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
-        SearchLinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
+//        SearchLinlay1=(RelativeLayout)view.findViewById(R.id.search_linlay1);
+//        SearchLinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
+//        SearchLinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(getString(R.string.app_name));
         toolbarBackIcon = view.findViewById(R.id.toolbar_back);
@@ -81,24 +81,24 @@ public class HomeSearchFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        SearchLinlay1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
-        SearchLinlay2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
-        SearchLinlay3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
+//        SearchLinlay1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
+//        SearchLinlay2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
+//        SearchLinlay3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
         nestedScrollView.setVisibility(View.GONE);
         tabLayout.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.VISIBLE);
@@ -165,7 +165,7 @@ public class HomeSearchFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventsFragment(), "Events");
-        adapter.addFragment(new SearchBusinessFragment(), "Businesses");
+        adapter.addFragment(new SearchBusinessFragment(), "Vendors");
         adapter.addFragment(new SearchItemsFragment(), "Items");
         adapter.addFragment(new SearchPostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");

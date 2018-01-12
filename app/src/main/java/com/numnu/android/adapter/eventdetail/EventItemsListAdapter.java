@@ -78,7 +78,6 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
 
 
-
         if(!dataItem.getItemimages().isEmpty()&&dataItem.getItemimages().get(0).getImageurl()!=null) {
             storageRef.child(dataItem.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -131,7 +130,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private  ImageView imageViewIcon;
-        private TextView textViewName;
+        private TextView textViewName,txtprice;
 
 
         public ViewHolder(View itemView) {
@@ -140,6 +139,7 @@ public class EventItemsListAdapter extends RecyclerView.Adapter<EventItemsListAd
             recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.item_image);
+            this.txtprice =  itemView.findViewById(R.id.event_price);
 
         }
     }

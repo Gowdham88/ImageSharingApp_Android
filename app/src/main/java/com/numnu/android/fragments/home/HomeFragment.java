@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -22,11 +23,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -44,10 +47,13 @@ import android.widget.Toolbar;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
+import com.google.gson.Gson;
 import com.numnu.android.LocationUpdatesService;
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
+import com.numnu.android.adapter.RecyclerVertialAdapter;
 import com.numnu.android.adapter.search.PlaceAutocompleteRecyclerViewAdapter;
+import com.numnu.android.adapter.search.SearchEventsAdapter;
 import com.numnu.android.adapter.search.SearchResultsAdapter;
 import com.numnu.android.fragments.search.EventsFragment;
 import com.numnu.android.fragments.search.EventsFragmentwithToolbar;
@@ -55,6 +61,14 @@ import com.numnu.android.fragments.search.SearchPostsFragment;
 import com.numnu.android.fragments.search.SearchBusinessFragment;
 import com.numnu.android.fragments.search.SearchItemsFragment;
 import com.numnu.android.fragments.search.UsersFragment;
+import com.numnu.android.network.ApiServices;
+import com.numnu.android.network.ServiceGenerator;
+import com.numnu.android.network.response.HomeApiResponse;
+import com.numnu.android.network.response.HomeEvebtResp;
+import com.numnu.android.network.response.HomeEventResponse;
+import com.numnu.android.network.response.HomeResponse;
+import com.numnu.android.network.response.LocationHomePost;
+import com.numnu.android.network.response.LocationObject;
 import com.numnu.android.utils.Constants;
 import com.numnu.android.utils.PreferencesHelper;
 import com.numnu.android.utils.Utils;
@@ -65,6 +79,9 @@ import java.util.List;
 import java.util.Locale;
 
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.numnu.android.utils.Utils.hideKeyboard;
 
@@ -81,7 +98,9 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
     private TabLayout tabLayout;
     NestedScrollView nestedScrollView;
     private RecyclerView currentEventsList,currentEventsList1,currentEventsList2, pastEventsList;
+    TextView currenteventtext,currenteventtext1,currenteventtext2;
     private ArrayList<String> stringlist,stringlist1;
+    List<HomeResponse> homelist = new ArrayList<>();
     Context context;
     Toolbar toolbar;
     BottomNavigationView mBottomNavigationView;
@@ -96,7 +115,15 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
     private Boolean isLocationSetByGps=false;
     private static final String[] LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final int RC_LOCATION_PERM = 1;
-
+    private boolean isLoading=false;
+    private boolean isLastPage=false;
+    private int PAGE_SIZE = 20;
+    private int nextPage = 1;
+    private android.support.v7.app.AlertDialog dialog;
+    private Double lat,lng;
+    private String keyword;
+    RecyclerVertialAdapter currentUpAdapter;
+    HomeResponse Homeresponses;
 
     /**
      * GeoDataClient wraps our service connection to Google Play services and provides access
@@ -119,6 +146,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+
         if(hasLocationPermission()) {
             context.startService(new Intent(context, LocationUpdatesService.class));
         }else {
@@ -129,6 +158,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
                     RC_LOCATION_PERM,
                     LOCATION);
         }
+        lat = Double.valueOf(PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_SEARCH_LATITUDE));
+        lng = Double.valueOf(PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_SEARCH_LONGITUDE));
 
     }
 
@@ -183,9 +214,12 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
         viewPager = view.findViewById(R.id.viewpager);
         googleLogo = view.findViewById(R.id.img_google);
 
-        currentEventsList = view.findViewById(R.id.current_up_recyclerview);
-        currentEventsList1 = view.findViewById(R.id.current_up_recyclerview1);
-        currentEventsList2 = view.findViewById(R.id.current_up_recyclerview2);
+//        currenteventtext=view.findViewById(R.id.current_events_text);
+//        currenteventtext1=view.findViewById(R.id.current_events_text1);
+//        currenteventtext2=view.findViewById(R.id.current_events_text2);
+        currentEventsList = view.findViewById(R.id.past_recyclerviewtx);
+//        currentEventsList1 = view.findViewById(R.id.current_up_recyclerview1);
+//        currentEventsList2 = view.findViewById(R.id.current_up_recyclerview2);
         pastEventsList = view.findViewById(R.id.past_recyclerview);
         searchListView = view.findViewById(R.id.search_results_recyclerview);
         searchViewFood=view.findViewById(R.id.et_search_food);
@@ -193,29 +227,29 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
         toolbarBackIcon = view.findViewById(R.id.toolbar_back);
-        Homelinlay1=(RelativeLayout)view.findViewById(R.id.search_linlay1);
-        Homelinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
-        Homelinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
+//        Homelinlay1=(RelativeLayout)view.findViewById(R.id.search_linlay1);
+//        Homelinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
+//        Homelinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
         AppLay=(AppBarLayout)view.findViewById(R.id.appbar_layout);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        Homelinlay1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
-        Homelinlay2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
-        Homelinlay3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
+//        Homelinlay1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
+//        Homelinlay2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
+//        Homelinlay3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
         toolbarBackIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -240,55 +274,55 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
         });
 
 
-        RelativeLayout viewCurrentEventsList = view.findViewById(R.id.view_current_event_list);
-        RelativeLayout viewCurrentEventsList1 = view.findViewById(R.id.view_current_event_list1);
-        RelativeLayout viewCurrentEventsList2 = view.findViewById(R.id.view_current_event_list2);
+//        RelativeLayout viewCurrentEventsList = view.findViewById(R.id.view_current_event_list);
+//        RelativeLayout viewCurrentEventsList1 = view.findViewById(R.id.view_current_event_list1);
+//        RelativeLayout viewCurrentEventsList2 = view.findViewById(R.id.view_current_event_list2);
+//
+//        ImageView viewPastEventsList = view.findViewById(R.id.view_past_event_list);
 
-        ImageView viewPastEventsList = view.findViewById(R.id.view_past_event_list);
+//        viewCurrentEventsList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
 
-        viewCurrentEventsList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-
-        viewCurrentEventsList1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-
-        viewCurrentEventsList2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-
-        viewPastEventsList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
-                transaction.addToBackStack(null).commit();
-            }
-        });
-        setupRecyclerView();
+//        viewCurrentEventsList1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
+//
+//        viewCurrentEventsList2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
+//
+//        viewPastEventsList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
+//                transaction.replace(R.id.frame_layout, EventsFragmentwithToolbar.newInstance());
+//                transaction.addToBackStack(null).commit();
+//            }
+//        });
+//        setupRecyclerView();
 
 
         // Construct a GeoDataClient for the Google Places API for Android.
@@ -305,12 +339,121 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
                 nestedScrollView.scrollTo(0,0);
             }
         });
+        final LinearLayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
+        currentEventsList.setLayoutManager(layoutManager);
+        currentEventsList.setNestedScrollingEnabled(false);
+        if(Utils.isNetworkAvailable(context)) {
+            geteventhomeData();
+        }else {
+            showAlert();
+        }
+        currentEventsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                if (!isLoading && !isLastPage) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= PAGE_SIZE) {
+//                        loadMoreItems();
+                    }
+                }
+            }
+        });
         return view;
     }
 
+    private void showAlert() {
+    }
+    private void geteventhomeData()
+    {
+        showProgressDialog();
+
+        LocationObject citylocation = new LocationObject();
+        citylocation.setLattitude(13.0312186);
+        citylocation.setLongitude(77.0312186);
+        citylocation.setNearMeRadiusInMiles(14000);
+        LocationHomePost locationhomepost=new LocationHomePost();
+        locationhomepost.setClientapp(Constants.CLIENT_APP);
+        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
+        locationhomepost.setLocationObject(citylocation);
+        locationhomepost.setSearchText(keyword);
+        isLoading = true;
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<List<HomeResponse>> call=apiServices.gethomeresp(locationhomepost);
+        call.enqueue(new Callback<List<HomeResponse>>() {
+            @Override
+            public void onResponse(Call<List<HomeResponse>> call, Response<List<HomeResponse>> response) {
+                int responsecode = response.code();
+                Log.e("userString", new Gson().toJson(response.body()));
+                if(responsecode==200) {
+                    homelist = response.body();
+                    updateUI();
+                    isLoading = false;
+                    hideProgressDialog();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<HomeResponse>> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                isLoading = false;
+
+            }
+        });
+
+    }
 
 
+    private void loadMoreItems()
+    {
+        LocationObject citylocation = new LocationObject();
+        citylocation.setLattitude(lat);
+        citylocation.setLongitude(lng);
+        citylocation.setNearMeRadiusInMiles(14000);
+        LocationHomePost locationhomepost=new LocationHomePost();
+        locationhomepost.setClientapp(Constants.CLIENT_APP);
+        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
+        locationhomepost.setLocationObject(citylocation);
+        locationhomepost.setSearchText(keyword);
+        nextPage += 1;
+        isLoading = true;
+        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+        Call<HomeEventResponse> call=apiServices.gethomeevents(String.valueOf(nextPage),locationhomepost);
+        call.enqueue(new Callback<HomeEventResponse>() {
+            @Override
+            public void onResponse(Call<HomeEventResponse> call, Response<HomeEventResponse> response) {
+                int responsecode = response.code();
+                if(responsecode==200) {
+                    List<HomeEvebtResp> dataItems=response.body().getData();
+                    Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                    Log.e("data", String.valueOf(response.body().getData()));
+                    if(!response.body().getPagination().isHasMore()){
+                        isLastPage = true;
+                    }
+//                    currentUpAdapter.addData(dataItems);
+                    currentUpAdapter.notifyDataSetChanged();
+                    isLoading = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomeEventResponse> call, Throwable t) {
+                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                isLoading = false;
+            }
+        });
+
+    }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -594,7 +737,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(EventsFragment.newInstance(searchViewFood.getText().toString()), "Events");
-        adapter.addFragment(SearchBusinessFragment.newInstance(searchViewFood.getText().toString()), "Businesses");
+        adapter.addFragment(SearchBusinessFragment.newInstance(searchViewFood.getText().toString()), "Vendors");
         adapter.addFragment( SearchItemsFragment.newInstance(searchViewFood.getText().toString()), "Items");
         adapter.addFragment( SearchPostsFragment.newInstance(searchViewFood.getText().toString()), "Posts");
         adapter.addFragment( UsersFragment.newInstance(searchViewFood.getText().toString()), "Users");
@@ -649,33 +792,36 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
         this.context = context;
     }
 
-
-
-    private void setupRecyclerView() {
+    private void updateUI() {
+        currentUpAdapter = new RecyclerVertialAdapter(context,homelist);
+        currentEventsList.setAdapter(currentUpAdapter);
+        currentUpAdapter.notifyDataSetChanged();
+    }
+//
+//
+//    private void setupRecyclerView() {
 //        stringlist = new ArrayList<>();
 //        stringlist1 = new ArrayList<>();
 //
 //        for (int i = 1; i <= 10; i++) {
 //            stringlist.add("Flatron");
 //        }
-            CurrentUpEventsAdapter currentUpAdapter = new CurrentUpEventsAdapter(context);
-            currentEventsList.setAdapter(currentUpAdapter);
-
-        CurrentUpEventsAdapter currentUpAdapter1 = new CurrentUpEventsAdapter(context);
-        currentEventsList1.setAdapter(currentUpAdapter1);
-
-        CurrentUpEventsAdapter currentUpAdapter2 = new CurrentUpEventsAdapter(context);
-        currentEventsList2.setAdapter(currentUpAdapter2);
-
-
-//        for (int i = 1; i <= 10; i++) {
-//            stringlist1.add("Flatron");
-//        }
-////            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
-//            pastEventsList.setAdapter(pastEventsAdapter);
-
-
-    }
+//
+//        RecyclerVertialAdapter currentUpAdapter = new RecyclerVertialAdapter(context);
+//        currentEventsList.setAdapter(currentUpAdapter);
+////
+////        CurrentUpEventsAdapter currentUpAdapter2 = new CurrentUpEventsAdapter(context);
+////        currentEventsList2.setAdapter(currentUpAdapter2);
+//
+//
+////        for (int i = 1; i <= 10; i++) {
+////            stringlist1.add("Flatron");
+////        }
+//////            PastEventsAdapter pastEventsAdapter = new PastEventsAdapter(context, stringlist1);
+////            pastEventsList.setAdapter(pastEventsAdapter);
+//
+//
+//    }
 
     @Override
     public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
@@ -765,6 +911,23 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
         }
     }
 
+    public void showProgressDialog() {
+
+
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        //View view = getLayoutInflater().inflate(R.layout.progress);
+        alertDialog.setView(R.layout.progress);
+        dialog = alertDialog.create();
+        dialog.show();
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+    }
+
+    public void hideProgressDialog(){
+        if(dialog!=null)
+            dialog.dismiss();
+    }
 
 }
 

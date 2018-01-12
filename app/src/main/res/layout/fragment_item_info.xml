@@ -61,28 +61,41 @@
             android:id="@+id/txt_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/content_image_card"
-            android:layout_marginTop="12dp"
+            android:layout_alignLeft="@+id/evntcottage_house_icon"
+            android:layout_alignStart="@+id/evntcottage_house_icon"
+            android:layout_alignTop="@+id/content_image_card"
+            android:layout_marginLeft="180dp"
             android:text="$3.63"
+            android:layout_toRightOf="@+id/item_header_name"
             style="@style/FontAvenirMedium"
             android:textStyle="bold"
-            android:layout_marginLeft="32dp"
             android:layout_marginBottom="1dp"
             android:gravity="center"
             android:textColor="@color/green"
             android:textSize="@dimen/font_small" />
-
         <TextView
             android:id="@+id/item_header_name"
             style="@style/BoldTextStyle"
+            android:layout_alignLeft="@+id/evntcottage_house_icon"
+            android:layout_alignStart="@+id/evntcottage_house_icon"
+            android:layout_alignTop="@+id/content_image_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="8dp"
-            android:layout_toRightOf="@id/content_image_card"
             android:text="Barbadous food and rum festival" />
+        <!--<TextView-->
+            <!--android:id="@+id/txt_amount"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/content_image_card"-->
+            <!--android:layout_marginTop="12dp"-->
+            <!--android:text="$3.63"-->
+            <!--style="@style/FontAvenirMedium"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_marginLeft="32dp"-->
+            <!--android:layout_marginBottom="1dp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/green"-->
+            <!--android:textSize="@dimen/font_small" />-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -159,7 +172,7 @@
             style="@style/FontAvenirMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_amount"
+            android:layout_below="@+id/evntbarbq_txt"
             android:textSize="13dp"
             android:maxLines="4"
             android:layout_marginLeft="10dp"
@@ -178,18 +191,19 @@
             android:textSize="13sp"/>
         <TextView
             android:id="@+id/text_terms"
+            style="@style/FontAvenirMedium"
+            android:padding="@dimen/spacing_normal"
+            android:textSize="13dp"
+            android:layout_below="@id/event_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/event_description"
             android:layout_marginTop="10dp"
-            android:background="@color/view_grey_color"
+            android:text="Posts"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
-            android:padding="@dimen/spacing_small"
-            android:text="Posts"
-            android:textSize="13sp" />
-
+            android:background="@color/taginside_color"
+            android:textColor="@color/tag_text_color" />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/user_posts_recycler"

@@ -61,4 +61,5 @@
         android:drawableLeft="@drawable/ic_city"
         android:text="Montreal"
         android:textSize="@dimen/font_small" />
+
 </RelativeLayout>

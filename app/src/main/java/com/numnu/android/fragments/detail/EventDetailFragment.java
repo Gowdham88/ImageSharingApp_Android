@@ -493,7 +493,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(EventBusinessFragment.newInstance(eventId), "Businesses");
+        adapter.addFragment(EventBusinessFragment.newInstance(eventId), "Vendors");
         adapter.addFragment(EventItemsCategoryFragment.newInstance(eventId), "Items");
         adapter.addFragment(EventPostsFragment.newInstance(eventId), "Posts");
         viewPager.setAdapter(adapter);

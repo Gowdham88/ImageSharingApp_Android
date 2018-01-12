@@ -174,7 +174,10 @@ public class LoginFragment extends Fragment {
         ConsLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-         hideKeyboard(getActivity());
+             hideKeyboard(getActivity());
+                emailview.setFocusableInTouchMode(false);
+                passview.setFocusableInTouchMode(false);
+
             }
         });
         // [START initialize_auth]

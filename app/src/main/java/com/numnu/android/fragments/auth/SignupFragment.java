@@ -155,7 +155,12 @@ public class SignupFragment extends Fragment {
         SignupConsLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 hideKeyboard(getActivity());
+
+                emailview.setFocusableInTouchMode(false);
+                passview.setFocusableInTouchMode(false);
+
             }
         });
 

@@ -236,20 +236,17 @@ public class SliceFragment extends Fragment {
         contentImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                initiatePopupWindow();
-                if (imagePath != null) {
-                    Intent intent = new Intent(getActivity(), SliceActivity.class);
-                    intent.putExtra("imagepath", imagePath.toString());
-                    context.startActivity(intent);
-                } else {
-                    Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
-                }
+                initiatePopupWindow();
+
+
 
             }
         });
 
         return view;
     }
+
+
 
     private void showAlert() {
     }
@@ -333,7 +330,7 @@ public class SliceFragment extends Fragment {
             inloveicon.setImageResource(R.drawable.rating3);
         }
         eventText.setText(postsResponse.getEvent().getName());
-        userNameTxt.setText(postsResponse.getPostcreator().getUsername());
+        userNameTxt.setText("@"+postsResponse.getPostcreator().getUsername());
         nameText.setText(postsResponse.getPostcreator().getName());
         title.setText(postsResponse.getComment());
         String postEndDate=postsResponse.getCreatedat();
@@ -501,5 +498,32 @@ public class SliceFragment extends Fragment {
             dialog.dismiss();
     }
 
+    private void initiatePopupWindow() {
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.image_popup,null);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        pw = new PopupWindow(layout, lp.width, lp.height, true);
+        pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+        if(imagePath!=null){
+            Intent intent=new Intent(getActivity(), SliceActivity.class);
+            intent.putExtra("imagepath",imagePath.toString());
+            getActivity().startActivity(intent);
+        }
+        else{
+            Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+        }
+        Animation hide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_up);
+        layout.startAnimation(hide);
+        LinearLayout btncancel = layout.findViewById(R.id.btncancelcat);
 
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pw.dismiss();
+            }
+        });
+    }
 }

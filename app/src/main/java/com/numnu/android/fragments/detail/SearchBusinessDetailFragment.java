@@ -157,7 +157,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         tabLayout.setupWithViewPager(viewPager);
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(R.string.business);
+        toolbarTitle.setText("Vendors");
 
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
         RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
