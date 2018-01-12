@@ -358,7 +358,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
+                int totalItemCount   = layoutManager.getItemCount();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
                 if (!isLoading && !isLastPage) {
@@ -415,7 +415,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
     }
 
 
-    private void loadMoreItems()
+    private void loadMoreItems(final Integer postion, Integer pageno)
     {
         LocationObject citylocation = new LocationObject();
         citylocation.setLattitude(lat);
@@ -429,13 +429,15 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<HomeEventResponse> call=apiServices.gethomeevents(String.valueOf(nextPage),locationhomepost);
-        call.enqueue(new Callback<HomeEventResponse>() {
+        Call<HomeResponse> call=apiServices.gethomeevntresp(String.valueOf(postion),String.valueOf(nextPage),locationhomepost);
+        call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onResponse(Call<HomeEventResponse> call, Response<HomeEventResponse> response) {
+            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                 int responsecode = response.code();
                 if(responsecode==200) {
-                    List<HomeEvebtResp> dataItems=response.body().getData();
+
+                    homelist.set(postion,response.body());
+
                     Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                     Log.e("data", String.valueOf(response.body().getData()));
                     if(!response.body().getPagination().isHasMore()){
@@ -447,7 +449,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
             }
 
             @Override
-            public void onFailure(Call<HomeEventResponse> call, Throwable t) {
+            public void onFailure(Call<HomeResponse> call, Throwable t) {
                 Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
                 isLoading = false;
             }

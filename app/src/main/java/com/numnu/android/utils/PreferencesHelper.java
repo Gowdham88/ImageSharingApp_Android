@@ -37,7 +37,7 @@ public class PreferencesHelper {
     public static final String PREFERENCE_SEARCH_LOCATION ="search_location";
     public static final String PREFERENCE_SEARCH_LATITUDE ="search_latitude";
     public static final String PREFERENCE_SEARCH_LONGITUDE ="search_longitude";
-
+    public static final String PREFERENCE_FIRST_TIME ="first_time";
 
 
     // endregion

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.numnu.android.R;
+import com.numnu.android.utils.PreferencesHelper;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -29,9 +30,23 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SplashActivity.this,OnboardingActivity.class);
-                SplashActivity.this.startActivity(mainIntent);
-                SplashActivity.this.finish();
+
+                if (PreferencesHelper.getPreferenceBoolean(SplashActivity.this,PreferencesHelper.PREFERENCE_FIRST_TIME)){
+
+
+                    Intent mainIntent = new Intent(SplashActivity.this, HomeActivity.class);
+                    SplashActivity.this.startActivity(mainIntent);
+                    SplashActivity.this.finish();
+
+                } else {
+
+                    Intent mainIntent = new Intent(SplashActivity.this,OnboardingActivity.class);
+                    SplashActivity.this.startActivity(mainIntent);
+                    SplashActivity.this.finish();
+
+                }
+
+
             }
         }, SPLASH_DISPLAY_LENGTH);
 

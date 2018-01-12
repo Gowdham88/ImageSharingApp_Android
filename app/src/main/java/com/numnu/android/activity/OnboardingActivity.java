@@ -184,6 +184,7 @@ public class OnboardingActivity extends MyActivity implements EasyPermissions.Pe
 //            getAddress();
 //
 //        } else {
+            PreferencesHelper.setPreferenceBoolean(OnboardingActivity.this,PreferencesHelper.PREFERENCE_FIRST_TIME,true);
             this.finish();
             Intent mainIntent = new Intent(OnboardingActivity.this, HomeActivity.class);
             this.startActivity(mainIntent);

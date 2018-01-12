@@ -280,10 +280,10 @@ public interface ApiServices {
 
     @Headers("Content-Type: application/json")
     @POST("/homeLists/{userId}")
-    Call<HomeResponse> gethomeevntresp(@Path("userId") String locationId,@Query("page") String page,LocationHomePost locationhomepost);
+    Call<HomeResponse> gethomeevntresp(@Path("userId") String locationId,@Query("page") String page,@Body LocationHomePost locationhomepost);
     @Headers("Content-Type: application/json")
     @POST("/homeLists/{userId}")
-    Call<HomeResponse> gethomeevntresp(@Path("userId") String locationId,LocationHomePost locationhomepost);
+    Call<HomeResponse> gethomeevntresp(@Path("userId") String locationId,@Body LocationHomePost locationhomepost);
 
 
 
