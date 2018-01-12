@@ -147,34 +147,34 @@ public class EventsFragmentwithToolbar extends Fragment {
     {
         showProgressDialog();
         LocationObject citylocation = new LocationObject();
-        citylocation.setLattitude(13.0312186);
-        citylocation.setLongitude(77.0312186);
-        citylocation.setNearMeRadiusInMiles(14000);
-        LocationHomePost locationhomepost=new LocationHomePost();
-        locationhomepost.setClientapp(Constants.CLIENT_APP);
-        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
-        locationhomepost.setLocationObject(citylocation);
-        isLoading = true;
-        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<HomeResponse> call=apiServices.gethomeevntresp(locationhomepost);
-        call.enqueue(new Callback<HomeResponse>() {
-            @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
-                int responsecode = response.code();
-                if(responsecode==200) {
-                    hmresponse = response.body();
-                    updateUI();
-                    isLoading = false;
-                    hideProgressDialog();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
-                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
-                isLoading = false;
-            }
-        });
+//        citylocation.setLattitude(13.0312186);
+//        citylocation.setLongitude(77.0312186);
+//        citylocation.setNearMeRadiusInMiles(14000);
+//        LocationHomePost locationhomepost=new LocationHomePost();
+//        locationhomepost.setClientapp(Constants.CLIENT_APP);
+//        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
+//        locationhomepost.setLocationObject(citylocation);
+//        isLoading = true;
+//        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+//        Call<HomeResponse> call=apiServices.gethomeevntresp(locationhomepost);
+//        call.enqueue(new Callback<HomeResponse>() {
+//            @Override
+//            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+//                int responsecode = response.code();
+//                if(responsecode==200) {
+//                    hmresponse = response.body();
+//                    updateUI();
+//                    isLoading = false;
+//                    hideProgressDialog();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<HomeResponse> call, Throwable t) {
+//                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+//                isLoading = false;
+//            }
+//        });
 
     }
 
@@ -182,38 +182,38 @@ public class EventsFragmentwithToolbar extends Fragment {
 
     private void loadMoreItems() {
         LocationObject citylocation = new LocationObject();
-        citylocation.setLattitude(13.0312186);
-        citylocation.setLongitude(77.0312186);
-        citylocation.setNearMeRadiusInMiles(14000);
-        LocationHomePost locationhomepost=new LocationHomePost();
-        locationhomepost.setClientapp(Constants.CLIENT_APP);
-        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
-        locationhomepost.setLocationObject(citylocation);
-        nextPage += 1;
-        isLoading = true;
-        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<HomeResponse> call = apiServices.gethomeevntresp(String.valueOf(nextPage),locationhomepost);
-        call.enqueue(new Callback<HomeResponse>() {
-            @Override
-            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
-                int responsecode = response.code();
-                if (responsecode == 200) {
-                    List<HomeApiResponse> dataItems = response.body().getData();
-                    if (!response.body().getPagination().isHasMore()) {
-                        isLastPage = true;
-                    }
-                    evntAdapter.addData(dataItems);
-                    evntAdapter.notifyDataSetChanged();
-                    isLoading = false;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<HomeResponse> call, Throwable t) {
-                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
-                isLoading = false;
-            }
-        });
+//        citylocation.setLattitude(13.0312186);
+//        citylocation.setLongitude(77.0312186);
+//        citylocation.setNearMeRadiusInMiles(14000);
+//        LocationHomePost locationhomepost=new LocationHomePost();
+//        locationhomepost.setClientapp(Constants.CLIENT_APP);
+//        locationhomepost.setClientip(Utils.getLocalIpAddress(context));
+//        locationhomepost.setLocationObject(citylocation);
+//        nextPage += 1;
+//        isLoading = true;
+//        ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
+//        Call<HomeResponse> call = apiServices.gethomeevntresp(String.valueOf(nextPage),locationhomepost);
+//        call.enqueue(new Callback<HomeResponse>() {
+//            @Override
+//            public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+//                int responsecode = response.code();
+//                if (responsecode == 200) {
+//                    List<HomeApiResponse> dataItems = response.body().getData();
+//                    if (!response.body().getPagination().isHasMore()) {
+//                        isLastPage = true;
+//                    }
+//                    evntAdapter.addData(dataItems);
+//                    evntAdapter.notifyDataSetChanged();
+//                    isLoading = false;
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<HomeResponse> call, Throwable t) {
+//                Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+//                isLoading = false;
+//            }
+//        });
 
     }
         @Override

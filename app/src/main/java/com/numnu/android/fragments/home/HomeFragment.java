@@ -52,6 +52,7 @@ import com.numnu.android.LocationUpdatesService;
 import com.numnu.android.R;
 import com.numnu.android.adapter.CurrentUpEventsAdapter;
 import com.numnu.android.adapter.RecyclerVertialAdapter;
+import com.numnu.android.adapter.search.HorizontalHomeListController;
 import com.numnu.android.adapter.search.PlaceAutocompleteRecyclerViewAdapter;
 import com.numnu.android.adapter.search.SearchEventsAdapter;
 import com.numnu.android.adapter.search.SearchResultsAdapter;
@@ -122,7 +123,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
     private android.support.v7.app.AlertDialog dialog;
     private Double lat,lng;
     private String keyword;
-    RecyclerVertialAdapter currentUpAdapter;
+    HorizontalHomeListController currentUpAdapter;
     HomeResponse Homeresponses;
 
     /**
@@ -158,8 +159,8 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
                     RC_LOCATION_PERM,
                     LOCATION);
         }
-        lat = Double.valueOf(PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_SEARCH_LATITUDE));
-        lng = Double.valueOf(PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_SEARCH_LONGITUDE));
+//        lat = Double.valueOf(PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_SEARCH_LATITUDE));
+//        lng = Double.valueOf(PreferencesHelper.getPreference(context, PreferencesHelper.PREFERENCE_SEARCH_LONGITUDE));
 
     }
 
@@ -440,7 +441,6 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
                     if(!response.body().getPagination().isHasMore()){
                         isLastPage = true;
                     }
-//                    currentUpAdapter.addData(dataItems);
                     currentUpAdapter.notifyDataSetChanged();
                     isLoading = false;
                 }
@@ -793,7 +793,7 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
     }
 
     private void updateUI() {
-        currentUpAdapter = new RecyclerVertialAdapter(context,homelist);
+        currentUpAdapter = new HorizontalHomeListController(context,homelist);
         currentEventsList.setAdapter(currentUpAdapter);
         currentUpAdapter.notifyDataSetChanged();
     }

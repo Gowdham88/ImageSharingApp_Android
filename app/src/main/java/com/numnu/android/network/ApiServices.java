@@ -279,11 +279,11 @@ public interface ApiServices {
 
 
     @Headers("Content-Type: application/json")
-    @POST("/homeLists")
-    Call<HomeResponse> gethomeevntresp(@Body String s, LocationHomePost locationhomepost);
+    @POST("/homeLists/{userId}")
+    Call<HomeResponse> gethomeevntresp(@Path("userId") String locationId,@Query("page") String page,LocationHomePost locationhomepost);
     @Headers("Content-Type: application/json")
-    @POST("/homeLists")
-    Call<HomeResponse> gethomeevntresp(@Body LocationHomePost s);
+    @POST("/homeLists/{userId}")
+    Call<HomeResponse> gethomeevntresp(@Path("userId") String locationId,LocationHomePost locationhomepost);
 
 
 
