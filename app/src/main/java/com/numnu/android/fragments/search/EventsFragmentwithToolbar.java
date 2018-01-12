@@ -53,7 +53,7 @@ public class EventsFragmentwithToolbar extends Fragment {
     HomeResponse hmresponse;
     EventsWithToolbarAdapter evntAdapter;
     int posit;
-    String str;
+    String str = "0";
     private android.support.v7.app.AlertDialog dialog;
 
     public static EventsFragmentwithToolbar newInstance() {
@@ -95,7 +95,7 @@ public class EventsFragmentwithToolbar extends Fragment {
     Bundle bun=new Bundle();
     if(bun!=null){
         int myvalue=bun.getInt("position",posit);
-        String str= String.valueOf(myvalue);
+        str= String.valueOf(myvalue);
     }
 
         final LinearLayoutManager layoutManager=new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
@@ -199,7 +199,7 @@ public class EventsFragmentwithToolbar extends Fragment {
         nextPage += 1;
         isLoading = true;
         ApiServices apiServices = ServiceGenerator.createServiceHeader(ApiServices.class);
-        Call<HomeResponse> call = apiServices.gethomeevntresp(String.valueOf(str),String.valueOf(nextPage),locationhomepost);
+        Call<HomeResponse> call = apiServices.gethomeevntresp(str,String.valueOf(nextPage),locationhomepost);
         call.enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {

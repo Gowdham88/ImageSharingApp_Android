@@ -285,7 +285,12 @@ public interface ApiServices {
     @POST("/homeLists/{userId}")
     Call<HomeResponse> gethomeevntresp(@Path("userId") String locationId,@Body LocationHomePost locationhomepost);
 
-
+    @Headers("Content-Type: application/json")
+    @POST("/homeLists")
+    Call<HomeResponse> gethomevntresp(@Body String s, LocationHomePost locationhomepost);
+    @Headers("Content-Type: application/json")
+    @POST("/homeLists")
+    Call<HomeResponse> gethomevntresp(@Body LocationHomePost s);
 
 
 }

@@ -68,7 +68,9 @@ public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToo
 
         final HomeApiResponse homeapires = List.get(position);
 
-        holder.textViewName.setText(List.get(position).getBusinessname());
+
+
+        holder.textViewName.setText(List.get(position).getName());
         if(!homeapires.getEventimages().isEmpty()&&homeapires.getEventimages().get(0).getImageurl()!=null) {
             storageRef.child(homeapires.getEventimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
