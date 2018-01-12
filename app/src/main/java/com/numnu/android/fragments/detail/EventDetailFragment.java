@@ -283,8 +283,14 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
             }
         });
-
-
+        String resp= String.valueOf(eventDetailResponse.isIsdetailedcontentpublished());
+        if(resp.equals(1)){
+            viewEventMap.setVisibility(View.VISIBLE);
+            viewEventMap.setOnClickListener(this);
+        }
+        else {
+            viewEventMap.setVisibility(View.GONE);
+        }
         String strtDate=eventDetailResponse.getStartsat();
         String EndDate=eventDetailResponse.getEndsat();
         SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
@@ -297,7 +303,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                 e.printStackTrace();
             }
 
-            SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd, hh:mm a");
+            SimpleDateFormat postFormater = new SimpleDateFormat("MMM dd,  hh:mm a");
             String StartDateStr = postFormater.format(date);
 //        eventStartDate.setText(StartDateStr);
 
@@ -312,7 +318,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                 e.printStackTrace();
             }
 
-            SimpleDateFormat Formater = new SimpleDateFormat("MMM dd, hh:mm a");
+            SimpleDateFormat Formater = new SimpleDateFormat("MMM dd,  hh:mm a");
             String endDateStr = Formater.format(endate);
 //        eventStartDate.setText(endDateStr);
             String Serverdate = StartDateStr + " - " + endDateStr;
@@ -363,7 +369,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         alertDialog.setView(deleteDialogView);
         final TextView shareTxt = (TextView) deleteDialogView.findViewById(R.id.share);
         final TextView BookmarkTxt = (TextView) deleteDialogView.findViewById(R.id.bookmark);
-        TextView cancel = (TextView) deleteDialogView.findViewById(R.id.gender_cancel);
+        TextView cancellay = (TextView) deleteDialogView.findViewById(R.id.g_cancel);
+        LinearLayout cancel = (LinearLayout) deleteDialogView.findViewById(R.id.g_cancel);
 //        LinearLayout GenderLinLay = (LinearLayout) deleteDialogView.findViewById(R.id.genlin_lay);
 //        Button ok = deleteDialogView.findViewById(R.id.ok_button);
 
@@ -404,6 +411,12 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog1.dismiss();
+            }
+        });
+        cancellay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog1.dismiss();

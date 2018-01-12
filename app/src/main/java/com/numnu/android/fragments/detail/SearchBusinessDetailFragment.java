@@ -157,7 +157,7 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         tabLayout.setupWithViewPager(viewPager);
 
         TextView toolbarTitle = view.findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Vendors");
+        toolbarTitle.setText(getResources().getString(R.string.business));
 
         ImageView toolbarIcon = view.findViewById(R.id.toolbar_image);
         RelativeLayout toolbarBackIcon = view.findViewById(R.id.toolbar_back);
@@ -283,7 +283,8 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         alertDialog.setView(deleteDialogView);
         final TextView shareTxt = (TextView) deleteDialogView.findViewById(R.id.share);
         final TextView BookmarkTxt = (TextView) deleteDialogView.findViewById(R.id.bookmark);
-        TextView cancel = (TextView) deleteDialogView.findViewById(R.id.gender_cancel);
+        TextView cancellay = (TextView) deleteDialogView.findViewById(R.id.g_cancel);
+        LinearLayout cancel = (LinearLayout) deleteDialogView.findViewById(R.id.g_cancel);
 //        LinearLayout GenderLinLay = (LinearLayout) deleteDialogView.findViewById(R.id.genlin_lay);
 //        Button ok = deleteDialogView.findViewById(R.id.ok_button);
 
@@ -329,6 +330,12 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
                 alertDialog1.dismiss();
             }
         });
+        cancellay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog1.dismiss();
+            }
+        });
 //        GenderLinLay.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -360,7 +367,6 @@ public class SearchBusinessDetailFragment extends Fragment implements View.OnCli
         lp.windowAnimations = R.style.shareDialogAnimation;
         alertDialog1.getWindow().setAttributes(lp);
     }
-
 
     private void postBookmark()
     {

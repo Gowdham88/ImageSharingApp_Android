@@ -165,7 +165,7 @@ public class HomeSearchFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new EventsFragment(), "Events");
-        adapter.addFragment(new SearchBusinessFragment(), "Vendors");
+        adapter.addFragment(new SearchBusinessFragment(), "Businesses");
         adapter.addFragment(new SearchItemsFragment(), "Items");
         adapter.addFragment(new SearchPostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");

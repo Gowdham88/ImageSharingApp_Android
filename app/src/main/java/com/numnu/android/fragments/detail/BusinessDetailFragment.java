@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,7 +118,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         setupViewPager(viewPagerBusiness);
         tabLayout.setupWithViewPager(viewPagerBusiness);
         TextView toolbarTitleBuss = view.findViewById(R.id.toolbar_title);
-        toolbarTitleBuss.setText("Vendors");
+        toolbarTitleBuss.setText(getResources().getString(R.string.business));
         ImageView toolbarIconBuss = view.findViewById(R.id.toolbar_image);
         RelativeLayout toolbarBackIconBuss = view.findViewById(R.id.toolbar_back);
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
@@ -292,7 +293,8 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
         alertDialog.setView(deleteDialogView);
         final TextView shareTxt = (TextView) deleteDialogView.findViewById(R.id.share);
         final TextView BookmarkTxt = (TextView) deleteDialogView.findViewById(R.id.bookmark);
-        TextView cancel = (TextView) deleteDialogView.findViewById(R.id.gender_cancel);
+        TextView cancellay = (TextView) deleteDialogView.findViewById(R.id.g_cancel);
+        LinearLayout cancel = (LinearLayout) deleteDialogView.findViewById(R.id.g_cancel);
 //        LinearLayout GenderLinLay = (LinearLayout) deleteDialogView.findViewById(R.id.genlin_lay);
 //        Button ok = deleteDialogView.findViewById(R.id.ok_button);
 
@@ -338,6 +340,7 @@ public class BusinessDetailFragment extends Fragment implements View.OnClickList
                 alertDialog1.dismiss();
             }
         });
+
 //        GenderLinLay.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

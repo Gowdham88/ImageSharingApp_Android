@@ -164,6 +164,7 @@
                     android:textSize="@dimen/font_smaller" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/txt_view_event_map"
                     style="@style/FontAvenirheavy"
                     android:layout_width="wrap_content"
@@ -238,7 +239,7 @@
                 android:textSize="13sp" />
 
             <TextView
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/more_button"
                 style="@style/FontAvenirMedium"
                 android:layout_width="38dp"
@@ -254,7 +255,7 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 app:tabIndicatorHeight="3dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_description"

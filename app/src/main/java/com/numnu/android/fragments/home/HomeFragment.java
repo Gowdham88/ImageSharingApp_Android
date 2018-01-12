@@ -607,11 +607,13 @@ public class HomeFragment extends Fragment implements View.OnKeyListener, EasyPe
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    searchViewLocation.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     if (searchViewLocation.getCompoundDrawables()[2]!= null){
                         if (motionEvent.getX() >=(searchViewLocation.getRight()-searchViewLocation.getLeft() - searchViewLocation.getCompoundDrawables()[2].getBounds().width())){
                             searchViewLocation.setText("");
                             searchViewFood.setCompoundDrawablesWithIntrinsicBounds(null,null,null,null);
                             searchViewLocation.clearFocus();
+
                             Utils.hideKeyboard(getActivity());
                         }
                     }
