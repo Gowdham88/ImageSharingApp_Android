@@ -11,6 +11,7 @@ android:layout_height="wrap_content"
 android:layout_marginLeft="@dimen/spacing_small"
 android:layout_marginRight="@dimen/spacing_small"
 android:text="@string/past_events"
+    android:layout_marginTop="10dp"
 android:textColor="@color/dark_grey"
 android:textSize="@dimen/font_normal" />
 
@@ -21,6 +22,7 @@ android:layout_height="@dimen/toolbar_icon_width"
 android:layout_alignParentEnd="true"
 android:layout_alignParentRight="true"
 android:layout_margin="10dp"
+    android:layout_marginBottom="10dp"
 app:srcCompat="@drawable/ic_arrow" />
 
 

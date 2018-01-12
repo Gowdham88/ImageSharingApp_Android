@@ -93,56 +93,75 @@ public class HorizontalHomePageAdapter extends RecyclerView.Adapter<RecyclerView
             }
         });
 
-//        if(!homeRespo.getItemimages().isEmpty()&&homeRespo.getItemimages().get(0).getImageurl()!=null) {
-//            storageRef.child(homeRespo.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                @Override
-//                public void onSuccess(Uri uri) {
-//                    // Got the download URL for 'users/me/profile.png'
-//                    Picasso.with(context).load(uri)
-//                            .placeholder(R.drawable.background)
-//                            .fit()
-//                            .into(holder.imageViewIcon);
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception exception) {
-//                    // Handle any errors
-//                }
-//            });
-//        }
-//        holder.textViewName.setText(homeRespo.getName());
-//        String StrtDate=homeRespo.getStartsat();
-//        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-//        java.util.Date date = null;
-//        try
-//        {
-//            date = form.parse(StrtDate);
-//        }
-//        catch (ParseException e)
-//        {
-//
-//            e.printStackTrace();
-//        }
-//        SimpleDateFormat postFormater = new SimpleDateFormat("MMM yyyy");
-//        String StartDateStr = postFormater.format(date);
-////        eventStartDate.setText(StartDateStr);
-//
-//        String EndDate=homeRespo.getEndsat();
-//        SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-//        java.util.Date endate = null;
-//        try
-//        {
-//            endate = endformat.parse(EndDate);
-//        }
-//        catch (ParseException e)
-//        {
-//
-//            e.printStackTrace();
-//        }
-//        SimpleDateFormat Formater = new SimpleDateFormat("MMM yyyy");
-//        String endDateStr = Formater.format(endate);
-//        String Serverdate=StartDateStr+" - "+endDateStr;
-//        holder.textDate.setText(Serverdate);
+
+
+        try {
+
+            if(!homeRespo.getItemimages().isEmpty()&&homeRespo.getItemimages().get(0).getImageurl()!=null) {
+                storageRef.child(homeRespo.getItemimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // Got the download URL for 'users/me/profile.png'
+                        Picasso.with(context).load(uri)
+                                .placeholder(R.drawable.background)
+                                .fit()
+                                .into(holder.imageViewIcon);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+
+        } catch (NullPointerException e) {
+
+            e.printStackTrace();
+        }
+
+        try {
+            holder.textViewName.setText(homeRespo.getName());
+        }
+            catch (NullPointerException e) {
+
+                e.printStackTrace();
+            }
+        try {
+            String StrtDate = homeRespo.getStartsat();
+            SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            java.util.Date date = null;
+            try {
+                date = form.parse(StrtDate);
+            } catch (ParseException e) {
+
+                e.printStackTrace();
+            }
+            SimpleDateFormat postFormater = new SimpleDateFormat("MMM yy");
+            String StartDateStr = postFormater.format(date);
+//        eventStartDate.setText(StartDateStr);
+
+            String EndDate = homeRespo.getEndsat();
+            SimpleDateFormat endformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            java.util.Date endate = null;
+            try {
+                endate = endformat.parse(EndDate);
+            } catch (ParseException e) {
+
+                e.printStackTrace();
+            }
+            SimpleDateFormat Formater = new SimpleDateFormat("MMM yy");
+            String endDateStr = Formater.format(endate);
+            String Serverdate = StartDateStr + " - " + endDateStr;
+            holder.textDate.setText(Serverdate);
+        }
+        catch (NullPointerException e) {
+
+            e.printStackTrace();
+        }
+
+
+
     }
 
     @Override
