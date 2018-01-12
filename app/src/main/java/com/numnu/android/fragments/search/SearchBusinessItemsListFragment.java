@@ -3,6 +3,8 @@ package com.numnu.android.fragments.search;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
@@ -11,10 +13,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,7 +101,7 @@ public class SearchBusinessItemsListFragment extends Fragment implements View.On
       toolbarIcon.setOnClickListener(new View.OnClickListener() {
                         @Override
             public void onClick(View v) {
-                            showBottomSheet(inflater);
+                            showAlertshare();
             }
         });
         RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
@@ -244,42 +249,34 @@ public class SearchBusinessItemsListFragment extends Fragment implements View.On
         }
     }
 
-    private void showBottomSheet(LayoutInflater inflater) {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-        View bottomSheetView = inflater.inflate(R.layout.dialog_share_bookmark,null);
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
-        ImageView shareimg = bottomSheetView.findViewById(R.id.dialog_image);
-        ImageView bookmarkimg = bottomSheetView.findViewById(R.id.bookmark_icon);
-        TextView share = bottomSheetView.findViewById(R.id.share_title);
-        TextView bookmark = bottomSheetView.findViewById(R.id.bookmark_title);
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    public void showAlertshare() {
 
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+        final View deleteDialogView = factory.inflate(R.layout.bookmark_layout, null);
+        final android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        alertDialog.setView(deleteDialogView);
+        final TextView shareTxt = (TextView) deleteDialogView.findViewById(R.id.share);
+        final TextView BookmarkTxt = (TextView) deleteDialogView.findViewById(R.id.bookmark);
+        TextView cancellay = (TextView) deleteDialogView.findViewById(R.id.g_cancel);
+        LinearLayout cancel = (LinearLayout) deleteDialogView.findViewById(R.id.g_cancel);
+//        LinearLayout GenderLinLay = (LinearLayout) deleteDialogView.findViewById(R.id.genlin_lay);
+//        Button ok = deleteDialogView.findViewById(R.id.ok_button);
+
+        final android.support.v7.app.AlertDialog alertDialog1 = alertDialog.create();
+        shareTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
                 sendIntent.setType("text/plain");
                 context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
-                bottomSheetDialog.dismiss();
+                alertDialog1.dismiss();
             }
         });
-        shareimg.setOnClickListener(new View.OnClickListener() {
+        BookmarkTxt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
-                sendIntent.setType("text/plain");
-                context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
-                bottomSheetDialog.dismiss();
-            }
-        });
-        bookmark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
                 if (!loginStatus) {
                     Bundle bundle = new Bundle();
@@ -288,39 +285,61 @@ public class SearchBusinessItemsListFragment extends Fragment implements View.On
                     logFragment.setArguments(bundle);
                     FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                     transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                    transaction.replace(R.id.frame_layout, logFragment);
+                    transaction.add(R.id.frame_layout, logFragment);
                     transaction.addToBackStack(null).commit();
 //                    Intent intent = new Intent(context, LoginFragment.class);
 //                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
 //                    context.startActivity(intent);
-                    bottomSheetDialog.dismiss();
-                }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
+                    alertDialog1.dismiss();
+                }else {
+//                    postBookmark();
+                    alertDialog1.dismiss();
                 }
+
             }
         });
-        bookmarkimg.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Boolean loginStatus =  PreferencesHelper.getPreferenceBoolean(context,PreferencesHelper.PREFERENCE_LOGGED_IN);
-                if (!loginStatus) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("BusinessBookmarkIntent","businessbookmark");
-                    LoginFragment logFragment = new LoginFragment();
-                    logFragment.setArguments(bundle);
-                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
-                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
-                    transaction.replace(R.id.frame_layout, logFragment);
-                    transaction.addToBackStack(null).commit();
-//                    Intent intent = new Intent(context, LoginFragment.class);
-//                    intent.putExtra("BusinessBookmarkIntent","businessbookmark");
-//                    context.startActivity(intent);
-                    bottomSheetDialog.dismiss();
-                }else if (loginStatus){
-                    Toast.makeText(context, "Bookmarked this page", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View v) {
+                alertDialog1.dismiss();
             }
         });
+        cancellay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog1.dismiss();
+            }
+        });
+//        GenderLinLay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                alertDialog1.dismiss();
+//            }
+//        });
+
+//        ok.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//            }
+//        });
+
+
+        alertDialog1.setCanceledOnTouchOutside(false);
+        try {
+            alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        alertDialog1.show();
+//        alertDialog1.getWindow().setLayout((int)Utils.convertDpToPixel(290,
+//                getActivity()),(int)Utils.convertDpToPixel(290,getActivity()));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(alertDialog1.getWindow().getAttributes());
+        lp.gravity = Gravity.BOTTOM;
+        lp.windowAnimations = R.style.shareDialogAnimation;
+        alertDialog1.getWindow().setAttributes(lp);
     }
 }
 

@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,6 +73,9 @@ public class UserDetailsFragment extends Fragment {
     private String userId;
     private UserdetailPostsAdapter userPostAdapter;
     private BusinessResponse businessResponse;
+    TextView morebutton;
+    int Max=4;
+    private Boolean isExpanded = false;
 
 
     public static UserDetailsFragment newInstance(String userId) {
@@ -125,18 +129,20 @@ public class UserDetailsFragment extends Fragment {
         final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mUserPostsRecycler.getContext(), LinearLayoutManager.VERTICAL);
         mUserPostsRecycler.addItemDecoration(dividerItemDecoration);
         mUserPostsRecycler.setNestedScrollingEnabled(false);
+        morebutton = view.findViewById(R.id.more_button);
+        morebutton.setVisibility(View.GONE);
 
         final Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
-                mUserPostsRecycler.scrollToPosition(0);
-            }
-        });
+                    mUserPostsRecycler.scrollToPosition(0);
+                }
+            });
 
 
-            toolbarBackImage.setOnClickListener(new View.OnClickListener() {
+        toolbarBackImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     getActivity().onBackPressed();
@@ -269,7 +275,29 @@ public class UserDetailsFragment extends Fragment {
         }else {
             userDescription.setVisibility(View.GONE);
         }
+        if(userDescription.getLineCount()>= Max){
+            morebutton.setVisibility(View.VISIBLE);
+        }
+        morebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if (isExpanded) {
+
+                    isExpanded = false;
+                    userDescription.setMaxLines(4);
+                    morebutton.setText("more");
+
+                } else {
+
+                    isExpanded = true;
+                    userDescription.setMaxLines(1000);
+                    morebutton.setText("less");
+
+                }
+
+            }
+        });
         if (!businessResponse.getBusinessimages().isEmpty() && businessResponse.getBusinessimages().get(0).getImageurl() != null) {
 
 

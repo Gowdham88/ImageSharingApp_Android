@@ -37,32 +37,29 @@
             android:textSize="16dp"
             android:textColor="@color/weblink_color"
             android:gravity="center"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/Edittxt_lineclr"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/gender_cancel"
+        android:background="@drawable/genderpopup"
+        android:layout_marginBottom="10dp">
+
+
 
         <TextView
             style="@style/FontAvenirMedium"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Cancel"
-            android:id="@+id/gender_cancel"
+            android:id="@+id/g_cancel"
             android:textSize="16dp"
             android:textColor="@color/loginbutton_color"
             android:gravity="center" />
 
     </LinearLayout>
-    <!--<TextView-->
-        <!--style="@style/FontAvenirLight"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:text="Select Gender"-->
-        <!--android:textSize="12dp"-->
-        <!--android:gravity="center"/>-->
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@color/Edittxt_lineclr" />-->
-
 </LinearLayout>

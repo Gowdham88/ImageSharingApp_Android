@@ -55,6 +55,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -75,6 +76,7 @@ import com.numnu.android.R;
 import com.numnu.android.adapter.FoodAdapter;
 import com.numnu.android.adapter.PlaceAutocompleteAdapter;
 import com.numnu.android.adapter.TagsAutocompleteAdapter;
+import com.numnu.android.fragments.auth.SignupFragment;
 import com.numnu.android.fragments.detail.SearchBusinessDetailFragment;
 import com.numnu.android.network.ApiServices;
 import com.numnu.android.network.ServiceGenerator;
@@ -717,8 +719,9 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
 
                     hideProgressDialog();
-                    Toast.makeText(context, "Profile edited successfully ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Profile updated successfully ", Toast.LENGTH_SHORT).show();
                     gotoSeetings();
+//                    Popup();
 
 //                    uploadImage(selectedImagePath,String.valueOf(body.getId()));
 
@@ -743,6 +746,66 @@ public class  EditProfileFragment extends Fragment implements EasyPermissions.Pe
 
             }
         });
+    }
+
+    private void Popup() {
+
+
+            LayoutInflater factory = LayoutInflater.from(getActivity());
+            final View deleteDialogView = factory.inflate(R.layout.edit_popup, null);
+            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+            alertDialog.setView(deleteDialogView);
+            final TextView ok = (TextView) deleteDialogView.findViewById(R.id.ok_txt);
+            final TextView cancel = (TextView) deleteDialogView.findViewById(R.id.cancel_txt);
+
+            final AlertDialog alertDialog1 = alertDialog.create();
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    gotoSeetings();
+//                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//                    FirebaseUser currentUser = mAuth.getCurrentUser();
+//                    if (currentUser != null) {
+//
+//                        currentUser.unlink(currentUser.getProviderId());
+//                        LoginManager.getInstance().logOut();
+//                        mAuth.signOut();
+//                        alertDialog1.dismiss();
+//                    }
+//                    PreferencesHelper.signOut(getApplicationContext());
+//                    PreferencesHelper.setPreferenceBoolean(getApplicationContext(), PreferencesHelper.PREFERENCE_LOGGED_IN, false);
+//                    FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.frame_layout, SignupFragment.newInstance());
+//                    transaction.addToBackStack(null).commit();
+                    alertDialog1.dismiss();
+
+                }
+            });
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog1.dismiss();
+                }
+            });
+            alertDialog1.show();
+//        alertDialog1.setCanceledOnTouchOutside(false);
+//        try {
+//            alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        alertDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+//        alertDialog1.getWindow().setLayout((int) Utils.convertDpToPixel(228,getActivity()),(int)Utils.convertDpToPixel(220,getActivity()));
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.copyFrom(alertDialog1.getWindow().getAttributes());
+////        lp.height=200dp;
+////        lp.width=228;
+//        lp.gravity = Gravity.CENTER;
+////        lp.windowAnimations = R.style.DialogAnimation;
+//        alertDialog1.getWindow().setAttributes(lp);
+
+
     }
 
     private void gotoSeetings() {

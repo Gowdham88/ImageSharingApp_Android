@@ -328,7 +328,8 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
         alertDialog.setView(deleteDialogView);
         final TextView shareTxt = (TextView) deleteDialogView.findViewById(R.id.share);
         final TextView BookmarkTxt = (TextView) deleteDialogView.findViewById(R.id.bookmark);
-        TextView cancel = (TextView) deleteDialogView.findViewById(R.id.gender_cancel);
+        TextView cancellay = (TextView) deleteDialogView.findViewById(R.id.g_cancel);
+        LinearLayout cancel = (LinearLayout) deleteDialogView.findViewById(R.id.g_cancel);
 //        LinearLayout GenderLinLay = (LinearLayout) deleteDialogView.findViewById(R.id.genlin_lay);
 //        Button ok = deleteDialogView.findViewById(R.id.ok_button);
 
@@ -369,6 +370,12 @@ public class ItemDetailFragment extends Fragment implements View.OnClickListener
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog1.dismiss();
+            }
+        });
+        cancellay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog1.dismiss();

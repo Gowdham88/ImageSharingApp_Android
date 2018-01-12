@@ -5,7 +5,7 @@
     android:id="@+id/business_rel_lay"
     android:layout_marginTop="20dp"
     android:layout_marginLeft="10dp"
-    android:background="@color/postBng_color"
+    android:background="@color/White_clr"
     android:padding="10dp">
 
 
@@ -21,18 +21,31 @@
         android:src="@drawable/background" />
     <TextView
         style="@style/FontAvenirMedium"
-        android:textColor="@color/event_map"
+        android:textColor="@color/completesignup_clr"
         android:id="@+id/user_description"
-        android:layout_width="80dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_below="@id/txt_city"
-        android:text="Marc chiriqui"
+        android:text=""
         android:gravity="center_horizontal"
         android:layout_centerVertical="true"
         android:textSize="15dp"
         />
 
+    <TextView
+        android:id="@+id/more_button"
+        style="@style/FontAvenirMedium"
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/user_description"
+        android:text="more"
+        android:layout_marginTop="5dp"
+        android:textColor="#4A90E2"
+        android:textSize="13sp"
+        android:visibility="gone" />
 
 
     <TextView
@@ -47,7 +60,7 @@
         android:layout_toEndOf="@+id/profile_image"
         android:layout_toRightOf="@+id/profile_image"
         android:text="@string/profile_header_str"
-        android:textColor="@color/event_map" />
+        android:textColor="@color/completesignup_clr" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,7 +98,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:text="Montreal,fsgjsdlg,hdhfkskhghkdsgksdhdfh"
-        android:textColor="@color/event_map"
+        android:textColor="@color/completesignup_clr"
         android:textSize="15dp" />
 
 

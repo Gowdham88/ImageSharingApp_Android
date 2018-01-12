@@ -44,7 +44,7 @@ public class SettingsFragment extends Fragment {
     ScrollView nestedScrollView;
 
     private Context context;
-    String textterms="terms",privacypol="privacy";
+    String textterms="terms",privacypol="privacy",Rate="rate";
     // Create a storage reference from our app
     StorageReference storageRef;
     private FirebaseStorage storage;
@@ -92,7 +92,12 @@ public class SettingsFragment extends Fragment {
         shareApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    shareApp();
+
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Post Content here..."+context.getPackageName());
+                        sendIntent.setType("text/plain");
+                        context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.share_using)));
             }
         });
 
@@ -100,7 +105,10 @@ public class SettingsFragment extends Fragment {
         rateApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    rateApp();
+                Intent setintent=new Intent(getActivity(),webFragment.class);
+                setintent.putExtra("textterms",Rate);
+                SettingsFragment.this.startActivity(setintent   );
+                getActivity().overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
             }
         });
 

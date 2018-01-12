@@ -66,7 +66,9 @@ public class webFragment  extends MyActivity {
                 url="http://www.numnu.com/terms/";
             }else if(names.equals("privacy")){
                 url="http://numnu.com/privacy-policy/";
-            }else{
+            }else if(names.equals("rate")){
+                url="https://itunes.apple.com/ca/app/numnu/id1231472732?mt=8";
+            }else {
                 url="http://www.totc.ca";
             }
 
