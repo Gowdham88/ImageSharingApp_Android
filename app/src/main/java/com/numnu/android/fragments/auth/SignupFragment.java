@@ -346,7 +346,7 @@ public class SignupFragment extends Fragment {
     }
     // [END on_start_check_user]
 
-    private void createAccount(final String email, final String password) {
+        private void createAccount(final String email, final String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
