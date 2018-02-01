@@ -1,6 +1,8 @@
 package com.numnu.android.fragments.home;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.numnu.android.R;
 import com.numnu.android.adapter.NotificationsAdapter;
@@ -71,7 +75,8 @@ public class NotificationFragment extends Fragment {
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(notificationRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
 //        notificationRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        ImageView toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackImage = view.findViewById(R.id.toolbar_back);
+        toolbarBackImage.setVisibility(View.GONE);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +90,16 @@ public class NotificationFragment extends Fragment {
 
 
         setupRecyclerView();
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                notificationRecyclerView.scrollToPosition(0);
+            }
+        });
         return view;
     }
 

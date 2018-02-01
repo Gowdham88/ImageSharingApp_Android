@@ -4,27 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_marginRight="10dp"
     android:background="@color/White_clr"
     tools:context="com.numnu.android.activity.HomeActivity">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
         app:cardCornerRadius="@dimen/image_card_corner_radius">
 
         <ImageView
             android:id="@+id/current_event_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:scaleType="centerCrop" />
 
     </android.support.v7.widget.CardView>
     <View
-        android:layout_width="100dp"
-        android:layout_height="104dp"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
         android:background="@android:drawable/dialog_holo_light_frame"/>
 
     <TextView
@@ -45,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/text_event"
         android:layout_marginTop="4dp"
-        android:text="Jan 15 -Jan 17"
+        android:text="Jan 15 - Jan 17"
         android:textSize="@dimen/font_small" />
 
     <TextView
@@ -55,7 +57,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/event_item_date"
         android:layout_marginTop="4dp"
+        android:drawablePadding="5dp"
         android:drawableLeft="@drawable/ic_city"
-        android:text="   Montreal"
+        android:text="Montreal"
         android:textSize="@dimen/font_small" />
+
 </RelativeLayout>

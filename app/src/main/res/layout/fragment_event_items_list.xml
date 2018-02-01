@@ -5,17 +5,28 @@
     android:layout_height="match_parent"
     android:background="@color/White_clr"
     tools:context="com.numnu.android.activity.HomeActivity">
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:id="@+id/appbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+        <!--<include layout="@layout/toolbar"/>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-        <include layout="@layout/toolbar"/>
-    </android.support.design.widget.AppBarLayout>
+        android:layout_alignParentTop="true"
+        android:id="@+id/lin_lay">
+        <include layout="@layout/toolbar_with_options" />
+
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/appbar"
+        android:layout_below="@+id/lin_lay"
         android:id="@+id/menu_items_recyclerview"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

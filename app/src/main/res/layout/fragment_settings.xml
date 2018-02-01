@@ -16,44 +16,10 @@
         <include layout="@layout/toolbar" />
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/taginside_color">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/profileimg" />
-
-        <TextView
-            style="@style/FontAvenirMedium"
-            android:textSize="@dimen/text17"
-            android:textColor="@color/name_black"
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_image"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:text="March"
-            android:layout_marginBottom="@dimen/size15"
-           />
-
-        <ImageView
-            android:id="@+id/imageView_profile_edit"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_above="@+id/textView16"
-            android:layout_alignEnd="@+id/profile_image"
-            android:layout_alignRight="@+id/profile_image"
-            app:srcCompat="@drawable/edit_profile" />
-    </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -61,16 +27,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/taginside_color">
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/background" />
+
+                <TextView
+                    style="@style/FontAvenirMedium"
+                    android:textSize="15dp"
+                    android:textColor="@color/name_black"
+                    android:id="@+id/txt_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile_image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:text="March"
+                    android:layout_marginBottom="15dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/imageView_profile_edit"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_above="@+id/txt_username"
+                    android:layout_alignEnd="@+id/profile_image"
+                    android:layout_alignRight="@+id/profile_image"
+                    app:srcCompat="@drawable/edit_profile" />
+            </RelativeLayout>
             <TextView
                 android:id="@+id/text_share_app"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -84,10 +84,9 @@
                 android:id="@+id/text_rate_app"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -99,10 +98,9 @@
                 android:id="@+id/text_terms"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -114,10 +112,9 @@
                 android:id="@+id/text_privacy"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -128,7 +125,7 @@
             <TextView
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -139,90 +136,107 @@
                 android:textColor="@color/tag_text_color" />
 
             <TextView
-                android:id="@+id/text_events"
+                android:id="@+id/text_bookmark_events"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/events"
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/text_rate_business"
+                android:id="@+id/text_bookmark_business"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/business"
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/text_items"
+                android:id="@+id/text_bookmark_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/items"
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/text_posts"
+                android:id="@+id/text_bookmark_posts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/posts"
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/text_users"
+                android:id="@+id/text_bookmark_users"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/settings_list_item_background"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
                 android:drawableRight="@drawable/ic_chevron_right_black_24dp"
                 android:gravity="center_vertical"
                 style="@style/FontAvenirMedium"
                 android:padding="@dimen/spacing_normal"
-                android:textSize="@dimen/text12"
+                android:textSize="14dp"
                 android:text="@string/users"
                 android:focusable="true" />
 
+            <!--<TextView-->
+                <!--android:id="@+id/text_logout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/taginside_color"-->
+                <!--android:textColor="@color/tag_text_color"-->
+                <!--android:clickable="true"-->
+                <!--android:padding="@dimen/spacing_small"-->
+                <!--android:text="Logout"-->
+                <!--android:focusable="true" />-->
+            <TextView
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:background="@color/taginside_color"
+                android:textColor="@color/tag_text_color" />
             <TextView
                 android:id="@+id/text_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/taginside_color"
-                android:textColor="@color/tag_text_color"
                 android:clickable="true"
-                android:gravity="center_vertical|center"
-                android:padding="@dimen/spacing_small"
-                android:text="Logout"
+                android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+                android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                android:gravity="center_vertical"
+                style="@style/FontAvenirMedium"
+                android:padding="@dimen/spacing_normal"
+                android:textSize="14dp"
+                android:text="@string/logout"
                 android:focusable="true" />
 
 

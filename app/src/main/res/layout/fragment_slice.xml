@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White_clr"
-    android:fitsSystemWindows="true">
+    android:background="@color/White_clr">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:id="@+id/appbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_alignParentTop="true"
+        android:id="@+id/lin_lay">
+        <include layout="@layout/toolbar_with_options" />
 
-        <include layout="@layout/toolbar" />
-    </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
+
+
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:scrollbars="vertical"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/lin_lay"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/toolbar_background_color"
@@ -38,7 +48,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/profileimg" />
+                android:src="@drawable/background" />
 
             <TextView
                 android:id="@+id/slice_toolbar_profile_name"
@@ -52,11 +62,11 @@
                 android:text="Marc Chiriqui," />
 
             <TextView
+                android:id="@+id/user_name"
                 fontPath="fonts/Avenir_next.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_below="@id/slice_toolbar_profile_name"
-                android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/slice_profile_image"
                 android:gravity="center"
                 android:text="@string/username"
@@ -71,8 +81,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/slice_toolbar_profile_name"
+                android:layout_marginRight="4dp"
                 android:gravity="center"
-                android:text="2hrs"
+                android:textAllCaps="false"
+                android:text="2 hrs"
                 android:textSize="13sp"
                 tools:ignore="MissingPrefix" />
 
@@ -85,21 +97,30 @@
                 android:text="It was a Great night !! Amazing food very long one Header ..."
                 android:textSize="13sp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_shadow_height"
+                android:layout_below="@+id/title"
+                android:layout_marginLeft="@dimen/spacing_small"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:background="@android:drawable/dialog_holo_light_frame" />
+
             <android.support.v7.widget.CardView
                 android:id="@+id/content_image_card"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/image_height_large"
                 android:layout_below="@+id/title"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/spacing_tiny"
                 app:cardCornerRadius="5dp">
 
                 <ImageView
                     android:id="@+id/content_image"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="match_parent"
                     android:background="@drawable/image_corner_radius"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/pasta" />
+                    android:src="@drawable/background" />
             </android.support.v7.widget.CardView>
 
             <RelativeLayout
@@ -121,6 +142,7 @@
                         android:layout_width="18dp"
                         android:layout_height="19dp"
                         android:layout_below="@+id/post_interests_layout"
+                        android:layout_marginTop="3dp"
                         android:layout_weight="0.5"
                         android:src="@drawable/dish_ico" />
 
@@ -129,10 +151,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/post_interests_layout"
+                        android:layout_marginLeft="1dp"
                         android:layout_toEndOf="@id/cottage_house_icon"
                         android:layout_toRightOf="@id/cottage_house_icon"
                         android:layout_weight="4"
-                        android:layout_marginLeft="@dimen/size1"
                         android:gravity="center_vertical"
                         android:text="Barbeque side platter"
                         android:textSize="13sp" />
@@ -144,6 +166,7 @@
                         android:layout_below="@id/cottage_house_txt"
                         android:layout_marginLeft="5dp"
                         android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_weight="0.5"
                         android:src="@drawable/restaurant_ico" />
 
@@ -152,10 +175,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/cottage_house_txt"
+                        android:layout_marginTop="2dp"
                         android:layout_toEndOf="@id/barbq_icon"
                         android:layout_toRightOf="@id/barbq_icon"
                         android:layout_weight="4"
-
                         android:gravity="center_vertical"
                         android:text="Cottage House"
                         android:textSize="13sp" />
@@ -198,11 +221,11 @@
                 <!--/>-->
                 <ImageView
                     android:id="@+id/inlove_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_toLeftOf="@+id/event_dots"
                     android:layout_toStartOf="@+id/event_dots"
-                    android:src="@drawable/ic_in_love" />
+                    android:src="@drawable/ic_in_lovetwo" />
 
                 <ImageView
                     android:id="@+id/event_dots"
@@ -219,30 +242,30 @@
             <!--android:layout_below="@id/post_interests_layout">-->
             <!--</LinearLayout>-->
             <ImageView
+                android:id="@+id/barbados_icon"
                 android:layout_width="15dp"
                 android:layout_height="16dp"
-                android:id="@+id/barbados_icon"
                 android:layout_below="@+id/post_interests_layout"
-                android:src="@drawable/ic_calendar"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="6dp"
-                />
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_calendar" />
+
             <TextView
+                android:id="@+id/barbados_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:id="@+id/barbados_txt"
-                android:text="Barbados food and rum festival"
-                android:layout_toRightOf="@id/barbados_icon"
-                android:layout_toEndOf="@id/barbados_icon"
                 android:layout_below="@+id/post_interests_layout"
-                android:gravity="center_vertical"
-                android:textSize="13sp"
-                android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@id/barbados_icon"
+                android:layout_toRightOf="@id/barbados_icon"
+                android:gravity="center_vertical"
+                android:text="Barbados food and rum festival"
+                android:textSize="13sp"
 
                 />
 
         </RelativeLayout>
     </ScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

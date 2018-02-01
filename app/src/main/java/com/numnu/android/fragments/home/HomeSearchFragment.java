@@ -12,14 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.numnu.android.R;
 import com.numnu.android.fragments.search.EventsFragment;
-import com.numnu.android.fragments.search.PostsFragment;
+import com.numnu.android.fragments.search.SearchPostsFragment;
 import com.numnu.android.fragments.search.SearchBusinessFragment;
 import com.numnu.android.fragments.search.SearchItemsFragment;
 import com.numnu.android.fragments.search.UsersFragment;
@@ -40,7 +38,8 @@ public class HomeSearchFragment extends Fragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private NestedScrollView nestedScrollView;
-    private ImageView toolbarBackIcon;
+//    private ImageView toolbarBackIcon;
+    RelativeLayout toolbarBackIcon;
     private String searchKeyword,type;
     RelativeLayout SearchLinlay1,SearchLinlay2,SearchLinlay3;
 
@@ -70,9 +69,9 @@ public class HomeSearchFragment extends Fragment {
         searchViewLocation=view.findViewById(R.id.et_search_location);
         tabLayout = view.findViewById(R.id.tabs);
         nestedScrollView = view.findViewById(R.id.events_scroll_view);
-        SearchLinlay1=(RelativeLayout)view.findViewById(R.id.search_linlay1);
-        SearchLinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
-        SearchLinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
+//        SearchLinlay1=(RelativeLayout)view.findViewById(R.id.search_linlay1);
+//        SearchLinlay2=(RelativeLayout)view.findViewById(R.id.search_linlay2);
+//        SearchLinlay3=(RelativeLayout)view.findViewById(R.id.search_linlay3);
         TextView toolbarTitle=view.findViewById(R.id.toolbar_title);
         toolbarTitle.setText(getString(R.string.app_name));
         toolbarBackIcon = view.findViewById(R.id.toolbar_back);
@@ -82,24 +81,24 @@ public class HomeSearchFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        SearchLinlay1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
-        SearchLinlay2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
-        SearchLinlay3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(getActivity());
-            }
-        });
+//        SearchLinlay1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
+//        SearchLinlay2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
+//        SearchLinlay3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideKeyboard(getActivity());
+//            }
+//        });
         nestedScrollView.setVisibility(View.GONE);
         tabLayout.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.VISIBLE);
@@ -113,6 +112,16 @@ public class HomeSearchFragment extends Fragment {
         }
 
         setupSearchListener();
+
+        final android.support.v7.widget.Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nestedScrollView.scrollTo(0,0);
+            }
+        });
 
         return view;
     }
@@ -158,7 +167,7 @@ public class HomeSearchFragment extends Fragment {
         adapter.addFragment(new EventsFragment(), "Events");
         adapter.addFragment(new SearchBusinessFragment(), "Businesses");
         adapter.addFragment(new SearchItemsFragment(), "Items");
-        adapter.addFragment(new PostsFragment(), "Posts");
+        adapter.addFragment(new SearchPostsFragment(), "Posts");
         adapter.addFragment(new UsersFragment(), "Users");
 //        adapter.addFragment(new SearchListFragment(), "Lists");
         viewPager.setAdapter(adapter);

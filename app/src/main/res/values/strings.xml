@@ -1,16 +1,17 @@
 <resources>
     <string name="app_name">Numnu</string>
-    <string name="businesses">Businesses</string>
+    <string name="businesses">Business</string>
     <string name="numnu">Numnu</string>
-    <string name="facebook_sign_in">Sign In with Facebook</string>
+    <string name="facebook_sign_in">Log in with Facebook</string>
     <string name="facebook_sign_up">Sign Up with Facebook</string>
     <string name="create_an_account">Create an Account</string>
-    <string name="sign_in">Sign In</string>
+    <string name="sign_in">Log In</string>
+    <string name="login">Log In</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="numnu_logo">Numnu logo</string>
     <string name="by_signing_up_you_agree_to_our_terms_of_service_privacy_policy"><![CDATA[By signing up you agree to our Terms of\nService & Privacy Policy]]></string>
     <string name="loading">Loading..</string>
-    <string name="yum_let_me_in">Yum ! Let me in !</string>
+    <string name="yum_let_me_in">Yum! Let me in!</string>
     <string name="enabling_notifications"><![CDATA[Enabling notifications & location services would optimize the user experience]]></string>
     <string name="onboard_text">Discover delicious food and drink at events and festivals near you</string>
     <string name="home">Home</string>
@@ -19,9 +20,9 @@
     <string name="current_upcoming_events"><![CDATA[Current & Upcoming Events]]></string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="past_events">Past events</string>
-    <string name="login_with_email">Sign In</string>
+    <string name="login_with_email">Log In</string>
     <string name="password">Password</string>
-    <string name="email_address">Email Address</string>
+    <string name="email_address">email Address</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="signup_with_email">Sign Up</string>
     <string name="sign_up">Sign Up</string>
@@ -35,18 +36,21 @@
     <string name="terms_of_service">Terms of Service</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="bookmarks">Bookmarks</string>
+    <string name="account">Account</string>
     <string name="events">Event</string>
     <string name="business">Business</string>
     <string name="items">Items</string>
     <string name="posts">Posts</string>
     <string name="users">Users</string>
+    <string name="logout">Logout</string>
     <string name="share_using">Share Using</string>
     <string name="share_content">Find Delicious Food around you.Get Numnu App. Click to Download https://play.google.com/store/apps/details?id=</string>
     <string name="name">Name</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="edit_profile">Edit Profile</string>
-
+    <string name="six">6</string>
+    <string name="resetpass">A reset link has been sent your email</string>
 
     <string name="facebook_app_id">2170111179882504</string>
     <string name="fb_login_protocol_scheme">fb[2170111179882504]</string>
@@ -56,7 +60,7 @@
     <string name="user_name">User Name</string>
     <string name="city">City</string>
     <string name="gender">Gender</string>
-    <string name="foodpreferences">Food Preferences</string>
+    <string name="foodpreferences">Food and drink Preferences</string>
     <string name="current_upcoming">Current and upcoming events</string>
     <string name="past_events_title">Past events</string>
     <string name="item">Item</string>
@@ -65,7 +69,38 @@
 
     <string name="google_maps_api_key">AIzaSyAuKzAZP8SLYJf_jfVUsxdcjChIU00FmDQ</string>
     <string name="title_activity_maps">Map</string>
+    <string name="profile_header_str">I have loved pizza since I\n was born!</string>
     <string name="event_description">This much-talked-about festival brings all your favorite Food Network personalities and celebrity chefs to Miami for five days of events, from intimate dinners cooked by Sean Brock to a late-night Tacos After Dark session with Aarón Sanchez. If you\'ve always dreamed of drinking tiki cocktails with Guy Fieri or having a rosé brunch with Martha Stewart, the South Beach Wine &amp; Food Festival can make your wishes come true.
-</string>
+    </string>
+    <!--DateStrings-->
+    <string name="date_util_term_less">less than</string>
+    <string name="date_util_term_a">a</string>
+    <string name="date_util_term_an">an</string>
 
+    <string name="date_util_unit_second">second</string>
+    <string name="date_util_unit_seconds">seconds</string>
+    <string name="date_util_unit_minute">minute</string>
+    <string name="date_util_unit_minutes">minutes</string>
+    <string name="date_util_unit_hour">hour</string>
+    <string name="date_util_unit_hours">hours</string>
+    <string name="date_util_unit_day">day</string>
+    <string name="date_util_unit_days">days</string>
+    <string name="date_util_unit_month">month</string>
+    <string name="date_util_unit_months">months</string>
+    <string name="date_util_unit_year">year</string>
+    <string name="date_util_unit_years">years</string>
+
+    <string name="date_util_prefix_lt">less than a</string>
+    <string name="date_util_prefix_about">about</string>
+    <string name="date_util_prefix_over">over</string>
+    <string name="date_util_prefix_almost">almost</string>
+
+    <string name="date_util_suffix">ago</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <!--
+        This is the name that users will see when interacting with this channel.
+        It should describe the category of notifications that will be sent through this channel
+     -->
+    <string name="default_notification_channel_name" translatable="true">News</string>
+    <string name="date_util_unit_weeks">weeks</string>
 </resources>

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="Category"
             android:textColor="@color/time_color"
-            android:textSize="@dimen/text13"
+            android:textSize="14dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
@@ -30,7 +30,7 @@
         <TextView
             style="@style/FontAvenirMedium"
             android:textColor="@color/time_color"
-            android:textSize="@dimen/text13"
+            android:textSize="14dp"
             android:id="@+id/item_count_text"
             android:layout_width="20dp"
             android:layout_height="wrap_content"

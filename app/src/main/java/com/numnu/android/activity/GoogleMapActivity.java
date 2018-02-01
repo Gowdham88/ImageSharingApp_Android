@@ -3,6 +3,7 @@ package com.numnu.android.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +46,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-public class GoogleMapActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+public class GoogleMapActivity extends MyActivity implements EasyPermissions.PermissionCallbacks {
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -57,6 +59,8 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
 
     private final static String KEY_LOCATION = "location";
 
+    private double latitude, longitude;
+    private String name="empty";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,10 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
 
+//        latitude = Double.parseDouble(getIntent().getStringExtra("latitude"));
+//        longitude = Double.parseDouble(getIntent().getStringExtra("longitude"));
+
+
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -85,7 +93,7 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
-        ImageView toolbarBackImage = findViewById(R.id.toolbar_back);
+        RelativeLayout toolbarBackImage = findViewById(R.id.toolbar_back);
 
         toolbarBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,8 +103,12 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
         });
 
         TextView toolbarTitle=findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Map View");
-
+        toolbarTitle.setText("Event Map");
+        name =getIntent().getStringExtra("name");
+       if(name.equals("name"))
+       {
+           toolbarTitle.setText("Location Map");
+       }
 
     }
 
@@ -107,8 +119,8 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
             if (hasLocationPermission()) {
                 getMyLocation();
                 // Add a marker in Montreal and move the camera
-                LatLng sydney = new LatLng(45.5088400, -73.5878100);
-                map.addMarker(new MarkerOptions().position(sydney).title("Marker in Montreal"));
+                LatLng sydney = new LatLng(latitude, longitude);
+                map.addMarker(new MarkerOptions().position(sydney).title(name));
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,17));
             }else {
                 // Ask for one permission
@@ -171,7 +183,7 @@ public class GoogleMapActivity extends AppCompatActivity implements EasyPermissi
      * Called when the Activity is no longer visible.
 	 */
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
     }
 

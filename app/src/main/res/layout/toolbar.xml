@@ -1,36 +1,122 @@
 <android.support.v7.widget.Toolbar
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
+    app:contentInsetStart="0dp"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/toolbar_background_color"
-    app:popupTheme="@style/AppTheme.PopupOverlay"
-    android:theme="@style/ThemeOverlay.AppCompat.Light"
-    app:contentInsetStart="0dp">
+    android:background="@color/toolbar_background_color">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="60dp"
+    android:id="@+id/toolbar_back"
+    android:layout_height="match_parent">
         <ImageView
-            android:id="@+id/toolbar_back"
+            android:id="@+id/toolb_back"
             app:srcCompat="@drawable/back_arrow"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="@dimen/toolbar_icon_width"
-            android:layout_height="@dimen/toolbar_icon_height" />
+            android:layout_marginTop="5dp"
+           android:layout_centerInParent="true"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+</RelativeLayout>
         <TextView
-            style="@style/FontAvenirLight"
+            style="@style/FontAvenirMedium"
             android:id="@+id/toolbar_title"
             android:text="@string/app_name"
+            android:gravity="center"
             android:textColor="@color/name_black"
-            android:textSize="@dimen/font_normal"
+            android:textSize="16dp"
+            android:textStyle="normal"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/back_word"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/backicon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="60dp"
+            android:layout_alignParentRight="true"
+            tools:ignore="VectorDrawableCompat" />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/forward"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/foricon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            tools:ignore="VectorDrawableCompat"/>
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/setting_img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+           android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_settings"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true" />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/google_img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/googleimg"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true" />
+        <!--<RelativeLayout-->
+           <!---->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/save_txt"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toRightOf="@+id/toolbar_title"-->
+            <!--android:layout_height="40dp">-->
+            <TextView
+                android:text=""
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/toolbar_title"
+                android:textAllCaps="false"
+                style="@style/FontAvenirMedium"
+                android:textColor="@color/name_black"
+                android:id="@+id/button_complete_signup"
+               android:layout_centerVertical="true" />
+        <TextView
+            android:text=""
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/toolbar_title"
+            android:textAllCaps="false"
+            style="@style/FontAvenirMedium"
+            android:textColor="@color/weblink_color"
+            android:id="@+id/butn_complete_signup"
+            android:layout_centerVertical="true" />
+
+        <!--</RelativeLayout>-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/Edittxt_lineclr"/>
     </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>

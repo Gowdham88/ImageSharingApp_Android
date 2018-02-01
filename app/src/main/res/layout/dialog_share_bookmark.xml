@@ -10,12 +10,12 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:id="@+id/dialog_image"
         android:background="#FAFAFA"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:src="@drawable/ic_share"
@@ -28,17 +28,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Share"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:gravity="center_vertical"
         android:textColor="@color/darker_grey"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/bookmark_icon"
         android:layout_toEndOf="@+id/bookmark_icon" />
     <ImageView
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:id="@+id/bookmark_icon"
         android:background="#FAFAFA"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_alignTop="@+id/bookmark_title"
         android:layout_alignLeft="@+id/dialog_image"
         android:src="@drawable/ic_bookmark"
@@ -52,10 +57,11 @@
         android:id="@+id/bookmark_title"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Bookmark"
+        android:gravity="center_vertical"
         android:textColor="@color/darker_grey"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:layout_below="@+id/share_title"
         android:layout_alignLeft="@+id/share_title"
         android:layout_alignStart="@+id/share_title"
-        android:layout_marginTop="22dp" />
+        android:layout_marginTop="20dp" />
     </RelativeLayout>

@@ -5,13 +5,16 @@
     android:background="@color/White_clr"
     android:layout_height="match_parent"
     tools:context="com.numnu.android.activity.HomeActivity">
+
    <include layout="@layout/toolbar"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
+        android:layout_marginTop="5dp"
         android:orientation="vertical"
         android:layout_below="@+id/toolbar"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

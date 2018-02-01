@@ -1,113 +1,57 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:background="@color/White_clr"
-    android:padding="10dp">
+    android:padding="8dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="80dp"
-        android:layout_height="60dp"
-        android:elevation="10dp"
+        style="@style/ThumnailStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/image_card_corner_radius">
 
         <ImageView
-            android:id="@+id/notification_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/entity_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/burger" />
+            android:src="@drawable/background" />
     </android.support.v7.widget.CardView>
 
     <TextView
-        style="@style/BoldTextStyle"
         android:id="@+id/business_name"
+        style="@style/BoldTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_small"
         android:layout_toRightOf="@id/card_view"
         android:text="Flatron" />
 
 
-    <HorizontalScrollView
-        android:id="@+id/chips_layout"
+    <LinearLayout
+        android:id="@+id/hrz_lin_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/business_name"
-        android:layout_toRightOf="@id/card_view"
-        android:scrollbars="none">
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/card_view">
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/flatron_recyclerview"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_small"
-            android:layout_marginLeft="@dimen/spacing_small"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:orientation="horizontal">
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:reverseLayout="false" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TagStyle"
-                android:text="food" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Rum" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                style="@style/TagStyle"
-                android:text="Wine" />
-        </LinearLayout>
-
-    </HorizontalScrollView>
+    </LinearLayout>
 
 
 </RelativeLayout>

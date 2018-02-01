@@ -211,7 +211,7 @@ public class PlaceAutocompleteRecyclerViewAdapter
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.simple_expandable_list_item_2, parent, false);
+                .inflate(R.layout.search_results_item, parent, false);
 
         return new ViewHolder(view);
     }
@@ -224,9 +224,11 @@ public class PlaceAutocompleteRecyclerViewAdapter
         // styling based on the given CharacterStyle.
 
         AutocompletePrediction item = getItem(position);
-
-        holder.textView1.setText(item.getPrimaryText(STYLE_BOLD));
-        holder.textView2.setText(item.getSecondaryText(STYLE_BOLD));
+        String merge= String.valueOf(item.getPrimaryText(STYLE_BOLD));
+        String merge1= String.valueOf(item.getSecondaryText(STYLE_BOLD));
+        String total=merge+", "+merge1;
+        holder.textView1.setText(total);
+//        holder.textView2.setText(item.getSecondaryText(STYLE_BOLD));
     }
 
     /**
@@ -244,8 +246,8 @@ public class PlaceAutocompleteRecyclerViewAdapter
         public ViewHolder(View itemView) {
             super(itemView);
             this.itemView.setOnClickListener(this);
-             textView1 = itemView.findViewById(android.R.id.text1);
-             textView2 = itemView.findViewById(android.R.id.text2);
+             textView1 = itemView.findViewById(R.id.txt_itemname);
+//             textView2 = itemView.findViewById(R.id.txt_itemname2);
 
         }
 

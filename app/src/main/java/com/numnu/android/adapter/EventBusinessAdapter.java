@@ -3,6 +3,7 @@ package com.numnu.android.adapter;
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
 
     Context context;
     ArrayList<String> stringArrayList = new ArrayList<>();
+    HorizontalContentAdapter adapter;
+    RecyclerView recyclerView;
 
 
     public EventBusinessAdapter(Context context, ArrayList<String> stringArrayList) {
@@ -48,13 +51,15 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
 
         holder.textViewName.setText(stringArrayList.get(position));
 
-        Picasso.with(context).load("null")
-                .placeholder(R.drawable.burger)
+        Picasso.with(context).load(R.drawable.burger)
+                .placeholder(R.drawable.background)
+                .fit()
                 .into(holder.imageViewIcon);
         holder.imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, BusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
@@ -63,11 +68,15 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction =  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left,R.anim.enter_from_left, R.anim.exit_to_righ);
                 transaction.replace(R.id.frame_layout, BusinessDetailFragment.newInstance());
                 transaction.addToBackStack(null).commit();
             }
         });
 
+//        adapter = new HorizontalContentAdapter(context, eventDetailResponse.getTags());
+//        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
@@ -83,6 +92,7 @@ public class EventBusinessAdapter extends RecyclerView.Adapter<EventBusinessAdap
         public ViewHolder(View itemView) {
             super(itemView);
             this.textViewName =  itemView.findViewById(R.id.business_name);
+            recyclerView=(RecyclerView)itemView.findViewById(R.id.business_recyclerview);
             //this.textViewVersion = (TextView) itemView.findViewById(R.id.textViewVersion);
             this.imageViewIcon = itemView.findViewById(R.id.notification_image);
             this.RelativeLay=itemView.findViewById(R.id.business_rel_lay);

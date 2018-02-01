@@ -5,20 +5,22 @@
     android:layout_height="match_parent"
     android:background="@color/White_clr">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <LinearLayout
+        android:id="@+id/lin_lay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
         <include layout="@layout/toolbar_with_options" />
 
-    </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
 
-    <android.support.v4.widget.NestedScrollView
+
+    <com.numnu.android.utils.CustomScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/appbar"
+        android:layout_below="@+id/lin_lay"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -30,10 +32,10 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
-                android:layout_height="179dp"
+                android:layout_height="@dimen/image_height_large"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:elevation="10dp"
+                android:layout_marginTop="10dp"
                 app:cardCornerRadius="@dimen/image_card_corner_radius">
 
                 <ImageView
@@ -41,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sasitem" />
+                    android:src="@drawable/background" />
             </android.support.v7.widget.CardView>
 
 
@@ -53,10 +55,10 @@
                 android:layout_below="@+id/card_view"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:text="Barbadous and rum food festival"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_normal"
                 tools:ignore="MissingPrefix" />
 
             <LinearLayout
@@ -72,9 +74,10 @@
                     android:id="@+id/txt_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:drawableLeft="@drawable/ic_city"
-                    android:drawablePadding="4dp"
-                    android:padding="4dp"
+                    android:drawablePadding="@dimen/spacing_tiny"
                     android:text="Montreal,Address line1,Address line2" />
 
             </LinearLayout>
@@ -86,7 +89,6 @@
                 android:layout_below="@+id/location_layout"
                 android:layout_marginLeft="@dimen/spacing_small"
                 android:layout_marginRight="@dimen/spacing_small"
-                android:elevation="10dp"
                 app:cardCornerRadius="@dimen/image_card_corner_radius">
 
                 <fragment
@@ -96,35 +98,54 @@
                     android:layout_height="match_parent" />
             </android.support.v7.widget.CardView>
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/txt_open_map"
-                style="@style/BoldTextStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/card_view_location"
-                android:layout_marginRight="@dimen/spacing_small"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:drawableLeft="@drawable/ic_maplocation"
-                android:text="Open Map"
-                android:textColor="@color/blue"
-                android:textSize="12sp" />
+                android:layout_centerInParent="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp">
 
-            <include
-                android:id="@+id/entity_item"
-                layout="@layout/business_entity_item"
+                <TextView
+                    android:id="@+id/opne_txt"
+                    style="@style/BoldTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/card_view_location"
+                    android:drawableLeft="@drawable/ic_maplocation"
+                    android:drawablePadding="7dp"
+                    android:gravity="center"
+                    android:text="Open map"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/font_smaller" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/buss_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_open_map" />
+                android:layout_below="@+id/txt_open_map"
+                android:layout_marginTop="15dp">
+
+                <include
+                    android:id="@+id/entity_item"
+                    layout="@layout/business_entity_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/entity_item"
+                android:layout_below="@+id/buss_content"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/white"
+                app:tabIndicatorHeight="3dp"
                 app:tabSelectedTextColor="@color/black"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabTextAppearance="@style/TabWidget"
                 app:tabTextColor="@color/dark_grey" />
 
             <com.numnu.android.utils.ContentWrappingViewPager
@@ -136,6 +157,6 @@
 
         </RelativeLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </com.numnu.android.utils.CustomScrollView>
 
 </RelativeLayout>

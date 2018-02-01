@@ -17,6 +17,7 @@
     <color name="primary_text_material_light">#757575</color>
     <color name="color_search_icon_background">#c93229</color>
     <color name="tag_inside_color">#D8D8D8</color>
+    <color name="new_tag_inside_color">#ECECEC</color>
     <color name="tag_inside_text_color">#8C939C</color>
     <color name="time_color">#757A82</color>
     <color name="event_map">#2A2A2A</color>
@@ -38,7 +39,7 @@
     <color name="postBng_color">#26ebebeb</color>
     <color name="tag_text_color">#8c939c</color>
     <color name="White_clr">#FFFFFF</color>
-
+    <color name="view_grey_color">#F5F5F5</color>
 
 
 
