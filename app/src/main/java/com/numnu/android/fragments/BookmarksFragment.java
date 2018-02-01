@@ -135,7 +135,7 @@ public class BookmarksFragment extends Fragment {
                 int responsecode = response.code();
                 if(responsecode==200) {
                      bookmarksResponse = response.body();
-                    updateUI();
+//                    updateUI();
                     isLoading = false;
                 }
             }

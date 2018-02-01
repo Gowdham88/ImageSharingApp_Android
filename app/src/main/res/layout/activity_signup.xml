@@ -274,14 +274,14 @@
 
         </LinearLayout>
     <!--</ScrollView>-->
-    <View
-        android:id="@+id/viewbottom"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC"
-        android:layout_marginBottom="6dp"
-        android:layout_above="@+id/text_terms_privacy"
-        />
+    <!--<View-->
+        <!--android:id="@+id/viewbottom"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#CCCCCC"-->
+        <!--android:layout_marginBottom="6dp"-->
+        <!--android:layout_above="@+id/text_terms_privacy"-->
+        <!--/>-->
 
 
     <TextView

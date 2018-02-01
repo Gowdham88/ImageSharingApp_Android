@@ -28,8 +28,6 @@
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_below="@id/txt_city"
         android:text=""
-        android:gravity="center_horizontal"
-        android:layout_centerVertical="true"
         android:textSize="15dp"
         />
 
@@ -91,7 +89,7 @@
         android:layout_toEndOf="@+id/profile_image"
         android:layout_toRightOf="@+id/profile_image"
         android:layout_below="@+id/hrz_lin_lay"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:singleLine="true"
         android:drawableLeft="@drawable/ic_city"
         android:drawablePadding="4dp"

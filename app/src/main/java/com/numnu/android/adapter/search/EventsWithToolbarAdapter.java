@@ -69,8 +69,13 @@ public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToo
         final HomeApiResponse homeapires = List.get(position);
 
 
+        try{
+            holder.textViewName.setText(List.get(position).getName());
+        }catch (NullPointerException e) {
 
-        holder.textViewName.setText(List.get(position).getName());
+            e.printStackTrace();
+        }
+        try{
         if(!homeapires.getEventimages().isEmpty()&&homeapires.getEventimages().get(0).getImageurl()!=null) {
             storageRef.child(homeapires.getEventimages().get(0).getImageurl()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -117,6 +122,10 @@ public class EventsWithToolbarAdapter extends RecyclerView.Adapter<EventsWithToo
         adapter = new HorizontalAdapterHome(context, homeapires.getTags());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        }catch (NullPointerException e) {
+
+            e.printStackTrace();
+        }
     }
 
 
