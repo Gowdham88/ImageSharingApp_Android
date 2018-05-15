@@ -79,7 +79,7 @@ public class CurrentEventsFragment extends Fragment {
         currentEventsList.setDrawingCacheEnabled(true);
         currentEventsList.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-        CurrentEventsAdapter currentEventsAdapter = new CurrentEventsAdapter(context, stringlist);
+         CurrentEventsAdapter currentEventsAdapter = new CurrentEventsAdapter(context, stringlist);
         currentEventsList.setAdapter(currentEventsAdapter);
 
     }
